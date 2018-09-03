@@ -11,7 +11,7 @@
         <tbody>
         <tr>
             <td style="width: 46%;vertical-align: bottom;padding-bottom: 8px;">
-                <img src="{{asset('portal_assets/dist/img/logo2.png')}}" alt="" style="width: 100%;height: auto;max-width: 280px;">
+                {{--<img src="{{asset('portal_assets/dist/img/logo2.png')}}" alt="" style="width: 100%;height: auto;max-width: 280px;">--}}
             </td>
             <td style="width: 54%;text-align: right;vertical-align: bottom;font-size: 20px;color: #6a6a6a;padding: 10px 5px 15px;letter-spacing: 1px;font-weight: 800;">忘記密碼 密碼通知信
             </td>

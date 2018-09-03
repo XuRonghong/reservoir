@@ -20,15 +20,15 @@ class CreateModReservoirInfoTable extends Migration
             Schema::create($this->table, function (Blueprint $table) {
                 $table->increments('iId');
                 $table->integer('iReservoirId');
-                $table->integer('iRank')->nullable();
-                $table->integer("iType")->nullable();
+                $table->integer('iRank')->nullable()->comment('序次');
+                $table->integer("iType")->nullable()->comment('水庫類別');
                 $table->string('vCode', 255)->nullable();
-                $table->text( 'vImages' )->nullable(); //圖片
-                $table->string('vSafe', 64);
-                $table->integer('iSafeValue');
+                $table->text( 'vImages' )->nullable()->comment('水庫照片'); //圖片
+                $table->string('vSafe', 64)->comment('');
+                $table->integer('iSafeValue')->comment('安全值');
                 $table->integer('iCreateTime');
                 $table->integer('iUpdateTime');
-                $table->integer('iSum')->default(0);
+                $table->integer('iSum')->default(0)->comment('總量');
                 $table->tinyInteger('iStatus')->default(1);
                 $table->tinyInteger('bDel')->default(0);
             });

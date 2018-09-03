@@ -46,7 +46,7 @@
                 <span aria-hidden="true">×</span>
                 <span class="sr-only">Close</span>
             </button>
-            <strong>{{ Session::get('error') }}</strong>
+            <h3><strong>{{ Session::get('error') }}</strong></h3>
         </div>
     @endif
 
@@ -74,7 +74,8 @@
         </select>
         Choose your xls/csv File : <input type="file" name="file" class="form-control">
 
-        <input type="submit" class="btn btn-primary btn-lg" style="margin-top: 3%">
+        <a href="{{url('/home')}}" class="btn btn-primary btn-lg" style="margin-top: 3%">Back</a>
+        <input type="submit" class="btn btn-primary btn-lg" style="margin-top: 3%;margin-left: 2%">
     </form>
 
 </div>

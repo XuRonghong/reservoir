@@ -1,14 +1,15 @@
 <?php
-// php artisan make:migration create_sys_member_verification_table
+// php artisan make:migration create_log_product_click_table
 // php artisan migrate
 // php artisan migrate:refresh
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSysMemberVerificationTable extends Migration
+class CreateLogProductClickTable extends Migration
 {
-    protected $table = 'sys_member_verification';
+    protected $table = "log_product_click";
 
     /**
      * Run the migrations.
@@ -17,14 +18,16 @@ class CreateSysMemberVerificationTable extends Migration
      */
     public function up ()
     {
+        //
         if ( !Schema::hasTable( $this->table )) {
             //
             Schema::create( $this->table, function( Blueprint $table ) {
-                $table->integer( 'iMemberId' );
-                $table->string( 'vVerification', 50 )->comment('暫存驗證碼');
-                $table->integer( 'iStartTime' );
-                $table->integer( 'iEndTime' )->comment('失效時間');
-                $table->tinyInteger( 'iStatus' )->default( 0 );
+                $table->increments( 'iId' );
+                $table->string( 'vSessionId' )->nullable()->default( 0 );
+                $table->integer( 'iMemberId' )->nullable()->default( 0 );
+                $table->integer( 'iClickType' )->nullable()->default( 0 ); //1.click 2.keep 3.cart
+                $table->integer( 'iProductId' )->nullable()->default( 0 );
+                $table->integer( 'iDateTime' )->nullable()->default( 0 );
             } );
         } else {
 

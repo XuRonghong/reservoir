@@ -22,10 +22,10 @@ class CreateModReservoirTable extends Migration
                 $table->integer('iRank')->nullable();
                 $table->integer("iType")->nullable();
                 $table->string('vCode', 255)->nullable();
-                $table->string('vRegion', 16)->nullable();
-                $table->string('vName', 64)->nullable();
-                $table->string('vLocation', 128)->nullable();
-                $table->string('vCounty', 32)->nullable();
+                $table->string('vRegion', 16)->nullable()->comment('地區別');
+                $table->string('vName', 64)->nullable()->comment('水庫或壩堰名稱');
+                $table->string('vLocation', 128)->nullable()->comment('詳細地址');
+                $table->string('vCounty', 32)->nullable()->comment('壩堰位置');
                 $table->integer('iCreateTime');
                 $table->integer('iUpdateTime');
                 $table->integer('iSum')->default(0);

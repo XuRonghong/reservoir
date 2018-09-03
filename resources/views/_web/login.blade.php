@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label>使用者權限</label>
                                     <select class="custom-select col-12 iAcType" id="inlineFormCustomSelect">
-                                        <option selected>Choose...</option>
+                                        <option value="0" selected>Choose...</option>
                                         <option value="2">網站系統管理員</option>
                                         <option value="10">水庫管理員(各水庫負責人員)</option>
                                         <option value="20">水庫審查人員(審核送審人員)</option>
@@ -69,10 +69,13 @@
                         <div class="card-body loginDiv2">
                             <div class="form-group">
                                 <label>系統將會寄發密碼到您的工作信箱</label>
-                                <span>帳號</span>
-                                <input type="text" placeholder="Account" class="inputStyle forgetId">
-                                <button class="backLogin">回登入頁</button>
-                                <button class="btn-esend btn-forgotpw">送出</button>
+                                <div class="form-group">
+                                    <span>帳號</span>
+                                    <input type="text" placeholder="Account" class="inputStyle forgetId">
+                                    <button class="backLogin">回登入頁</button>
+                                    <button class="btn-esend btnVerification">送出驗證碼</button>
+                                    <span class="warning"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -393,10 +396,14 @@
 <!--  -->
 <script type="text/javascript">
     function _initial(){
+        $('.preloader').hide();
+        $('.topbar').hide();
+        $('.left-sidebar').hide();
         $('.register').hide();
         $('.customizer').hide();
         $('.chat-windows').hide();
         //重設隱藏
+        $('.loginDiv2').hide();
         $('.forgetpassword').hide();
     }
 
@@ -408,14 +415,14 @@
         }
         if ($(".vPassword").val() === "") {
             $(".vPassword").focus();
-            $('.warning').text( $(".vPassword").siblings('label').text() + '未填' , "{{trans('_web_alert.notice')}}");
+            $('.warning').text( $(".vPassword").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
             return false;
         }
         //
         if(type==='login'){
-            if($('.iAcType').val() === 0) {
+            if($('.iAcType').val() == 0) {
                 $(".iAcType").focus();
-                $('.warning').text($(".iAcType").siblings('label').text() + '未填', "{{trans('_web_alert.notice')}}");
+                $('.warning').text($(".iAcType").siblings('label').text() + '未選', "{{trans('_web_alert.notice')}}");
                 return false;
             }
             return true;
@@ -451,7 +458,7 @@
         //註冊
         $(".doSignIn").click(function () {
 
-            check_field_no_empty();
+            if (! check_field_no_empty())return;
 
             var data = {"_token": "{{ csrf_token() }}"};
             data.vAccount = $(".vAccount").val();
@@ -483,7 +490,8 @@
         //登入
         $(".doLogin").click(function () {
 
-            check_field_no_empty('login');
+
+            if (! check_field_no_empty('login'))return;
 
             var data = {"_token": "{{ csrf_token() }}"};
             data.vAccount = $(".vAccount").val();
@@ -495,7 +503,7 @@
                 resetForm: true,
                 success: function (rtndata) {
                     if (rtndata.status) {
-                        $('.success').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
                         // if ($('input[name=remember]').prop("checked")) {
                         //     localStorage.setItem('account', $(".email").val());
                         //     localStorage.setItem('password', $(".password").val());
@@ -521,17 +529,22 @@
 
         //忘記密碼
         $(".forgetPw").click(function () {
-            $('.login').hide();
-            var parent = $(this).parents('.forgetpassword');
+            $('.loginDiv1').hide();
+            var parent = $('.loginDiv2');
             parent.show();
+        });
 
-            if ( parent.find(".vVerification").val() === "" ) {
-                parent.find(".vVerification").focus();
-                $('.warning').text( parent.find(".vVerification").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+
+        //寄送驗證碼到信箱重新設定密碼
+        $('.btnVerification').click(function () {
+            parent = $(this).parents('.login');
+
+            if ( parent.find(".forgetId").val() === "" ) {
+                parent.find(".forgetId").focus();
+                $('.warning').text( parent.find(".forgetId").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
                 return false;
             }
             parent.find(".forgetPw").attr('disabled', 'disabled');
-
             var data = {"_token": "{{ csrf_token() }}"};
             // data.userId = parent.find(".forgeotpw-id").val();
             // data.vAccount = parent.find(".forgeotpw-email").val();
@@ -544,7 +557,7 @@
                 resetForm: true,
                 success: function (rtndata) {
                     if (rtndata.status) {
-                        $('.success').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
                         parent.find('.login').hide();
                         parent.find('.forgetpassword').css({ display: 'inline-block' });
                     } else {
@@ -555,6 +568,12 @@
                     $('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
                 }
             });
+        });
+
+        //
+        $('.backLogin').click(function () {
+            $('.loginDiv1').show();
+            $('.loginDiv2').hide();
         });
 
 

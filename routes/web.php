@@ -11,64 +11,48 @@
 |
 */
 
-//不需要登入驗證-前台
-//Route::group(
-//    [
-//        'namespace' => '_Portal',
-//    ], function() {
-//    //
-//    Route::get( 'login'     , 'LoginController@index') ->middleware([ 'CheckMallLogout' ]);
-//    Route::group([
-//        'middleware'=> ['LoginThrottle:5,10']
-//    ], function(){
-//        Route::post('doLogin'   , 'LoginController@doLogin' );
-//    });
-//    //
-//    Route::post('doSendVerification', 'LoginController@doSendVerification' );//
-//    Route::post('doResetPassword'   , 'LoginController@doResetPassword' );//
-//    //
-//    Route::post('doRegister'        , 'RegisterController@doRegister' );//
-//    Route::get( 'doActive/{usercode}', 'RegisterController@doActive' );//
-//    //
-//    Route::post('doLogout'  , 'LogoutController@doLogout' );
-//});
-
-//需要登入驗證-前台
-//Route::group(
-//    [
-//        'namespace' => '_Portal',
-//        'middleware' => [ '' ]
-//    ], function() {
-//    //
-//    Route::get( 'register' , 'RegisterController@index' );//
-//    //
-//    Route::get( 'logout', 'LogoutController@index' );
-//    //
-//    Route::get( 'search', 'SearchController@index' );
-//} );
-
 
 /*
  * 後台
  */
-//Route::get( 'web', '_Web\LoginController@index' );
 
-
+//不需要登入驗證
 Route::group(
     [
-//        'middleware' => 'CheckLang',
+        'namespace' => '_Web',
+    ], function() {
+    Route::get( '' , 'LoginController@indexView') ;//->middleware([ 'CheckMallLogout' ]);
+
+    Route::get( 'login' , 'LoginController@indexView') ;//->middleware([ 'CheckMallLogout' ]);
+    Route::group([
+//        'middleware'=> ['LoginThrottle:5,10']
+    ], function(){
+        Route::post('doLogin'   , 'LoginController@doLogin' );
+    });
+    //
+    //Route::get('register', 'LoginController@registerView');
+    Route::post('doRegister' , 'LoginController@doRegister' );//
+    //
+    Route::post('doSendVerification', 'LoginController@doSendVerification' );//
+    Route::post('doResetPassword'   , 'LoginController@doResetPassword' );//
+    Route::get( 'doActive/{usercode}', 'LoginController@doActive' );//
+    //
+    Route::post('logout' , 'LoginController@logoutView' );
+    Route::post('doLogout' , 'LoginController@doLogout' );
+});
+
+//需要登入驗證
+Route::group(
+    [
+        'middleware' => 'CheckMallLogin',
         'prefix' => '',
         'namespace' => '_Web'
     ], function() {
-
 
     //
     Route::get('import_excel', 'ExcelController@index')->name('index');
     Route::post('import_excel', 'ExcelController@import')->name('import');
 
-
-    //
-    Route::get( '', 'LoginController@index');
     //
     Route::get( 'home', 'IndexController@index' );
     Route::get( 'add', 'IndexController@add' );
@@ -76,18 +60,38 @@ Route::group(
     Route::get( 'member', 'MemberController@index' );
     Route::get( 'member/add', 'MemberController@add' );
     //
-    Route::get( 'logout', 'LoginController@index' );
+    Route::get( 'logout', 'LoginController@logoutView' );
+    Route::post( 'dologout', 'LoginController@doLogout' );
 
 
-    //
-    Route::get('register', 'RegisterController@index');
-    Route::post('doRegister', 'RegisterController@doRegister');
+    /*********************************
+     * 會員中心
+     **********************************/
+    Route::group(
+        [
+            'middleware' => 'CheckMallLogin',
+            'prefix' => 'member_center',
+            'namespace' => 'MemberCenter'
+        ], function() {
+
+        //會員資訊
+        Route::get( '', 'InformationController@index' );
+        Route::post( 'dosave', 'InformationController@doSave' );
+        Route::post( 'dosavepassword', 'InformationController@doSavePassword' );
 
 
-    Route::group([
-        'middleware' => ['LoginThrottle:5,30']
-    ], function () {
-        Route::post('doLogin', 'LoginController@doLogin');
-    });
+        //我的收藏
+        Route::group(
+            [
+                'prefix' => 'keep',
+                'namespace' => 'Keep'
+            ], function() {
+            Route::get( '', 'IndexController@index' );
+            Route::post( 'doadd', 'IndexController@doAdd' );
+            Route::post( 'dosave', 'IndexController@doSave' );
+            Route::post( 'dodel', 'IndexController@doDel' );
+            Route::get( 'getlist', 'IndexController@getList' );
+        } );
+    } );
 
 });

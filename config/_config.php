@@ -15,7 +15,7 @@ return [
         ]
     ],
     'coin_fee' => 0.1,
-    'agent_code' => "pin2wall",
+    'agent_code' => "kahap",
     'center_connection' => env( 'DB_CENTER_CONNECTION' ),
     'fb_appid' => env( 'FB_APPID' ),
     'fb_secret' => env( 'FB_SECRET' ),

@@ -48,6 +48,12 @@ class CreateSysMemberInfoTable extends Migration
                     "vUserEmail" => "kahap@kahap.com",
                     "vUserContact" => ""
                 ],
+                [
+                    "vUserImage" => "/images/manager.jpg",
+                    "vUserName" => "Ronghong",
+                    "vUserEmail" => "ronghong@kahap.com",
+                    "vUserContact" => ""
+                ],
             ];
             $iMemberId = 1;
             foreach ($data_arr as $key => $var) {

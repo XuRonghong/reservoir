@@ -20,15 +20,15 @@ class CreateModReservoirMetaTable extends Migration
             Schema::create($this->table, function (Blueprint $table) {
                 $table->increments('iId');
                 $table->integer('iRank')->nullable();
-                $table->string('vStructure', 128)->nullable();
-                $table->string('vLevel', 32)->nullable();
-                $table->integer('iHeight')->nullable();
-                $table->integer('iStoreTotal')->nullable();
-                $table->string('vGrade', 16)->nullable();
-                $table->string('vTrustRegion', 32)->nullable();
-                $table->string('vNumber', 64)->nullable();
-                $table->string('vNet', 32)->default('WR');
-                $table->string('vAreaCode', 32)->default('00');
+                $table->string('vStructure', 128)->nullable()->comment('蓄水建造物');
+                $table->string('vLevel', 32)->nullable()->comment('災害潛勢');
+                $table->integer('iHeight')->nullable()->comment('壩高(m)');
+                $table->integer('iStoreTotal')->nullable()->comment('總蓄水量 (萬m3) ');
+                $table->string('vGrade', 16)->nullable()->comment('分級');
+                $table->string('vTrustRegion', 32)->nullable()->comment('責任區');
+                $table->string('vNumber', 64)->nullable()->comment('站碼');
+                $table->string('vNet', 32)->default('WR')->comment('NET');
+                $table->string('vAreaCode', 32)->default('00')->comment('區碼');
                 $table->integer('iCreateTime');
                 $table->integer('iUpdateTime');
                 $table->tinyInteger('iStatus')->default(1);

@@ -24,13 +24,13 @@ class CreateSysMemberTable extends Migration
             Schema::create( $this->table, function( Blueprint $table ) {
                 $table->increments( 'iId' );
                 $table->integer( 'iRank' )->nullable();
-                $table->string( 'vAgentCode', 20 );
-                $table->integer( 'iUserId' )->unique();
-                $table->string( 'vUserCode', 64 )->unique();
-                $table->integer( "iAcType" );
+                $table->string( 'vAgentCode', 20 )->comment('代理商代码');
+                $table->integer( 'iUserId' )->unique()->comment('會員編號');
+                $table->string( 'vUserCode', 64 )->unique()->comment('會員代號');
+                $table->integer( "iAcType" )->comment('存取權限');
                 $table->string( 'vAccount', 50 )->unique();
                 $table->string( 'vPassword', 255 );
-                $table->string( 'vCreateIP', 255 );
+                $table->string( 'vCreateIP', 255 )->comment('註冊的網路位置');
                 $table->integer( 'iCreateTime' );
                 $table->integer( 'iUpdateTime' );
                 $table->string( 'vSessionId' )->nullable();
@@ -46,6 +46,10 @@ class CreateSysMemberTable extends Migration
                 [
                     "iAcType" => 2,
                     "vAccount" => "manager@kahap.com"
+                ],
+                [
+                    "iAcType" => 2,
+                    "vAccount" => "ronghong@kahap.com"
                 ],
             ];
             $iUserId = 1000000001;
@@ -63,7 +67,7 @@ class CreateSysMemberTable extends Migration
                 $Dao->vUserCode = $uuid;
                 $Dao->iAcType = $var ['iAcType'];
                 $Dao->vAccount = $var ['vAccount'];
-                $Dao->vPassword = hash( 'sha256', $Dao->vAgentCode . md5( "abc123" ) . $Dao->vUserCode );
+                $Dao->vPassword = hash( 'sha256', $Dao->vAgentCode .  "abc123"  . $Dao->vUserCode );
                 $Dao->vCreateIP = env('APP_URL', '127.0.0.1');
                 $Dao->iCreateTime = $Dao->iUpdateTime = time();
                 $Dao->bActive = 1;

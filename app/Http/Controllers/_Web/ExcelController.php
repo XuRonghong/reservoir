@@ -14,6 +14,7 @@ class ExcelController extends Controller
     public function index()
     {
         return view('_web.import_export');
+
     }
 
     public function import(Request $request){
@@ -38,15 +39,19 @@ class ExcelController extends Controller
                     switch ($chooseType){
                         case 'reservoir':
                             // Excel Sheet 1
-                            foreach ($data[0] as $key => $value) {
-                                $insert[] = [
-                                    'vRegion' => $value->region,
-                                    'vName' => $value->name,
-                                    'vLocation' => $value->location,
-                                    'vCounty' => $value->county,
-                                    'iCreateTime' => time(),
-                                    'iUpdateTime' => time(),
-                                ];
+                            try {
+                                foreach ($data[0] as $key => $value) {
+                                    $insert[] = [
+                                        'vRegion' => $value->region,
+                                        'vName' => $value->name,
+                                        'vLocation' => $value->location,
+                                        'vCounty' => $value->county,
+                                        'iCreateTime' => time(),
+                                        'iUpdateTime' => time(),
+                                    ];
+                                }
+                            }catch (\Exception $e){
+                                Session::flash('error', $e->getMessage());
                             }
 
                             try {
@@ -61,25 +66,29 @@ class ExcelController extends Controller
                                     }
                                 }
                             }catch (\Exception $e){
-                                dd($e->getMessage());
+                                Session::flash('error', $e->getMessage());
                             }
 
                             // Excel Sheet 2
-                            foreach ($data[1] as $key => $value) {
-                                $insert2[] = [
-                                    'iRank' => $value->rank,
-                                    'vStructure' => $value->structure,
-                                    'vLevel' => $value->level,
-                                    'iHeight' => $value->height=='- '? 0 :$value->height,
-                                    'iStoreTotal' => $value->store_total=='- '? 0 :$value->store_total,
-                                    'vGrade' => $value->grade,
-                                    'vTrustRegion' => $value->trust_region,
-                                    'vNumber' => $value->number,
-                                    'vNet' => $value->net,
-                                    'vAreaCode' => $value->area_code,
-                                    'iCreateTime' => time(),
-                                    'iUpdateTime' => time(),
-                                ];
+                            try {
+                                foreach ($data[1] as $key => $value) {
+                                    $insert2[] = [
+                                        'iRank' => $value->rank,
+                                        'vStructure' => $value->structure,
+                                        'vLevel' => $value->level,
+                                        'iHeight' => $value->height == '- ' ? 0 : $value->height,
+                                        'iStoreTotal' => $value->store_total == '- ' ? 0 : $value->store_total,
+                                        'vGrade' => $value->grade,
+                                        'vTrustRegion' => $value->trust_region,
+                                        'vNumber' => $value->number,
+                                        'vNet' => $value->net,
+                                        'vAreaCode' => $value->area_code,
+                                        'iCreateTime' => time(),
+                                        'iUpdateTime' => time(),
+                                    ];
+                                }
+                            }catch (\Exception $e){
+                                Session::flash('error', $e->getMessage());
                             }
 
                             try {
@@ -94,11 +103,11 @@ class ExcelController extends Controller
                                     }
                                 }
                             }catch (\Exception $e){
-                                dd($e->getMessage());
+                                Session::flash('error', $e->getMessage());
                             }
                             break;
                         case 'member':
-
+                            Session::flash('error', 'SORRY~會員匯入功能還沒開放');
                             break;
                     }
 

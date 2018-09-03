@@ -1,14 +1,15 @@
 <?php
-// php artisan make:migration create_sys_member_verification_table
+// php artisan make:migration create_log_order_table
 // php artisan migrate
 // php artisan migrate:refresh
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSysMemberVerificationTable extends Migration
+class CreateLogOrderTable extends Migration
 {
-    protected $table = 'sys_member_verification';
+    protected $table = "log_order";
 
     /**
      * Run the migrations.
@@ -17,14 +18,18 @@ class CreateSysMemberVerificationTable extends Migration
      */
     public function up ()
     {
+        //
         if ( !Schema::hasTable( $this->table )) {
             //
             Schema::create( $this->table, function( Blueprint $table ) {
-                $table->integer( 'iMemberId' );
-                $table->string( 'vVerification', 50 )->comment('暫存驗證碼');
-                $table->integer( 'iStartTime' );
-                $table->integer( 'iEndTime' )->comment('失效時間');
-                $table->tinyInteger( 'iStatus' )->default( 0 );
+                $table->increments( 'iId' );
+                $table->integer( 'iMemberId' )->nullable();
+                $table->string( 'vUserName', 255 )->nullable();
+                $table->string( 'vOrderNum' );
+                $table->string( 'vAction', 255 );
+                $table->longText( 'vValue' )->nullable();
+                $table->integer( 'iDateTime' );
+                $table->string( 'vCreateIP', 255 )->nullable();
             } );
         } else {
 

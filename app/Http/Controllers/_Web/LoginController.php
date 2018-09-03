@@ -33,7 +33,7 @@ class LoginController extends _WebController
     /*
      *
      */
-    public function index ()
+    public function indexView ()
     {
         $this->module = [ 'login' ];
         $this->view = View()->make( "_web." . implode( '.' , $this->module ) );
@@ -64,16 +64,16 @@ class LoginController extends _WebController
 
 
         //帳號email格式是否正確
-        if ( $vAccount!="" && !FuncController::_isValidEmail( $vAccount )) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.register.error_account' );
-            return response()->json( $this->rtndata );
-        }
+//        if ( $vAccount!="" && !FuncController::_isValidEmail( $vAccount )) {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.register.error_account' );
+//            return response()->json( $this->rtndata );
+//        }
 
         //會員編碼是否為空
         if ( $iUserId == "" && $vAccount == "") {
             $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.register.empty_account' );
+            $this->rtndata ['message'] = trans( '_web_message.login.empty_account' );
             return response()->json( $this->rtndata );
         }
 
@@ -132,7 +132,7 @@ class LoginController extends _WebController
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
-        $this->rtndata ['rtnurl'] = ( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( '' );
+        $this->rtndata ['rtnurl'] = url('home');//( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'home' );
 
         return response()->json( $this->rtndata );
     }
@@ -300,8 +300,8 @@ class LoginController extends _WebController
     public function doSendVerification ( Request $request )
     {
 
-        $iUserId  = ( $request->exists( 'iUserId' ) ) ? $request->input( 'iUserId' ) : "" ;
-        $vAccount = ( $request->exists( 'vAccount' ) ) ? $request->input( 'vAccount' ) : "";
+        $iUserId  = ( $request->exists( 'iUserId' ) ) ? htmlspecialchars($request->input( 'iUserId' )) : "" ;
+        $vAccount = ( $request->exists( 'vAccount' ) ) ? htmlspecialchars($request->input( 'vAccount' )) : "";
 
 //        if (  $vAccount!="" && !FuncController::_isValidEmail( $vAccount )) {
 //            $this->rtndata ['status'] = 0;
@@ -312,7 +312,7 @@ class LoginController extends _WebController
         if ($vAccount == "" && $iUserId == "")
         {
             $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.login.error_account' );
+            $this->rtndata ['message'] = trans( '_web_message.login.error_account' ).time();
             return response()->json( $this->rtndata );
         }
 
@@ -323,7 +323,7 @@ class LoginController extends _WebController
         if ( !$DaoMember)
         {
             $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.login.error_account' );
+            $this->rtndata ['message'] = trans( '_web_message.login.error_account' ).time();
             return response()->json( $this->rtndata );
         }
 
@@ -365,9 +365,12 @@ class LoginController extends _WebController
 
         if ($DaoMemberVerification->save()) {
             //
-            Mail::send( '_email.forgot' , [ 'verification' => $verification ] , function( $message ) use ( $email ) {
-                $message->to( $email )->subject( trans( '_web_message.verification.forgot_password' ) );
-            } );
+//            Mail::send( '_email.forgot' , [ 'verification' => $verification ] , function( $message ) use ( $email ) {
+//                $message->to( $email )->subject( trans( '_web_message.verification.forgot_password' ) );
+//            } );
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = 'SORRY~寄信功能尚未開放';
+            return response()->json( $this->rtndata );
 
             session()->put( 'verification.memberid', $DaoMember->iId );
             $this->rtndata ['status'] = 1;
@@ -386,10 +389,10 @@ class LoginController extends _WebController
      */
     public function forgotpassword ()
     {
-        $this->func = "_template_web.forgotpassword";
-        $this->view = View()->make( $this->func );
-
-        return $this->view;
+//        $this->func = "_template_web.forgotpassword";
+//        $this->view = View()->make( $this->func );
+//
+//        return $this->view;
     }
 
     /*
@@ -555,6 +558,154 @@ class LoginController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
         }
 
+        return response()->json( $this->rtndata );
+    }
+
+
+    /*
+     * 註冊頁面
+     */
+    public function registerView ()
+    {
+        $this -> module = [ 'register' ];
+        $this->view = View()->make( "_web." . implode( '.' , $this->module ) );
+
+        return $this->view;
+    }
+
+    /*
+     *
+     */
+    public function doRegister ( Request $request )
+    {
+        $vAccount  = ( $request->exists( 'vAccount' ) ) ? $request->input( 'vAccount' ) : "";
+        $vPassword = ( $request->exists( 'vPassword') ) ? $request->input( 'vPassword' ) : "";
+
+        //帳號email格式錯誤，退回
+        if ( !FuncController::_isValidEmail( $vAccount )) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.register.error_account' );
+            return response()->json( $this->rtndata );
+        }
+
+        //帳號存在，退回
+        $map ['vAccount'] = $vAccount;
+        $DaoMember = SysMember::query()->where( $map )->first();
+        if ($DaoMember) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.register.account_not_empty' );
+            return response()->json( $this->rtndata );
+        }
+
+        $str = md5( uniqid( mt_rand(), true ) );
+        $uuid = substr( $str, 0, 8 ) . '-';
+        $uuid .= substr( $str, 8, 4 ) . '-';
+        $uuid .= substr( $str, 12, 4 ) . '-';
+        $uuid .= substr( $str, 16, 4 ) . '-';
+        $uuid .= substr( $str, 20, 12 );
+        do {
+            $userid = rand( 1000000001, 1099999999 );
+            $check = SysMember::query()->where( "iUserId", $userid )->first();
+        } while ($check);
+
+        //
+        $date_time = time();
+        $DaoMember = new SysMember ();
+        $DaoMember->vAgentCode = config( '_config.agent_code' );
+        $DaoMember->iUserId = $userid;
+        $DaoMember->vUserCode = $uuid;
+        $DaoMember->iAcType = 99; //
+        $DaoMember->vAccount = $vAccount;
+        $DaoMember->vPassword = hash( 'sha256', $DaoMember->vAgentCode . $vPassword . $DaoMember->vUserCode );
+        $DaoMember->vCreateIP = $request->ip();
+        $DaoMember->iCreateTime = $DaoMember->iUpdateTime = $date_time;
+        $DaoMember->bActive = 0;
+        $DaoMember->iStatus = 1;
+        if ($DaoMember->save()) {
+            //註冊會員的詳情資料
+            $DaoMemberInfo = new SysMemberInfo();
+            $DaoMemberInfo->iMemberId = $DaoMember->iId;
+            $DaoMemberInfo->vUserImage = "/images/empty.jpg";
+            $DaoMemberInfo->vUserName = ( $request->exists( 'vUserName' ) ) ? $request->input( 'vUserName' ) : $vAccount;
+            $DaoMemberInfo->vUserID =   ( $request->exists( 'vUserID' ) )   ? $request->input( 'vUserID' ) : "";
+            $DaoMemberInfo->iUserBirthday = time();
+            $DaoMemberInfo->vUserEmail = $vAccount;
+            $DaoMemberInfo->vUserContact = ( $request->exists( 'vUserContact' ) ) ? $request->input( 'vUserContact' ) : "";
+            $DaoMemberInfo->save();
+
+            //註冊會員的群組,預設'5'的一般會員群組
+            $DaoGroupMember = new SysGroupMember();
+            $DaoGroupMember->iGroupId = 5;
+            $DaoGroupMember->iMemberId = $DaoMember->iId;
+            $DaoGroupMember->iCreateTime = $DaoGroupMember->iUpdateTime = time();
+            $DaoGroupMember->iStatus = 1;
+            $DaoGroupMember->save();
+
+            $this->rtndata ['status'] = 1;
+            $this->rtndata ['message'] = trans( '_web_message.register.success' ).trans( '_web_message.register.verification' );
+            $this->rtndata ['rtnurl'] = ( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'login' );
+
+            Mail::send( '_email.welcome' , [ 'url' => url( 'doActive' ) . '/' . $uuid ], function( $message ) use ( $vAccount ) {
+                $message->to( $vAccount, '會員' )->subject( 'Register Success!' );
+            } );
+
+            //
+            //CoinController::_CheckActivityRegister( $DaoMember->iId );
+        } else {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.register.fail' );
+        }
+
+        return response()->json( $this->rtndata );
+    }
+
+
+    /*
+     * 註冊成功，信箱驗證
+     */
+    public function doActive ( $usercode )
+    {
+        $map['vUserCode'] = $usercode;
+        $Dao = SysMember::query()->where( $map )->first();
+        if ( !$Dao) {
+            return View()->make( "errors.empty" );
+        }
+//        if ($Dao->bActive) {
+//            return View()->make( "errors.active" );
+//        }
+        $Dao->bActive = 1;
+        $Dao->iUpdateTime = time();
+        $Dao->save();
+
+        return redirect( 'member_center/resetpw' );
+    }
+
+
+
+    /*
+     * View blade of account logout
+     */
+    public function logoutView ()
+    {
+        //session()->flush();
+//        $request->session()->regenerate();
+        session()->forget( 'shop_member' );
+        session()->forget( 'shop_member.iId' );
+        session()->forget( 'rtnurl' );
+        return redirect()->guest( 'login' );
+    }
+
+    /*
+     * logout process
+     */
+    public function doLogout ()
+    {
+        //session()->flush();
+        session()->forget( 'shop_member' );
+        session()->forget( 'shop_member.iId' );
+        $this->rtndata ['status'] = 1;
+        $this->rtndata ['message'] = trans( '_web_message.logout.success' );
+        $this->rtndata ['rtnurl'] = url('/');
         return response()->json( $this->rtndata );
     }
 }

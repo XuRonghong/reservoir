@@ -37,6 +37,7 @@
     </script>
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/toastr.min.css">
 
 
 
@@ -277,6 +278,7 @@
                         <ul aria-expanded="false" class="collapse first-level">
                             <li class="sidebar-item"><a href="{{url('/home')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
                             <li class="sidebar-item"><a href="{{url('/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>
                         </ul>
                     </li>
                     {{--<li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-jsgrid.html" aria-expanded="false"><i class="mdi mdi-border-top"></i><span class="hide-menu">Table Jsgrid</span></a></li>--}}
@@ -470,6 +472,10 @@
 <script src="{{url('xtreme-admin/dist/js/sidebarmenu.js')}}"></script>
 <!--Custom JavaScript -->
 <script src="{{url('xtreme-admin/dist/js/custom.min.js')}}"></script>
+
+
+
+<script src="{{url('/js/toastr.min.js')}}"></script>
 
 
 <!-- Public commit -->
