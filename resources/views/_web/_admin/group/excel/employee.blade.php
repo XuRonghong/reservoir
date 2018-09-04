@@ -1,0 +1,1 @@
+@include('_template_web._admin.group.excel._layout.index')

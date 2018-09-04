@@ -918,7 +918,7 @@ class SysMenuTableSeeder extends Seeder
                         [
                             //消息畫面
                             "iId" => 609,
-                            "vName" => "scenes.news",
+                            "vName" => "scenes.reservoir",
                             "vUrl" => "",
                             "vCss" => "",
                             "bSubMenu" => 1,
@@ -930,8 +930,8 @@ class SysMenuTableSeeder extends Seeder
                                     [
                                         //圖片編輯
                                         "iId" => 60901,
-                                        "vName" => "scenes.news.banner",
-                                        "vUrl" => "web/scenes/news/banner",
+                                        "vName" => "scenes.reservoir.banner",
+                                        "vUrl" => "web/scenes/reservoir/banner",
                                         "vCss" => "",
                                         "bSubMenu" => 0,
                                         "iParentId" => 609,
@@ -1338,7 +1338,7 @@ class SysMenuTableSeeder extends Seeder
                         [
                             //活動訊息
                             "iId" => 30013,
-                            "vName" => "activity.news",
+                            "vName" => "activity.reservoir",
                             "vUrl" => "",
                             "vCss" => "",
                             "bSubMenu" => 1,
@@ -1350,8 +1350,8 @@ class SysMenuTableSeeder extends Seeder
                                     [
                                         //活動訊息
                                         "iId" => 300131,
-                                        "vName" => "activity.news.index",
-                                        "vUrl" => "web/activity/news/index",
+                                        "vName" => "activity.reservoir.index",
+                                        "vUrl" => "web/activity/reservoir/index",
                                         "vCss" => "",
                                         "bSubMenu" => 1,
                                         "iParentId" => 30013,
@@ -1415,7 +1415,7 @@ class SysMenuTableSeeder extends Seeder
             [
                 //訊息公告
                 "iId" => 4001,
-                "vName" => "news",
+                "vName" => "reservoir",
                 "vUrl" => "",
                 "vCss" => "fa-list",
                 "bSubMenu" => 1,
@@ -1427,8 +1427,8 @@ class SysMenuTableSeeder extends Seeder
                         [
                             //公告訊息
                             "iId" => 40011,
-                            "vName" => "news.index",
-                            "vUrl" => "web/news/index",
+                            "vName" => "reservoir.index",
+                            "vUrl" => "web/reservoir/index",
                             "vCss" => "",
                             "bSubMenu" => 0,
                             "iParentId" => 4001,

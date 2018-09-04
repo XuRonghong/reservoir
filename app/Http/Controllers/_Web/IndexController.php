@@ -2,33 +2,26 @@
 
 namespace App\Http\Controllers\_Web;
 
-use App\Http\Controllers\_Web\_WebController;
-use Maatwebsite\Excel\Facades\Excel;
-use App\ModReservoir;
-use App\ModReservoirInfo;
+use Illuminate\Http\Request;
+
 
 class IndexController extends _WebController
 {
-    public $module = [ 'index' ];
+    public $module = [  ];
+
 
     /*
      *
      */
     public function index ()
     {
-        //$this->__initial();
-        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) );
-
-        return $this->view;
-    }
-
-    /*
-     *
-     */
-    public function add ()
-    {
-        //$this->__initial();
-        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '_add' );
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . 'index' );
+        //
+        $breadcrumb = [
+            '後臺首頁' => url( '' ),
+        ];
+        $this->view->with( 'breadcrumb', $breadcrumb );
+        $this->view->with( 'module', $this->module );
 
         return $this->view;
     }

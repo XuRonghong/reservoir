@@ -60,13 +60,13 @@
                                 {{--<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">--}}
                                     {{--<div class="carousel-inner" role="listbox">--}}
                                         {{--<div class="carousel-item active">--}}
-                                            {{--<div class="container p-0"> <img class="d-block img-fluid" src="xtreme-admin/assets/images/big/img1.jpg" alt="First slide"></div>--}}
+                                            {{--<div class="container p-0"> <img class="d-block img-fluid" src="{{url('/xtreme-admin/assets/images/big/img1.jpg')}}" alt="First slide"></div>--}}
                                         {{--</div>--}}
                                         {{--<div class="carousel-item">--}}
-                                            {{--<div class="container p-0"><img class="d-block img-fluid" src="xtreme-admin/assets/images/big/img2.jpg" alt="Second slide"></div>--}}
+                                            {{--<div class="container p-0"><img class="d-block img-fluid" src="{{url('/xtreme-admin/assets/images/big/img2.jpg')}}" alt="Second slide"></div>--}}
                                         {{--</div>--}}
                                         {{--<div class="carousel-item">--}}
-                                            {{--<div class="container p-0"><img class="d-block img-fluid" src="xtreme-admin/assets/images/big/img3.jpg" alt="Third slide"></div>--}}
+                                            {{--<div class="container p-0"><img class="d-block img-fluid" src="{{url('/xtreme-admin/assets/images/big/img3.jpg')}}" alt="Third slide"></div>--}}
                                         {{--</div>--}}
                                     {{--</div>--}}
                                     {{--<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>--}}
@@ -268,25 +268,25 @@
                                 <div class="message-center message-body">
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img"> <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle"> <span class="profile-status online pull-right"></span> </span>
+                                        <span class="user-img"> <img src="{{url('xtreme-admin/assets/images/users/1.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status online pull-right"></span> </span>
                                         <div class="mail-contnet">
                                             <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                                     </a>
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img"> <img src="../../assets/images/users/2.jpg" alt="user" class="rounded-circle"> <span class="profile-status busy pull-right"></span> </span>
+                                        <span class="user-img"> <img src="{{url('xtreme-admin/assets/images/users/2.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status busy pull-right"></span> </span>
                                         <div class="mail-contnet">
                                             <h5 class="message-title">Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
                                     </a>
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img"> <img src="../../assets/images/users/3.jpg" alt="user" class="rounded-circle"> <span class="profile-status away pull-right"></span> </span>
+                                        <span class="user-img"> <img src="{{url('/xtreme-admin/assets/images/users/3.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status away pull-right"></span> </span>
                                         <div class="mail-contnet">
                                             <h5 class="message-title">Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
                                     </a>
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img"> <img src="../../assets/images/users/4.jpg" alt="user" class="rounded-circle"> <span class="profile-status offline pull-right"></span> </span>
+                                        <span class="user-img"> <img src="{{url('/xtreme-admin/assets/images/users/4.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status offline pull-right"></span> </span>
                                         <div class="mail-contnet">
                                             <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
                                     </a>
@@ -305,11 +305,11 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="xtreme-admin/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url('/xtreme-admin/assets/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="31"></a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <span class="with-arrow"><span class="bg-primary"></span></span>
                         <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                            <div class=""><img src="xtreme-admin/assets/images/users/1.jpg" alt="user" class="img-circle" width="60"></div>
+                            <div class=""><img src="{{url('/xtreme-admin/assets/images/users/1.jpg')}}" alt="user" class="img-circle" width="60"></div>
                             <div class="m-l-10">
                                 <h4 class="m-b-0">Steave Jobs</h4>
                                 <p class=" m-b-0">varun@gmail.com</p>

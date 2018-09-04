@@ -20,10 +20,6 @@ class _WebController extends Controller
     public $sys_menu;
     public $breadcrumb = [];
 
-    protected $agent;
-    protected $device;
-    protected $module;
-
     /*
      *
      */
@@ -88,5 +84,87 @@ class _WebController extends Controller
         $DaoLogAction->iDateTime = time();
         $DaoLogAction->vCreateIP = Request::ip();
         $DaoLogAction->save();
+    }
+
+
+
+    /*
+     * 丟檔案id取得圖片檔路徑 get()
+     */
+    public function getPictureWithId ( $Dao )
+    {
+        if ( !isset($Dao) ) return "No data input";
+
+        foreach ($Dao as $key => $var) {
+            //圖片
+            $image_arr = [];
+            if ($var->vImages) {
+                $tmp_arr = explode(';', $var->vImages);
+                $tmp_arr = array_filter($tmp_arr);
+                foreach ($tmp_arr as $item) {
+                    $image_arr[] = FuncController::_getFilePathById($item);
+                }
+                if ($tmp_arr) {
+                    $var->vImages = $image_arr;
+                } else {
+                    $var->vImages = [];
+                }
+            }
+            //手機圖片
+            $image_arr = [];
+            if ($var->vImagesMobile) {
+                $tmp_arr = explode(';', $var->vImagesMobile);
+                $tmp_arr = array_filter($tmp_arr);
+                foreach ($tmp_arr as $item) {
+                    $image_arr[] = FuncController::_getFilePathById($item);
+                }
+                if ($tmp_arr) {
+                    $var->vImagesMobile = $image_arr;
+                } else {
+                    $var->vImagesMobile = [];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /*
+     * 丟檔案id取得圖片檔路徑 first()
+     */
+    public function firstPictureWithId ( $DaoFirst )
+    {
+        if ( !isset($DaoFirst) ) return "No data input only one";
+
+        //圖片
+        $image_arr = [];
+        if ($DaoFirst->vImages) {
+            $tmp_arr = explode(';', $DaoFirst->vImages);
+            $tmp_arr = array_filter($tmp_arr);
+            foreach ($tmp_arr as $item) {
+                $image_arr[] = FuncController::_getFilePathById($item);
+            }
+        }
+        if ($tmp_arr) {
+            $DaoFirst->vImages = $image_arr;
+        } else {
+            $DaoFirst->vImages = [];
+        }
+        //手機圖片
+        $image_arr = [];
+        if ($DaoFirst->vImagesMobile) {
+            $tmp_arr = explode(';', $DaoFirst->vImagesMobile);
+            $tmp_arr = array_filter($tmp_arr);
+            foreach ($tmp_arr as $item) {
+                $image_arr[] = FuncController::_getFilePathById($item);
+            }
+        }
+        if ($tmp_arr) {
+            $DaoFirst->vImagesMobile = $image_arr;
+        } else {
+            $DaoFirst->vImagesMobile = [];
+        }
+
+        return null;
     }
 }

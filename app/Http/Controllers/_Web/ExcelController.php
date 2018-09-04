@@ -9,14 +9,29 @@ use Session;
 use Excel;
 use File;
 
-class ExcelController extends Controller
+class ExcelController extends _WebController
 {
-    public function index()
-    {
-        return view('_web.import_export');
+    public $module = [ 'excel' ];
 
+    /*
+     *
+     */
+    public function index ()
+    {
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . 'import_export' );
+        //
+        $breadcrumb = [
+            '後臺首頁' => url( '' ),
+        ];
+        $this->view->with( 'breadcrumb', $breadcrumb );
+        $this->view->with( 'module', $this->module );
+
+        return $this->view;
     }
 
+    /*
+     *
+     */
     public function import(Request $request){
 
         $chooseType = $request->get('importTable') ? $request->get('importTable') : '';

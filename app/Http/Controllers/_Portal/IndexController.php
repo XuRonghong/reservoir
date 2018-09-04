@@ -39,9 +39,9 @@ class IndexController extends _PortalController
             ->get();
         foreach ($DaoNews as $item){
             //
-//            $item->vUrl = url('news/detail/' . $item->iId );
+//            $item->vUrl = url('reservoir/detail/' . $item->iId );
         }
-        $this->view->with( 'news', $DaoNews );
+        $this->view->with( 'reservoir', $DaoNews );
 
 
         //meta-org

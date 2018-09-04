@@ -4,7 +4,7 @@
             <img src="{{asset('portal_assets/dist/img/logo.png')}}" alt="">
         </a>
         <div class="linkBox">
-            <a href="{{url('news')}}">{{trans('_portal.news.title')}}</a>
+            <a href="{{url('news')}}">{{trans('reservoir')}}</a>
             @if(isset($_header))
             @foreach($_header as $item)
                 <a href="{{$item->vUrl or '#'}}">{{$item->vName or ''}}</a>

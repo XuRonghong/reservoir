@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Taipei',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'zh-tw',
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +121,8 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'), //single
+    'log_max_files' => 7,
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -228,6 +229,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Package Aliases...
+         */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],

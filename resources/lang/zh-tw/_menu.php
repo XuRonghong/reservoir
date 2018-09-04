@@ -355,7 +355,7 @@ return [
                             'title' => 'banner編輯',
                         ],
                 ],
-            'news' =>
+            'reservoir' =>
                 [
                     'title' => '消息畫面',
                     'banner' =>
@@ -801,7 +801,7 @@ return [
                                 ]
                         ]
                 ],
-            'news' =>
+            'reservoir' =>
                 [
                     'title' => '活動訊息',
                     'index' =>
@@ -855,7 +855,7 @@ return [
                         ]
                 ]
         ],
-    'news' =>
+    'reservoir' =>
         [
             'title' => '訊息公告',
             'index' =>

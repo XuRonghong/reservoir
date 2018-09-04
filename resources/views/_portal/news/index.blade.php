@@ -26,7 +26,7 @@
             <section class="news">
                 <div class="newsCenter container">
                     <div class="filterBar">
-                        <span>{{trans('_portal.news.category')}}</span>
+                        <span>{{trans('reservoir')}}</span>
                         <select class="filterList form-control btn-cate">
                             <option value="0">
                                 {{trans('_portal.news.all')}}
@@ -96,7 +96,7 @@
 
         function getlist(data) {
             $.ajax({
-                url: "{{url('news/getlist')}}",
+                url: "{{url('reservoir')}}",
                 data: data,
                 type: "GET",
                 success: function (rtndata) {

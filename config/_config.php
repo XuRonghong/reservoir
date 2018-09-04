@@ -4,7 +4,7 @@ return [
         [
           'ttb' =>
             [
-                'address' => 'ronghong@pin2wall.com'
+                'address' => 'ronghong@kahap.com'
             ],
         ],
     'admin_access' => [ 1, 2 ],
