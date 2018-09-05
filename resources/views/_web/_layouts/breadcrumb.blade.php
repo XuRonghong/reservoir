@@ -7,21 +7,21 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         @foreach($breadcrumb as $key => $value)
-                        <li class="breadcrumb-item"><a href="{{$value}}"">{{$key}}</a></li>
+                        <li class="breadcrumb-item"><a href="{{$value}}">{{$key}}</a></li>
                         @endforeach
                         {{--<li class="breadcrumb-item active" aria-current="page">Library</li>--}}
                     </ol>
                 </nav>
             </div>
         </div>
-        {{--<div class="col-7 align-self-center">--}}
-            {{--<div class="d-flex no-block justify-content-end align-items-center">--}}
-                {{--<div class="m-r-10">--}}
+        <div class="col-7 align-self-center">
+            <div class="d-flex no-block justify-content-end align-items-center">
+                <div class="m-r-10">
                     {{--<div class="lastmonth"></div>--}}
-                {{--</div>--}}
+                </div>
                 {{--<div class=""><small>LAST MONTH</small>--}}
                     {{--<h4 class="text-info m-b-0 font-medium">$58,256</h4></div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+            </div>
+        </div>
     </div>
 </div>

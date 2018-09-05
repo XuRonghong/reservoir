@@ -2314,7 +2314,7 @@
 	 * Creates video thumbnail.
 	 * @protected
 	 * @param {jQuery} target - The target containing the video data.
-	 * @param {Object} info - The video info object.
+	 * @param {Object} meta - The video meta object.
 	 * @see `fetch`
 	 */
 	Video.prototype.thumbnail = function(target, video) {

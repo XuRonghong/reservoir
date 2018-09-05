@@ -466,7 +466,7 @@ $('.drops').daterangepicker({
 $('.buttonClass').daterangepicker({
     drops: "up",
     buttonClasses: "btn",
-    applyClass: "btn-info",
+    applyClass: "btn-meta",
     cancelClass: "btn-danger"
 });
 

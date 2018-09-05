@@ -80,7 +80,7 @@ $(function() {
         $('#todo-lists-demo-datepicker').lobiList({
             lists: [{
                 title: 'Todo',
-                defaultStyle: 'lobilist-info',
+                defaultStyle: 'lobilist-meta',
                 items: [{
                     title: 'Floor cool cinders',
                     description: 'Thunder fulfilled travellers folly, wading, lake.',
@@ -210,7 +210,7 @@ $(function() {
                         },
                         lists: [{
                             title: 'Todo',
-                            defaultStyle: 'lobilist-info',
+                            defaultStyle: 'lobilist-meta',
                             items: [{
                                     title: 'Floor cool cinders',
                                     description: 'Thunder fulfilled travellers folly, wading, lake.',
@@ -246,7 +246,7 @@ $(function() {
         $('#todo-lists-demo-controls').lobiList({
             lists: [{
                     title: 'Todo',
-                    defaultStyle: 'lobilist-info',
+                    defaultStyle: 'lobilist-meta',
                     controls: ['edit', 'styleChange'],
                     items: [{
                         title: 'Floor cool cinders',
@@ -293,7 +293,7 @@ $(function() {
             sortable: false,
             lists: [{
                     title: 'Todo',
-                    defaultStyle: 'lobilist-info',
+                    defaultStyle: 'lobilist-meta',
                     controls: ['edit', 'styleChange'],
                     items: [{
                         title: 'Floor cool cinders',

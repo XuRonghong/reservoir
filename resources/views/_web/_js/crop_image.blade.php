@@ -12,7 +12,7 @@
 }
 </style>
 <!-- Image cropper -->
-<link href="/web_assets/v1/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+<link href="{{url('css/cropper.min.css')}}" rel="stylesheet">
 <div id="image-form" class="modal fade" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -24,7 +24,7 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="image-crop">
-							<img style="width: 100%; height: auto" src="/images/empty.jpg">
+							<img style="width: 100%; height: auto" src="{{url('images/empty.jpg')}}">
 						</div>
 					</div>
 					<div class="col-sm-6">
@@ -41,14 +41,14 @@
 		</div>
 	</div>
 </div>
-<script src="/web_assets/v1/js/plugins/cropper/cropper.min.js"></script>
+<script src="{{url('js/cropper.min.js')}} "></script>
 <script>
 var imagedata = {};
 $(document).ready(function() {
     $(".btn-image-modal").click(function() {
         $('#image-form').modal();
-    })
-    var $image = $(".image-crop > img")
+    });
+    var $image = $(".image-crop > img");
     $($image).cropper({
         aspectRatio: 1,
         //aspectRatio: 3.097,

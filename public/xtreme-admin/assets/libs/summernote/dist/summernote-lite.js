@@ -3709,7 +3709,7 @@ var TableResultAction = function (startPoint, where, action, domTable) {
         _startPoint.rowPos = startPoint.parentElement.rowIndex;
     }
     /**
-     * Define virtual table position info object.
+     * Define virtual table position meta object.
      *
      * @param {int} rowIndex Index position in line of virtual table.
      * @param {int} cellIndex Index position in column of virtual table.
@@ -3768,7 +3768,7 @@ var TableResultAction = function (startPoint, where, action, domTable) {
         }
     }
     /**
-     * Recover info about row and cell and add information to virtual table.
+     * Recover meta about row and cell and add information to virtual table.
      *
      * @param {object} row Row to recover information.
      * @param {object} cell Cell to recover information.
@@ -4869,7 +4869,7 @@ var Editor = /** @class */ (function () {
         }
     };
     /**
-     * returns link info
+     * returns link meta
      *
      * @return {Object}
      * @return {WrappedRange} return.range
@@ -5354,7 +5354,7 @@ var Handle = /** @class */ (function () {
             '<div class="',
             (this.options.disableResizeImage ? 'note-control-holder' : 'note-control-sizing'),
             ' note-control-se"></div>',
-            (this.options.disableResizeImage ? '' : '<div class="note-control-selection-info"></div>'),
+            (this.options.disableResizeImage ? '' : '<div class="note-control-selection-meta"></div>'),
             '</div>',
             '</div>'
         ].join('')).prependTo(this.$editingArea);
@@ -5422,7 +5422,7 @@ var Handle = /** @class */ (function () {
             var origImageObj = new Image();
             origImageObj.src = $image.attr('src');
             var sizingText = imageSize.w + 'x' + imageSize.h + ' (' + this.lang.image.original + ': ' + origImageObj.width + 'x' + origImageObj.height + ')';
-            $selection.find('.note-control-selection-info').text(sizingText);
+            $selection.find('.note-control-selection-meta').text(sizingText);
             this.context.invoke('editor.saveTarget', target);
         }
         else {

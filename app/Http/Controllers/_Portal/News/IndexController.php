@@ -124,7 +124,7 @@ class IndexController extends _PortalController
             return redirect( 'news' )->with( 'redirect_message', $this->rtndata );
         }
         $this->view->with( 'pre', isset( $pre ) ? $pre : 0 );
-        $this->view->with( 'info', isset( $current ) ? $current : 0 );
+        $this->view->with( 'meta', isset( $current ) ? $current : 0 );
         $this->view->with( 'next', isset( $next ) ? $next : 0 );
 
 

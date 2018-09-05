@@ -253,7 +253,7 @@ $(function() {
 
 
     // Info
-    var infoColorSlider = document.getElementById('info-color-slider');
+    var infoColorSlider = document.getElementById('meta-color-slider');
 
     noUiSlider.create(infoColorSlider, {
         start: [35, 65],

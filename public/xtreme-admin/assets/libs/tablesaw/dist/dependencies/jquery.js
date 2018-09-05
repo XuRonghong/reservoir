@@ -23,7 +23,7 @@
 		// (such as Node.js), expose a factory as module.exports.
 		// This accentuates the need for the creation of a real `window`.
 		// e.g. var jQuery = require("jquery")(window);
-		// See ticket #14549 for more info.
+		// See ticket #14549 for more meta.
 		module.exports = global.document ?
 			factory( global, true ) :
 			function( w ) {
@@ -4895,7 +4895,7 @@ function returnFalse() {
 }
 
 // Support: IE <=9 only
-// See #13393 for more info
+// See #13393 for more meta
 function safeActiveElement() {
 	try {
 		return document.activeElement;
@@ -4950,7 +4950,7 @@ function on( elem, types, selector, data, fn, one ) {
 		origFn = fn;
 		fn = function( event ) {
 
-			// Can use an empty set, since event contains the info
+			// Can use an empty set, since event contains the meta
 			jQuery().off( event );
 			return origFn.apply( this, arguments );
 		};
@@ -6540,7 +6540,7 @@ jQuery.each( [ "height", "width" ], function( i, name ) {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
 
-				// Certain elements can have dimension info if we invisibly show them
+				// Certain elements can have dimension meta if we invisibly show them
 				// but it must have a current display style that would benefit
 				return rdisplayswap.test( jQuery.css( elem, "display" ) ) &&
 

@@ -18,7 +18,7 @@ class ExcelController extends _WebController
      */
     public function index ()
     {
-        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . 'import_export' );
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.import_export' );
         //
         $breadcrumb = [
             '後臺首頁' => url( '' ),

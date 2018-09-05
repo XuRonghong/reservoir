@@ -1,5 +1,5 @@
 <?php
-// debugbar()->info($this->func);
+// debugbar()->meta($this->func);
 // debugbar()->error('Error!');
 // debugbar()->warning('Watch out…');
 // debugbar()->addMessage('Another message', 'mylabel');

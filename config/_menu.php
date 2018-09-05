@@ -10,7 +10,7 @@ return [
                 [
                     "userinfo" =>
                         [
-                            "view" => "_template_web._member.userinfo"
+                            "view" => "_template_web.member.userinfo"
                         ]
                 ],
             /***********************

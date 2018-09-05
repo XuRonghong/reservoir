@@ -1022,7 +1022,7 @@ $(function() {
     };
     $.fn.lobiList.DEFAULT_OPTIONS = {
         // Available style for lists
-        'listStyles': ['lobilist-default', 'lobilist-danger', 'lobilist-success', 'lobilist-warning', 'lobilist-info', 'lobilist-primary'],
+        'listStyles': ['lobilist-default', 'lobilist-danger', 'lobilist-success', 'lobilist-warning', 'lobilist-meta', 'lobilist-primary'],
         // Default options for all lists
         listsOptions: {
             id: false,

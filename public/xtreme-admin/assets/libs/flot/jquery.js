@@ -1463,7 +1463,7 @@ jQuery.support = (function() {
 
 			// Check if div with explicit width and no margin-right incorrectly
 			// gets computed margin-right based on width of container. For more
-			// info see bug #3333
+			// meta see bug #3333
 			// Fails in WebKit before Feb 2011 nightlies
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
 			marginDiv = document.createElement("div");
@@ -3524,7 +3524,7 @@ jQuery.fn.extend({
 		if ( one === 1 ) {
 			origFn = fn;
 			fn = function( event ) {
-				// Can use an empty set, since event contains the info
+				// Can use an empty set, since event contains the meta
 				jQuery().off( event );
 				return origFn.apply( this, arguments );
 			};
@@ -7035,7 +7035,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 	jQuery.cssHooks[ name ] = {
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
-				// certain elements can have dimension info if we invisibly show them
+				// certain elements can have dimension meta if we invisibly show them
 				// however, it must have a current display style that would benefit from this
 				if ( elem.offsetWidth === 0 && rdisplayswap.test( curCSS( elem, "display" ) ) ) {
 					return jQuery.swap( elem, cssShow, function() {

@@ -15,12 +15,12 @@ class ModProduct extends Model
      */
     public static function getProductById ( $id, $spec_id = 0 )
     {
-        $product['info'] = self::join( 'mod_product_info', function( $join ) {
+        $product['meta'] = self::join( 'mod_product_info', function( $join ) {
             $join->on( 'mod_product_info.iProductId', '=', 'mod_product.iId' );
         } )->join( 'mod_product_price', function( $join ) {
             $join->on( 'mod_product_price.iProductId', '=', 'mod_product.iId' );
         } )->find( $id );
-        if ($product['info']) {
+        if ($product['meta']) {
             $mapAttributes['iProductId'] = $id;
             $product['attributes'] = ModProductAttributes::where( $mapAttributes )->get();
             //

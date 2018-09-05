@@ -32,7 +32,7 @@ $(function() {
     $("body").on('click', ".chat-windows .user-chat .chat-head .closeit", function(e) {
         var id = $(this).attr("data-user-id");
         $(".chat-windows #user-chat" + id).hide();
-        $("#chat .message-center .user-info#chat_user_" + id).removeClass("active");
+        $("#chat .message-center .user-meta#chat_user_" + id).removeClass("active");
     });
 
     $("body").on('click', ".chat-windows .user-chat .chat-head img, .chat-windows .user-chat .chat-head .mini-chat", function(e) {
@@ -63,12 +63,12 @@ function msg_receive(msg) {
     var d = new Date();
     var h = d.getHours();
     var m = d.getMinutes();
-    return "<li class='msg_receive'><div class='chat-content'><div class='box bg-light-info'>" + msg + "</div></div><div class='chat-time'>" + h + ":" + m + "</div></li>";
+    return "<li class='msg_receive'><div class='chat-content'><div class='box bg-light-meta'>" + msg + "</div></div><div class='chat-time'>" + h + ":" + m + "</div></li>";
 }
 
 function msg_sent(msg) {
     var d = new Date();
     var h = d.getHours();
     var m = d.getMinutes();
-    return "<li class='odd msg_sent'><div class='chat-content'><div class='box bg-light-info'>" + msg + "</div><br></div><div class='chat-time'>" + h + ":" + m + "</div></li>";
+    return "<li class='odd msg_sent'><div class='chat-content'><div class='box bg-light-meta'>" + msg + "</div><br></div><div class='chat-time'>" + h + ":" + m + "</div></li>";
 }

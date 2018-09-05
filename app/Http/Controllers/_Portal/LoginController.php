@@ -96,7 +96,7 @@ class LoginController extends _PortalController
         // Member
         session()->put( 'shop_member', json_decode( json_encode( $DaoMember ), true ) );
         // MemberInfo
-        session()->put( 'shop_member.info', json_decode( json_encode( $DaoMemberInfo ), true ) );
+        session()->put( 'shop_member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
 
 
@@ -231,7 +231,7 @@ class LoginController extends _PortalController
         session()->put( 'shop_member', json_decode( json_encode( $DaoMember ), true ) );
         // MemberInfo
         $DaoMemberInfo = SysMemberInfo::query()->find( $DaoMember->iId );
-        session()->put( 'shop_member.info', json_decode( json_encode( $DaoMemberInfo ), true ) );
+        session()->put( 'shop_member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
         // MemberGroup join ModActivitySchedule
         $iGroupId = SysGroupMember::query()->where('iMemberId', '=', $DaoMember->iId)->first()->iGroupId;

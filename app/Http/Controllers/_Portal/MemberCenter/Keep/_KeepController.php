@@ -23,23 +23,23 @@ class _KeepController extends _MemberCenterController
         foreach ($data_arr as $key => $var) {
             $DaoProduct = ModProduct::getProductById( $var->iProductId, $var->iSpecId );
             //Product存在時 且被開啟
-            if ($DaoProduct && $DaoProduct['info']['iCategoryId'] != 0 && $DaoProduct['info']['bShow'] == 1 && $DaoProduct['info']['bDel'] == 0) {
-                $var->vProductCode = $DaoProduct['info']->vProductCode;
-                $tmp_arr = explode( ';', $DaoProduct['info']->vImages );
+            if ($DaoProduct && $DaoProduct['meta']['iCategoryId'] != 0 && $DaoProduct['meta']['bShow'] == 1 && $DaoProduct['meta']['bDel'] == 0) {
+                $var->vProductCode = $DaoProduct['meta']->vProductCode;
+                $tmp_arr = explode( ';', $DaoProduct['meta']->vImages );
                 $tmp_arr = array_filter( $tmp_arr );
                 if ($tmp_arr) {
                     $var->vImages = $tmp_arr[0];
                 }
-                $var->vProductName = $DaoProduct['info']->vProductName;
-                $var->vProductNum = $DaoProduct['info']->vProductNum;
+                $var->vProductName = $DaoProduct['meta']->vProductName;
+                $var->vProductNum = $DaoProduct['meta']->vProductNum;
                 $var->vSpecTitle = $DaoProduct['spec']->vSpecTitle;
                 $var->iSpecStock = $DaoProduct['spec']->iSpecStock;
                 $var->iCount = ( $var->iCount > $var->iSpecStock ) ? $var->iSpecStock : $var->iCount;
-                $var->iProductPromoPrice = $DaoProduct['info']->iProductPromoPrice;
-                $var->iProductPrepareDay = $DaoProduct['info']->iProductPrepareDay;
+                $var->iProductPromoPrice = $DaoProduct['meta']->iProductPromoPrice;
+                $var->iProductPrepareDay = $DaoProduct['meta']->iProductPrepareDay;
                 $var->vProductUrl = url( 'product/detail/' . $var->vProductCode );
-                $var->iProductVolume = $DaoProduct['info']->iProductVolume;
-                $var->iProductWeight = $DaoProduct['info']->iProductWeight;
+                $var->iProductVolume = $DaoProduct['meta']->iProductVolume;
+                $var->iProductWeight = $DaoProduct['meta']->iProductWeight;
             } else {
                 //不合法商品
                 unset( $data_arr[$key] );

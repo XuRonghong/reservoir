@@ -20,7 +20,7 @@ class Controller extends BaseController
     {
         $this->rtndata ['status'] = 0;
         $this->rtndata ['message'] = "";
-        $this->rtndata ['info'] = [];
+        $this->rtndata ['meta'] = [];
     }
 
     /*

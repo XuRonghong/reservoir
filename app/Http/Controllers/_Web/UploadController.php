@@ -132,7 +132,7 @@ class UploadController extends Controller
                 ];
         }
         $this->rtndata ['status'] = 1;
-        $this->rtndata ['info'] = $rtndata;
+        $this->rtndata ['meta'] = $rtndata;
 
         return response()->json( $this->rtndata );
     }

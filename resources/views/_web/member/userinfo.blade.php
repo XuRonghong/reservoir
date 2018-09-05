@@ -39,7 +39,7 @@
                                     <div class="col-sm-12">
                                         <div class="row">
                                             <div class="col-sm-3 profile-pic">
-                                                <img src="{{session('member.info.vUserImage')}}" alt="{{session('member.info.vUserName')}}">
+                                                <img src="{{session('meta')}}" alt="{{session('member.info.vUserName')}}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <h1>{{$info->vUserName}} ({{$info->vUserNameE}})

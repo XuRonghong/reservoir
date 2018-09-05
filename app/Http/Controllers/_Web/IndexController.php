@@ -22,6 +22,7 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , '水庫管理系統' );
 
         return $this->view;
     }

@@ -161,7 +161,7 @@ class CategoryController extends _WebController
 
             return redirect( 'web/' . implode( '/', $this->module ) );
         }
-        $this->view->with( 'info', $Dao );
+        $this->view->with( 'meta', $Dao );
 
         return $this->view;
     }

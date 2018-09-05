@@ -1,5 +1,5 @@
 <?php
-// debugbar()->info($this->func);
+// debugbar()->meta($this->func);
 // debugbar()->error('Error!');
 // debugbar()->warning('Watch out…');
 // debugbar()->addMessage('Another message', 'mylabel');
@@ -19,6 +19,7 @@ class _WebController extends Controller
     public $view;
     public $sys_menu;
     public $breadcrumb = [];
+    public $module = [];
 
     /*
      *

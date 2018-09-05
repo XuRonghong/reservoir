@@ -7,7 +7,7 @@
 
     -->
 </style>
-<script src="/web_assets/v3/js/plugin/summernote/summernote.min.js"></script>
+<script src="{{url('js/summernote.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('.summernote').summernote({

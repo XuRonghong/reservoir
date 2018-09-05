@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /*
  *
- * More info at [www.dropzonejs.com](http://www.dropzonejs.com)
+ * More meta at [www.dropzonejs.com](http://www.dropzonejs.com)
  *
  * Copyright (c) 2012, Matias Meno
  *
@@ -172,7 +172,7 @@ var Dropzone = function (_Emitter) {
 
         /**
          * How many file uploads to process in parallel (See the
-         * Enqueuing file uploads* documentation section for more info)
+         * Enqueuing file uploads* documentation section for more meta)
          */
         parallelUploads: 2,
 

@@ -259,7 +259,7 @@
                             }
                         }
                         if (!foundValidator) {
-                            $.error("Cannot find validation info for '" + el + "'");
+                            $.error("Cannot find validation meta for '" + el + "'");
                         }
                     });
                     $helpBlock.data("original-contents", ($helpBlock.data("original-contents") ? $helpBlock.data("original-contents") : $helpBlock.html()));

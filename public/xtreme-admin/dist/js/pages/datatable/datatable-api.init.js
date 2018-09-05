@@ -96,7 +96,7 @@ function format(d) {
         '<td>' + d.extn + '</td>' +
         '</tr>' +
         '<tr>' +
-        '<td>Extra info:</td>' +
+        '<td>Extra meta:</td>' +
         '<td>And any further details here (images etc)...</td>' +
         '</tr>' +
         '</table>';

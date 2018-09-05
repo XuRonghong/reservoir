@@ -196,7 +196,7 @@ class InformationController extends _MemberCenterController
             // Member
             session()->put( 'shop_member', json_decode( json_encode( $DaoMember ), true ) );
             // MemberInfo
-            session()->put( 'shop_member.info', json_decode( json_encode( $Dao ), true ) );
+            session()->put( 'shop_member.meta', json_decode( json_encode( $Dao ), true ) );
 
         } else {
             $this->rtndata ['status'] = 0;
@@ -239,7 +239,7 @@ class InformationController extends _MemberCenterController
             //Logs
             $this->_saveLogAction( $DaoMember->getTable(), $DaoMember->iId, 'edit', json_encode( $DaoMember ) );
             session()->forget( 'shop_member' );
-            session()->forget( 'shop_member.info' );
+            session()->forget( 'shop_member.meta' );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
