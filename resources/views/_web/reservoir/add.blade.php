@@ -33,7 +33,7 @@
             <!-- Row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card"  id="edit-modal">
+                    <div class="card"  id="add-modal">
                         <div class="card-body">
                             <h4 class="card-title">Project Assigning</h4>
                             <h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>
@@ -112,47 +112,16 @@
                                 {{--</div>--}}
 
 
-                                {{--@if( isset($info))--}}
-                                    {{--<div class="form-group" style="min-height:300px;max-width:100%;">--}}
-                                        {{--<label class="control-label col-md-1">PC</label>--}}
-                                        {{--<div class="btn-image-modal col-md-5 vImages" data-modal="image-form"--}}
-                                             {{--data-id="{{$info->vImages}}">--}}
-                                            {{--@forelse($info->images as $key => $image)--}}
-                                                {{--<div class="image-box">--}}
-                                                    {{--<img src="{{$image}}" id="Image">--}}
-                                                {{--</div>--}}
-                                            {{--@empty--}}
-                                                {{--<div class="image-box">--}}
-                                                    {{--<img src="{{asset('images/empty.jpg')}}" id="Image">--}}
-                                                {{--</div>--}}
-                                            {{--@endforelse--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
-                                        {{--<div class="col-md-10 cropper_image">--}}
-                                            {{--@foreach($info->vImages as $key => $var)--}}
-                                                {{--<div class="image-box">--}}
-                                                    {{--<img id="{{$key}}" src="{{$var}}"> <a class="image-del">X</a>--}}
-                                                {{--</div>--}}
-                                            {{--@endforeach--}}
-                                            {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                                                {{--@if(count($info->vImages) < 5)--}}
-                                                    {{--<img id="Image" data-data="" src="/images/empty.jpg">--}}
-                                                {{--@endif--}}
-                                            {{--</a>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--@else--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
-                                        {{--<div class="col-md-10 cropper_image">--}}
-                                            {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                                                {{--<img id="Image" data-data="" src="{{url('images/empty.jpg')}}" style="width: 15%">--}}
-                                            {{--</a>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--@endif--}}
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <a class="btn-image-modal" data-modal="image-form" data-id="">
+                                                <img src="{{url('images/empty.jpg')}}" style="height:140px">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
@@ -240,7 +209,7 @@
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
             //
-            var modal = $("#edit-modal");
+            var modal = $("#add-modal");
             current_modal = modal;
             //
             $(".btn-cancel").click(function () {
@@ -269,6 +238,7 @@
                         data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
                     }
                 });
+                data.vImages = modal.find("img").attr('src');
 
 
                 $.ajax({
@@ -312,6 +282,7 @@
                         data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
                     }
                 });
+                data.vImages = modal.find("img").attr('src');
 
 
                 $.ajax({

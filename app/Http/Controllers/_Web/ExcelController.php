@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers\_Web;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\_Web\_WebController;
 use Session;
 use Excel;
 use File;
 
+
 class ExcelController extends _WebController
 {
-    public $module = [ 'excel' ];
+
+    /*
+     *
+     */
+    function __construct ()
+    {
+        $this->module = [ 'excel' ];
+    }
+
 
     /*
      *
@@ -20,38 +29,40 @@ class ExcelController extends _WebController
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.import_export' );
         //
-        $breadcrumb = [
-            '後臺首頁' => url( '' ),
+        $this->breadcrumb = [
+            implode( '.', $this->module ) => url( 'web/' )
         ];
-        $this->view->with( 'breadcrumb', $breadcrumb );
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , '試算表系統' );
 
         return $this->view;
     }
 
+
     /*
      *
      */
-    public function import(Request $request){
-
+    public function import (Request $request)
+    {
         $chooseType = $request->get('importTable') ? $request->get('importTable') : '';
-
 
         //validate the xls file
         $this->validate($request, array(
             'file'      => 'required'
         ));
 
-        if($request->hasFile('file')){
+        if($request->hasFile('file'))
+        {
             $extension = File::extension($request->file->getClientOriginalName());
-            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
-
+            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv")
+            {
                 $path = $request->file->getRealPath();
-                $data = Excel::load($path, function($reader) {
-                })->get();
-                if(!empty($data) && $data->count()){
-
-                    switch ($chooseType){
+                $data = Excel::load($path, function($reader){})->get();
+                if(!empty($data) && $data->count())
+                {
+                    switch ($chooseType)
+                    {
                         case 'reservoir':
                             // Excel Sheet 1
                             try {
@@ -65,10 +76,10 @@ class ExcelController extends _WebController
                                         'iUpdateTime' => time(),
                                     ];
                                 }
-                            }catch (\Exception $e){
+                            }
+                            catch (\Exception $e) {
                                 Session::flash('error', $e->getMessage());
                             }
-
                             try {
                                 if (!empty($insert)) {
                                     DB::table('mod_reservoir')->delete();
@@ -80,7 +91,8 @@ class ExcelController extends _WebController
                                         return back();
                                     }
                                 }
-                            }catch (\Exception $e){
+                            }
+                            catch (\Exception $e){
                                 Session::flash('error', $e->getMessage());
                             }
 
@@ -102,10 +114,10 @@ class ExcelController extends _WebController
                                         'iUpdateTime' => time(),
                                     ];
                                 }
-                            }catch (\Exception $e){
+                            }
+                            catch (\Exception $e){
                                 Session::flash('error', $e->getMessage());
                             }
-
                             try {
                                 if(!empty($insert)){
                                     DB::table('mod_reservoir_meta')->delete();
@@ -117,25 +129,24 @@ class ExcelController extends _WebController
                                         return back();
                                     }
                                 }
-                            }catch (\Exception $e){
+                            }
+                            catch (\Exception $e){
                                 Session::flash('error', $e->getMessage());
                             }
-                            break;
+                        break;
                         case 'member':
                             Session::flash('error', 'SORRY~會員匯入功能還沒開放');
-                            break;
+                        break;
                     }
-
                 }
-
                 return back();
-
-            }else {
+            }
+            else
+            {
                 Session::flash('error', 'File is a '.$extension.' file.!! Please upload a valid xls/csv file..!!');
                 return back();
             }
         }
-
         return null;
     }
 

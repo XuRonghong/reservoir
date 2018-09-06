@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers\_Web\Reservoir;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\_Web\_WebController;
+use App\Http\Controllers\FuncController;
 use App\ModReservoir;
 use App\ModReservoirInfo;
-use Illuminate\Http\Request;
-use App\Http\Controllers\FuncController;
-use App\Http\Controllers\_Web\_WebController;
 
 
 class IndexController extends _WebController
 {
-    public $module = [ 'reservoir' ];
+
+    /*
+     *
+     */
+    function __construct ()
+    {
+        $this->module = [ 'reservoir' ];
+    }
+
 
     /*
      *
@@ -19,15 +27,13 @@ class IndexController extends _WebController
     public function index ()
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.index' );
-        //
         $this->breadcrumb = [
-            '後臺首頁' => url( 'web/reservoir' ),
-            '水庫' => url( 'web/reservoir' ),
+            $this->vTitle => url( 'web' ),
+            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '水庫' );
-
 
         return $this->view;
     }
@@ -40,13 +46,14 @@ class IndexController extends _WebController
     {
         $sort_arr = [];
         $search_arr = [];
-        $search_word = $request->input('sSearch') ? $request->input('sSearch') : '' ;
+        $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
         $iDisplayLength = $request->input('iDisplayLength') ? $request->input('iDisplayLength') : 0 ;
-        $iDisplayStart = $request->input('iDisplayStart') ? $request->input('iDisplayStart') : 0 ;
-        $sEcho = $request->input( 'sEcho' ) ? $request->input('sEcho') : '' ;
-        $column_arr = $request->input( 'sColumns' ) ? $request->input('sColumns') : '' ;
+        $iDisplayStart =  $request->input('iDisplayStart') ? $request->input('iDisplayStart') : 0 ;
+        $sEcho =          $request->input('sEcho' ) ? $request->input('sEcho') : '' ;
+        $column_arr =     $request->input('sColumns' ) ? $request->input('sColumns') : '' ;
         $column_arr = explode( ',', $column_arr );
-        foreach ($column_arr as $key => $item) {
+        foreach ($column_arr as $key => $item)
+        {
             if ($item == "") {
                 unset( $column_arr[$key] );
                 continue;
@@ -62,8 +69,6 @@ class IndexController extends _WebController
         $sort_dir = $request->input( 'sSortDir_0' );
 
 
-
-//        $mapReservoir['mod_reservoir.iStatus'] = 1;
         $mapReservoir['mod_reservoir.bDel'] = 0;
         $total_count = ModReservoir::query()->where( $mapReservoir )
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
@@ -71,9 +76,6 @@ class IndexController extends _WebController
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
-//            ->leftJoin( 'mod_reservoir_info', function ($join) {
-//                $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
-//            })
             ->count();
 
         $data_arr = ModReservoir::query()->where( $mapReservoir )
@@ -82,36 +84,31 @@ class IndexController extends _WebController
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
-//            ->leftJoin( 'mod_reservoir_info', function ($join) {
-//                $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
-//            })
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
-//            ->select( 'mod_reservoir.*' ,
-//                'mod_reservoir_info.vImages',
-//                'mod_reservoir_info.iSafeValue')
             ->get();
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
             $this->rtndata['message'] = ['Oops! 沒有水庫資訊!'];
             return $this->rtndata;
         }
-        foreach ($data_arr as $key => $var) {
+        foreach ($data_arr as $key => $var)
+        {
             $var->DT_RowId = $var->iId;
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
-            $var->vImages = [];
+            $var->vImages = url('images/empty.jpg');
 
             $DaoInfo = ModReservoirInfo::query()->where('iReservoirId','=',$var->iId)->first();
             if ( !$DaoInfo)continue;
-            //圖片
-            $image_arr = [];
-            $tmp_arr = explode( ';', $DaoInfo->vImages );
-            $tmp_arr = array_filter( $tmp_arr );
-            foreach ($tmp_arr as $item) {
-                $image_arr[] = FuncController::_getFilePathById( $item );
-            }
-            $var->vImages = $image_arr;
+//            //圖片
+//            $image_arr = [];
+//            $tmp_arr = explode( ';', $DaoInfo->vImages );
+//            $tmp_arr = array_filter( $tmp_arr );
+//            foreach ($tmp_arr as $item) {
+//                $image_arr[] = FuncController::_getFilePathById( $item );
+//            }
+            $var->vImages = $DaoInfo->vImages;
             //
 //            $var->vCategoryNum = ( $var->iCategoryId > 0 ) ? FuncController::_getCategoryNum( $var->iCategoryId ) . str_pad( $var->iId, 6, 0, STR_PAD_LEFT ) : "";
         }
@@ -121,7 +118,7 @@ class IndexController extends _WebController
         $this->rtndata ['sEcho'] = $sEcho;
         $this->rtndata ['iTotalDisplayRecords'] = $total_count;
         $this->rtndata ['iTotalRecords'] = $total_count;
-        $this->rtndata ['aaData'] = $data_arr;
+        $this->rtndata ['aaData'] = $total_count ? $data_arr : [];
 
         return response()->json( $this->rtndata );
     }
@@ -133,16 +130,14 @@ class IndexController extends _WebController
     public function add ()
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
             implode( '.', $this->module ) . '.add' => url( 'web/' . implode( '/', $this->module ) . "/add" )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '水庫' );
-
+        session()->put( 'SEO.vTitle' , '水庫add' );
 
         return $this->view;
     }

@@ -49,7 +49,7 @@ class CreateSysMemberTable extends Migration
                 ],
                 [
                     "iAcType" => 2,
-                    "vAccount" => "ronghong@kahap.com"
+                    "vAccount" => "admin"
                 ],
             ];
             $iUserId = 1000000001;

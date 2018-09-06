@@ -5,28 +5,29 @@
 // debugbar()->addMessage('Another message', 'mylabel');
 //Logs
 //$this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+
 namespace App\Http\Controllers\_Web;
 
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FuncController;
 use App\LogAction;
 use App\LogOrder;
 use App\SysMenu;
-use Illuminate\Support\Facades\Request;
+use App\SysMember;
+use App\SysMemberInfo;
+use App\SysGroupMember;
+
 
 class _WebController extends Controller
 {
-    public $func;
-    public $view;
-    public $sys_menu;
-    public $breadcrumb = [];
-    public $module = [];
+    protected $vTitle = '水庫管理系統';
+    protected $func;
+    protected $view;
+    protected $sys_menu;
+    protected $breadcrumb = [];
+    protected $module;
 
-    /*
-     *
-     */
-    public function __construct ()
-    {
-    }
 
     /*
      *
@@ -37,7 +38,7 @@ class _WebController extends Controller
         session()->put( 'menu_parent', config( '_menu.' . $this->func . '.menu_parent' ) );
         session()->put( 'menu_access', config( '_menu.' . $this->func . '.menu_access' ) );
         $mapSysMenu ['bOpen'] = 1;
-        $DaoSysMenu = SysMenu::where( $mapSysMenu )->orderBy( 'iRank', 'ASC' )->get();
+        $DaoSysMenu = SysMenu::query()->where( $mapSysMenu )->orderBy( 'iRank', 'ASC' )->get();
         $this->sys_menu = $DaoSysMenu->where('iParentId', '=', 0);
         foreach ($this->sys_menu as $key => $var) {
             if ($var->bSubMenu) {
@@ -86,7 +87,6 @@ class _WebController extends Controller
         $DaoLogAction->vCreateIP = Request::ip();
         $DaoLogAction->save();
     }
-
 
 
     /*
@@ -167,5 +167,17 @@ class _WebController extends Controller
         }
 
         return null;
+    }
+
+
+    /*
+     *
+     */
+    public function init ()
+    {
+//        $map['iStatus'] = 1;
+//        $map['iId'] = session( 'member.iId' , '');
+//        $DaoMem = SysMember::query()->where($map)->get();
+//        $this->view->with( 'profile', $this->module );
     }
 }

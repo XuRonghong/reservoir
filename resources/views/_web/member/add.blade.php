@@ -33,14 +33,14 @@
             <!-- Row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card"  id="edit-modal">
+                    <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title">Project Assigning</h4>
+                            <h4 class="card-title modalTitle">Member Add </h4>
                             <h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>
                         </div>
                         <hr>
                         <form class="form-horizontal">
-                            <div class="card-body">
+                            <div class="card-body member-modal">
                                 <h4 class="card-title">Personal Info</h4>
                                 @if(isset($info))
                                     <div class="form-group row">
@@ -50,21 +50,27 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="lname1" class="col-sm-3 text-right control-label col-form-label">密碼重設</label>
+                                        <label for="lname1" class="col-sm-3 text-right control-label col-form-label">舊密碼</label>
                                         <div class="col-sm-9">
                                             <input type="password" class="form-control vPassword" id="lname1" placeholder="密碼" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="lname2" class="col-sm-3 text-right control-label col-form-label">確認密碼</label>
+                                        <label for="lname2" class="col-sm-3 text-right control-label col-form-label">新密碼</label>
                                         <div class="col-sm-9">
-                                            <input type="password" class="form-control vPassword2" id="lname2" placeholder="確認密碼" value="">
+                                            <input type="password" class="form-control vPassword1" id="lname2" placeholder="密碼" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname22" class="col-sm-3 text-right control-label col-form-label">確認新密碼</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control vPassword2" id="lname22" placeholder="確認密碼" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname3" class="col-sm-3 text-right control-label col-form-label"></label>
                                         <div class="col-sm-9">
-                                            <button type="button" class="btn btn-info waves-effect waves-light btn-doresetpw" data-id="{{$info->iId or ''}}">更改密碼</button>
+                                            <button type="button" class="btn btn-danger waves-effect waves-light btn-doresetpw" data-id="{{$info->iId or ''}}">更改密碼</button>
                                         </div>
                                     </div>
                                 @else
@@ -77,7 +83,7 @@
                                     <div class="form-group row">
                                         <label for="lname4" class="col-sm-3 text-right control-label col-form-label">密碼</label>
                                         <div class="col-sm-9">
-                                            <input type="password" class="form-control vPassword" id="lname4" placeholder="密碼" value="">
+                                            <input type="password" class="form-control vPassword1" id="lname4" placeholder="密碼" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -91,29 +97,17 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">權限</label>
                                     <div class="col-sm-9">
                                         <select class="form-control iAcType">
-                                            <option value="0" selected>Choose...</option>
-                                            {{--<option value="2">網站系統管理員</option>--}}
+                                            {{--<option value="0" selected>Choose...</option>--}}
+                                            <option value="2">網站系統管理員</option>
                                             <option value="10">水庫管理員(各水庫負責人員)</option>
                                             <option value="20">水庫審查人員(審核送審人員)</option>
                                             <option value="30">中央水利署人員</option>
                                         </select>
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                    {{--<label for="lname" class="col-sm-3 text-right control-label col-form-label">權限</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                        {{--<input type="text" class="form-control vCounty" id="lname" placeholder="壩堰位置" value="{{$info->vCounty or ''}}">--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="lname" class="col-sm-3 text-right control-label col-form-label">sum</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="number" class="form-control iSum" id="lname" placeholder="sum">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                             <hr>
-                            <div class="card-body">
+                            <div class="card-body memberInfo-modal">
                                 <h4 class="card-title">Info</h4>
                                 <div class="form-group row">
                                     <label for="com1" class="col-sm-3 text-right control-label col-form-label">UserName</label>
@@ -139,94 +133,6 @@
                                         <input type="text" class="form-control vUserAddress" id="com3" placeholder="" value="{{$info->vUserAddress or ''}}">
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Interested In</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Desiging</option>--}}
-                                {{--<option>Development</option>--}}
-                                {{--<option>Videography</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Budget</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Less then $5000</option>--}}
-                                {{--<option>$5000 - $10000</option>--}}
-                                {{--<option>$10000 - $20000</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-
-
-                                {{--@if( isset($info))--}}
-                                {{--<div class="form-group" style="min-height:300px;max-width:100%;">--}}
-                                {{--<label class="control-label col-md-1">PC</label>--}}
-                                {{--<div class="btn-image-modal col-md-5 vImages" data-modal="image-form"--}}
-                                {{--data-id="{{$info->vImages}}">--}}
-                                {{--@forelse($info->images as $key => $image)--}}
-                                {{--<div class="image-box">--}}
-                                {{--<img src="{{$image}}" id="Image">--}}
-                                {{--</div>--}}
-                                {{--@empty--}}
-                                {{--<div class="image-box">--}}
-                                {{--<img src="{{asset('images/empty.jpg')}}" id="Image">--}}
-                                {{--</div>--}}
-                                {{--@endforelse--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group">--}}
-                                {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
-                                {{--<div class="col-md-10 cropper_image">--}}
-                                {{--@foreach($info->vImages as $key => $var)--}}
-                                {{--<div class="image-box">--}}
-                                {{--<img id="{{$key}}" src="{{$var}}"> <a class="image-del">X</a>--}}
-                                {{--</div>--}}
-                                {{--@endforeach--}}
-                                {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                                {{--@if(count($info->vImages) < 5)--}}
-                                {{--<img id="Image" data-data="" src="/images/empty.jpg">--}}
-                                {{--@endif--}}
-                                {{--</a>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--@else--}}
-                                {{--<div class="form-group">--}}
-                                {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
-                                {{--<div class="col-md-10 cropper_image">--}}
-                                {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                                {{--<img id="Image" data-data="" src="{{url('images/empty.jpg')}}" style="width: 15%">--}}
-                                {{--</a>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--@endif--}}
-
-
-
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">水庫照片</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<div class="input-group mb-3">--}}
-                                {{--<div class="input-group-prepend">--}}
-                                {{--<span class="input-group-text">Upload</span>--}}
-                                {{--</div>--}}
-                                {{--<div class="custom-file">--}}
-                                {{--<input type="file" class="custom-file-input vImages" id="inputGroupFile01">--}}
-                                {{--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="abpro" class="col-sm-3 text-right control-label col-form-label">About Project</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="text" class="form-control" id="abpro" placeholder="About Project Here">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                             <hr>
                             <div class="card-body">
@@ -234,9 +140,11 @@
                                     @if(isset($info))
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
                                     @else
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                     @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
+                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
                             </div>
                         </form>
@@ -290,45 +198,53 @@
         var url_index = "{{ url('web/'.implode( '/', $module ))}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
-        var url_dosaveshow = "{{ url('web/'.implode( '/', $module ).'/dosaveshow')}}";
-        var url_doresetpw = "{{ url('web/'.implode( '/', $module ).'/doresetpw')}}";
-        var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
+        var url_doresetpw = "{{ url('web/'.implode( '/', $module ).'/dosavepassword')}}";
         $(document).ready(function () {
             //
-            var modal = $("#edit-modal");
-            current_modal = modal;
+            var modal = $("#manage-modal");
+            current_modal = modal.find('.member-modal');
+            next_modal = modal.find('.memberInfo-modal');
+            next_modal.hide();
+            modal.find('.btn-doadd').hide();
+            modal.find('.btn-back').hide();
             //
             $(".btn-cancel").click(function () {
                 location.href = url_index;
             });
             //
+            $(".btn-back").click(function () {
+                next_modal.hide();
+                current_modal.show();
+                modal.find('.btn-doadd').hide();
+                modal.find('.btn-next').show();
+                modal.find('.btn-back').hide();
+                modal.find('.btn-cancel').show();
+                modal.find('.modalTitle').text('Member Add');
+            });
+            //
+            $(".btn-next").click(function () {
+                modal.find('.modalTitle').text('Member Information Add');
+                current_modal.hide();
+                next_modal.show();
+                modal.find('.btn-doadd').show();
+                modal.find('.btn-next').hide();
+                modal.find('.btn-back').show();
+                modal.find('.btn-cancel').hide();
+            });
+            //
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.vAccount = $(".vAccount").val();
-                data.vPassword = $(".vPassword").val();
-                data.vPassword2 = $(".vPassword2").val();
-                data.iAcType = $(".iAcType").val();
+                data.vAccount = current_modal.find(".vAccount").val();
+                data.vPassword1 = current_modal.find(".vPassword1").val();
+                data.vPassword2 = current_modal.find(".vPassword2").val();
+                data.iAcType = current_modal.find(".iAcType").val();
                 // data.iSum = $(".iSum").val();
-                data.vUserName = $(".vUserName").val();
-                data.vUserEmail = $(".vUserEmail").val();
-                data.vUserContact = $(".vUserContact").val();
-                data.vUserAddress = $(".vUserAddress").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-                // data.vImages = $(".vImages").data('id');
-                // $(".vImages img").each(function () {
-                //     if ($(this).attr('id') != "Image" && $(this).attr('id')) {
-                //         data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
-                //     }
-                // });
-
-
+                data.vUserName = next_modal.find(".vUserName").val();
+                data.vUserEmail = next_modal.find(".vUserEmail").val();
+                data.vUserContact = next_modal.find(".vUserContact").val();
+                data.vUserAddress = next_modal.find(".vUserAddress").val();
+                //
                 $.ajax({
                     url: url_doadd,
                     type: "POST",
@@ -352,25 +268,7 @@
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
                 data.iAcType = $(".iAcType").val();
-                // data.iSum = $(".iSum").val();
-                data.vUserName = $(".vUserName").val();
-                data.vUserEmail = $(".vUserEmail").val();
-                data.vUserContact = $(".vUserContact").val();
-                data.vUserAddress = $(".vUserAddress").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-                // data.vImages = $(".vImages").data('id');
-                // $(".vImages img").each(function () {
-                //     if ($(this).attr('id') != "Image" && $(this).attr('id')) {
-                //         data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
-                //     }
-                // });
-
+                //
                 $.ajax({
                     url: url_dosave,
                     type: "POST",
@@ -388,13 +286,17 @@
                     }
                 });
             });
-
             //
             $(".btn-doresetpw").click(function () {
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
-                data.vPassword = $(".vPassword").val();
-                data.vPassword2 = $(".vPassword2").val();
+                data.vPassword = current_modal.find(".vPassword").val();
+                data.vPassword1 = current_modal.find(".vPassword1").val();
+                data.vPasswordNew = current_modal.find(".vPassword2").val();
+                if (data.vPassword1 != data.vPasswordNew) {
+                    toastr.error('確認密碼錯誤', "{{trans('_web_alert.notice')}}");
+                    return ;
+                }
                 $.ajax({
                     url: url_doresetpw,
                     type: "POST",
@@ -409,6 +311,12 @@
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
+                    },
+                    error: function (rtndata) {
+                        toastr.error(rtndata, "{{trans('_web_alert.notice')}}");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000)
                     }
                 });
             });

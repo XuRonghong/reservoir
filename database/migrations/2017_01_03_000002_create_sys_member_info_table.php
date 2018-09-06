@@ -37,21 +37,21 @@ class CreateSysMemberInfoTable extends Migration
             } );
             $data_arr = [
                 [
-                    "vUserImage" => "/images/admin.jpg",
+                    "vUserImage" => env('APP_URL') . "/images/admin.jpg",
                     "vUserName" => "Admin",
                     "vUserEmail" => "admin@kahap.com",
                     "vUserContact" => ""
                 ],
                 [
-                    "vUserImage" => "/images/manager.jpg",
+                    "vUserImage" => env('APP_URL') . "/images/manager.jpg",
                     "vUserName" => "Manager",
                     "vUserEmail" => "kahap@kahap.com",
                     "vUserContact" => ""
                 ],
                 [
-                    "vUserImage" => "/images/manager.jpg",
-                    "vUserName" => "Ronghong",
-                    "vUserEmail" => "ronghong@kahap.com",
+                    "vUserImage" => env('APP_URL') . "/images/manager.jpg",
+                    "vUserName" => "Kahap",
+                    "vUserEmail" => "admin@kahap.com",
                     "vUserContact" => ""
                 ],
             ];

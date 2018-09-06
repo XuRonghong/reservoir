@@ -25,8 +25,10 @@ return [
 		'upload' => [ 
 				'image' => '上傳圖片',
 				'image_preview' => '預覽圖片',
-				'image_new' => '上傳新圖片',
-				'image_crop' => '裁切' 
+//				'image_new' => '上傳新圖片',
+//				'image_crop' => '裁切'
+				'image_new' => '選擇檔案',
+				'image_crop' => '上傳'
 		] ,
 
     // center 移過來的

@@ -6,7 +6,7 @@
     <!-- This page plugin CSS -->
     <style type="text/css" rel="stylesheet">
         .btn {
-            margin-left: 20px;
+            margin-left: 10px;
         }
     </style>
 @endsection
@@ -115,78 +115,48 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
+                // "scrollY": '65vh',
                 "aoColumns": [
-                    // {"sTitle": "id", "mData": "iId", "width": "5%", "sName": "iId"},
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "35px",
+                        "width": "5%",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
-                            // current_data[row.iId] = row;
-                            // return '<button class="btn btn-xs btn-default btn-copy" title="複製"><i class="fa fa-copy" aria-hidden="true"></i></button>' + data;
                         }
                     },
-                    {
-                        "sTitle": "Rank",
-                        "mData": "iRank",
-                        "sName": "iRank",
-                        "bSearchable": false,
-                        "width": "30px",
-                        "mRender": function (data, type, row) {
-                            return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                        }
-                    },
+                    // {
+                    //     "sTitle": "Rank",
+                    //     "mData": "iRank",
+                    //     "sName": "iRank",
+                    //     "bSearchable": false,
+                    //     "width": "5%",
+                    //     "mRender": function (data, type, row) {
+                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
+                    //     }
+                    // },
                     {"sTitle": "會員編號", "mData": "iUserId", "width": "5%", "sName": "iUserId"},
-                    {"sTitle": "會員代號", "mData": "vUserCode", "width": "5%", "sName": "vUserCode"},
+                    // {"sTitle": "會員代號", "mData": "vUserCode", "width": "5%", "sName": "vUserCode"},
                     {"sTitle": "存取權限", "mData": "iAcType", "width": "10%", "sName": "iAcType"},
-                    {"sTitle": "帳號", "mData": "vAccount", "width": "10%", "sName": "vAccount"},
-                    {"sTitle": "IP", "mData": "vCreateIP", "width": "10%", "sName": "vCreateIP"},
-                    {"sTitle": "新增時間", "mData": "iCreateTime", "width": "10%", "sName": "iCreateTime"},
+                    {"sTitle": "帳號", "mData": "vAccount", "width": "5%", "sName": "vAccount"},
+                    {"sTitle": "IP", "mData": "vCreateIP", "width": "5%", "sName": "vCreateIP"},
+                    {"sTitle": "加入時間", "mData": "iCreateTime", "width": "10%", "sName": "iCreateTime"},
                     {"sTitle": "更新時間", "mData": "iUpdateTime", "width": "10%", "sName": "iUpdateTime"},
                     {"sTitle": "登入時間", "mData": "iLoginTime", "width": "10%", "sName": "iLoginTime"},
-                    //     "sTitle": "圖片",
-                    //     "mData": "vImages",
-                    //     "width": "130px",
-                    //     "bSortable": false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         var html_str = "";
-                    //         for (var key in data) {
-                    //             html_str += "<img width='75px' src=" + data[key] + " style='margin:5px;'>";
-                    //         }
-                    //         return html_str;
-                    //     }
-                    // },
-                    // {"sTitle": "簡介", "mData": "vSummary", "width": "15%", "sName": "vSummary"},
-                    // {"sTitle": "外部連結", "mData": "vUrl", "width": "5%", "sName": "vUrl"},
-                    // {
-                    //     "sTitle": "公告時間",
-                    //     "mData": "iStartTime",
-                    //     "sName": "iStartTime",
-                    //     "width": "10%",
-                    //     "bSortable": false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return row.iStartTime + "~" + row.iEndTime;
-                    //     }
-                    // },
                     {
                         "sTitle": "啟用",
                         "mData": "bActive",
-                        "width": "5%",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             var btn = "無狀態";
                             switch (data) {
                                 case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-active">已開啟</button>';
+                                    btn = '<button class="btn btn-xs btn-danger btn-active">已啟用</button>';
                                     break;
                                 default:
-                                    btn = '<button class="btn btn-xs btn-primary btn-active">未開啟</button>';
+                                    btn = '<button class="btn btn-xs btn-primary btn-active">未啟用</button>';
                                     break;
                             }
                             return btn;
@@ -194,7 +164,6 @@
                     },
                     {
                         "sTitle": "Action",
-                        "width": "90px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -215,7 +184,7 @@
                 "autoWidth": true,
                 "oLanguage": {
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
-                },
+                }
             });
             /* END BASIC */
             //
@@ -253,7 +222,7 @@
                     "_token": "{{ csrf_token() }}"
                 };
                 data.iId = id;
-                data.iActive = "change";
+                data.bActive = "change";
                 $.ajax({
                     url: url_dosave_show,
                     data: data,
@@ -276,33 +245,43 @@
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 location.href = url_edit + '/' + id;
-
-                {{--var data = {--}}
-                {{--"_token": "{{ csrf_token() }}"--}}
-                {{--};--}}
-                {{--data.id = id;--}}
-                {{--$.ajax({--}}
-                {{--url: url_edit,--}}
-                {{--data: data,--}}
-                {{--type: "GET",--}}
-                {{--//async: false,--}}
-                {{--success: function (rtndata) {--}}
-                {{--if (rtndata.status) {--}}
-                {{--toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")--}}
-                {{--setTimeout(function () {--}}
-                {{--table.api().ajax.reload(null, false);--}}
-                {{--}, 100);--}}
-                {{--} else {--}}
-                {{--swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");--}}
-                {{--}--}}
-                {{--}--}}
-                {{--});--}}
             });
             //
-            $("#dt_basic").on('click', '.btn-attributes', function () {
+            $("#dt_basic").on('click', '.btn-del', function () {
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
-                location.href = url_attributes + '/' + id;
+                var data = {
+                    "_token": "{{ csrf_token() }}"
+                };
+                data.iId = id;
+                data.iStatus = "change";
+                swal({
+                    title: "{{trans('_web_alert.del.title')}}",
+                    text: "{{trans('_web_alert.del.note')}}",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "{{trans('_web_alert.cancel')}}",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "{{trans('_web_alert.ok')}}",
+                    closeOnConfirm: true
+                }, function () {
+                    $.ajax({
+                        url: url_dosave_show,
+                        data: data,
+                        type: "POST",
+                        //async: false,
+                        success: function (rtndata) {
+                            if (rtndata.status) {
+                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")
+                                setTimeout(function () {
+                                    table.api().ajax.reload(null, false);
+                                }, 100);
+                            } else {
+                                swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");
+                            }
+                        }
+                    });
+                });
             });
         });
     </script>

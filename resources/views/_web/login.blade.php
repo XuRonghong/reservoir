@@ -34,13 +34,13 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body loginDiv1">
-                            <h4 class="card-title">水庫安全資訊管理系統</h4>
+                            <h3 class="card-title">水庫安全資訊管理系統</h3>
                             <h6 class="card-subtitle"> 電腦版僅「網站系統管理員」可登入 </h6>
                             <form class="m-t-30" id="login-form1">
                                 <div class="warning"></div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">帳號(Account)</label>
-                                    <input type="text" class="form-control vAccount" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Account">
+                                    <input type="text" class="form-control vAccount" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Account" value="">
                                     {{--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--}}
                                 </div>
                                 <div class="form-group">
@@ -50,23 +50,25 @@
                                 <div class="form-group">
                                     <label>使用者權限</label>
                                     <select class="custom-select col-12 iAcType" id="inlineFormCustomSelect">
-                                        <option value="0" selected>Choose...</option>
+                                        {{--<option value="0" selected>Choose...</option>--}}
                                         <option value="2">網站系統管理員</option>
                                         <option value="10">水庫管理員(各水庫負責人員)</option>
                                         <option value="20">水庫審查人員(審核送審人員)</option>
                                         <option value="30">中央水利署人員</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <a href="javascript:;" class="linkStyle forgetPw">忘記密碼?( Forget Password ? )?</a>
-                                </div>
-                                <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
-                                    <input type="checkbox" class="custom-control-input checkMeOut" id="checkbox0" value="check">
-                                    <label class="custom-control-label" for="checkbox0">Check Me Out !</label>
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<a href="javascript:;" class="linkStyle forgetPw">忘記密碼?( Forget Password ? )?</a>--}}
+                                {{--</div>--}}
+                                {{--<div class="custom-control custom-checkbox mr-sm-2 m-b-15">--}}
+                                    {{--<input type="checkbox" class="custom-control-input checkMeOut" id="checkbox0" value="check">--}}
+                                    {{--<label class="custom-control-label" for="checkbox0">Check Me Out !</label>--}}
+                                {{--</div>--}}
+                                {{--<div class="custom-control custom-checkbox mr-sm-2 m-b-15">--}}
+                                    {{--<input type="checkbox" class="custom-control-input" id="checkbox1" name="remember" value="">--}}
+                                    {{--<label class="custom-control-label" for="checkbox1">Remeber Me</label>--}}
+                                {{--</div>--}}
                                 <button type="button" class="btn btn-primary doLogin">登入(Login)</button>
-                                <div class="success"></div>
                             </form>
                         </div>
                         <div class="card-body loginDiv2">
@@ -74,7 +76,8 @@
                                 <label>系統將會寄發密碼到您的工作信箱</label>
                                 <div class="form-group">
                                     <span>帳號</span>
-                                    <input type="text" placeholder="Account" class="inputStyle forgetId">
+                                    <input type="text" placeholder="Account" class="inputStyle forgetUs">
+                                    {{--<input type="text" placeholder="UserId" class="inputStyle forgetId">--}}
                                     <button class="backLogin">回登入頁</button>
                                     <button class="btn-esend btnVerification">送出驗證碼</button>
                                     <span class="warning"></span>
@@ -89,7 +92,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">水庫安全資訊管理系統</h4>
+                            <h3 class="card-title">水庫安全資訊管理系統</h3>
                             <h6 class="card-subtitle"> 電腦版僅「網站系統管理員」可登入 </h6>
                             <form class="m-t-30" id="login-form2">
                                 <div class="warning"></div>
@@ -106,16 +109,16 @@
                                     <label for="rePw2">再次確認密碼</label>
                                     <input type="password" class="form-control vPasswordNew2" id="rePw2" placeholder="再次輸入新密碼">
                                 </div>
-                                <div class="form-group">
-                                    <label>選擇您的使用者權限</label>
-                                    <select class="custom-select col-12 iAcType2" id="inlineFormCustomSelect2">
-                                        <option value="0" selected>Choose...</option>
-                                        <option value="2">網站系統管理員</option>
-                                        <option value="10">水庫管理員(各水庫負責人員)</option>
-                                        <option value="20">水庫審查人員(審核送審人員)</option>
-                                        <option value="30">中央水利署人員</option>
-                                    </select>
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label>選擇您的使用者權限</label>--}}
+                                    {{--<select class="custom-select col-12 iAcType" id="inlineFormCustomSelect2">--}}
+                                        {{--<option value="0" selected>Choose...</option>--}}
+                                        {{--<option value="2">網站系統管理員</option>--}}
+                                        {{--<option value="10">水庫管理員(各水庫負責人員)</option>--}}
+                                        {{--<option value="20">水庫審查人員(審核送審人員)</option>--}}
+                                        {{--<option value="30">中央水利署人員</option>--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
                                 <button type="button" class="btn btn-primary doResetPw">密碼變更</button>
                                 <div class="success"></div>
                             </form>
@@ -127,8 +130,8 @@
             <div class="row register">
                 <div class="col-12">
                     <div class="card card-body">
-                        <h4 class="card-title">Sample Basic Forms</h4>
-                        <h5 class="card-subtitle"> Bootstrap Elements </h5>
+                        <h4 class="card-title">會員註冊</h4>
+                        <h5 class="card-subtitle"> 加入會員即可使用服務 </h5>
                         <div class="row">
                             <div class="col-sm-12 col-xs-12">
                                 <form>
@@ -151,8 +154,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox mr-sm-2">
-                                            <input type="checkbox" class="custom-control-input chkIagree" id="checkbox1" value="check">
-                                            <label class="custom-control-label" for="checkbox1">
+                                            <input type="checkbox" class="custom-control-input chkIagree" id="checkbox2" value="check">
+                                            <label class="custom-control-label" for="checkbox2">
                                                 我同意<a href="javascript:;" class="linkStyle">服務條款</a>
                                             </label>
                                         </div>
@@ -411,40 +414,40 @@
             $('.forgetpassword').hide();
         }
 
-        function check_field_no_empty( type = 'register'){
-            if ($(".vAccount").val() === "") {
-                $(".vAccount").focus();
-                $('.warning').text( $(".vAccount").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+        function check_field_no_empty( module , type ){
+            if (module.find(".vAccount").val() === "") {
+                module.find(".vAccount").focus();
+                module.find('.warning').text( module.find(".vAccount").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
                 return false;
             }
-            if ($(".vPassword").val() === "") {
-                $(".vPassword").focus();
-                $('.warning').text( $(".vPassword").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+            if (module.find(".vPassword").val() === "") {
+                module.find(".vPassword").focus();
+                module.find('.warning').text( module.find(".vPassword").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
                 return false;
             }
             //
             if(type==='login'){
-                if($('.iAcType').val() == 0) {
-                    $(".iAcType").focus();
-                    $('.warning').text($(".iAcType").siblings('label').text() + '未選', "{{trans('_web_alert.notice')}}");
+                if(module.find('.iAcType').val() == 0) {
+                    module.find(".iAcType").focus();
+                    module.find('.warning').text(module.find(".iAcType").siblings('label').text() + '未選', "{{trans('_web_alert.notice')}}");
                     return false;
                 }
                 return true;
             }
             //
-            if ( $(".vPassword").val().length < 6 || $(".vPassword").val().length > 24) {
-                $(".vPassword").focus();
-                $('.warning').text( $(".vPassword").attr('placeholder') + '' , "{{trans('_web_alert.notice')}}");
+            if ( module.find(".vPassword").val().length < 6 || module.find(".vPassword").val().length > 24) {
+                module.find(".vPassword").focus();
+                module.find('.warning').text( module.find(".vPassword").attr('placeholder') + '' , "{{trans('_web_alert.notice')}}");
                 return false;
             }
-            if ($(".vPassword").val() !== $(".vPassword2").val()) {
-                $('.warning').text( $(".vPassword2").siblings('label').text() + '錯誤' , "{{trans('_web_alert.notice')}}");
-                $(".vPassword2").focus();
+            if (module.find(".vPassword").val() !== module.find(".vPassword2").val()) {
+                module.find('.warning').text( module.find(".vPassword2").siblings('label').text() + '錯誤' , "{{trans('_web_alert.notice')}}");
+                module.find(".vPassword2").focus();
                 return false;
             }
-            if ( ! $(".chkIagree").is(":checked") ) {
-                $('.warning').text( $(".chkIagree").siblings('label').text() + '未勾選' , "{{trans('_web_alert.notice')}}");
-                $(".chkIagree").focus();
+            if ( !module.find(".chkIagree").is(":checked") ) {
+                module.find('.warning').text( module.find(".chkIagree").siblings('label').text() + '未勾選' , "{{trans('_web_alert.notice')}}");
+                module.find(".chkIagree").focus();
                 return false;
             }
             return true;
@@ -457,17 +460,16 @@
 @section('inline-js')
 <script type="text/javascript">
     $(function () {
-
         _initial();
 
         //註冊
         $(".doSignIn").click(function () {
-
-            if (! check_field_no_empty())return;
+            var module = $('.register');
+            if ( !check_field_no_empty( module , 'register'))return;
 
             var data = {"_token": "{{ csrf_token() }}"};
-            data.vAccount = $(".vAccount").val();
-            data.vPassword = $(".vPassword").val();
+            data.vAccount = module.find(".vAccount").val();
+            data.vPassword = module.find(".vPassword").val();
             $.ajax({
                 url: "{{url('web/doRegister')}}",
                 data: data,
@@ -476,29 +478,30 @@
                 success: function (rtndata) {
                     // 1
                     if (rtndata.status) {
-                        $('.success').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        toastr.success( rtndata.message, "{{trans('_web_alert.notice')}}");
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;
                         }, 1000)
                     // 0
                     } else {
-                        $('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        toastr.error( rtndata.message , "{{trans('_web_alert.notice')}}");
                     }
                 },
                 error: function ( rtndata ) {
-                    $('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
+                    toastr.info( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
                 }
             });
         });
 
         //登入
         $(".doLogin").click(function () {
-
-            if (! check_field_no_empty('login'))return;
+            var module = $('.login');
+            if ( !check_field_no_empty(module , 'login') )return;
 
             var data = {"_token": "{{ csrf_token() }}"};
-            data.vAccount = $(".vAccount").val();
-            data.vPassword = $(".vPassword").val();
+            data.vAccount = module.find(".vAccount").val();
+            data.vPassword = module.find(".vPassword").val();
+            data.iAcType = module.find('.iAcType').val();
             $.ajax({
                 url: "{{url('web/doLogin')}}",
                 data: data,
@@ -508,8 +511,8 @@
                     if (rtndata.status) {
                         toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
                         // if ($('input[name=remember]').prop("checked")) {
-                        //     localStorage.setItem('account', $(".email").val());
-                        //     localStorage.setItem('password', $(".password").val());
+                        //     localStorage.setItem('account', module.find(".vAccount").val());
+                        //     localStorage.setItem('password', module.find(".vPassword").val());
                         //     localStorage.setItem('remember', true);
                         // } else {
                         //     localStorage.setItem('account', '');
@@ -520,11 +523,11 @@
                             location.href = rtndata.rtnurl;
                         }, 500)
                     } else {
-                        $('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        toastr.error( rtndata.message , "{{trans('_web_alert.notice')}}");
                     }
                 },
                 error: function ( rtndata ) {
-                    $('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
+                    toastr.info( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
                 }
             });
         });
@@ -532,24 +535,30 @@
         //忘記密碼
         $(".forgetPw").click(function () {
             $('.loginDiv1').hide();
-            var parent = $('.loginDiv2');
-            parent.show();
+            $('.loginDiv2').show();
+        });
+
+        //按"返回"
+        $('.backLogin').click(function () {
+            $('.loginDiv1').show();
+            $('.loginDiv2').hide();
         });
 
         //寄送驗證碼到信箱重新設定密碼
         $('.btnVerification').click(function () {
             parent = $(this).parents('.login');
 
-            if ( parent.find(".forgetId").val() === "" ) {
-                parent.find(".forgetId").focus();
-                $('.warning').text( parent.find(".forgetId").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+            if ( parent.find(".forgetUs").val() === "" ) {
+                parent.find(".forgetUs").focus();
+                parent.find('.warning').text( parent.find(".forgetUs").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
                 return false;
             }
+
             parent.find(".forgetPw").attr('disabled', 'disabled');
             var data = {"_token": "{{ csrf_token() }}"};
-            // data.userId = parent.find(".forgeotpw-id").val();
+            data.iUserId = parent.find(".forgetId").val();
             // data.vAccount = parent.find(".forgeotpw-email").val();
-            data.vAccount = parent.find(".forgetId").val();
+            data.vAccount = parent.find(".forgetUs").val();
 
             $.ajax({
                 url: "{{url('web/doSendVerification')}}",
@@ -559,22 +568,16 @@
                 success: function (rtndata) {
                     if (rtndata.status) {
                         toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
-                        parent.find('.login').hide();
-                        parent.find('.forgetpassword').css({ display: 'inline-block' });
+                        parent.hide();
+                        $('.forgetpassword').css({ display: 'inline-block' });
                     } else {
-                        $('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        parent.find('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
                     }
                 },
                 error: function ( rtndata ) {
-                    $('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
+                    parent.find('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
                 }
             });
-        });
-
-        //按"返回"
-        $('.backLogin').click(function () {
-            $('.loginDiv1').show();
-            $('.loginDiv2').hide();
         });
 
         //重設password
@@ -582,30 +585,30 @@
             var parent = $(this).parents('.forgetpassword');
 
             if ( parent.find(".vVerification").val() === "") {
-                $('.warning').text( parent.find(".vVerification").attr('placeholder') , "{{trans('_web_alert.notice')}}");
+                parent.find('.warning').text( parent.find(".vVerification").attr('placeholder') , "{{trans('_web_alert.notice')}}");
                 parent.find(".vVerification").focus();
                 return false;
             }
             if ( parent.find(".vPasswordNew").val() === "") {
-                $('.warning').text( parent.find(".vPasswordNew").attr('placeholder') , "{{trans('_web_alert.notice')}}");
+                parent.find('.warning').text( parent.find(".vPasswordNew").attr('placeholder') , "{{trans('_web_alert.notice')}}");
                 parent.find(".vPasswordNew").focus();
                 return false;
             }
             if ( parent.find(".vPasswordNew").val() !== parent.find(".vPasswordNew2").val()) {
-                $('.warning').text( parent.find(".vPasswordNew2").attr('placeholder')+'有誤' , "{{trans('_web_alert.notice')}}");
+                parent.find('.warning').text( parent.find(".vPasswordNew2").attr('placeholder')+'有誤' , "{{trans('_web_alert.notice')}}");
                 parent.find(".vPasswordNew2").focus();
                 return false;
             }
             if ( parent.find(".vPasswordNew").val().length < 6 || parent.find(".vPasswordNew").length > 24) {
-                $('.warning').text( parent.find(".vPasswordNew2").attr('placeholder') + '長度(6~24)' , "{{trans('_web_alert.notice')}}");
-                $(".vPasswordNew2").focus();
+                parent.find('.warning').text( parent.find(".vPasswordNew2").attr('placeholder') + '長度(6~24)' , "{{trans('_web_alert.notice')}}");
+                parent.find(".vPasswordNew2").focus();
                 return false;
             }
 
             var data = {"_token": "{{ csrf_token() }}"};
             data.vVerification = parent.find(".vVerification").val();
-            // data.vPassword = CryptoJS.MD5($(".reset-pw").val()).toString(CryptoJS.enc.Base64);
-            data.vPassword = $(".vPasswordNew").val();
+            // data.vPasswordNew = CryptoJS.MD5($(".reset-pw").val()).toString(CryptoJS.enc.Base64);
+            data.vPasswordNew = parent.find(".vPasswordNew").val();
             $.ajax({
                 url: "{{url('web/doResetPassword')}}",
                 data: data,
@@ -613,16 +616,16 @@
                 resetForm: true,
                 success: function (rtndata) {
                     if (rtndata.status) {
-                        $('.success').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        parent.find('.success').text( rtndata.message , "{{trans('_web_alert.notice')}}");
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;
-                        }, 500)
+                        }, 1000)
                     } else {
-                        $('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
+                        parent.find('.warning').text( rtndata.message , "{{trans('_web_alert.notice')}}");
                     }
                 },
                 error: function ( rtndata ) {
-                    $('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
+                    parent.find('.warning').text( rtndata.responseJSON.message , "{{trans('_web_alert.notice')}}");
                 }
             });
         });

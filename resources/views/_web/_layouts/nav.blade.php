@@ -5,8 +5,8 @@
         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Tables</span></li>
         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-border-all"></i><span class="hide-menu">會員 Tables</span></a>
             <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item"><a href="{{url('web/member')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">使用者帳號 </span></a></li>
-                <li class="sidebar-item"><a href="{{url('web/member/info')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">使用者資訊</span></a></li>
+                <li class="sidebar-item"><a href="{{url('web/member')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">帳號list </span></a></li>
+                <li class="sidebar-item"><a href="{{url('web/member/info')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">User資訊list</span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/member/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">新增 </span></a></li>
                 {{--<li class="sidebar-item"><a href="{{url('web/member/edit')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">修改 </span></a></li>--}}
                 {{--<li class="sidebar-item"><a href="{{url('web/member/')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">刪除</span></a></li>--}}

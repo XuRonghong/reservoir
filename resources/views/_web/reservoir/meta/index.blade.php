@@ -201,7 +201,7 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
+                // "scrollY": '65vh',
                 "aoColumns": [
                     // {"sTitle": "id", "mData": "iId", "width": "5%", "sName": "iId"},
                     {
@@ -230,10 +230,10 @@
                     {"sTitle": "災害潛勢", "mData": "vLevel", "width": "5%", "sName": "vLevel"},
                     {"sTitle": "壩高(m)", "mData": "iHeight", "width": "10%", "sName": "iHeight"},
                     {"sTitle": "總蓄水量 (萬m3)", "mData": "iStoreTotal", "width": "10%", "sName": "iStoreTotal"},
-                    {"sTitle": "分級", "mData": "vGrade", "width": "10%", "sName": "vGrade"},
+                    {"sTitle": "分級", "mData": "vGrade", "width": "5%", "sName": "vGrade"},
                     {"sTitle": "責任區", "mData": "vTrustRegion", "width": "10%", "sName": "vTrustRegion"},
                     {"sTitle": "站碼", "mData": "vNumber", "width": "10%", "sName": "vNumber"},
-                    {"sTitle": "NET", "mData": "vNet", "width": "10%", "sName": "vNet"},
+                    {"sTitle": "NET", "mData": "vNet", "width": "5%", "sName": "vNet"},
                     {"sTitle": "區碼", "mData": "vAreaCode", "width": "10%", "sName": "vAreaCode"},
                     // {
                     //     "sTitle": "圖片",
@@ -267,7 +267,6 @@
                     },
                     {
                         "sTitle": "Action",
-                        "width": "90px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {

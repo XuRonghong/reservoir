@@ -15,7 +15,6 @@
     {{--<title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>--}}
 
     <!-- This page plugin CSS -->
-    <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
     @yield('page-css')
 
     <!-- Custom CSS -->
@@ -32,6 +31,7 @@
     {{--<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="{{url('css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
+    <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
 
 </head>
 <body>

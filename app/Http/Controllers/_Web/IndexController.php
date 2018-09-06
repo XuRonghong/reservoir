@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 
 class IndexController extends _WebController
 {
-    public $module = [  ];
+
+    /*
+     *
+     */
+    function __construct ()
+    {
+        $this->module = [  ];
+    }
 
 
     /*
@@ -17,12 +24,12 @@ class IndexController extends _WebController
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . 'index' );
         //
-        $breadcrumb = [
-            '後臺首頁' => url( '' ),
+        $this->breadcrumb = [
+            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
-        $this->view->with( 'breadcrumb', $breadcrumb );
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '水庫管理系統' );
+        session()->put( 'SEO.vTitle' , $this->vTitle );
 
         return $this->view;
     }

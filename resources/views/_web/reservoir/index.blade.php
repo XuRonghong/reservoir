@@ -115,19 +115,16 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
+                // "scrollY": '65vh',
                 "aoColumns": [
-                    // {"sTitle": "id", "mData": "iId", "width": "5%", "sName": "iId"},
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "35px",
+                        "width": "5%",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
-                            // current_data[row.iId] = row;
-                            // return '<button class="btn btn-xs btn-default btn-copy" title="複製"><i class="fa fa-copy" aria-hidden="true"></i></button>' + data;
                         }
                     },
                     {
@@ -135,45 +132,29 @@
                         "mData": "iRank",
                         "sName": "iRank",
                         "bSearchable": false,
-                        "width": "30px",
+                        "width": "5%",
                         "mRender": function (data, type, row) {
                             return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
                         }
                     },
-                    {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "Code", "mData": "vCode", "width": "5%", "sName": "vCode"},
-                    {"sTitle": "地區別", "mData": "vRegion", "width": "10%", "sName": "vRegion"},
+                    // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
+                    // {"sTitle": "Code", "mData": "vCode", "width": "5%", "sName": "vCode"},
+                    {"sTitle": "地區別", "mData": "vRegion", "width": "5%", "sName": "vRegion"},
                     {"sTitle": "水庫或壩堰名稱", "mData": "vName", "width": "10%", "sName": "vName"},
-                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "10%", "sName": "vLocation"},
+                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "20%", "sName": "vLocation"},
                     {"sTitle": "壩堰位置", "mData": "vCounty", "width": "10%", "sName": "vCounty"},
-                    {"sTitle": "Sum", "mData": "iSum", "width": "10%", "sName": "iSum"},
+                    {"sTitle": "Sum", "mData": "iSum", "width": "5%", "sName": "iSum"},
                     {
                         "sTitle": "圖片",
                         "mData": "vImages",
-                        "width": "130px",
+                        "sName": "vImages",
+                        "width": "10%",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
-                            var html_str = "";
-                            for (var key in data) {
-                                html_str += "<img width='75px' src=" + data[key] + " style='margin:5px;'>";
-                            }
-                            return html_str;
+                            return "<img width='100px' src=" + data + ">";
                         }
                     },
-                    // {"sTitle": "簡介", "mData": "vSummary", "width": "15%", "sName": "vSummary"},
-                    // {"sTitle": "外部連結", "mData": "vUrl", "width": "5%", "sName": "vUrl"},
-                    // {
-                    //     "sTitle": "公告時間",
-                    //     "mData": "iStartTime",
-                    //     "sName": "iStartTime",
-                    //     "width": "10%",
-                    //     "bSortable": false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return row.iStartTime + "~" + row.iEndTime;
-                    //     }
-                    // },
                     {
                         "sTitle": "I/O",
                         "mData": "iStatus",
@@ -195,7 +176,6 @@
                     },
                     {
                         "sTitle": "Action",
-                        "width": "90px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -216,7 +196,7 @@
                 "autoWidth": true,
                 "oLanguage": {
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
-                },
+                }
             });
             /* END BASIC */
             //
@@ -277,27 +257,6 @@
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 location.href = url_edit + '/' + id;
-
-                {{--var data = {--}}
-                    {{--"_token": "{{ csrf_token() }}"--}}
-                {{--};--}}
-                {{--data.id = id;--}}
-                {{--$.ajax({--}}
-                    {{--url: url_edit,--}}
-                    {{--data: data,--}}
-                    {{--type: "GET",--}}
-                    {{--//async: false,--}}
-                    {{--success: function (rtndata) {--}}
-                        {{--if (rtndata.status) {--}}
-                            {{--toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")--}}
-                            {{--setTimeout(function () {--}}
-                                {{--table.api().ajax.reload(null, false);--}}
-                            {{--}, 100);--}}
-                        {{--} else {--}}
-                            {{--swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");--}}
-                        {{--}--}}
-                    {{--}--}}
-                {{--});--}}
             });
             //
             $("#dt_basic").on('click', '.btn-del', function () {
@@ -336,12 +295,6 @@
                         }
                     });
                 });
-            });
-            //
-            $("#dt_basic").on('click', '.btn-attributes', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
-                location.href = url_attributes + '/' + id;
             });
         });
     </script>

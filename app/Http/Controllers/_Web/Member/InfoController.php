@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_Web\_Member;
+namespace App\Http\Controllers\_Web\Member;
 
 use App\Http\Controllers\_Web\_WebController;
 use App\SysMember;
@@ -11,7 +11,15 @@ use App\Http\Controllers\FuncController;
 
 class InfoController extends _WebController
 {
-    public $module = [ 'member', 'info' ];
+
+    /*
+     *
+     */
+    function __construct ()
+    {
+        $this->module = [ 'member' , 'info' ];
+    }
+
 
     /*
      *
@@ -66,34 +74,21 @@ class InfoController extends _WebController
         $sort_dir = $request->input( 'sSortDir_0' );
 
 
-
-//        $sysMember['sys_member.iStatus'] = 1;
-        $total_count = SysMemberInfo::query()//->where( $sysMember )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
+        $total_count = SysMemberInfo::query()->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
-            })
-//            ->leftJoin( 'mod_reservoir_info', function ($join) {
-//                $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
-//            })
+            })->where('iMemberId','>',1)
             ->count();
 
-        $data_arr = SysMemberInfo::query()//->where( $sysMember )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
+        $data_arr = SysMemberInfo::query()->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
-            })
-//            ->leftJoin( 'mod_reservoir_info', function ($join) {
-//                $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
-//            })
+            })->where('iMemberId','>',1)
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
-//            ->select( 'mod_reservoir.*' ,
-//                'mod_reservoir_info.vImages',
-//                'mod_reservoir_info.iSafeValue')
             ->get();
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
@@ -116,7 +111,6 @@ class InfoController extends _WebController
             //
 //            $var->vCategoryNum = ( $var->iCategoryId > 0 ) ? FuncController::_getCategoryNum( $var->iCategoryId ) . str_pad( $var->iId, 6, 0, STR_PAD_LEFT ) : "";
         }
-
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['sEcho'] = $sEcho;
@@ -144,44 +138,29 @@ class InfoController extends _WebController
         $this->view->with('module', $this->module);
 
 
-//        $mapReservoir['mod_reservoir.bDel'] = 0;
-        $DaoMemberInfo = SysMemberInfo::query()//->where($mapReservoir)
-//            ->leftJoin('sys_member_info', function ($join) {
-//                $join->on('sys_member.iId', '=', 'sys_member_info.iMemberId');
-//            })
-//            ->select('sys_member.*',
-//                'sys_member_info.vUserName',
-//                'sys_member_info.vUserEmail',
-//                'sys_member_info.vUserContact',
-//                'sys_member_info.vUserAddress')
-            ->find($id);
+        $DaoMemberInfo = SysMemberInfo::query()->find($id);
         if (!$DaoMemberInfo) {
             session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
         }
-
-
-//        $DaoInfo = ModReservoirInfo::query()->where('iReservoirId', '=', $DaoReservoir->iId)->first();
-//        if ($DaoInfo) {
+//        if ($DaoMemberInfo) {
 //            //圖片
 //            $image_arr = [];
-//            $tmp_arr = explode(';', $DaoInfo->vImages);
+//            $tmp_arr = explode(';', $DaoMemberInfo->vImages);
 //            $tmp_arr = array_filter($tmp_arr);
 //            foreach ($tmp_arr as $item) {
 //                $image_arr[] = FuncController::_getFilePathById($item);
 //            }
-//            $DaoReservoir->vImages = $image_arr;
+//            $DaoMemberInfo->vImages = $image_arr;
 //        } else {
-//            $DaoReservoir->vImages = [];
+//            $DaoMemberInfo->vImages = [];
 //        }
 
-
-        //商品
+        //
         $this->view->with( 'info', $DaoMemberInfo );
 
         return $this->view;
     }
-
 
 
     /*
@@ -189,20 +168,16 @@ class InfoController extends _WebController
      */
     public function doSave ( Request $request )
     {
-        $Dao = SysMember::query()->find( session( 'member.iId' ) );
-        if ( !$Dao) {
+        $id = ( $request->exists( 'iId' ) ) ? $request->input( 'iId' ) : 0;
+        if ( !$id) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-//        if ($request->input( 'iAcType' )) {
-//            $Dao->iAcType = $request->input( 'iAcType' );
-//        }
-//        $Dao->iUpdateTime = time();
-//        if ($Dao->save()) {
-//            //Logs
-//            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
-            $DaoMemberInfo = SysMemberInfo::find( session( 'member.iId' ) );
+
+
+            $DaoMemberInfo = SysMemberInfo::query()->find( $id );
+            $DaoMemberInfo->vUserImage = ( $request->input( 'vUserImage' ) ) ? $request->input( 'vUserImage' ) : "";
             if ($request->exists( 'vUserName' )) {
                 $DaoMemberInfo->vUserName = $request->input( 'vUserName' );
             }

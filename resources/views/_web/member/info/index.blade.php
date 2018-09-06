@@ -115,27 +115,34 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
+                // "scrollY": '65vh',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
                         "mData": "iMemberId",
-                        "width": "35px",
+                        "width": "7%",
                         "sName": "iMemberId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
-                            // current_data[row.iId] = row;
-                            // return '<button class="btn btn-xs btn-default btn-copy" title="複製"><i class="fa fa-copy" aria-hidden="true"></i></button>' + data;
                         }
                     },
-                    {"sTitle": "使用者名稱", "mData": "vUserName", "width": "5%", "sName": "vUserName"},
-                    {"sTitle": "使用者信箱", "mData": "vUserEmail", "width": "5%", "sName": "vUserEmail"},
-                    {"sTitle": "連絡電話", "mData": "vUserContact", "width": "10%", "sName": "vUserContact"},
-                    {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "10%", "sName": "vUserAddress"},
+                    {
+                        "sTitle": "圖片",
+                        "mData": "vUserImage",
+                        "width": "10%",
+                        "bSortable": false,
+                        "bSearchable": false,
+                        "mRender": function (data, type, row) {
+                            return "<img width='100%' src=" + data + ">";
+                        }
+                    },
+                    {"sTitle": "使用者名稱", "mData": "vUserName", "width": "15%", "sName": "vUserName"},
+                    {"sTitle": "使用者信箱", "mData": "vUserEmail", "width": "20%", "sName": "vUserEmail"},
+                    {"sTitle": "連絡電話", "mData": "vUserContact", "width": "15%", "sName": "vUserContact"},
+                    {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "25%", "sName": "vUserAddress"},
                     {
                         "sTitle": "Action",
-                        "width": "90px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -164,27 +171,6 @@
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 location.href = url_edit + '/' + id;
-
-                {{--var data = {--}}
-                {{--"_token": "{{ csrf_token() }}"--}}
-                {{--};--}}
-                {{--data.id = id;--}}
-                {{--$.ajax({--}}
-                {{--url: url_edit,--}}
-                {{--data: data,--}}
-                {{--type: "GET",--}}
-                {{--//async: false,--}}
-                {{--success: function (rtndata) {--}}
-                {{--if (rtndata.status) {--}}
-                {{--toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")--}}
-                {{--setTimeout(function () {--}}
-                {{--table.api().ajax.reload(null, false);--}}
-                {{--}, 100);--}}
-                {{--} else {--}}
-                {{--swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");--}}
-                {{--}--}}
-                {{--}--}}
-                {{--});--}}
             });
         });
     </script>

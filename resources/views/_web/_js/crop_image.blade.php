@@ -15,10 +15,10 @@
 <link href="{{url('css/cropper.min.css')}}" rel="stylesheet">
 <div id="image-form" class="modal fade" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content" style="width: 680px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">{{trans('_web_alert.cropper_image')}}</h4>
+				{{--<h4 class="modal-title">{{trans('_web_alert.cropper_image')}}</h4>--}}
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -30,10 +30,18 @@
 					<div class="col-sm-6">
 						<h4>{{trans('_web_alert.upload.image_preview')}}</h4>
 						<div class="img-preview img-preview-sm"></div>
+						<br>
 						<div class="btn-group">
-							<label title="Upload image file" for="inputImage" class="btn btn-primary"> <input type="file" accept="image/*" name="file" id="inputImage" class="hide"> {{trans('_web_alert.upload.image_new')}}
+							<label title="Upload image file" for="inputImage" class="btn btn-primary">
+								<input type="file" accept="image/*" name="file" id="inputImage" class="hide">
+								{{trans('_web_alert.upload.image_new')}}
 							</label>
-							<button class="btn btn-warning" id="setDrag" type="button">{{trans('_web_alert.upload.image_crop')}}</button>
+							<label class="btn btn-warning" id="setDrag" type="button">
+								{{trans('_web_alert.upload.image_crop')}}
+							</label>
+							{{--<button class="btn btn-warning" id="setDrag" type="button">--}}
+								{{--{{trans('_web_alert.upload.image_crop')}}--}}
+							{{--</button>--}}
 						</div>
 					</div>
 				</div>
