@@ -242,11 +242,13 @@
 //} );
 
 
+
+
+
 // 首頁先導向後臺登入頁
 Route::get( '', function (){
-    return redirect(url('web'));
+    return redirect('web');
 } ) ;
-
 /*
  * 後台
  */
@@ -257,7 +259,7 @@ Route::group(
         'namespace' => '_Web'
     ], function() {
 
-        Route::get( '', 'LoginController@indexView') ;
+        Route::get( '', 'LoginController@indexView')->name('index') ;
         //
         //Route::get( 'register', 'RegisterController@index' );
         //Route::post( 'doRegister', 'RegisterController@doRegister' );
@@ -298,7 +300,7 @@ Route::group(
             /**********************************************************
              * Import Excel
              *********************************************************/
-            Route::get( 'import_excel', 'ExcelController@index')->name('index');
+            Route::get( 'import_excel', 'ExcelController@index')->name('excel_index');
             Route::post('import_excel', 'ExcelController@import')->name('import');
 
 
