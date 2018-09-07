@@ -242,6 +242,11 @@
 //} );
 
 
+// 首頁先導向後臺登入頁
+Route::get( '', function (){
+    return redirect(url('web'));
+} ) ;
+
 /*
  * 後台
  */
