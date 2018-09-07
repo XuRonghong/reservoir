@@ -503,7 +503,7 @@
             data.vPassword = module.find(".vPassword").val();
             data.iAcType = module.find('.iAcType').val();
             $.ajax({
-                url: "{{url('web/doLogin')}}",
+                url: "{{$url_dologin}}",
                 data: data,
                 type: "POST",
                 resetForm: true,

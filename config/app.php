@@ -168,8 +168,8 @@ return [
         /*
          * Package Service Providers...
          */
-
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,6 +233,7 @@ return [
          * Package Aliases...
          */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

@@ -17,6 +17,7 @@ use App\SysMenu;
 use App\SysMember;
 use App\SysMemberInfo;
 use App\SysGroupMember;
+use Jenssegers\Agent\Agent;
 
 
 class _WebController extends Controller
@@ -27,6 +28,7 @@ class _WebController extends Controller
     protected $sys_menu;
     protected $breadcrumb = [];
     protected $module;
+    protected $agent;
 
 
     /*
@@ -173,8 +175,23 @@ class _WebController extends Controller
     /*
      *
      */
-    public function init ()
+    public function _init ()
     {
+        /*
+         *  判斷裝置手機版或電腦版
+         */
+        $this->agent = new Agent();
+        if ( $this->agent->isMobile() && !$this->agent->isTablet() ) {
+//            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
+
+
+        } else {
+//            $this->view = View()->make( "_template_portal." . implode( '.' , $this->module ) );
+
+
+
+        }
+
 //        $map['iStatus'] = 1;
 //        $map['iId'] = session( 'member.iId' , '');
 //        $DaoMem = SysMember::query()->where($map)->get();

@@ -320,6 +320,20 @@
                     }
                 });
             });
+            //
+            $(".iAcType").change(function () {
+                swal({
+                    title: '提醒',//"{{trans('_web_alert.del.title')}}",
+                    text: '更改權限的話,某些權限的功能可能無法使用.\n' +
+                        '(網頁版只有網站管理員可以登入)',//"{{trans('_web_alert.del.note')}}",
+                    type: "warning",
+                    showCancelButton: false,
+                    cancelButtonText: "{{trans('_web_alert.cancel')}}",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "{{trans('_web_alert.ok')}}",
+                    closeOnConfirm: true
+                }, );
+            });
         });
     </script>
 @endsection
