@@ -117,7 +117,7 @@
                                 <div class="form-group row">
                                     <label for="com1" class="col-sm-3 text-right control-label col-form-label">UserName</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserName" id="com1" placeholder="" value="{{$info->vUserName or ''}}">
+                                        <input type="text" class="form-control vUserName" id="com1" placeholder="UserName" value="{{$info->vUserName or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -129,20 +129,20 @@
                                 <div class="form-group row">
                                     <label for="com2" class="col-sm-3 text-right control-label col-form-label">UserContact</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserContact" id="com2" placeholder="" value="{{$info->vUserContact or ''}}">
+                                        <input type="text" class="form-control vUserContact" id="com2" placeholder="UserContact" value="{{$info->vUserContact or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="com3" class="col-sm-3 text-right control-label col-form-label">UserAddress</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserAddress" id="com3" placeholder="" value="{{$info->vUserAddress or ''}}">
+                                        <input type="text" class="form-control vUserAddress" id="com3" placeholder="UserAddress" value="{{$info->vUserAddress or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="img1" class="col-sm-3 text-right control-label col-form-label">UserPicture</label>
                                     <div class="col-sm-9">
                                         <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img id="Image" src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
+                                            <img src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
                                         </a>
                                     </div>
                                 </div>
@@ -153,11 +153,11 @@
                                     @if(isset($info))
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
                                     @else
-                                        <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
-                                        <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                     @endif
-                                    <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
-                                    <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
+                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
+                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
                             </div>
                         </form>
@@ -243,6 +243,7 @@
                 modal.find('.btn-next').hide();
                 modal.find('.btn-back').show();
                 modal.find('.btn-cancel').hide();
+                current_modal = modal;
             });
             //
             $(".btn-doadd").click(function () {
@@ -254,11 +255,11 @@
                 data.vPassword2 = current_modal.find(".vPassword2").val();
                 data.iAcType = current_modal.find(".iAcType").val();
                 // data.iSum = $(".iSum").val();
-                data.vUserName = next_modal.find(".vUserName").val();
-                data.vUserEmail = next_modal.find(".vUserEmail").val();
-                data.vUserContact = next_modal.find(".vUserContact").val();
-                data.vUserAddress = next_modal.find(".vUserAddress").val();
-                data.vUserImage = next_modal.find("img").attr('src');
+                data.vUserName = current_modal.find(".vUserName").val();
+                data.vUserEmail = current_modal.find(".vUserEmail").val();
+                data.vUserContact = current_modal.find(".vUserContact").val();
+                data.vUserAddress = current_modal.find(".vUserAddress").val();
+                data.vUserImage = current_modal.find("img").attr('src');
                 //
                 $.ajax({
                     url: url_doadd,
@@ -351,7 +352,7 @@
             });
         });
 
-        function check_field_no_empty( module , type ){
+        function check_field_no_empty( module ){
             if (module.find(".vAccount").val() === "") {
                 module.find(".vAccount").focus();
                 toastr.info( module.find(".vAccount").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
