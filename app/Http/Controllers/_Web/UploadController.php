@@ -104,6 +104,7 @@ class UploadController extends Controller
                 $Dao->vFileName = $filename;
                 $Dao->iFileSize = $storage->size( $filePath . '/' . $filename );
                 $Dao->iCreateTime = $Dao->iUpdateTime = time();
+                $Dao->iStatus = 1;
                 $Dao->save();
                 $rtndata = [
                     'fileid' => $Dao->iId,
@@ -125,6 +126,7 @@ class UploadController extends Controller
                 $Dao->vFileName = $filename;
                 $Dao->iFileSize = $storage->size( $filePath . '/' . $filename );
                 $Dao->iCreateTime = $Dao->iUpdateTime = time();
+                $Dao->iStatus = 1;
                 $Dao->save();
                 $rtndata = [
                     'fileid' => $Dao->iId,

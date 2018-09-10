@@ -137,22 +137,26 @@
                             return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
                         }
                     },
-                    // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    // {"sTitle": "Code", "mData": "vCode", "width": "5%", "sName": "vCode"},
                     {"sTitle": "地區別", "mData": "vRegion", "width": "5%", "sName": "vRegion"},
                     {"sTitle": "水庫或壩堰名稱", "mData": "vName", "width": "10%", "sName": "vName"},
                     {"sTitle": "詳細地址", "mData": "vLocation", "width": "20%", "sName": "vLocation"},
                     {"sTitle": "壩堰位置", "mData": "vCounty", "width": "10%", "sName": "vCounty"},
+                    // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
+                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "5%", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
                     {"sTitle": "Sum", "mData": "iSum", "width": "5%", "sName": "iSum"},
                     {
                         "sTitle": "圖片",
                         "mData": "vImages",
                         "sName": "vImages",
-                        "width": "10%",
+                        "width": "15%",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
-                            return "<img width='100px' src=" + data + ">";
+                            var html_str = "";
+                            for (var key in data) {
+                                html_str += "<img width='75px' src=" + data[key] + " style='margin:5px;'>";
+                            }
+                            return html_str;
                         }
                     },
                     {
@@ -183,7 +187,7 @@
                             var btn = "無功能";
                             btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                            btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             return btn;
                         }
                     },
@@ -274,7 +278,7 @@
                     cancelButtonText: "{{trans('_web_alert.cancel')}}",
                     confirmButtonColor: "#DD6B55",
                     confirmButtonText: "{{trans('_web_alert.ok')}}",
-                    closeOnConfirm: false
+                    closeOnConfirm: true
                 }, function () {
                     $.ajax({
                         url: url_dodel,

@@ -97,20 +97,25 @@ class IndexController extends _WebController
         {
             $var->DT_RowId = $var->iId;
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
-            $var->vImages = url('images/empty.jpg');
+            $var->vImages = [];//url('images/empty.jpg');
+            $var->iSafeValue = 0;
 
             $DaoInfo = ModReservoirInfo::query()->where('iReservoirId','=',$var->iId)->first();
             if ( !$DaoInfo)continue;
-//            //圖片
-//            $image_arr = [];
-//            $tmp_arr = explode( ';', $DaoInfo->vImages );
-//            $tmp_arr = array_filter( $tmp_arr );
-//            foreach ($tmp_arr as $item) {
-//                $image_arr[] = FuncController::_getFilePathById( $item );
-//            }
-            $var->vImages = $DaoInfo->vImages;
-            //
-//            $var->vCategoryNum = ( $var->iCategoryId > 0 ) ? FuncController::_getCategoryNum( $var->iCategoryId ) . str_pad( $var->iId, 6, 0, STR_PAD_LEFT ) : "";
+            //安全值
+            $var->iSafeValue = $DaoInfo->iSafeValue ? $DaoInfo->iSafeValue : 0;
+            //圖片
+            $image_arr = [];
+            $tmp_arr = explode( ';', $DaoInfo->vImages );
+            $tmp_arr = array_filter( $tmp_arr );
+            foreach ($tmp_arr as $item) {
+                $image_arr[] = FuncController::_getFilePathById( $item );
+            }
+            if ($tmp_arr){
+                $var->vImages = $image_arr;
+            } else {
+                $var->vImages = [];
+            }
         }
 
 
@@ -229,23 +234,20 @@ class IndexController extends _WebController
             return redirect('web/' . implode('/', $this->module));
         }
 
+        //圖片
+        $image_arr = [];
+        $tmp_arr = explode( ';', $DaoReservoir->vImages );
+        $tmp_arr = array_filter( $tmp_arr );
+        foreach ($tmp_arr as $item) {
+            $image_arr[$item] = FuncController::_getFilePathById( $item );
+        }
+        if ($tmp_arr){
+            $DaoReservoir->vImages = $image_arr;
+        } else {
+            $DaoReservoir->vImages = [];
+        }
 
-//        $DaoInfo = ModReservoirInfo::query()->where('iReservoirId', '=', $DaoReservoir->iId)->first();
-//        if ($DaoInfo) {
-//            //圖片
-//            $image_arr = [];
-//            $tmp_arr = explode(';', $DaoInfo->vImages);
-//            $tmp_arr = array_filter($tmp_arr);
-//            foreach ($tmp_arr as $item) {
-//                $image_arr[] = FuncController::_getFilePathById($item);
-//            }
-//            $DaoReservoir->vImages = $image_arr;
-//        } else {
-//            $DaoReservoir->vImages = [];
-//        }
-
-
-        //商品
+        //水庫List
         $this->view->with( 'info', $DaoReservoir );
 
         return $this->view;
@@ -310,10 +312,10 @@ class IndexController extends _WebController
                 $this->rtndata ['message'] = trans( '_web_message.empty_id' ) . 'info';
                 return response()->json( $this->rtndata );
             }
-            if ($request->exists( 'vImages' )) {
+            if ($request->input( 'vImages' )) {
                 $DaoInfo->vImages = $request->input( 'vImages' );
             }
-            if ($request->exists( 'iSafeValue' )) {
+            if ($request->input( 'iSafeValue' )) {
                 $DaoInfo->iSafeValue = $request->input( 'iSafeValue' );
             }
             $DaoInfo->iUpdateTime = time();
@@ -347,10 +349,6 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-//        if ( !in_array( session( 'member.iAcType' ), config( '_config.admin_access' ) )) {
-//            $map['iStoreId'] = session( 'store.iId' );
-//        }
-
 
         $map['bDel'] = 0;
         $Dao = ModReservoir::query()->find( $id );
@@ -380,6 +378,7 @@ class IndexController extends _WebController
 
         return response()->json( $this->rtndata );
     }
+
 
     /*
      *

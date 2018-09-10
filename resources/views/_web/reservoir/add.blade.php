@@ -33,7 +33,7 @@
             <!-- Row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card"  id="add-modal">
+                    <div class="card"  id="manage-modal">
                         <div class="card-body">
                             <h4 class="card-title">Project Assigning</h4>
                             <h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>
@@ -66,18 +66,6 @@
                                         <input type="text" class="form-control vCounty" id="lname" placeholder="壩堰位置" value="{{$info->vCounty or ''}}">
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="lname" class="col-sm-3 text-right control-label col-form-label">sum</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="number" class="form-control iSum" id="lname" placeholder="sum">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="email1" class="col-sm-3 text-right control-label col-form-label">Email</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="email" class="form-control" id="email1" placeholder="Email Here">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                             <hr>
                             <div class="card-body">
@@ -89,6 +77,43 @@
                                     </div>
                                 </div>
                                 {{--<div class="form-group row">--}}
+                                    {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
+                                    {{--<div class="col-md-10 cropper_image">--}}
+                                        {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
+                                            {{--<img id="Image" data-data="" src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">--}}
+                                        {{--</a>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                <div class="form-group row">
+                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">{{trans('web.images')}}</label>
+                                    <div class="col-sm-9 cropper_image">
+                                        @if(isset($info))
+                                            @foreach($info->vImages as $key => $var)
+                                                <div class="image-box">
+                                                    <img id="{{$key}}" src="{{$var}}"> <a class="image-del">X</a>
+                                                </div>
+                                            @endforeach
+                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
+                                            @if(count($info->vImages) < 5)
+                                                <img id="Image" data-data="" src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
+                                            @endif
+                                        </a>
+                                        @else
+                                            <a class="btn-image-modal" data-modal="image-form" data-id="">
+                                                <img id="Image" data-data="" src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="img1" class="col-sm-3 text-right control-label col-form-label">UserPicture</label>--}}
+                                    {{--<div class="col-sm-9">--}}
+                                        {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
+                                            {{--<img src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">--}}
+                                        {{--</a>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<div class="form-group row">--}}
                                 {{--<label class="col-sm-3 text-right control-label col-form-label">Interested In</label>--}}
                                 {{--<div class="col-sm-9">--}}
                                 {{--<select class="form-control">--}}
@@ -98,46 +123,6 @@
                                 {{--<option>Videography</option>--}}
                                 {{--</select>--}}
                                 {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Budget</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Less then $5000</option>--}}
-                                {{--<option>$5000 - $10000</option>--}}
-                                {{--<option>$10000 - $20000</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-
-
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                                <img src="{{url('images/empty.jpg')}}" style="height:140px">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                {{--<div class="form-group row">--}}
-                                    {{--<label class="col-sm-3 text-right control-label col-form-label">水庫照片</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                        {{--<div class="input-group mb-3">--}}
-                                            {{--<div class="input-group-prepend">--}}
-                                                {{--<span class="input-group-text">Upload</span>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="custom-file">--}}
-                                                {{--<input type="file" class="custom-file-input vImages" id="inputGroupFile01">--}}
-                                                {{--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
                                 {{--</div>--}}
                                 {{--<div class="form-group row">--}}
                                 {{--<label for="abpro" class="col-sm-3 text-right control-label col-form-label">About Project</label>--}}
@@ -209,8 +194,8 @@
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
             //
-            var modal = $("#add-modal");
-            current_modal = modal;
+            var modal = $("#manage-modal");
+            var current_modal = modal;
             //
             $(".btn-cancel").click(function () {
                 location.href = url_index;
@@ -219,28 +204,19 @@
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.vRegion = $(".vRegion").val();
-                data.vName = $(".vName").val();
-                data.vLocation = $(".vLocation").val();
-                data.vCounty = $(".vCounty").val();
-                // data.iSum = $(".iSum").val();
-                data.iSafeValue = $(".iSafeValue").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-                data.vImages = $(".vImages").data('id');
-                $(".vImages img").each(function () {
-                    if ($(this).attr('id') != "Image" && $(this).attr('id')) {
-                        data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
+                data.vRegion = current_modal.find(".vRegion").val();
+                data.vName = current_modal.find(".vName").val();
+                data.vLocation = current_modal.find(".vLocation").val();
+                data.vCounty = current_modal.find(".vCounty").val();
+                data.iSafeValue = current_modal.find(".iSafeValue").val();
+                data.vImages = "";
+                $(".cropper_image").find('img').each(function () {
+                    if ($(this).attr('id') != "Image") {
+                        //data.vImages = data.vImages + $(this).attr('src') + ";";
+                        data.vImages = data.vImages + $(this).attr('id') + ";";
                     }
                 });
-                data.vImages = modal.find("img").attr('src');
-
-
+                //
                 $.ajax({
                     url: url_doadd,
                     type: "POST",
@@ -263,28 +239,19 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
-                data.vRegion = $(".vRegion").val();
-                data.vName = $(".vName").val();
-                data.vLocation = $(".vLocation").val();
-                data.vCounty = $(".vCounty").val();
-                // data.iSum = $(".iSum").val();
-                data.iSafeValue = $(".iSafeValue").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-                data.vImages = $(".vImages").data('id');
-                $(".vImages img").each(function () {
-                    if ($(this).attr('id') != "Image" && $(this).attr('id')) {
-                        data.vImages = /*data.vImages +*/ $(this).attr('id') + ";";
+                data.vRegion = current_modal.find(".vRegion").val();
+                data.vName = current_modal.find(".vName").val();
+                data.vLocation = current_modal.find(".vLocation").val();
+                data.vCounty = current_modal.find(".vCounty").val();
+                data.iSafeValue = current_modal.find(".iSafeValue").val();
+                data.vImages = "";
+                $(".cropper_image").find('img').each(function () {
+                    if ($(this).attr('id') != "Image") {
+                        //data.vImages = data.vImages + $(this).attr('src') + ";";
+                        data.vImages = data.vImages + $(this).attr('id') + ";";
                     }
                 });
-                data.vImages = modal.find("img").attr('src');
-
-
+                //
                 $.ajax({
                     url: url_dosave,
                     type: "POST",
@@ -302,7 +269,6 @@
                     }
                 });
             });
-
         });
     </script>
 @endsection
