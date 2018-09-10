@@ -51,7 +51,7 @@
                                 <div class="form-group row">
                                     <label for="email1" class="col-sm-3 text-right control-label col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control vEmail" id="email1" placeholder="Email Here" value="{{$info->vEmail or ''}}">
+                                        <input type="email" class="form-control vEmail" id="email1" placeholder="Email Here" value="{{$info->vUserEmail or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -171,7 +171,6 @@
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                // data.iSum = $(".iSum").val();
                 data.vUserName = current_modal.find(".vUserName").val();
                 data.vUserEmail = current_modal.find(".vUserEmail").val();
                 data.vUserContact = current_modal.find(".vUserContact").val();
@@ -200,7 +199,6 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
-                // data.iSum = $(".iSum").val();
                 data.vUserName = current_modal.find(".vUserName").val();
                 data.vUserEmail = current_modal.find(".vUserEmail").val();
                 data.vUserContact = current_modal.find(".vUserContact").val();

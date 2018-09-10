@@ -210,7 +210,7 @@ class IndexController extends _WebController
             //註冊會員的詳情資料
             $DaoMemberInfo = new SysMemberInfo();
             $DaoMemberInfo->iMemberId = $DaoMember->iId;
-            $DaoMemberInfo->vUserImage = "/images/empty.jpg";
+            $DaoMemberInfo->vUserImage = ( $request->input( 'vUserImage' ) ) ? $request->input( 'vUserImage' ) : "/images/empty.jpg";
             $DaoMemberInfo->vUserName = $vUserName;
             $DaoMemberInfo->vUserID =   ( $request->exists( 'vUserID' ) )   ? $request->input( 'vUserID' ) : "";
             $DaoMemberInfo->iUserBirthday = time();

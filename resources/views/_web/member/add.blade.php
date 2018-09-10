@@ -6,6 +6,11 @@
     <!--  -->
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid-theme.min.css')}}" rel="stylesheet">
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid.min.css')}}" rel="stylesheet">
+    <style>
+        .btn {
+            margin-left: 20px;
+        }
+    </style>
 @endsection
 <!-- ================== /page-css ================== -->
 
@@ -118,7 +123,7 @@
                                 <div class="form-group row">
                                     <label for="email1" class="col-sm-3 text-right control-label col-form-label">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control vEmail" id="email1" placeholder="Email Here" value="{{$info->vEmail or ''}}">
+                                        <input type="email" class="form-control vEmail" id="email1" placeholder="Email Here" value="{{$info->vUserEmail or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -133,6 +138,14 @@
                                         <input type="text" class="form-control vUserAddress" id="com3" placeholder="" value="{{$info->vUserAddress or ''}}">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">UserPicture</label>
+                                    <div class="col-sm-9">
+                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
+                                            <img src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="card-body">
@@ -140,11 +153,11 @@
                                     @if(isset($info))
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
                                     @else
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
+                                        <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
+                                        <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                     @endif
-                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
-                                    <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
+                                    <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
+                                    <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                 </div>
                             </div>
                         </form>
@@ -233,6 +246,7 @@
             });
             //
             $(".btn-doadd").click(function () {
+                check_field_no_empty(modal);
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.vAccount = current_modal.find(".vAccount").val();
@@ -244,6 +258,7 @@
                 data.vUserEmail = next_modal.find(".vUserEmail").val();
                 data.vUserContact = next_modal.find(".vUserContact").val();
                 data.vUserAddress = next_modal.find(".vUserAddress").val();
+                data.vUserImage = next_modal.find("img").attr('src');
                 //
                 $.ajax({
                     url: url_doadd,
@@ -335,6 +350,25 @@
                 }, );
             });
         });
+
+        function check_field_no_empty( module , type ){
+            if (module.find(".vAccount").val() === "") {
+                module.find(".vAccount").focus();
+                toastr.info( module.find(".vAccount").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+                return false;
+            }
+            if (module.find(".vPassword1").val() === "") {
+                module.find(".vPassword1").focus();
+                toastr.info( module.find(".vPassword1").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+                return false;
+            }
+            if (module.find(".vUserName").val() === "") {
+                module.find(".vUserName").focus();
+                toastr.info( module.find(".vUserName").attr('placeholder') + '未填' , "{{trans('_web_alert.notice')}}");
+                return false;
+            }
+            return true;
+        }
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->
