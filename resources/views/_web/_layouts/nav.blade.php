@@ -46,9 +46,13 @@
             <span class="hide-menu">Extra</span>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap')}}" aria-expanded="false">
                 <i class="mdi mdi-content-paste"></i>
-                <span class="hide-menu">Documentation</span>
+                <span class="hide-menu">Shakemap</span>
+            </a>
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">Shakemap新版</span>
             </a>
         </li>
         {{--<li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="" aria-expanded="false"><i class="mdi mdi-directions"></i><span class="hide-menu">Log Out</span></a></li>--}}

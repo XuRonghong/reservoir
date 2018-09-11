@@ -129,7 +129,7 @@ class IndexController extends _WebController
     /*
      *
      */
-    public function add ()
+    public function add (Request $request)
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
@@ -373,9 +373,11 @@ class IndexController extends _WebController
         $Dao->iRank = $request->input( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
         if ($Dao->save()) {
-            $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
-            $DaoInfo->iMemberId = 0;
-            $DaoInfo->save();
+            if ($request->input( 'iStatus' )) {
+                $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
+                $DaoInfo->iMemberId = 0;
+                $DaoInfo->save();
+            }
 
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );

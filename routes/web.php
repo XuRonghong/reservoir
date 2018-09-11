@@ -381,6 +381,8 @@ Route::group(
                     } );
             } );
 
+            Route::get( 'shakemap', 'IndexController@shakemap' );
+            Route::get( 'shakemap2', 'IndexController@shakemap2' );
 
             /***********************************************************
              * Admin

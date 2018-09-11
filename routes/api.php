@@ -46,6 +46,14 @@ Route::group(
         ], function() {
         Route::get( 'getlist', 'SearchController@getList' );
     } );
+
+    //
+    Route::group(
+        [
+            'prefix' => 'shakemap_event_api',
+        ], function() {
+        Route::post( '', '_APIController@shakemap_event_api' );
+    } );
 } );
 
 
