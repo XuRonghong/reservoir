@@ -137,7 +137,7 @@ return [
             'video_summary' => '影片簡介'
         ],
     'member_image' => '頭像',
-    'reservoir' =>
+    'reservoir2' =>
         [
             'index_author' => '發佈者',
             'index_date' => '公告日期',

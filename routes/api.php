@@ -17,6 +17,11 @@ Route::group(
     [
         'namespace' => '_API',
     ], function() {
+
+    //
+    Route::any( 'shakemap_event_api', '_APIController@shakemap_event_api' );
+
+
     Route::group(
         [
             'prefix' => 'category',
@@ -45,14 +50,6 @@ Route::group(
             'prefix' => 'search',
         ], function() {
         Route::get( 'getlist', 'SearchController@getList' );
-    } );
-
-    //
-    Route::group(
-        [
-            'prefix' => 'shakemap_event_api',
-        ], function() {
-        Route::post( '', '_APIController@shakemap_event_api' );
     } );
 } );
 

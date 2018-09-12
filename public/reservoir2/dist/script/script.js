@@ -40,9 +40,9 @@
 
   function displayInfo() {
     $('.box>.title').text($(this).next('.text').text())
-      $('.box>.info1').text($(this).next('.info1').text())
-      $('.box>.info2').text($(this).next('.info2').text())
-      $('.box>.info3').text($(this).next('.info3').text())
+    $('.box>.info1').text($(this).nextAll('[data-name="info1"]').text())
+    $('.box>.info2').text($(this).nextAll('[data-name="info2"]').text())
+    $('.box>.info3').text($(this).nextAll('[data-name="info3"]').text())
       //
     $('circle').attr('style', '')
     $(this).css({fill: '#fff', stroke: '#3a3837', strokeWidth: '2'})
@@ -57,7 +57,13 @@
     $(window).on('resize', _.debounce(collapseOnResize, WaitingTime))
     $('.btn-hamburger').on('click', _.throttle(toggleNavList, WaitingTime))
     $('.btn-collapse').on('click', _.throttle(toggleFooter, WaitingTime))
-    $('circle').on('click', displayInfo)
+    $('circle').on('click', displayInfo);
+
+    $('g[data-id]').each(function() {
+      $(this).find('.text').each(function(index){
+        $(this).attr('data-name', 'info' + index)
+      })
+    })
   }
 
   $(document).ready(init)

@@ -116,7 +116,7 @@ class InfoController extends _WebController
         $this->rtndata ['sEcho'] = $sEcho;
         $this->rtndata ['iTotalDisplayRecords'] = $total_count;
         $this->rtndata ['iTotalRecords'] = $total_count;
-        $this->rtndata ['aaData'] = $data_arr;
+        $this->rtndata ['aaData'] = $total_count ? $data_arr : [];
 
         return response()->json( $this->rtndata );
     }

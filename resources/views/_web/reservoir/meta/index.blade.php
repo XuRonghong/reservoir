@@ -202,6 +202,8 @@
                 "stateSave": true,
                 "scrollX": true,
                 // "scrollY": '65vh',
+                'bProcessing': true,
+                // 'sServerMethod': 'GET',
                 "aoColumns": [
                     // {"sTitle": "id", "mData": "iId", "width": "5%", "sName": "iId"},
                     {

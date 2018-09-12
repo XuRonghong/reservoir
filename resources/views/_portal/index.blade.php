@@ -64,7 +64,7 @@
                         @endfor
                 </div>
                 <div class="seeMore">
-                    <a href="{{url('news')}}">{{trans('reservoir')}}</a>
+                    <a href="{{url('news')}}">{{trans('reservoir2')}}</a>
                 </div>
                 @endif
             </div>

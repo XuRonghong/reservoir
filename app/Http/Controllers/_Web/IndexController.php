@@ -48,6 +48,10 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        $info['id'] = 'xxxxxxxx';
+        $info['date'] = date('Y') . '年' . date('m') . '月' . date('d') . '日';
+        $info['time'] = date('H') . '時' . date('m') . '分' . date('s') . '秒';
+        $this->view->with( 'info', $info );
         session()->put( 'SEO.vTitle' , $this->vTitle );
 
         return $this->view;

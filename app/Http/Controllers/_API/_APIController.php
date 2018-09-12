@@ -31,8 +31,14 @@ class _APIController extends Controller
                 ->orWhere('id', 'LIKE', 'MD%')
                 ->orderBy('id', 'ASC')
                 ->get();
-            $returnList["data"] = $DaoShakemap ? $DaoShakemap : [];
+            if (!$DaoShakemap){
+                DB::reconnect();
+                $returnList["data"] = [];
+            }
+            $returnList["data"] = $DaoShakemap ;
         }
+        $returnList['date'] = date('Y') . '年' . date('m') . '月' . date('d') . '日';
+        $returnList['time'] = date('H') . '時' . date('i') . '分' . date('s') . '秒';
 
         echo json_encode($returnList);
 

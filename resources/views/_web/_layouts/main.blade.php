@@ -17,11 +17,6 @@
     <!-- This page plugin CSS -->
     @yield('page-css')
 
-
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    {{--<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>--}}
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
     <!-- Custom CSS -->
     <link href="{{url('xtreme-admin/dist/css/style.min.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -37,7 +32,6 @@
     <link rel="stylesheet" href="{{url('css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
     <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
-
 
 </head>
 <body>
@@ -121,7 +115,6 @@
     {{--document.write('<script src="{{url('/js/jquery-ui-1.10.3.min.js')}}"><\/script>');--}}
     {{--}--}}
     {{--</script>--}}
-
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
     <!-- ============================================================== -->

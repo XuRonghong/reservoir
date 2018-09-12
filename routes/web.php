@@ -318,7 +318,7 @@ Route::group(
 
                 //
                 Route::get( '', 'IndexController@index' );
-                Route::get( 'getlist', 'IndexController@getList' );
+                Route::any( 'getlist', 'IndexController@getList' );
                 Route::get( 'add', 'IndexController@add' );
                 Route::post( 'doadd', 'IndexController@doAdd' );
                 Route::get( 'edit/{id}', 'IndexController@edit' );
@@ -332,7 +332,7 @@ Route::group(
                     ], function() {
                     //
                     Route::get( '', 'InfoController@index' );
-                    Route::get( 'getlist', 'InfoController@getList' );
+                    Route::any( 'getlist', 'InfoController@getList' );
 //                    Route::get( 'add', 'InfoController@add' );
 //                    Route::post( 'doadd', 'InfoController@doAdd' );
                     Route::get( 'edit/{id}', 'InfoController@edit' );
@@ -352,7 +352,7 @@ Route::group(
                 ], function() {
 
                     Route::get( '', 'IndexController@index' );
-                    Route::get( 'getlist', 'IndexController@getList' );
+                    Route::any( 'getlist', 'IndexController@getList' );
                     Route::get( 'add', 'IndexController@add' );
                     Route::post( 'doadd', 'IndexController@doAdd' );
                     Route::get( 'edit/{id}', 'IndexController@edit' );

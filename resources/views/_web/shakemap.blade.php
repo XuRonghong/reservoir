@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>地震資訊</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('xtreme-admin/assets/images/favicon.png')}}">
     <style>
     html, body {
         padding:0;
@@ -483,7 +485,7 @@
     </div>
 
     <!--  -->
-    <script type="text/javascript" src="{{url('reservoir/dist/script/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('reservoir/jquery.min.js')}}"></script>
     <script>
         function countyColor(target, color) {
             for (var i = 0; i < target.childNodes.length; i++) {
@@ -591,7 +593,7 @@
                             });
                         }
                     }
-                    setTimeout(apiRead, 1500);
+                    setTimeout(apiRead, 1000);
                 },"json");
             };
             apiRead();

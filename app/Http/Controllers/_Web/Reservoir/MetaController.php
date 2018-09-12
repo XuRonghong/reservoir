@@ -35,7 +35,7 @@ class MetaController extends _WebController
 
 
     /*
-     * 所有水庫 ajax
+     * 所有水庫meta ajax
      */
     public function getList ( Request $request )
     {
@@ -117,7 +117,7 @@ class MetaController extends _WebController
         $this->rtndata ['sEcho'] = $sEcho;
         $this->rtndata ['iTotalDisplayRecords'] = $total_count;
         $this->rtndata ['iTotalRecords'] = $total_count;
-        $this->rtndata ['aaData'] = $data_arr;
+        $this->rtndata ['aaData'] = $total_count ? $data_arr : [];
 
         return response()->json( $this->rtndata );
     }
