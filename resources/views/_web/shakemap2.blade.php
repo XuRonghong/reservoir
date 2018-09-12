@@ -720,9 +720,9 @@
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info0']").each(function(){
                                 $(this).text($(this).attr("data-title")+"ID:"+src.data[i].id);
                             });
-                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info1']").each(function(){
-                                $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
-                            });
+                            // $("[data-id='"+src.data[i].id+"']").find("[data-name='info1']").each(function(){
+                            //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
+                            // });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
                                 $(this).text($(this).attr("data-title")+"NET:"+src.data[i].NET);
                             });
@@ -732,25 +732,36 @@
 
                             //
                             $("[data-id='"+src.data[i].id+"']").each(function(){
+                                var earthquake = 0;
                                 if(src.data[i].PGA<=0.8){
                                     fillColor="#999999";
                                 }else if(src.data[i].PGA<=2.5){
                                     fillColor="#98f0ff";
+                                    earthquake = 1;
                                 }else if(src.data[i].PGA<=8.0){
                                     fillColor="#528eff";
+                                    earthquake = 2;
                                 }else if(src.data[i].PGA<=25){
                                     fillColor="#05e600";
+                                    earthquake = 3;
                                 }else if(src.data[i].PGA<=80){
                                     fillColor="#fff316";
+                                    earthquake = 4;
                                 }else if(src.data[i].PGA<=250){
                                     fillColor="#ffa85d";
+                                    earthquake = 5;
                                 }else if(src.data[i].PGA<=400){
                                     fillColor="#f75f5f";
+                                    earthquake = 6;
                                 }else{
                                     fillColor="#a04de6";
+                                    earthquake = 7;
                                 }
                                 $(this).css({
                                     "fill":fillColor
+                                });
+                                $(this).find("[data-name='info1']").each(function(){
+                                    $(this).text("震度:"+earthquake);
                                 });
                             });
                         }

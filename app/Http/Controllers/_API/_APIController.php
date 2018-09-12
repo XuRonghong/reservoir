@@ -19,7 +19,7 @@ class _APIController extends Controller
 
         $returnList["type"]="event";
         $Dao = ModEvent::query()
-            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))
+            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區扣的時差
             ->orderBy('eventTime', 'DESC')
             ->limit(45)
             ->get();

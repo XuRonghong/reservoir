@@ -140,6 +140,8 @@ class LoginController extends _WebController
         // MemberInfo
         session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
+        //
+        FuncController::_addLog( 'login' );
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
@@ -230,6 +232,9 @@ class LoginController extends _WebController
         // MemberInfo
         session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
+
+        //
+        FuncController::_addLog( 'login' );
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
