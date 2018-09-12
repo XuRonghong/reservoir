@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\_API;
 
 use App\Http\Controllers\Controller;
+use App\ModReservoir;
 use App\ModShakemap;
 use App\ModEvent;
 
@@ -19,7 +20,10 @@ class _APIController extends Controller
 
         $returnList["type"]="event";
         $Dao = ModEvent::query()
-            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區扣的時差
+            ->join( 'mod_reservoir_meta', function ($join) {
+                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
+            })
+            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
             ->orderBy('eventTime', 'DESC')
             ->limit(45)
             ->get();
@@ -27,6 +31,9 @@ class _APIController extends Controller
         if ( $Dao->count() == 0){
             $returnList["type"]="normal";
             $DaoShakemap = ModShakemap::query()
+                ->join( 'mod_reservoir_meta', function ($join) {
+                    $join->on('shakemap.id', '=', 'mod_reservoir_meta.vNumber');
+                })
                 ->where('id', 'LIKE', 'SD%')
                 ->orWhere('id', 'LIKE', 'MD%')
                 ->orderBy('id', 'ASC')
@@ -36,6 +43,10 @@ class _APIController extends Controller
                 $returnList["data"] = [];
             }
             $returnList["data"] = $DaoShakemap ;
+        }
+        foreach ($returnList["data"] as $key => $item){
+            $returnList['data2'][$key] = ModReservoir::query()->where('vName', 'LIKE', '%'.$item->vStructure.'%')->first();
+//            echo $item->vStructure . '=' . $returnList['data2'][$key]->vLocation .'<br>';
         }
         $returnList['date'] = date('Y') . '年' . date('m') . '月' . date('d') . '日';
         $returnList['time'] = date('H') . '時' . date('i') . '分' . date('s') . '秒';

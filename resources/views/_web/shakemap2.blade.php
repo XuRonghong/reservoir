@@ -45,10 +45,10 @@
         <div class="main">
             <section class="alert">
                 <div class="title">地震報告</div>
-                <div class="row">
-                    <div class="label">- 編號：</div>
-                    <div class="data">第{{$info['id'] or '-'}}號</div>
-                </div>
+                {{--<div class="row">--}}
+                    {{--<div class="label">- 編號：</div>--}}
+                    {{--<div class="data">第{{$info['id'] or '-'}}號</div>--}}
+                {{--</div>--}}
                 <div class="row">
                     <div class="label">- 日期：</div>
                     <div class="data date">{{$info['date'] or '-'}}</div>
@@ -726,9 +726,9 @@
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
                                 $(this).text($(this).attr("data-title")+"NET:"+src.data[i].NET);
                             });
-                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).text($(this).attr("data-title")+"LOCATION:"+src.data[i].LOCATION);
-                            });
+                            // $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
+                            //     $(this).text($(this).attr("data-title")+"LOCATION:"+src.data[i].LOCATION);
+                            // });
 
                             //
                             $("[data-id='"+src.data[i].id+"']").each(function(){
@@ -762,6 +762,9 @@
                                 });
                                 $(this).find("[data-name='info1']").each(function(){
                                     $(this).text("震度:"+earthquake);
+                                });
+                                $(this).find("[data-name='info3']").each(function(){
+                                    $(this).text(""+src.data2[i].vLocation);
                                 });
                             });
                         }
@@ -797,7 +800,7 @@
                                 $(this).text($(this).attr("data-title")+"NET:"+src.data[i].NET);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).text($(this).attr("data-title")+"LOCATION:"+src.data[i].LOCATION);
+                                $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
                             });
                         }
                     }
