@@ -7,7 +7,7 @@
 //$this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
 namespace App\Http\Controllers\_API;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ModReservoir;
 use App\ModShakemap;
@@ -25,37 +25,54 @@ class _APIController extends Controller
         echo json_encode( $Dao );
     }
 
-
     public function addModData (Request $request)
     {
-        $iData1 = $request->exist('data1') ? $request->input('data1') : 0;
-        $vData2 = $request->exist('data2') ? $request->input('data2') : '';
-
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
         $Dao = new ModData();
-        $Dao->iData1 = $iData1;
-        $Dao->vData2 = $vData2;
+        $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : 0;
+        $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : '';
+        $Dao->iCreateTime = $Dao->iUpdateTime = time();
+        $Dao->iStatus = 1;
+        $Dao->bDel = 0;
         $Dao->save();
-
-        echo json_encode( $Dao->iId );
+        return json_encode( $Dao );
     }
 
-
-    public function addModDeviceToken (Request $request)
+    public function editModData (Request $request, $id)
     {
-        $iId = $request->exist('userid') ? $request->input('userid') : 0;
-        $vToken = $request->exist('token') ? $request->input('token') : '';
-
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
-        $Dao = new ModDeviceToken();
-        $Dao->iMemberId = $iId;
-        $Dao->vToken = $vToken;
+        $Dao = ModData::query()->where($map)->findOrFail($id);
+        $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : $Dao->iData1;
+        $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : $Dao->vData2;
+        $Dao->iUpdateTime = time();
+        $Dao->iStatus = 1;
+        $Dao->bDel = 0;
         $Dao->save();
-
-        echo json_encode( $Dao->iId );
+        return json_encode( $Dao );
     }
+
+    public function delModData (Request $request, $id)
+    {
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
+        $map['bDel'] = 0;
+        $map['iStatus'] = 1;
+        $Dao = ModData::query()->where($map)->find($id);
+        if ($Dao){
+            $Dao->bDel = 1;
+            $Dao->iUpdateTime = time();
+            $Dao->save();
+        }
+        return 204;
+    }
+
 
     public function getDeviceToken ()
     {
@@ -65,6 +82,58 @@ class _APIController extends Controller
         echo json_encode( $Dao );
     }
 
+    public function addDeviceToken (Request $request)
+    {
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
+        $Dao = new ModDeviceToken();
+        $Dao->iMemberId = $request->exist('userid') ? $request->input('userid') : 0;
+        $Dao->vToken = $request->exist('token') ? $request->input('token') : '';
+        $Dao->iCreateTime = $Dao->iUpdateTime = time();
+        $Dao->iStatus = 1;
+        $Dao->bDel = 0;
+        $Dao->save();
+        return json_encode( $Dao );
+    }
+    public function editDeviceToken (Request $request, $id)
+    {
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
+        $map['bDel'] = 0;
+        $map['iStatus'] = 1;
+        $Dao = ModDeviceToken::query()->where($map)->findOrFail($id);
+        $Dao->iMemberId = $request->exists('userid') ? $request->input('userid') : $Dao->iMemberId;
+        $Dao->vToken = $request->exists('token') ? $request->input('token') : $Dao->vToken;
+        $Dao->iUpdateTime = time();
+        $Dao->iStatus = 1;
+        $Dao->bDel = 0;
+        $Dao->save();
+        return json_encode( $Dao );
+    }
+
+    public function delDeviceToken (Request $request, $id)
+    {
+        if ( !$request->exists('_token')){
+            return $request->input('_token') . '<>' ;
+        }
+        $map['bDel'] = 0;
+        $map['iStatus'] = 1;
+        $Dao = ModDeviceToken::query()->where($map)->find($id);
+        if ($Dao){
+            $Dao->bDel = 1;
+            $Dao->iUpdateTime = time();
+            $Dao->save();
+        }
+        return 204;
+    }
+
+
+
+    /*
+     *
+     */
     public function shakemap_event_api ()
     {
         $returnList=array();

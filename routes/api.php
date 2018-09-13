@@ -20,16 +20,19 @@ Route::group(
 
     //
     Route::get( 'get_data', '_APIController@getModData' );
-    Route::post( 'put_data', '_APIController@addModData' );
-    Route::post( 'post_data', '_APIController@editModData' );
-    Route::post( 'get_data/del/{id}', '_APIController@delModData' );
+    Route::post( 'putdata', '_APIController@addModData' );
+    Route::put( 'editdata/{id}', '_APIController@editModData' );
+    Route::delete( 'deldata/{id}', '_APIController@delModData' );
 
     Route::get( 'device_token', '_APIController@getDeviceToken' );
-    Route::post( 'put_token', '_APIController@addModDeviceToken' );
+    Route::post( 'puttoken', '_APIController@addDeviceToken' );
+    Route::put( 'edittoken/{id}', '_APIController@editDeviceToken' );
+    Route::delete( 'deltoken/{id}', '_APIController@delDeviceToken' );
 
 
     //
     Route::any( 'shakemap_event_api', '_APIController@shakemap_event_api' );
+
 
 
     Route::group(
