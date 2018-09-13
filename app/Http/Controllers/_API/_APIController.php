@@ -22,7 +22,7 @@ class _APIController extends Controller
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
         $Dao = ModData::query()->where($map)->get();
-        echo json_encode( json_decode($Dao), true);
+        echo json_encode( $Dao );
     }
 
 
@@ -38,7 +38,7 @@ class _APIController extends Controller
         $Dao->vData2 = $vData2;
         $Dao->save();
 
-        echo json_encode( json_decode($Dao->iId), true);
+        echo json_encode( $Dao->iId );
     }
 
 
@@ -54,7 +54,7 @@ class _APIController extends Controller
         $Dao->vToken = $vToken;
         $Dao->save();
 
-        echo json_encode( json_decode($Dao->iId), true);
+        echo json_encode( $Dao->iId );
     }
 
     public function getModDeviceToken ()
@@ -62,7 +62,7 @@ class _APIController extends Controller
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
         $Dao = ModDeviceToken::query()->where($map)->get();
-        echo json_encode( json_decode($Dao), true);
+        echo json_encode( $Dao );
     }
 
     public function shakemap_event_api ()
