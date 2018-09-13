@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Web\Member;
 
+use App\LogLogin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
@@ -110,9 +111,9 @@ class IndexController extends _WebController
             } else {
                 $var->iAcType = "一般人員";
             }
-            $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
-            $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
-            $var->iLoginTime = date( 'Y/m/d H:i:s' , $var->iLoginTime );
+//            $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
+//            $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
+//            $var->iLoginTime = date( 'Y/m/d H:i:s' , $var->iLoginTime );
         }
 
 
@@ -252,6 +253,13 @@ class IndexController extends _WebController
      */
     public function edit ( $id )
     {
+        if (session('member.iAcType') > 9 && session('member.iUserId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+        if ($id == 1000000001 && session('member.iUserId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -262,7 +270,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
 
 
-        $DaoMember = SysMember::query()->find($id);
+        $DaoMember = SysMember::query()->where('iUserId','=',$id)->first();
         if (!$DaoMember) {
             session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
@@ -434,4 +442,37 @@ class IndexController extends _WebController
 
         return response()->json( $this->rtndata );
     }
+
+
+    /*
+     *
+     */
+    public function attr (Request $request , $id)
+    {
+        $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
+        $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
+            implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+            implode('.', $this->module) . '.meta' => url('web/' . implode('/', $this->module) . "/meta")
+        ];
+        $this->view->with('breadcrumb', $this->breadcrumb);
+        $this->view->with('module', $this->module);
+
+
+        $DaoMember = SysMember::query()->find($id);
+        if (!$DaoMember) {
+            session()->put('check_empty.message', trans('_web_message.empty_id'));
+            return redirect('web/' . implode('/', $this->module));
+        }
+        $DaoMember->iCreateTime = date( 'Y/m/d H:i:s', $DaoMember->iCreateTime );
+        $DaoMember->iUpdateTime = date( 'Y/m/d H:i:s', $DaoMember->iUpdateTime );
+        $DaoMember->iLoginTime = $DaoMember->iLoginTime ? date( 'Y/m/d H:i:s' , $DaoMember->iLoginTime ) : '';
+
+        $this->view->with( 'info', $DaoMember );
+
+        return $this->view;
+    }
+
+
+
 }

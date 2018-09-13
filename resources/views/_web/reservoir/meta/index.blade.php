@@ -6,7 +6,7 @@
     <!-- This page plugin CSS -->
     <style type="text/css" rel="stylesheet">
         .btn {
-            margin-left: 30px;
+            margin-left: 5px;
         }
     </style>
 @endsection
@@ -209,7 +209,7 @@
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "35px",
+                        // "width": "35px",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -218,25 +218,25 @@
                             // return '<button class="btn btn-xs btn-default btn-copy" title="複製"><i class="fa fa-copy" aria-hidden="true"></i></button>' + data;
                         }
                     },
-                    {
-                        "sTitle": "Rank",
-                        "mData": "iRank",
-                        "sName": "iRank",
-                        "bSearchable": false,
-                        "width": "30px",
-                        "mRender": function (data, type, row) {
-                            return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                        }
-                    },
-                    {"sTitle": "蓄水建造物", "mData": "vStructure", "width": "5%", "sName": "vStructure"},
-                    {"sTitle": "災害潛勢", "mData": "vLevel", "width": "5%", "sName": "vLevel"},
-                    {"sTitle": "壩高(m)", "mData": "iHeight", "width": "10%", "sName": "iHeight"},
-                    {"sTitle": "總蓄水量 (萬m3)", "mData": "iStoreTotal", "width": "10%", "sName": "iStoreTotal"},
-                    {"sTitle": "分級", "mData": "vGrade", "width": "5%", "sName": "vGrade"},
-                    {"sTitle": "責任區", "mData": "vTrustRegion", "width": "10%", "sName": "vTrustRegion"},
-                    {"sTitle": "站碼", "mData": "vNumber", "width": "10%", "sName": "vNumber"},
-                    {"sTitle": "NET", "mData": "vNet", "width": "5%", "sName": "vNet"},
-                    {"sTitle": "區碼", "mData": "vAreaCode", "width": "10%", "sName": "vAreaCode"},
+                    // {
+                    //     "sTitle": "Rank",
+                    //     "mData": "iRank",
+                    //     "sName": "iRank",
+                    //     "bSearchable": false,
+                    //     "width": "30px",
+                    //     "mRender": function (data, type, row) {
+                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
+                    //     }
+                    // },
+                    {"sTitle": "蓄水建造物", "mData": "vStructure", /*"width": "12%",*/ "sName": "vStructure"},
+                    {"sTitle": "災害潛勢", "mData": "vLevel", /*"width": "5%",*/ "sName": "vLevel"},
+                    {"sTitle": "壩高(m)", "mData": "iHeight", /*"width": "10%", */"sName": "iHeight"},
+                    {"sTitle": "總蓄水量 (萬m3)", "mData": "iStoreTotal", /*"width": "10%",*/ "sName": "iStoreTotal"},
+                    {"sTitle": "分級", "mData": "vGrade", /*"width": "5%",*/ "sName": "vGrade"},
+                    {"sTitle": "責任區", "mData": "vTrustRegion", /*"width": "10%",*/ "sName": "vTrustRegion"},
+                    {"sTitle": "站碼", "mData": "vNumber", /*"width": "10%",*/ "sName": "vNumber"},
+                    {"sTitle": "NET", "mData": "vNet", /*"width": "5%",*/ "sName": "vNet"},
+                    {"sTitle": "區碼", "mData": "vAreaCode", /*"width": "10%",*/ "sName": "vAreaCode"},
                     // {
                     //     "sTitle": "圖片",
                     //     "mData": "vImages",
@@ -248,25 +248,24 @@
                     //         return "<img width='100px' src=" + data + ">";
                     //     }
                     // },
-                    {
-                        "sTitle": "I/O",
-                        "mData": "iStatus",
-                        "sName": "iStatus",
-                        "width": "5%",
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            var btn = "無狀態";
-                            switch (data) {
-                                case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
-                                    break;
-                                default:
-                                    btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
-                                    break;
-                            }
-                            return btn;
-                        }
-                    },
+                    // {
+                    //     "sTitle": "I/O",
+                    //     "mData": "iStatus",
+                    //     "sName": "iStatus",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         var btn = "無狀態";
+                    //         switch (data) {
+                    //             case 1:
+                    //                 btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                    //                 break;
+                    //             default:
+                    //                 btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
+                    //                 break;
+                    //         }
+                    //         return btn;
+                    //     }
+                    // },
                     {
                         "sTitle": "Action",
                         "bSortable": false,
@@ -274,7 +273,15 @@
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            switch (row.iStatus) {
+                                case 1:
+                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                                    break;
+                                default:
+                                    btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
+                                    break;
+                            }
+                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             return btn;
                         }

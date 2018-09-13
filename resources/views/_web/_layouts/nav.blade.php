@@ -6,6 +6,7 @@
             <i class="mdi mdi-dots-horizontal"></i>
             <span class="hide-menu">Tables</span>
         </li>
+        @if(session('member.iAcType')<10)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="mdi mdi-border-all"></i>
@@ -15,10 +16,10 @@
                 <li class="sidebar-item"><a href="{{url('web/member')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">帳號list </span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/member/info')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">User資訊list</span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/member/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">新增 </span></a></li>
-                {{--<li class="sidebar-item"><a href="{{url('web/member/edit')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">修改 </span></a></li>--}}
                 {{--<li class="sidebar-item"><a href="{{url('web/member/')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">刪除</span></a></li>--}}
             </ul>
         </li>
+        @endif
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="mdi mdi-border-left"></i>
@@ -41,6 +42,18 @@
                 {{--<li class="sidebar-item"><a href="{{url('web/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>--}}
             </ul>
         </li>
+        @if(session('member.iAcType')==1)
+        <li class="sidebar-item">
+            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                <i class="mdi mdi-border-all"></i>
+                <span class="hide-menu">LOG</span>
+            </a>
+            <ul aria-expanded="false" class="collapse first-level">
+                <li class="sidebar-item"><a href="{{url('web/log/login')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">登入紀錄</span></a></li>
+                <li class="sidebar-item"><a href="{{url('web/log/edit')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">修改紀錄</span></a></li>
+            </ul>
+        </li>
+        @endif
         <li class="nav-small-cap">
             <i class="mdi mdi-dots-horizontal"></i>
             <span class="hide-menu">Extra</span>

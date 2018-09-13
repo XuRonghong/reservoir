@@ -266,7 +266,7 @@ Route::group(
 
         Route::get( 'login', 'LoginController@indexView') ;
         Route::group([
-                'middleware'=> ['LoginThrottle:5,10']
+//                'middleware'=> ['LoginThrottle:5,10']
             ], function(){
             Route::post('doLogin', 'LoginController@doLogin' );
             Route::post('doLoginMobile', 'LoginController@doLoginMobile' );
@@ -311,6 +311,7 @@ Route::group(
                 [
                     'prefix' => 'member',
                     'namespace' => 'Member',
+//                    'middleware' => 'CheckAuthLogin'
                 ], function() {
 //                Route::get( 'userinfo', 'IndexController@index' );
 //                Route::post( 'userinfo/dosave', 'IndexController@doSave' );
@@ -325,6 +326,7 @@ Route::group(
                 Route::post( 'dosave', 'IndexController@doSave' );
                 Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
                 Route::post( 'dosavepassword', 'IndexController@doSavePassword' );
+                Route::get( 'attr/{id}', 'IndexController@attr' );
 
                 Route::group(
                     [
@@ -359,7 +361,7 @@ Route::group(
                     Route::post( 'dosave', 'IndexController@doSave' );
                     Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
                     Route::post( 'dodel', 'IndexController@doDel' );
-                    Route::get( 'attributes/{id}', 'IndexController@attributes' );
+                    Route::get( 'attr/{id}', 'IndexController@attr' );
                     Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
 
                     Route::group(
@@ -381,8 +383,49 @@ Route::group(
                     } );
             } );
 
+
+            Route::group(
+                [
+                    'prefix' => 'log',
+                    'middleware' => 'CheckSuperLogin',
+                    'namespace' => 'LOG',
+                ], function() {
+
+                //
+                Route::group(
+                    [
+                        'prefix' => 'login',
+                    ], function() {
+                    //
+                    Route::get( '', 'LogController@index' );
+//                    Route::any( 'getlist', 'LogController@getList' );
+//                    Route::get( 'add', 'LogController@add' );
+//                    Route::post( 'doadd', 'LogController@doAdd' );
+//                    Route::get( 'edit/{id}', 'LogController@edit' );
+//                    Route::post( 'dosave', 'LogController@doSave' );
+//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
+                } );
+                //
+                Route::group(
+                    [
+                        'prefix' => 'edit',
+                    ], function() {
+                    //
+                    Route::get( '', 'LogController@edit' );
+                    Route::get( 'attr/{id}', 'LogController@attr' );
+//                    Route::any( 'getlist', 'LogController@getList' );
+//                    Route::get( 'add', 'LogController@add' );
+//                    Route::post( 'doadd', 'LogController@doAdd' );
+//                    Route::get( 'edit/{id}', 'LogController@edit' );
+//                    Route::post( 'dosave', 'LogController@doSave' );
+//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
+                } );
+
+            } );
+
             Route::get( 'shakemap', 'IndexController@shakemap' );
             Route::get( 'shakemap2', 'IndexController@shakemap2' );
+
 
             /***********************************************************
              * Admin

@@ -10,7 +10,7 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="{{url('web')}}">
                 <!-- Logo icon -->
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -322,7 +322,7 @@
                                 <p class=" m-b-0">{{session('member.meta.vUserEmail' , '')}}</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="{{url('web/member/edit').'/'.session('member.iId' , '')}}"><i class="ti-user m-r-5 m-l-5"></i> My Confidential</a>
+                        <a class="dropdown-item" href="{{url('web/member/edit').'/'.session('member.iUserId' , '')}}"><i class="ti-user m-r-5 m-l-5"></i> My Confidential</a>
                         <a class="dropdown-item" href="{{url('web/member/info/edit').'/'.session('member.iId' , '')}}"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                         {{--<a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>--}}
                         {{--<a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>--}}

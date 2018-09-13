@@ -98,6 +98,7 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if(session('member.iAcType')<10 && session('member.iAcType')>1)
                                 <div class="form-group row">
                                     <label class="col-sm-3 text-right control-label col-form-label">權限</label>
                                     <div class="col-sm-9">
@@ -110,6 +111,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <hr>
                             <div class="card-body memberInfo-modal">
@@ -151,7 +153,9 @@
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
                                     @if(isset($info))
+                                        @if(session('member.iAcType')<10)
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
+                                        @endif
                                     @else
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-next">Next</button>
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
@@ -222,7 +226,8 @@
             modal.find('.btn-back').hide();
             //
             $(".btn-cancel").click(function () {
-                location.href = url_index;
+                // location.href = url_index;
+                history.back();
             });
             //
             $(".btn-back").click(function () {

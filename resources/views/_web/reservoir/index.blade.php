@@ -6,7 +6,7 @@
     <!-- This page plugin CSS -->
     <style type="text/css" rel="stylesheet">
         .btn {
-            margin-left: 20px;
+            margin-left: 10px;
         }
     </style>
 @endsection
@@ -38,7 +38,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
+                            {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
                             <h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
@@ -127,28 +127,28 @@
                             return data;
                         }
                     },
-                    {
-                        "sTitle": "Rank",
-                        "mData": "iRank",
-                        "sName": "iRank",
-                        "bSearchable": false,
-                        "width": "5%",
-                        "mRender": function (data, type, row) {
-                            return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                        }
-                    },
-                    {"sTitle": "地區別", "mData": "vRegion", "width": "5%", "sName": "vRegion"},
-                    {"sTitle": "水庫或壩堰名稱", "mData": "vName", "width": "10%", "sName": "vName"},
-                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "20%", "sName": "vLocation"},
-                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "10%", "sName": "vCounty"},
+                    // {
+                    //     "sTitle": "Rank",
+                    //     "mData": "iRank",
+                    //     "sName": "iRank",
+                    //     "bSearchable": false,
+                    //     "width": "5%",
+                    //     "mRender": function (data, type, row) {
+                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
+                    //     }
+                    // },
+                    {"sTitle": "地區別", "mData": "vRegion", /*"width": "8%", */"sName": "vRegion"},
+                    {"sTitle": "名稱", "mData": "vName", /*"width": "8%",*/ "sName": "vName"},
+                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "25%", "sName": "vLocation"},
+                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "12%", "sName": "vCounty"},
                     // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "5%", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
-                    {"sTitle": "Sum", "mData": "iSum", "width": "5%", "sName": "iSum"},
+                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "8%", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
+                    // {"sTitle": "Sum", "mData": "iSum", "width": "8%", "sName": "iSum"},
                     {
                         "sTitle": "圖片",
                         "mData": "vImages",
                         "sName": "vImages",
-                        "width": "15%",
+                        "width": "10%",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -159,25 +159,24 @@
                             return html_str;
                         }
                     },
-                    {
-                        "sTitle": "I/O",
-                        "mData": "iStatus",
-                        "sName": "iStatus",
-                        "width": "5%",
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            var btn = "無狀態";
-                            switch (data) {
-                                case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
-                                    break;
-                                default:
-                                    btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
-                                    break;
-                            }
-                            return btn;
-                        }
-                    },
+                    // {
+                    //     "sTitle": "I/O",
+                    //     "mData": "iStatus",
+                    //     "sName": "iStatus",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         var btn = "無狀態";
+                    //         switch (data) {
+                    //             case 1:
+                    //                 btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                    //                 break;
+                    //             default:
+                    //                 btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
+                    //                 break;
+                    //         }
+                    //         return btn;
+                    //     }
+                    // },
                     {
                         "sTitle": "Action",
                         "bSortable": false,
@@ -185,7 +184,15 @@
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            switch (row.iStatus) {
+                                case 1:
+                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                                    break;
+                                default:
+                                    btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
+                                    break;
+                            }
+                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             return btn;

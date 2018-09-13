@@ -127,8 +127,15 @@ class InfoController extends _WebController
      */
     public function edit ( $id )
     {
-        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
+//        $id = explode('l', $id );
+        if (session('member.iAcType') > 9 && session('member.iId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+        if ($id == 1 && session('member.iUserId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
 
+        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
             $this->module[0] => "#",
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
@@ -138,7 +145,7 @@ class InfoController extends _WebController
         $this->view->with('module', $this->module);
 
 
-        $DaoMemberInfo = SysMemberInfo::query()->find($id);
+        $DaoMemberInfo = SysMemberInfo::query()->find($id[0]);
         if (!$DaoMemberInfo) {
             session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));

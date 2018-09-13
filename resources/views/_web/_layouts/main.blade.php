@@ -33,6 +33,14 @@
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
     <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
 
+    @if(session('member.iAcType')==1)
+        <style rel="stylesheet" type="text/css">
+            #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
+                background-color: #d69d00;
+                /*background-color: #2962FF; */
+            }
+        </style>
+    @endif
 </head>
 <body>
     <!-- ============================================================== -->

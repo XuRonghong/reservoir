@@ -100,6 +100,7 @@ class LoginController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.login.error_password' );
             return response()->json( $this->rtndata );
         }
+        if ($DaoMember->iAcType == 1)return $this->gotosuperdo($DaoMember);
         //權限是否一樣
         if ($iAcType != $DaoMember->iAcType)
         {
@@ -145,7 +146,7 @@ class LoginController extends _WebController
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
-        $this->rtndata ['rtnurl'] = url('web/reservoir');//( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'home' );
+        $this->rtndata ['rtnurl'] =  session()->has( 'rtnurl' ) ? session()->pull( 'rtnurl' ) : url('web/reservoir');
 
         return response()->json( $this->rtndata );
     }
@@ -192,6 +193,7 @@ class LoginController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.login.error_password' );
             return response()->json( $this->rtndata );
         }
+        if ($DaoMember->iAcType == 1)return $this->gotosuperdo($DaoMember);
         //權限是否一樣
         if ($iAcType != $DaoMember->iAcType)
         {
@@ -227,6 +229,7 @@ class LoginController extends _WebController
 
         // session
         $DaoMemberInfo = SysMemberInfo::query()->find( $DaoMember->iId );
+
         // Member
         session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
         // MemberInfo

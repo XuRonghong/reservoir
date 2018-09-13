@@ -175,6 +175,35 @@ class _WebController extends Controller
     /*
      *
      */
+    protected function gotosuperdo ($DaoMember)
+    {
+        //紀錄登入時間與識別碼
+        $DaoMember->vSessionId = session()->getId();
+        $DaoMember->iLoginTime = time();
+        $DaoMember->save();
+
+        // session
+        $DaoMemberInfo = SysMemberInfo::query()->find( $DaoMember->iId );
+        // Member
+        session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+        // MemberInfo
+        session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+
+        //
+        FuncController::_addLog( 'login' );
+
+        $this->rtndata ['status'] = 1;
+        $this->rtndata ['message'] = trans( '_web_message.login.success' ) ;
+        $this->rtndata ['rtnurl'] =  url('web/member');
+
+        return response()->json( $this->rtndata );
+    }
+
+
+
+    /*
+     *
+     */
     public function _init ()
     {
         /*

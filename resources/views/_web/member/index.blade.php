@@ -106,7 +106,7 @@
         var url_edit = "{{ url('web/'.implode( '/', $module ).'/edit')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
-        var url_attributes = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
+        var url_attr = "{{ url('web/'.implode( '/', $module ).'/attr')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
         $(document).ready(function () {
             /* BASIC ;*/
@@ -137,14 +137,14 @@
                     //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
                     //     }
                     // },
-                    {"sTitle": "會員編號", "mData": "iUserId", "width": "5%", "sName": "iUserId"},
+                    // {"sTitle": "會員編號", "mData": "iUserId", "width": "5%", "sName": "iUserId"},
                     // {"sTitle": "會員代號", "mData": "vUserCode", "width": "5%", "sName": "vUserCode"},
                     {"sTitle": "存取權限", "mData": "iAcType", "width": "10%", "sName": "iAcType"},
                     {"sTitle": "帳號", "mData": "vAccount", "width": "5%", "sName": "vAccount"},
-                    {"sTitle": "IP", "mData": "vCreateIP", "width": "5%", "sName": "vCreateIP"},
-                    {"sTitle": "加入時間", "mData": "iCreateTime", "width": "10%", "sName": "iCreateTime"},
-                    {"sTitle": "更新時間", "mData": "iUpdateTime", "width": "10%", "sName": "iUpdateTime"},
-                    {"sTitle": "登入時間", "mData": "iLoginTime", "width": "10%", "sName": "iLoginTime"},
+                    // {"sTitle": "IP", "mData": "vCreateIP", "width": "5%", "sName": "vCreateIP"},
+                    // {"sTitle": "加入時間", "mData": "iCreateTime", "width": "10%", "sName": "iCreateTime"},
+                    // {"sTitle": "更新時間", "mData": "iUpdateTime", "width": "10%", "sName": "iUpdateTime"},
+                    // {"sTitle": "登入時間", "mData": "iLoginTime", "width": "10%", "sName": "iLoginTime"},
                     {
                         "sTitle": "啟用",
                         "mData": "bActive",
@@ -169,9 +169,9 @@
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                            // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             return btn;
                         }
                     },
@@ -282,6 +282,12 @@
                         }
                     });
                 });
+            });
+            //
+            $("#dt_basic").on('click', '.btn-attributes', function () {
+                //var id = $(this).closest('tr').attr('id');
+                var id = $(this).closest('tr').find('td').first().text();
+                location.href = url_attr + '/' + id;
             });
         });
     </script>
