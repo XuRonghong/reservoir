@@ -57,7 +57,7 @@ class _APIController extends Controller
         echo json_encode( $Dao->iId );
     }
 
-    public function getModDeviceToken ()
+    public function getDeviceToken ()
     {
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
