@@ -19,7 +19,7 @@ Route::group(
     ], function() {
 
     //
-    Route::get( 'get_data', '_APIController@getModData' );
+    Route::get( 'getdata', '_APIController@getModData' );
     Route::post( 'putdata', '_APIController@addModData' );
     Route::put( 'editdata/{id}', '_APIController@editModData' );
     Route::delete( 'deldata/{id}', '_APIController@delModData' );

@@ -17,12 +17,19 @@ use App\ModData;
 
 class _APIController extends Controller
 {
-    public function getModData ()
+    public function getModData (Request $request)
     {
+        if ( !$request->exists('_token')){
+            return 404;
+        }
+        if ( $request->input('_token') != '753951'){
+            return 404;
+        }
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
         $Dao = ModData::query()->where($map)->get();
-        echo json_encode( $Dao );
+//        echo json_encode( $Dao );
+        return json_encode( $Dao );
     }
 
     public function addModData (Request $request)
@@ -74,12 +81,19 @@ class _APIController extends Controller
     }
 
 
-    public function getDeviceToken ()
+    public function getDeviceToken (Request $request)
     {
+        if ( !$request->exists('_token')){
+            return 404;
+        }
+        if ( $request->input('_token') != '84269713'){
+            return 404;
+        }
         $map['bDel'] = 0;
         $map['iStatus'] = 1;
         $Dao = ModDeviceToken::query()->where($map)->get();
-        echo json_encode( $Dao );
+//        echo json_encode( $Dao );
+        return json_encode( $Dao );
     }
 
     public function addDeviceToken (Request $request)
