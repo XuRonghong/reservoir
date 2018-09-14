@@ -23,7 +23,6 @@
     <!--  -->
     <script>
         $(document).ready(function() {
-            checkIsApp();
 
             //確認是否使用App開啟
 

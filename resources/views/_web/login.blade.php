@@ -519,6 +519,14 @@
                         //     localStorage.setItem('password', '');
                         //     localStorage.setItem('remember', false);
                         // }
+
+
+                        // function checkIsApp(){
+                        // var ID = document.getElementById("IDName").value;
+                        document.location = "js://checkIsApp?ID="+'{{session('member.iId',0)}}';
+                        // }
+
+
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;
                         }, 500)
