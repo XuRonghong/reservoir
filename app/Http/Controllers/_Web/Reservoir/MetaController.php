@@ -218,7 +218,11 @@ class MetaController extends _WebController
 
 
         $map['bDel'] = 0;
-        $Dao = ModReservoirMeta::query()->where( $map )->find( $id );
+//        $Dao = ModReservoirMeta::query()->where( $map )->find( $id );
+        $Dao = ModReservoirMeta::query()->where($map)
+            ->where( 'iId', '=', $id )
+            ->orWhere('vNumber', '=', $id)
+            ->first();
         if ( !$Dao) {
             session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
             return redirect( 'web/' . implode( '/', $this->module ) );

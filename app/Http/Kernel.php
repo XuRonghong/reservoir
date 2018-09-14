@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'CheckMallLogout' => \App\Http\Middleware\CheckMallLogout::class,
         //
         'LoginThrottle' => \App\Http\Middleware\LoginThrottle::class,
+        //
+        'NewInitial' => \App\Http\Middleware\NewInitial::class,
     ];
 }

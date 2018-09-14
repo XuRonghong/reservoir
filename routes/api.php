@@ -31,7 +31,7 @@ Route::group(
 
 
     //
-    Route::any( 'shakemap_event_api', '_APIController@shakemap_event_api' );
+    Route::post( 'shakemap_event_api', '_APIController@shakemap_event_api' );
 
 
 

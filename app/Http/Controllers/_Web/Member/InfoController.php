@@ -222,6 +222,15 @@ class InfoController extends _WebController
             if ($DaoMemberInfo->save()){
                 //Logs
                 $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
+
+                // session
+                $DaoMember = SysMember::query()->find( session()->get( 'member.iId') );
+                $DaoMemberInfo = SysMemberInfo::query()->find( session()->get( 'member.iId') );
+                // Member
+                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+                // MemberInfo
+                session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans( '_web_message.save_success' );
             } else {

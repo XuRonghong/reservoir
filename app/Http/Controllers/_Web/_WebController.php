@@ -18,6 +18,13 @@ use App\SysMember;
 use App\SysMemberInfo;
 use App\SysGroupMember;
 use Jenssegers\Agent\Agent;
+use App\ModEvent;
+use App\ModMessage;
+use App\ModTraceCheck;
+use App\ModRecord;
+use App\ModReservoirMeta;
+use App\ModReservoir;
+use App\ModReservoirInfo;
 
 
 class _WebController extends Controller
@@ -30,6 +37,110 @@ class _WebController extends Controller
     protected $module;
     protected $agent;
 
+
+    /*
+     *
+     */
+    public function _init ()
+    {
+        //目前的最新地震事件
+//        $DaoEvent = session('event' , []);
+        $DaoEvent = ModEvent::query()
+            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
+            ->orderBy('eventTime', 'DESC')
+            ->take(45)
+            ->get();
+
+        //所有的水庫管理員
+        $DaoMember = SysMember::query()->where('iAcType','=','10')->get();
+
+        //
+        foreach ($DaoMember as $item) {
+            foreach ($DaoEvent as $var) {
+                if (ModMessage::query()->where('iSource', '=', $var->keyValue)->count()){
+                    continue;
+                }
+                $DaoMessage = new ModMessage();
+                $DaoMessage->iSource = $var->keyValue;
+                $DaoMessage->iHead = $item->iId;
+                $DaoMessage->vTitle = '有地震通知';
+                $DaoMessage->vSummary = '發生時間:' . $var->eventTime . '<br>' .
+                    '發生在水庫編號' . $var->id . '的地方';
+//            $DaoMessage->vDetail = '有地震通知';
+                $DaoMessage->vUrl = url('web/reservoir/meta/edit') . '/' . $var->id;
+                $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
+                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
+                $DaoMessage->iStartTime = time();
+                $DaoMessage->iEndTime = time() + 60 * 30;   //30分鐘後
+                $DaoMessage->iCheck = 0;
+                $DaoMessage->iCreateTime = time();
+                $DaoMessage->iUpdateTime = time();
+                $DaoMessage->iStatus = 1;
+                $DaoMessage->bDel = 0;
+                $DaoMessage->save();
+            }
+        }
+
+
+
+        // Message table
+        session()->put( 'message', json_decode( json_encode( $DaoEvent ), true ) );
+//        foreach ($DaoEvent as $item){
+//            $item->meta = ModReservoirMeta::query()->where('vNumber','=', $item->id)
+//                ->select([
+//                    'iRank',
+//                    'vStructure',
+//                    'vLevel',
+//                    'iHeight',
+//                    'iStoreTotal',
+//                    'vGrade',
+//                    'vTrustRegion',
+//                    'vNumber',
+//                    'vNet',
+//                    'vAreaCode'])
+//                ->first();
+//            $item->reservoir = ModReservoir::query()->where('vName', 'LIKE', '%'.$item->meta->vStructure.'%')
+//                ->leftJoin( 'mod_reservoir_info', function ($join) {
+//                    $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
+//                })
+//                ->select([
+//                    'mod_reservoir.vRegion',
+//                    'mod_reservoir.vName',
+//                    'mod_reservoir.vLocation',
+//                    'mod_reservoir.vCounty',
+//                    'mod_reservoir.iSum',
+//                    'mod_reservoir_info.iType',
+//                    'mod_reservoir_info.vCode',
+//                    'mod_reservoir_info.vImages',
+//                    'mod_reservoir_info.iSafeValue'])
+//                ->first();
+//        }
+
+
+
+
+        /*
+         *  判斷裝置手機版或電腦版
+         */
+//        $this->agent = new Agent();
+//        if ( $this->agent->isMobile() && !$this->agent->isTablet() ) {
+//            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
+
+
+//        } else {
+//            $this->view = View()->make( "_template_portal." . implode( '.' , $this->module ) );
+
+
+
+//        }
+
+//        $map['iStatus'] = 1;
+//        $map['iId'] = session( 'member.iId' , '');
+//        $DaoMem = SysMember::query()->where($map)->get();
+//        $this->view->with( 'profile', $this->module );
+
+        return ;
+    }
 
     /*
      *
@@ -200,30 +311,4 @@ class _WebController extends Controller
     }
 
 
-
-    /*
-     *
-     */
-    public function _init ()
-    {
-        /*
-         *  判斷裝置手機版或電腦版
-         */
-        $this->agent = new Agent();
-        if ( $this->agent->isMobile() && !$this->agent->isTablet() ) {
-//            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
-
-
-        } else {
-//            $this->view = View()->make( "_template_portal." . implode( '.' , $this->module ) );
-
-
-
-        }
-
-//        $map['iStatus'] = 1;
-//        $map['iId'] = session( 'member.iId' , '');
-//        $DaoMem = SysMember::query()->where($map)->get();
-//        $this->view->with( 'profile', $this->module );
-    }
 }

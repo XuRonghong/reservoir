@@ -29,6 +29,7 @@ class LoginController extends _WebController
      */
     public function indexView ()
     {
+
         $this->module = [ 'login' ];
         $this->view = View()->make( "_web." . implode( '.' , $this->module ) );
 

@@ -253,10 +253,10 @@ class IndexController extends _WebController
      */
     public function edit ( $id )
     {
-        if (session('member.iAcType') > 9 && session('member.iUserId') != $id){
+        if (session('member.iAcType') > 9 && session('member.iId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
-        if ($id == 1000000001 && session('member.iUserId') != $id){
+        if ($id == 1 && session('member.iId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
 
@@ -270,7 +270,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
 
 
-        $DaoMember = SysMember::query()->where('iUserId','=',$id)->first();
+        $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
         if (!$DaoMember) {
             session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
@@ -342,6 +342,15 @@ class IndexController extends _WebController
 //            $DaoMemberInfo->save();
 //            //Logs
 //            $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
+
+            // session
+            $DaoMember = SysMember::query()->find( session()->get( 'member.iId') );
+            $DaoMemberInfo = SysMemberInfo::query()->find( session()->get( 'member.iId') );
+            // Member
+            session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+            // MemberInfo
+            session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+            //
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );

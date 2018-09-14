@@ -139,8 +139,8 @@
                     // },
                     // {"sTitle": "會員編號", "mData": "iUserId", "width": "5%", "sName": "iUserId"},
                     // {"sTitle": "會員代號", "mData": "vUserCode", "width": "5%", "sName": "vUserCode"},
-                    {"sTitle": "存取權限", "mData": "iAcType", "width": "10%", "sName": "iAcType"},
-                    {"sTitle": "帳號", "mData": "vAccount", "width": "5%", "sName": "vAccount"},
+                    {"sTitle": "帳號", "mData": "vAccount", "width": "15%", "sName": "vAccount"},
+                    {"sTitle": "存取權限", "mData": "iAcType", "width": "25%", "sName": "iAcType"},
                     // {"sTitle": "IP", "mData": "vCreateIP", "width": "5%", "sName": "vCreateIP"},
                     // {"sTitle": "加入時間", "mData": "iCreateTime", "width": "10%", "sName": "iCreateTime"},
                     // {"sTitle": "更新時間", "mData": "iUpdateTime", "width": "10%", "sName": "iUpdateTime"},
@@ -148,6 +148,7 @@
                     {
                         "sTitle": "啟用",
                         "mData": "bActive",
+                        "width": "5%",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             var btn = "無狀態";

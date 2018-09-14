@@ -22,6 +22,7 @@ class IndexController extends _WebController
      */
     public function index ()
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . 'index' );
         //
         $this->breadcrumb = [

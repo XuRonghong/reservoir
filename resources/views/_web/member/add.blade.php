@@ -46,7 +46,7 @@
                         <hr>
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
-                                <h4 class="card-title">Personal Info</h4>
+                                <h4 class="card-title">沒有要更改密碼,不需填寫</h4>
                                 @if(isset($info))
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">帳號</label>
@@ -99,6 +99,7 @@
                                     </div>
                                 @endif
                                 @if(session('member.iAcType')<10 && session('member.iAcType')>1)
+                                <h4 class="card-title">管理</h4>
                                 <div class="form-group row">
                                     <label class="col-sm-3 text-right control-label col-form-label">權限</label>
                                     <div class="col-sm-9">
@@ -350,7 +351,7 @@
                     type: "warning",
                     showCancelButton: false,
                     cancelButtonText: "{{trans('_web_alert.cancel')}}",
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "#0c9b00",
                     confirmButtonText: "{{trans('_web_alert.ok')}}",
                     closeOnConfirm: true
                 }, );

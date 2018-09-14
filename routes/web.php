@@ -255,6 +255,7 @@ Route::get( '', function (){
 Route::group(
     [
 //        'middleware' => 'CheckLang',
+//        'middleware' => 'NewInitial',
         'prefix' => 'web',
         'namespace' => '_Web'
     ], function() {
