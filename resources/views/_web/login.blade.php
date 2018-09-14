@@ -510,22 +510,11 @@
                 success: function (rtndata) {
                     if (rtndata.status) {
                         toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
-                        // if ($('input[name=remember]').prop("checked")) {
-                        //     localStorage.setItem('account', module.find(".vAccount").val());
-                        //     localStorage.setItem('password', module.find(".vPassword").val());
-                        //     localStorage.setItem('remember', true);
-                        // } else {
-                        //     localStorage.setItem('account', '');
-                        //     localStorage.setItem('password', '');
-                        //     localStorage.setItem('remember', false);
-                        // }
-
 
                         // function checkIsApp(){
                         // var ID = document.getElementById("IDName").value;
-                        document.location = "js://checkIsApp?ID="+'{{session('member.iId',0)}}';
+                        document.location = "js://checkIsApp?ID=" + rtndata.id;
                         // }
-
 
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;

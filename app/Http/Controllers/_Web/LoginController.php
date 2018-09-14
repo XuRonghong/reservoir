@@ -243,6 +243,7 @@ class LoginController extends _WebController
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
         $this->rtndata ['rtnurl'] = url('web/reservoir');//( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'home' );
+        $this->rtndata ['id'] = $DaoMember->iId;
 
         return response()->json( $this->rtndata );
     }
