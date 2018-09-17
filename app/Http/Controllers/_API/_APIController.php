@@ -18,130 +18,208 @@ use App\ModData;
 
 class _APIController extends Controller
 {
+    /*
+     * Public be able to application with api for web service
+     */
+    protected $version = '1.1';//1.0
+    private $api_data_table_key = '753951';
+    private $api_device_token_table_key = '84269713';
+
+    /*
+     *  API get data from table
+     */
     public function getModData (Request $request)
     {
         if ( !$request->exists('_token')){
-            return 404;
+            return abort(404);
         }
-        if ( $request->input('_token') != '753951'){
-            return 404;
+        if ( $request->input('_token') != $this->api_data_table_key){
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModData::query()->where($map)->get();
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModData::query()->where($map)->get();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
 //        echo json_encode( $Dao );
         return json_encode( $Dao );
     }
 
+    /*
+     * API add data to table
+     */
     public function addModData (Request $request)
     {
         if ( !$request->exists('_token')){
-            return $request->input('_token') . '<>' ;
+            return abort(404);
         }
-        $Dao = new ModData();
-        $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : 0;
-        $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : '';
-        $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = 1;
-        $Dao->bDel = 0;
-        $Dao->save();
-        return json_encode( $Dao );
+        if ( $request->input('_token') != $this->api_data_table_key){
+            return abort(404);
+        }
+        try {
+            $Dao = new ModData();
+            $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : 0;
+            $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : '';
+            $Dao->iCreateTime = $Dao->iUpdateTime = time();
+            $Dao->iStatus = 1;
+            $Dao->bDel = 0;
+            $Dao->save();
+        } catch (\Exception $e) {
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
+        return 'Add success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
     }
 
+    /*
+     * API mod data to table
+     */
     public function editModData (Request $request, $id)
     {
         if ( !$request->exists('_token')){
-            return $request->input('_token') . '<>' ;
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModData::query()->where($map)->findOrFail($id);
-        $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : $Dao->iData1;
-        $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : $Dao->vData2;
-        $Dao->iUpdateTime = time();
-        $Dao->iStatus = 1;
-        $Dao->bDel = 0;
-        $Dao->save();
-        return json_encode( $Dao );
+        if ( $request->input('_token') != $this->api_data_table_key){
+            return abort(404);
+        }
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModData::query()->where($map)->findOrFail($id);
+            $Dao->iData1 = $request->exists('data1') ? $request->input('data1') : $Dao->iData1;
+            $Dao->vData2 = $request->exists('data2') ? $request->input('data2') : $Dao->vData2;
+            $Dao->iUpdateTime = time();
+            $Dao->iStatus = 1;
+            $Dao->bDel = 0;
+            $Dao->save();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
+        return 'Edit success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
     }
 
+    /*
+     * API destory data on table
+     */
     public function delModData (Request $request, $id)
     {
         if ( !$request->exists('_token')){
-            return $request->input('_token') . '<>' ;
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModData::query()->where($map)->find($id);
-        if ($Dao){
+        if ( $request->input('_token') != $this->api_data_table_key){
+            return abort(404);
+        }
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModData::query()->where($map)->find($id);
             $Dao->bDel = 1;
             $Dao->iUpdateTime = time();
             $Dao->save();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 204;
+        return abort(204);
     }
 
 
+    /*
+     * API get device token table
+     */
     public function getDeviceToken (Request $request)
     {
         if ( !$request->exists('_token')){
-            return 404;
+            return abort(404);
         }
-        if ( $request->input('_token') != '84269713'){
-            return 404;
+        if ( $request->input('_token') != $this->api_device_token_table_key){
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModDeviceToken::query()->where($map)->get();
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModDeviceToken::query()->where($map)->get();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
 //        echo json_encode( $Dao );
         return json_encode( $Dao );
     }
 
+    /*
+     * API device token add
+     */
     public function addDeviceToken (Request $request)
     {
-        if ( !$request->input('_token')){
-            return $request->input('_token') . '<>' ;
+        if ( !$request->exists('_token')){
+            return abort(404);
         }
-        $Dao = new ModDeviceToken();
-        $Dao->iMemberId = $request->input('userid') ? $request->input('userid') : 0;
-        $Dao->vToken = $request->input('token') ? $request->input('token') : '';
-        $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = 1;
-        $Dao->bDel = 0;
-        $Dao->save();
-        return json_encode( $Dao );
+        if ( $request->input('_token') != $this->api_device_token_table_key){
+            return abort(404);
+        }
+        try {
+            $Dao = new ModDeviceToken();
+            $Dao->iMemberId = $request->input('userid') ? $request->input('userid') : 0;
+            $Dao->vToken = $request->input('token') ? $request->input('token') : '';
+            $Dao->iCreateTime = $Dao->iUpdateTime = time();
+            $Dao->iStatus = 1;
+            $Dao->bDel = 0;
+            $Dao->save();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
+        return 'Add success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
     }
+
+    /*
+     * API device token edit
+     */
     public function editDeviceToken (Request $request, $id)
     {
         if ( !$request->exists('_token')){
-            return $request->input('_token') . '<>' ;
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModDeviceToken::query()->where($map)->findOrFail($id);
-        $Dao->iMemberId = $request->exists('userid') ? $request->input('userid') : $Dao->iMemberId;
-        $Dao->vToken = $request->exists('token') ? $request->input('token') : $Dao->vToken;
-        $Dao->iUpdateTime = time();
-        $Dao->iStatus = 1;
-        $Dao->bDel = 0;
-        $Dao->save();
-        return json_encode( $Dao );
+        if ( $request->input('_token') != $this->api_device_token_table_key){
+            return abort(404);
+        }
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModDeviceToken::query()->where($map)->findOrFail($id);
+            $Dao->iMemberId = $request->exists('userid') ? $request->input('userid') : $Dao->iMemberId;
+            $Dao->vToken = $request->exists('token') ? $request->input('token') : $Dao->vToken;
+            $Dao->iUpdateTime = time();
+            $Dao->iStatus = 1;
+            $Dao->bDel = 0;
+            $Dao->save();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+        }
+        return 'Edit success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
     }
 
+    /*
+     * API device token del
+     */
     public function delDeviceToken (Request $request, $id)
     {
         if ( !$request->exists('_token')){
-            return $request->input('_token') . '<>' ;
+            return abort(404);
         }
-        $map['bDel'] = 0;
-        $map['iStatus'] = 1;
-        $Dao = ModDeviceToken::query()->where($map)->find($id);
-        if ($Dao){
+        if ( $request->input('_token') != $this->api_device_token_table_key){
+            return abort(404);
+        }
+        try {
+            $map['bDel'] = 0;
+            $map['iStatus'] = 1;
+            $Dao = ModDeviceToken::query()->where($map)->find($id);
             $Dao->bDel = 1;
             $Dao->iUpdateTime = time();
             $Dao->save();
+        } catch (\Exception $e){
+            echo $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 204;
+        return abort(204);
     }
 
 
