@@ -185,9 +185,9 @@ class _APIController extends Controller
         try {
             $map['bDel'] = 0;
             $map['iStatus'] = 1;
-            $Dao = ModDeviceToken::query()->where($map)->findOrFail($id);
+            $map['vToken'] = $request->exists('token') ? $request->input('token') : 0;
+            $Dao = ModDeviceToken::query()->where($map)->first();
             $Dao->iMemberId = $request->exists('userid') ? $request->input('userid') : $Dao->iMemberId;
-            $Dao->vToken = $request->exists('token') ? $request->input('token') : $Dao->vToken;
             $Dao->iUpdateTime = time();
             $Dao->iStatus = 1;
             $Dao->bDel = 0;
@@ -212,7 +212,8 @@ class _APIController extends Controller
         try {
             $map['bDel'] = 0;
             $map['iStatus'] = 1;
-            $Dao = ModDeviceToken::query()->where($map)->find($id);
+            $map['vToken'] = $request->exists('token') ? $request->input('token') : 0;
+            $Dao = ModDeviceToken::query()->where($map)->first();
             $Dao->bDel = 1;
             $Dao->iUpdateTime = time();
             $Dao->save();
