@@ -166,7 +166,7 @@ class _APIController extends Controller
             $Dao->bDel = 0;
             $Dao->save();
         } catch (\Exception $e){
-            echo $e->getMessage() . '<br>Code:' . $e->getCode();
+            return $e->getMessage() . '<br>Code:' . $e->getCode();
         }
         return 'Add success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
     }

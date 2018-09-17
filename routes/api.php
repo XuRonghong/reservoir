@@ -18,16 +18,24 @@ Route::group(
         'namespace' => '_API',
     ], function() {
 
-    //
+    // api get data table
     Route::get( 'getdata', '_APIController@getModData' );
     Route::post( 'putdata', '_APIController@addModData' );
     Route::put( 'editdata/{id}', '_APIController@editModData' );
     Route::delete( 'deldata/{id}', '_APIController@delModData' );
-
+    Route::any( 'getdata', abort(404) );
+    Route::any( 'putdata', abort(404) );
+    Route::any( 'editdata/{id}', abort(404) );
+    Route::any( 'deldata/{id}', abort(404) );
+    // api get device token table
     Route::get( 'device_token', '_APIController@getDeviceToken' );
     Route::post( 'puttoken', '_APIController@addDeviceToken' );
     Route::put( 'edittoken/{id}', '_APIController@editDeviceToken' );
     Route::delete( 'deltoken/{id}', '_APIController@delDeviceToken' );
+    Route::any( 'device_token', abort(404) );
+    Route::any( 'puttoken', abort(404) );
+    Route::any( 'edittoken/{id}', abort(404) );
+    Route::any( 'deltoken/{id}', abort(404) );
 
 
     //
