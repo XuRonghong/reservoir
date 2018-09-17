@@ -21,7 +21,7 @@ class _APIController extends Controller
     /*
      * Public be able to application with api for web service
      */
-    protected $version = '1.1';//1.0
+    protected $version = '1.2';//'1.1';//1.0
     private $api_data_table_key = '753951';
     private $api_device_token_table_key = '84269713';
 
