@@ -511,11 +511,10 @@
                     if (rtndata.status) {
                         toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
 
-                        // function checkIsApp(){
-                        // var ID = document.getElementById("IDName").value;
-                        document.location = "js://checkIsApp?ID=" + rtndata.id;
-                        // }
-
+                        //
+                        if (rtndata.isMobile == true){
+                            document.location = "js://checkIsApp?ID=" + rtndata.id;
+                        }
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;
                         }, 500)

@@ -230,7 +230,8 @@
             current_modal = modal;
             //
             $(".btn-cancel").click(function () {
-                location.href = url_index;
+                history.back();
+                // location.href = url_index;
             });
             //
             $(".btn-doadd").click(function () {

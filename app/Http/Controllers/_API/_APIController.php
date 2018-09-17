@@ -234,7 +234,7 @@ class _APIController extends Controller
 
         $returnList["type"]="event";
         $Dao = ModEvent::query()
-            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400*3))   //北美中部時區的時差-8小時
+            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
             ->orderBy('eventTime', 'DESC')
             ->take(45)
             ->get();

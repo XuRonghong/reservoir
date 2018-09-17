@@ -23,7 +23,6 @@
     <!--  -->
     <script>
         $(document).ready(function() {
-
             //確認是否使用App開啟
 
             // DO NOT REMOVE : GLOBAL FUNCTIONS!
@@ -51,11 +50,6 @@
             {{--});--}}
 
         });
-
-        function checkIsApp(){
-            // var ID = document.getElementById("IDName").value;
-            document.location = "js://checkIsApp?ID="+'{{session('member.iId',0)}}';
-        }
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->

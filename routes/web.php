@@ -428,6 +428,9 @@ Route::group(
             Route::get( 'shakemap2', 'IndexController@shakemap2' );
 
 
+            Route::post( 'addmessage', 'IndexController@addMessage');
+            Route::post( 'getmessage', 'IndexController@getMessageList');
+
             /***********************************************************
              * Admin
              ***********************************************************/

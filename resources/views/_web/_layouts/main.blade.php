@@ -172,7 +172,80 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
+
+            // ajax to new message
+            get_new_message();
         })();
+
+
+        function get_new_message() {
+            var data = {"_token": "{{ csrf_token() }}"};
+            // data.iId = $(this).data('id');
+            //
+            $.ajax({
+                url: '{{url('web/addmessage')}}',
+                type: "POST",
+                data: data,
+                resetForm: true,
+                success: function (rtndata) {
+                    var html_str = "";
+                    if (rtndata.status) {
+                        get_message_on_upbar();
+                    } else {
+                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                    }
+                }
+            });
+        }
+        <!-- upperbar for message -->
+        function get_message_on_upbar() {
+            var data = {"_token": "{{ csrf_token() }}"};
+            // data.iId = $(this).data('id');
+            //
+            $.ajax({
+                url: '{{url('web/getmessage')}}',
+                type: "POST",
+                data: data,
+                resetForm: true,
+                success: function (rtndata) {
+                    var html_str = "";
+                    if (rtndata.status) {
+                        //
+                        html_str += '<li>';
+                        html_str +=     '<div class="drop-title text-white bg-danger">';
+                        html_str +=         '<h4 class="m-b-0 m-t-5">' + rtndata.total + ' New</h4>';
+                        html_str +=         '<span class="font-light">Messages</span>';
+                        html_str +=     '</div>';
+                        html_str += '</li>';
+                        html_str += '<li>';
+                        html_str +=     '<div class="message-center message-body">';
+                        //
+                        for (var key in rtndata.aaData) {
+                            var obj = rtndata.aaData[key];
+                            html_str += '<a href="' + obj.vUrl + '" class="message-item">';
+                            html_str +=     '<span class="user-img">';
+                            html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
+                            html_str +=         '<span class="profile-status online pull-right"></span>';
+                            html_str +=     '</span>';
+                            html_str +=     '<div class="mail-contnet">';
+                            html_str +=         '<h5 class="message-title">' + obj.vTitle + '</h5>';
+                            html_str +=         '<span class="mail-desc">' + obj.vSummary + '</span>';
+                            html_str +=         '<span class="time">' + obj.iCreateTime + ' AM</span>';
+                            html_str +=     '</div>';
+                            html_str += '</a>';
+                        }
+                        html_str +=     '</div>';
+                        html_str += '</li>';
+                        html_str += '<li>';
+                        html_str +=     '<a class="nav-link text-center link" href="javascript:void(0);"> <b>See all e-Mails</b> <i class="fa fa-angle-right"></i> </a>';
+                        html_str += '</li>';
+                        $(".ulMessage").html(html_str);
+                    } else {
+                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                    }
+                }
+            });
+        }
     </script>
 
     <!-- ================== page-js ================== -->
