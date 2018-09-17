@@ -9,6 +9,8 @@ use App\SysGroupMember;
 use Jenssegers\Agent\Agent;
 use App\ModEvent;
 use App\ModMessage;
+use App\ModReservoirMeta;
+use App\ModReservoir;
 
 
 class IndexController extends _WebController
@@ -67,18 +69,23 @@ class IndexController extends _WebController
                 if (ModMessage::query()->where('iSource', '=', $var->keyValue)->count()){
                     continue;
                 }
+
+                $oneReservoirMeta = ModReservoirMeta::query()->where('vNumber','=', $var->id)->first();
+                $oneReservoir = ModReservoir::query()->where('vName', 'LIKE', '%'.$oneReservoirMeta->vStructure.'%')->first();
+
                 $DaoMessage = new ModMessage();
                 $DaoMessage->iSource = $var->keyValue;
                 $DaoMessage->iHead = $item->iId;
                 $DaoMessage->vTitle = '有地震通知';
-                $DaoMessage->vSummary = '發生時間:' . ($var->eventTime+28800) . '<br>' .
-                    '發生在水庫編號' . $var->id . '的地方';
+                $DaoMessage->vSummary = '發生時間: <h5>' . ($var->eventTime+ date( 'Y/m/d H:i:s',28800)) . '</h5>' ;
+                $DaoMessage->vSummary .='發生在 <h4>' . $oneReservoir->vName . '</h4>';
+                $DaoMessage->vSummary .='水庫地址: <br>' . $oneReservoir->vLocation . '<br>';
 //            $DaoMessage->vDetail = '有地震通知';
-                $DaoMessage->vUrl = url('web/reservoir/meta/edit') . '/' . $var->id;
+                $DaoMessage->vUrl = url('web/message/attr') . '/' . (ModMessage::query()->max('iId') + 1);
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
                 $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
                 $DaoMessage->iStartTime = time();
-                $DaoMessage->iEndTime = time() + 60 * 30;   //30分鐘後
+                $DaoMessage->iEndTime = time() + (60 * 30);   //30分鐘後
                 $DaoMessage->iCheck = 0;
                 $DaoMessage->iCreateTime = time();
                 $DaoMessage->iUpdateTime = time();
@@ -90,11 +97,6 @@ class IndexController extends _WebController
 
 //        if ($DaoEvent){
             $this->rtndata ['status'] = 1;
-//            $this->rtndata ['aaData'] = $DaoMessage ? $DaoMessage : [];
-//            $this->rtndata ['total'] = $DaoMessage->count();
-//        }
-//        else {
-//            $this->rtndata ['status'] = 0;
 //            $this->rtndata ['message'] = 'message no get from 404';
 //        }
 

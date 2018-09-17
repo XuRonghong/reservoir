@@ -267,7 +267,7 @@ Route::group(
 
         Route::get( 'login', 'LoginController@indexView') ;
         Route::group([
-//                'middleware'=> ['LoginThrottle:5,10']
+                'middleware'=> ['LoginThrottle:5,10']
             ], function(){
             Route::post('doLogin', 'LoginController@doLogin' );
             Route::post('doLoginMobile', 'LoginController@doLoginMobile' );
@@ -290,7 +290,7 @@ Route::group(
             [
                 'middleware' => 'CheckLogin'
             ], function() {
-            Route::get( '', 'IndexController@index' );
+             Route::get( 'index', 'IndexController@index' );
 
             /**********************************************************
              * Upload Images
@@ -430,6 +430,29 @@ Route::group(
 
             Route::post( 'addmessage', 'IndexController@addMessage');
             Route::post( 'getmessage', 'IndexController@getMessageList');
+
+            /*************************************
+             * 通知訊息
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'message',
+                    'namespace' => 'Message',
+                ], function() {
+
+                Route::get( '', 'IndexController@index' );
+//                Route::any( 'getlist', 'IndexController@getList' );
+//                Route::get( 'add', 'IndexController@add' );
+//                Route::post( 'doadd', 'IndexController@doAdd' );
+//                Route::get( 'edit/{id}', 'IndexController@edit' );
+                Route::post( 'dosave', 'IndexController@doSave' );
+//                Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
+//                Route::post( 'dodel', 'IndexController@doDel' );
+                Route::get( 'attr/{id}', 'IndexController@attr' );
+//                Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
+
+            } );
+
 
             /***********************************************************
              * Admin

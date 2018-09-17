@@ -282,7 +282,11 @@ class _WebController extends Controller
         $mapMessage['iStatus'] = 1;
         $mapMessage['bDel'] = 0;
         $mapMessage['iHead'] = session('member.iId' , 0);
-        $DaoMessage = ModMessage::query()->where($mapMessage)->get();
+        $DaoMessage = ModMessage::query()->where($mapMessage)
+//            ->where('iEndTime' , '<', time())
+            ->where('iCreateTime' , '>', time()-86400+23.5*3600)
+            ->orderBy('iCreateTime' , 'desc')
+            ->get();
         if ($DaoMessage){
             foreach ($DaoMessage as $var){
                 $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
