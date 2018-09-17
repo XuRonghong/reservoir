@@ -18,6 +18,7 @@ Route::group(
         'namespace' => '_API',
     ], function() {
 
+            //
             Route::get('getdata', '_APIController@getModData');
             Route::post('putdata', '_APIController@addModData');
             Route::put('editdata/{id}', '_APIController@editModData');

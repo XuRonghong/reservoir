@@ -21,7 +21,7 @@ class _APIController extends Controller
     /*
      * Public be able to application with api for web service
      */
-    protected $version = '1.2';//'1.1';//1.0
+    protected $version = '1.3';//'1.1';//1.0
     private $api_data_table_key = '26841397';
     private $api_device_token_table_key = '951753';
 
@@ -69,7 +69,7 @@ class _APIController extends Controller
         } catch (\Exception $e) {
             echo $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 'Add success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
+        return 'Add success :' . $Dao->iId . '<br>on time:' . date('Y/m/d', $Dao->iCreateTime);
     }
 
     /*
@@ -96,7 +96,7 @@ class _APIController extends Controller
         } catch (\Exception $e){
             echo $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 'Edit success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
+        return 'Edit success :' . $Dao->iId . '<br>on time:' . date('Y/m/d', $Dao->iCreateTime);
     }
 
     /*
@@ -168,7 +168,7 @@ class _APIController extends Controller
         } catch (\Exception $e){
             return $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 'Add success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
+        return 'Add success :' . $Dao->iId . '<br>on time:' . date('Y/m/d', $Dao->iCreateTime);
     }
 
     /*
@@ -195,7 +195,7 @@ class _APIController extends Controller
         } catch (\Exception $e){
             echo $e->getMessage() . '<br>Code:' . $e->getCode();
         }
-        return 'Edit success :' . $Dao->iId . '<br>on time:' . data('Y/m/d', $Dao->iCreateTime);
+        return 'Edit success :' . $Dao->iId . '<br>on time:' . date('Y/m/d', $Dao->iCreateTime);
     }
 
     /*
