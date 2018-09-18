@@ -510,11 +510,6 @@
                 success: function (rtndata) {
                     if (rtndata.status) {
                         toastr.success( rtndata.message , "{{trans('_web_alert.notice')}}");
-
-                        //
-                        if (rtndata.isMobile){
-                            document.location = "js://checkIsApp?ID=" + rtndata.id;
-                        }
                         setTimeout(function () {
                             location.href = rtndata.rtnurl;
                         }, 500)

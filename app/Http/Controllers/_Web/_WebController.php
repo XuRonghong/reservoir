@@ -276,16 +276,15 @@ class _WebController extends Controller
     /*
      * get ModMessage list
      */
-    public function getDaoMessage ()
+    public function getDaoMessage ($set_check = true)
     {
         //
         $mapMessage['iStatus'] = 1;
         $mapMessage['bDel'] = 0;
-        $mapMessage['iHead'] = session('member.iId' , 0);
+        if ($set_check) $mapMessage['iCheck'] = session('member.iAcType') < 10 ? 0 : session('member.iAcType') - 10;
         $DaoMessage = ModMessage::query()->where($mapMessage)
-//            ->where('iEndTime' , '<', time())
-            ->where('iCreateTime' , '>', time()-86400+23.5*3600)
-            ->orderBy('iCreateTime' , 'desc')
+            ->where('iHead' , '>', session('member.iAcType'))
+            ->orderBy('iUpdateTime' , 'desc')
             ->get();
         if ($DaoMessage){
             foreach ($DaoMessage as $var){

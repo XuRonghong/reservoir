@@ -267,7 +267,7 @@ Route::group(
 
         Route::get( 'login', 'LoginController@indexView') ;
         Route::group([
-                'middleware'=> ['LoginThrottle:5,10']
+//                'middleware'=> ['LoginThrottle:5,10']
             ], function(){
             Route::post('doLogin', 'LoginController@doLogin' );
             Route::post('doLoginMobile', 'LoginController@doLoginMobile' );
@@ -447,7 +447,7 @@ Route::group(
 //                Route::get( 'edit/{id}', 'IndexController@edit' );
                 Route::post( 'dosave', 'IndexController@doSave' );
 //                Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
-//                Route::post( 'dodel', 'IndexController@doDel' );
+                Route::get( 'dodelall', 'IndexController@doDelAll' );
                 Route::get( 'attr/{id}', 'IndexController@attr' );
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
 

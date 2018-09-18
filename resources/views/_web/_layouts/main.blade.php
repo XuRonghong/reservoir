@@ -175,6 +175,11 @@
 
             // ajax to new message
             get_new_message();
+
+            //upbar reload on click
+            $('.topbartoggler').click(function () {
+                get_new_message();
+            });
         })();
 
 
@@ -192,11 +197,12 @@
                     if (rtndata.status) {
                         get_message_on_upbar();
                     } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
                     }
                 }
             });
         }
+
         <!-- upperbar for message -->
         function get_message_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
@@ -221,17 +227,17 @@
                         html_str +=     '<div class="message-center message-body">';
                         //
                         for (var key in rtndata.aaData) {
-                            if (key > 2)break;
+                            if (key > 4) break;  //顯示5筆資料
                             var obj = rtndata.aaData[key];
-                            html_str += '<a href="' + obj.vUrl + '" class="message-item">';
+                            html_str += '<a href="' + obj.url + '" class="message-item">';
                             html_str +=     '<span class="user-img">';
-                            html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
+                            // html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
                             html_str +=         '<span class="profile-status online pull-right"></span>';
                             html_str +=     '</span>';
                             html_str +=     '<div class="mail-contnet">';
                             html_str +=         '<h5 class="message-title">' + obj.vTitle + '</h5>';
                             html_str +=         '<span class="mail-desc">' + obj.vSummary + '</span>';
-                            html_str +=         '<span class="time">' + obj.iCreateTime + '</span>';
+                            html_str +=         '<span class="time" style="text-align: right;">' + obj.iCreateTime + '</span>';
                             html_str +=     '</div>';
                             html_str += '</a>';
                         }

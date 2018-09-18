@@ -43,15 +43,14 @@
                             <h4 class="card-title modalTitle">{{$info->vTitle or ''}}</h4>
                             <h6 class="card-subtitle">{{$info->iCreateTime or ''}}</h6>
                         </div>
-                        <hr>
+                        {{--<hr>--}}
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
-                                <h4 class="card-title">Detail</h4>
-                                {{--@if(isset($info))--}}
+                                {{--<h3 class="card-title">Detail</h3>--}}
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">內容</label>
                                     <div class="col-sm-9">
-                                        {{$info->vSummary or ''}}
+                                        {!! $info->vSummary !!}
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -66,13 +65,26 @@
                                         {{$info->shake or ''}}
                                     </div>
                                 </div>
+                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 30)
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
+                                    <div class="col-sm-9" style="text-align: center;">
+                                        <br>
+                                        <h3>
+                                            <a href="{{url('web/trace/add')}}">填寫相關追蹤查核內容</a>
+                                        </h3>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
+                                    @if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<30)
                                     <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">
                                         Check & Send
                                     </button>
+                                    @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
                             </div>
@@ -131,9 +143,8 @@
                     success: function (rtndata) {
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
-                            // setTime(function () {
-                            //     location.href = rtndata.rtnurl;
-                            // }, 1000);
+                            //button hide
+                            $(".btn-check").hide();
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }

@@ -36,14 +36,16 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-//            implode('.', $this->module) . '.log_login' => url('web/' . implode('/', $this->module) . ".index")
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '通知訊息' );
 
 
-        $DaoMessage = $this->getDaoMessage();
+        $DaoMessage = $this->getDaoMessage( false);
+        foreach ($DaoMessage as $var){
+            $var->url = url('web/message/attr') . '/' . $var->iId;
+        }
         $this->view->with( 'info', $DaoMessage );
         $this->view ->with('total',$DaoMessage->count() );
 
@@ -301,44 +303,35 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        $Dao = ModMessage::query()->find( $id );
+        $Dao = ModMessage::query()->join('event', 'iSource', '=', 'keyValue')->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+        switch (session('member.iAcType')){
+            case 10:
+                $message = '發送給 水庫審查人員';
+                break;
+            case 20:
+                $message = '發送給 中央水利署人';
+                break;
+        }
 
-        $Dao->iCheck = 1;
+        $Dao->vSummary = '<h5>發生時間: ' . date( 'Y/m/d H:i:s',(strtotime($Dao->eventTime) + 28800)) . '</h5>' ;
+//        $Dao->vSummary .= '待確認後' . $message;
+        $Dao->iCheck += 10; //有確認的目標權限人員
+        $Dao->iHead += 10;  //目標人員權限再加10
         $Dao->iUpdateTime = time();
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
 
             //所有的水庫審查員
-            $DaoMember = SysMember::query()->where('iAcType','=','20')->get();
-            //
-            foreach ($DaoMember as $item) {
-                $DaoMessage = new ModMessage();
-                $DaoMessage->iSource = $Dao->iId;
-                $DaoMessage->iHead = $item->iId;
-                $DaoMessage->vTitle = '有地震通知';
-                $DaoMessage->vSummary = $Dao->vSummary;
-    //            $DaoMessage->vDetail = $Dao->vDetail;
-                $DaoMessage->vUrl = url('web/message/attr') . '/' . (ModMessage::query()->max('iId') + 1);
-                $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
-                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
-                $DaoMessage->iStartTime = time();
-                $DaoMessage->iEndTime = time() + (60 * 30);   //30分鐘後
-                $DaoMessage->iCheck = 0;
-                $DaoMessage->iCreateTime = time();
-                $DaoMessage->iUpdateTime = time();
-                $DaoMessage->iStatus = 1;
-                $DaoMessage->bDel = 0;
-                $DaoMessage->save();
-            }
+//            $DaoMember = SysMember::query()->where('iAcType','=','20')->get();
 
             $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = '已發送給 水庫審查人員';
+            $this->rtndata ['message'] = $message;
 //            $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
         } else {
             $this->rtndata ['status'] = 0;
@@ -448,17 +441,15 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.meta' => url('web/' . implode('/', $this->module) . "/meta")
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
 
-
         //
         $mapMessage['iStatus'] = 1;
         $mapMessage['bDel'] = 0;
-        $mapMessage['iHead'] = session('member.iId' , 0);
         $DaoMessage = ModMessage::query()->where($mapMessage)
+            ->where('iHead' , '>', session('member.iAcType'))
             ->join('event', 'keyValue', '=', 'iSource')
             ->find($id);
         if ($DaoMessage){
@@ -500,5 +491,38 @@ class IndexController extends _WebController
     }
 
 
+    /*
+     *
+     */
+    public function doDelAll ( Request $request )
+    {
+        if ( session('member.iAcType' , 0) != 1) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+            return response()->json( $this->rtndata );
+        }
+        $mapMessage['bDel'] = 0;
+        $Dao = ModMessage::query()->where($mapMessage)->get();
+        if ( !$Dao) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+            return response()->json( $this->rtndata );
+        }
+        foreach ($Dao as $var){
+            $var->bDel = 1;
+            $var->iUpdateTime = time();
+            if (!$var->save()) {
+                //Logs
+                $this->_saveLogAction( $var->getTable(), $var->iId, 'delete', json_encode( $var ) );
+            } else {
+                $this->rtndata ['status'] = 0;
+                $this->rtndata ['message'] = trans( '_web_message.delete_fail' );
+                return response()->json( $this->rtndata );
+            }
+        }
+        $this->rtndata ['status'] = 1;
+        $this->rtndata ['message'] = trans( '_web_message.delete_success' );
 
+        return response()->json( $this->rtndata );
+    }
 }
