@@ -35,73 +35,63 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title modalTitle">Member Edit</h4>
-                            <h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>
+                            <h4 class="card-title modalTitle">Message</h4>
+                            {{--<h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>--}}
                         </div>
                         <hr>
                         <form class="form-horizontal">
-                            <div class="card-body memberInfo-modal">
-                                <h4 class="card-title">Personal Info</h4>
+                            <div class="card-body messageInfo-modal">
+                                <h4 class="card-title"></h4>
                                 <div class="form-group row">
-                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">UserName</label>
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">發送者</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserName" id="com1" placeholder="" value="{{$info->vUserName or ''}}">
+                                        {{$info->iSource or 'Self'}}
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="email1" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                    <label for="com2" class="col-sm-3 text-right control-label col-form-label">目標階層</label>
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control vEmail" id="email1" placeholder="Email Here" value="{{$info->vUserEmail or ''}}">
+                                        <select class="form-control iHead" id="com2" >
+                                            @if(isset($info))
+                                            <option value="10" @if($info->iHead<20) selected @endif>網站管理員</option>
+                                            <option value="20" @if($info->iHead<30 && $info->iHead>19) selected @endif>1.水庫管理員</option>
+                                            <option value="30" @if($info->iHead<40 && $info->iHead>29) selected @endif>2.水庫審查員</option>
+                                            <option value="40" @if($info->iHead<50 && $info->iHead>39) selected @endif>3.中央水利署人員</option>
+                                            @else
+                                                <option value="10" title="只有網站管理員才看到">網站管理員</option>
+                                                <option value="20" title="水庫管理員看得到">1.水庫管理員</option>
+                                                <option value="30" title="水庫相關人員看得到">2.水庫審查員</option>
+                                                <option value="40" title="相關人員看得到">3.中央水利署人員</option>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="com2" class="col-sm-3 text-right control-label col-form-label">UserContact</label>
+                                    <label for="com3" class="col-sm-3 text-right control-label col-form-label">標頭</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserContact" id="com2" placeholder="" value="{{$info->vUserContact or ''}}">
+                                        <input type="text" class="form-control vTitle" id="com3" placeholder="" value="{{$info->vTitle or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="com3" class="col-sm-3 text-right control-label col-form-label">UserAddress</label>
+                                    <label for="com4" class="col-sm-3 text-right control-label col-form-label">概要</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vUserAddress" id="com3" placeholder="" value="{{$info->vUserAddress or ''}}">
+                                        <input type="text" class="form-control vSummary" id="com4" placeholder="" value="{{ $info->vSummary or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">UserPicture</label>
+                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">圖片</label>
                                     <div class="col-sm-9">
                                         <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">
+                                            <img src="{{$info->vImages or url('images/empty.jpg')}}" style="height:140px">
                                         </a>
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Interested In</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Desiging</option>--}}
-                                {{--<option>Development</option>--}}
-                                {{--<option>Videography</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Budget</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Less then $5000</option>--}}
-                                {{--<option>$5000 - $10000</option>--}}
-                                {{--<option>$10000 - $20000</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
                                     @if(isset($info))
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iMemberId or ''}}">Save</button>
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
                                     @else
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                     @endif
@@ -156,26 +146,25 @@
     <!-- end -->
     <script type="text/javascript">
         var current_data = [];
-        var url_index = "{{ url('web/'.implode( '/', $module ))}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
             //
             var modal = $("#manage-modal");
-            current_modal = modal.find('.memberInfo-modal');
+            current_modal = modal.find('.messageInfo-modal');
             //
             $(".btn-cancel").click(function () {
-                location.href = url_index;
+                history.back();
             });
             //
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.vUserName = current_modal.find(".vUserName").val();
-                data.vUserEmail = current_modal.find(".vUserEmail").val();
-                data.vUserContact = current_modal.find(".vUserContact").val();
-                data.vUserAddress = current_modal.find(".vUserAddress").val();
-                data.vUserImage = current_modal.find("img").attr('src');
+                data.iSource = current_modal.find(".iSource").val();
+                data.iHead = current_modal.find(".iHead").val();
+                data.vTitle = current_modal.find(".vTitle").val();
+                data.vSummary = current_modal.find(".vSummary").val();
+                data.vImages = current_modal.find("img").attr('src');
                 //
                 $.ajax({
                     url: url_doadd,
@@ -199,11 +188,11 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
-                data.vUserName = current_modal.find(".vUserName").val();
-                data.vUserEmail = current_modal.find(".vUserEmail").val();
-                data.vUserContact = current_modal.find(".vUserContact").val();
-                data.vUserAddress = current_modal.find(".vUserAddress").val();
-                data.vUserImage = current_modal.find("img").attr('src');
+                data.iSource = current_modal.find(".iSource").val();
+                data.iHead = current_modal.find(".iHead").val();
+                data.vTitle = current_modal.find(".vTitle").val();
+                data.vSummary = current_modal.find(".vSummary").val();
+                data.vImages = current_modal.find("img").attr('src');
                 //
                 $.ajax({
                     url: url_dosave,

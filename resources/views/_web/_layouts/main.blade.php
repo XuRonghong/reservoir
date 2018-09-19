@@ -175,13 +175,21 @@
 
             // ajax to new message
             get_new_message();
+            get_message_on_upbar();
 
             //upbar reload on click
-            $('.topbartoggler').click(function () {
+            // $('.topbartoggler').click(function () {
+            $(this).click(function () {
                 get_new_message();
+                get_message_on_upbar();
             });
-        })();
+            //click message
+            $('.message-count').click(function () {
+                save_message();
+                get_message_on_upbar();
+            });
 
+        })();
 
         function get_new_message() {
             var data = {"_token": "{{ csrf_token() }}"};
@@ -195,9 +203,81 @@
                 success: function (rtndata) {
                     var html_str = "";
                     if (rtndata.status) {
+                        get_comment_on_upbar();
+                    } else {
+                        {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
+                    }
+                }
+            });
+        }
+
+        function save_message() {
+            var data = {"_token": "{{ csrf_token() }}"};
+            data.iId = $(this).data('id');
+            //
+            $.ajax({
+                url: '{{url('web/savemessage')}}',
+                type: "POST",
+                data: data,
+                resetForm: true,
+                success: function (rtndata) {
+                    var html_str = "";
+                    if (rtndata.status) {
                         get_message_on_upbar();
                     } else {
                         {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
+                    }
+                }
+            });
+        }
+
+        <!-- upperbar for comment -->
+        function get_comment_on_upbar() {
+            var data = {"_token": "{{ csrf_token() }}"};
+            // data.iId = $(this).data('id');
+            //
+            $.ajax({
+                url: '{{url('web/getcomment')}}',
+                type: "POST",
+                data: data,
+                resetForm: true,
+                success: function (rtndata) {
+                    var html_str = "";
+                    if (rtndata.status) {
+                        //
+                        html_str += '<li>';
+                        html_str +=     '<div class="drop-title text-white bg-danger">';
+                        html_str +=         '<h4 class="m-b-0 m-t-5">' + rtndata.total + ' New</h4>';
+                        html_str +=         '<span class="font-light">Messages</span>';
+                        html_str +=     '</div>';
+                        html_str += '</li>';
+                        html_str += '<li>';
+                        html_str +=     '<div class="message-center message-body">';
+                        //
+                        for (var key in rtndata.aaData) {
+                            if (key > 4) break;  //顯示5筆資料
+                            var obj = rtndata.aaData[key];
+                            html_str += '<a href="' + obj.url + '" class="message-item">';
+                            html_str +=     '<span class="user-img">';
+                            html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
+                            html_str +=         '<span class="profile-status online pull-right"></span>';
+                            html_str +=     '</span>';
+                            html_str +=     '<div class="mail-contnet">';
+                            html_str +=         '<h5 class="message-title">' + obj.vTitle + '</h5>';
+                            html_str +=         '<span class="mail-desc">' + obj.vSummary + '</span>';
+                            html_str +=         '<span class="time" style="text-align: right;">' + obj.iCreateTime + '</span>';
+                            html_str +=     '</div>';
+                            html_str += '</a>';
+                        }
+                        html_str +=     '</div>';
+                        html_str += '</li>';
+                        html_str += '<li>';
+                        html_str +=     '<a class="nav-link text-center link" href="{{url('web/message')}}"> <b>看更多訊息</b> <i class="fa fa-angle-right"></i> </a>';
+                        html_str += '</li>';
+                        $(".ulComment").html(html_str);
+                        $('.comment-count').text(rtndata.total);
+                    } else {
+                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                     }
                 }
             });
@@ -231,7 +311,7 @@
                             var obj = rtndata.aaData[key];
                             html_str += '<a href="' + obj.url + '" class="message-item">';
                             html_str +=     '<span class="user-img">';
-                            // html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
+                            html_str +=         '<img src="' + obj.vImages + '" alt="user" class="rounded-circle">';
                             html_str +=         '<span class="profile-status online pull-right"></span>';
                             html_str +=     '</span>';
                             html_str +=     '<div class="mail-contnet">';
@@ -244,10 +324,10 @@
                         html_str +=     '</div>';
                         html_str += '</li>';
                         html_str += '<li>';
-                        html_str +=     '<a class="nav-link text-center link" href="{{url('web/message')}}"> <b>看更多訊息</b> <i class="fa fa-angle-right"></i> </a>';
+                        html_str +=     '<a class="nav-link text-center link" href="{{url('web/message/center')}}"> <b>看更多訊息</b> <i class="fa fa-angle-right"></i> </a>';
                         html_str += '</li>';
                         $(".ulMessage").html(html_str);
-                        $('.message-count').text(rtndata.total);
+                        $('.message-count').text(rtndata.total_see);
                     } else {
                         toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                     }

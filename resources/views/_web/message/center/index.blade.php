@@ -6,7 +6,7 @@
     <!-- This page plugin CSS -->
     <style type="text/css" rel="stylesheet">
         .btn {
-            margin-left: 20px;
+            margin-left: 10px;
         }
     </style>
 @endsection
@@ -106,7 +106,7 @@
         var url_edit = "{{ url('web/'.implode( '/', $module ).'/edit')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
-        var url_attributes = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
+        var url_attr = "{{ url('web/'.implode( '/', $module ).'/attr')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
         $(document).ready(function () {
             /* BASIC ;*/
@@ -119,38 +119,44 @@
                 "aoColumns": [
                     {
                         "sTitle": "ID",
-                        "mData": "iMemberId",
-                        "width": "7%",
-                        "sName": "iMemberId",
+                        "mData": "iId",
+                        "width": "5%",
+                        "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
                         }
                     },
+                    // {
+                    //     "sTitle": "圖片",
+                    //     "mData": "vImages",
+                    //     "width": "10%",
+                    //     "bSortable": false,
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         return "<img width='100%' src=" + data + ">";
+                    //     }
+                    // },
+                    {"sTitle": "標頭", "mData": "vTitle", /*"width": "25%",*/ "sName": "vTitle"},
+                    {"sTitle": "發送者", "mData": "iSource", "width": "10%", "sName": "iSource"},
+                    {"sTitle": "狀態分類", "mData": "iType", "width": "10%", "sName": "iType"},
+                    {"sTitle": "創立時間", "mData": "iCreateTime", "width": "15%", "sName": "iCreateTime"},
                     {
-                        "sTitle": "圖片",
-                        "mData": "vUserImage",
-                        "width": "10%",
-                        "bSortable": false,
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            return "<img width='100%' src=" + data + ">";
-                        }
-                    },
-                    {"sTitle": "使用者名稱", "mData": "vUserName", "width": "15%", "sName": "vUserName"},
-                    {"sTitle": "使用者信箱", "mData": "vUserEmail", "width": "20%", "sName": "vUserEmail"},
-                    {"sTitle": "連絡電話", "mData": "vUserContact", "width": "15%", "sName": "vUserContact"},
-                    {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "25%", "sName": "vUserAddress"},
-                    {
-                        "sTitle": "Action",
+                        "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                            // btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                            // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            if (row.iType === '訊息'){
+                                btn = '<button class="btn btn-xs btn-success btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                                btn += '<button class="btn btn-xs btn-success btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                                btn += '<button class="pull-right btn btn-xs btn-success btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            } else {
+                                btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                                btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                                btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            }
                             return btn;
                         }
                     },
@@ -171,6 +177,57 @@
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 location.href = url_edit + '/' + id;
+            });
+            //
+            $("#dt_basic").on('click', '.btn-del', function () {
+                //var id = $(this).closest('tr').attr('id');
+                var id = $(this).closest('tr').find('td').first().text();
+                var data = {
+                    "_token": "{{ csrf_token() }}"
+                };
+                data.iId = id;
+                swal({
+                    title: "{{trans('_web_alert.del.title')}}",
+                    text: "{{trans('_web_alert.del.note')}}",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "{{trans('_web_alert.cancel')}}",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "{{trans('_web_alert.ok')}}",
+                    closeOnConfirm: true
+                }, function () {
+                    $.ajax({
+                        url: url_dodel,
+                        data: data,
+                        type: "POST",
+                        //async: false,
+                        success: function (rtndata) {
+                            if (rtndata.status) {
+                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")
+                                setTimeout(function () {
+                                    table.api().ajax.reload(null, false);
+                                }, 100);
+                            } else {
+                                swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");
+                            }
+                        }
+                    });
+                });
+            });
+            //
+            $("#dt_basic").on('click', '.btn-attributes', function () {
+                //var id = $(this).closest('tr').attr('id');
+                var id = $(this).closest('tr').find('td').first().text();
+                location.href = url_attr + '/' + id;
+            });
+            //
+            var ii = 1;
+            $('thead>tr>th').each(function () {
+                if (ii==5){
+                    $(this).click();
+                    $(this).click();
+                }
+                ii++;
             });
         });
     </script>

@@ -164,7 +164,7 @@
                         }
                     },
                     {
-                        "sTitle": "Action",
+                        "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {

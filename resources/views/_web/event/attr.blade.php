@@ -40,55 +40,55 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title modalTitle">{{$info->vTitle or ''}}</h4>
-                            <h6 class="card-subtitle">{{$info->iCreateTime or ''}}</h6>
+                            <h4 class="card-title modalTitle">{{$attributes->vName or ''}}</h4>
+                            <h6 class="card-subtitle">{{$attributes->vLocation or ''}}</h6>
                         </div>
-                        {{--<hr>--}}
+                        <hr>
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
-                                {{--<h3 class="card-title">Detail</h3>--}}
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">內容</label>
-                                    <div class="col-sm-9">
-                                        @if(isset($info->vSummary))
-                                        {!! $info->vSummary !!}
-                                        @endif
+                                <h4 class="card-title"></h4>
+                                @if(isset($info))
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Key Value</label>
+                                        <div class="col-sm-9">
+                                            {{$info->keyValue or ''}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">PGA</label>
-                                    <div class="col-sm-9">
-                                        {{$info->PGA or ''}}
+                                    <div class="form-group row">
+                                        <label for="lname1" class="col-sm-3 text-right control-label col-form-label">發生時間</label>
+                                        <div class="col-sm-9">
+                                            {{$info->eventTime or ''}}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">震度</label>
-                                    <div class="col-sm-9">
-                                        {{$info->shake or ''}}
+                                    <div class="form-group row">
+                                        <label for="lname2" class="col-sm-3 text-right control-label col-form-label">PGA</label>
+                                        <div class="col-sm-9">
+                                            {{$info->PGA or ''}}
+                                        </div>
                                     </div>
-                                </div>
-                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 30)
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
-                                    <div class="col-sm-9" style="text-align: center;">
-                                        <br>
-                                        <h3>
-                                            <a href="{{url('web/trace/add')}}">填寫相關追蹤查核內容</a>
-                                        </h3>
+                                    <div class="form-group row">
+                                        <label for="lname22" class="col-sm-3 text-right control-label col-form-label">震度</label>
+                                        <div class="col-sm-9">
+                                            {{$info->shake or ''}}
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="form-group row">
+                                        <label for="lname3" class="col-sm-3 text-right control-label col-form-label">地區</label>
+                                        <div class="col-sm-9">
+                                            {{$attributes->vRegion or ''}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname1" class="col-sm-3 text-right control-label col-form-label">縣市</label>
+                                        <div class="col-sm-9">
+                                            {{$attributes->vCounty or ''}}
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    @if(isset($info->iCheck))
-                                        @if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<30)
-                                        <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">
-                                            Check & Send
-                                        </button>
-                                        @endif
-                                    @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
                             </div>
@@ -130,30 +130,11 @@
 @section('inline-js')
     <!--  -->
     <script>
-        var url_index = "{{ url('web/'.implode( '/', $module ))}}";
+{{--        var url_index = "{{ url('web/'.implode( '/', $module ))}}";--}}
         $(document).ready(function () {
             //
             $(".btn-back").click(function () {
                 history.back()
-            });
-            //
-            $(".btn-check").click(function () {
-                var data = {"_token": "{{ csrf_token() }}"};
-                data.iId = $(this).data('id');
-                $.ajax({
-                    url: '{{url('web/message/dosave')}}',
-                    type: 'POST',
-                    data: data,
-                    success: function (rtndata) {
-                        if (rtndata.status) {
-                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
-                            //button hide
-                            $(".btn-check").hide();
-                        } else {
-                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
-                        }
-                    }
-                })
             });
         });
     </script>

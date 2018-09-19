@@ -33,15 +33,6 @@ class LoginController extends _WebController
         $this->module = [ 'login' ];
         $this->view = View()->make( "_web." . implode( '.' , $this->module ) );
 
-        // set_meta_og
-//        $og = [
-//            "url"           => url('login'),
-//            "type"          => "website",
-//            "title"         => config( '_website.web_title' ),
-//            "description"   => config( '_website.web_description' ),
-//            "images"        => 'portal_assets/dist/img/logo.png',
-//        ];
-//        $this->view->with( 'og' , $og );
         session()->put( 'SEO.vTitle' , '水庫管理系統' );
 
         /*
@@ -152,7 +143,7 @@ class LoginController extends _WebController
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
-        $this->rtndata ['rtnurl'] =  /*session()->has( 'rtnurl' ) ? session()->pull( 'rtnurl' ) :*/ url('web/reservoir');
+        $this->rtndata ['rtnurl'] =  /*session()->has( 'rtnurl' ) ? session()->pull( 'rtnurl' ) :*/ url('web/event');
         $this->rtndata ['isMobile'] = false;
 
         return response()->json( $this->rtndata );
@@ -248,7 +239,7 @@ class LoginController extends _WebController
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );
-        $this->rtndata ['rtnurl'] = url('web/reservoir');//( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'home' );
+        $this->rtndata ['rtnurl'] = url('web/event');//( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'home' );
         $this->rtndata ['isMobile'] = true;
         $this->rtndata ['id'] = $DaoMember->iId;
 

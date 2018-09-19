@@ -42,6 +42,19 @@
                 {{--<li class="sidebar-item"><a href="{{url('web/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>--}}
             </ul>
         </li>
+        @if(session('member.iAcType')<10)
+            <li class="sidebar-item">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                    <i class="mdi mdi-border-left"></i>
+                    <span class="hide-menu">通知中心</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                    <li class="sidebar-item"><a href="{{url('web/message/center')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
+                    <li class="sidebar-item"><a href="{{url('web/message/center/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+                    {{--<li class="sidebar-item"><a href="{{url('web/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>--}}
+                </ul>
+            </li>
+        @endif
         @if(session('member.iAcType')==1)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
@@ -59,6 +72,10 @@
             <span class="hide-menu">Extra</span>
         </li>
         <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/event')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">地震Event</span>
+            </a>
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap')}}" aria-expanded="false">
                 <i class="mdi mdi-content-paste"></i>
                 <span class="hide-menu">Shakemap</span>
@@ -66,6 +83,10 @@
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
                 <i class="mdi mdi-content-paste"></i>
                 <span class="hide-menu">Shakemap新版</span>
+            </a>
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/trace')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">追蹤紀錄</span>
             </a>
         </li>
         {{--<li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="" aria-expanded="false"><i class="mdi mdi-directions"></i><span class="hide-menu">Log Out</span></a></li>--}}

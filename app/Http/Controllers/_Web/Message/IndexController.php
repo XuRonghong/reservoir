@@ -141,132 +141,13 @@ class IndexController extends _WebController
     /*
      *
      */
-    public function add (Request $request)
-    {
-        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
-        $this->breadcrumb = [
-            $this->vTitle => url( 'web' ),
-            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
-            implode( '.', $this->module ) . '.add' => url( 'web/' . implode( '/', $this->module ) . "/add" )
-        ];
-        $this->view->with( 'breadcrumb', $this->breadcrumb );
-        $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '新增會員' );
-
-        return $this->view;
-    }
-
-
-    /*
-    *
-    */
-    public function doAdd ( Request $request )
-    {
-        $vAccount  = ( $request->exists( 'vAccount' ) ) ? $request->input( 'vAccount' ) : "";
-        $vPassword = ( $request->exists( 'vPassword1') ) ? $request->input( 'vPassword1' ) : "";
-        $vPassword2 = ( $request->exists( 'vPassword2') ) ? $request->input( 'vPassword2' ) : "";
-        $iAcType =    ( $request->exists( 'iAcType') ) ? $request->input( 'iAcType' ) : "";
-        $vUserName =  ( $request->exists( 'vUserName') ) ? $request->input( 'vUserName' ) : "";
-        $vUserEmail = ( $request->exists( 'vUserEmail') ) ? $request->input( 'vUserEmail' ) : "";
-        $vUserContact = ( $request->exists( 'vUserContact') ) ? $request->input( 'vUserContact' ) : "";
-        $vUserAddress = ( $request->exists( 'vUserAddress') ) ? $request->input( 'vUserAddress' ) : "";
-
-        //
-        if ( $vPassword != $vPassword2 ) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = '密碼確認錯誤';
-            return response()->json( $this->rtndata );
-        }
-        //帳號email格式錯誤，退回
-//        if ( !FuncController::_isValidEmail( $vUserEmail )) {
-//            $this->rtndata ['status'] = 0;
-//            $this->rtndata ['message'] = trans( '_web_message.register.error_account' );
-//            return response()->json( $this->rtndata );
-//        }
-        //帳號存在，退回
-        $map ['vAccount'] = $vAccount;
-        $DaoMember = SysMember::query()->where( $map )->first();
-        if ($DaoMember) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.register.account_not_empty' );
-            return response()->json( $this->rtndata );
-        }
-
-
-        $str = md5( uniqid( mt_rand(), true ) );
-        $uuid = substr( $str, 0, 8 ) . '-';
-        $uuid .= substr( $str, 8, 4 ) . '-';
-        $uuid .= substr( $str, 12, 4 ) . '-';
-        $uuid .= substr( $str, 16, 4 ) . '-';
-        $uuid .= substr( $str, 20, 12 );
-        do {
-            $userid = rand( 1000000001, 1099999999 );
-            $check = SysMember::query()->where( "iUserId", $userid )->first();
-        } while ($check);
-
-        //
-        $date_time = time();
-        $DaoMember = new SysMember ();
-        $DaoMember->vAgentCode = config( '_config.agent_code' );
-        $DaoMember->iUserId = $userid;
-        $DaoMember->vUserCode = $uuid;
-        $DaoMember->iAcType = $iAcType; //
-        $DaoMember->vAccount = $vAccount;
-        $DaoMember->vPassword = hash( 'sha256', $DaoMember->vAgentCode . $vPassword . $DaoMember->vUserCode );
-        $DaoMember->vCreateIP = $request->ip();
-        $DaoMember->iCreateTime = $DaoMember->iUpdateTime = $date_time;
-        $DaoMember->iLoginTime = 0;
-        $DaoMember->bActive = 1;
-        $DaoMember->iStatus = 1;
-        if ($DaoMember->save()) {
-            //註冊會員的詳情資料
-            $DaoMemberInfo = new SysMemberInfo();
-            $DaoMemberInfo->iMemberId = $DaoMember->iId;
-            $DaoMemberInfo->vUserImage = ( $request->input( 'vUserImage' ) ) ? $request->input( 'vUserImage' ) : "/images/empty.jpg";
-            $DaoMemberInfo->vUserName = $vUserName;
-            $DaoMemberInfo->vUserID =   ( $request->exists( 'vUserID' ) )   ? $request->input( 'vUserID' ) : "";
-            $DaoMemberInfo->iUserBirthday = time();
-            $DaoMemberInfo->vUserEmail = $vUserEmail;
-            $DaoMemberInfo->vUserContact = $vUserContact;
-            $DaoMemberInfo->vUserAddress = $vUserAddress;
-            $DaoMemberInfo->save();
-
-            //註冊會員的群組,預設'5'的一般會員群組
-            $DaoGroupMember = new SysGroupMember();
-            $DaoGroupMember->iGroupId = 5;
-            $DaoGroupMember->iMemberId = $DaoMember->iId;
-            $DaoGroupMember->iCreateTime = $DaoGroupMember->iUpdateTime = time();
-            $DaoGroupMember->iStatus = 1;
-            $DaoGroupMember->save();
-
-            $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.register.success' ).trans( '_web_message.register.verification' );
-//            $this->rtndata ['rtnurl'] = ( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'login' );
-            $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
-
-//            Mail::send( '_email.welcome' , [ 'url' => url( 'doActive' ) . '/' . $uuid ], function( $message ) use ( $vAccount ) {
-//                $message->to( $vAccount, '會員' )->subject( 'Register Success!' );
-//            } );
-
-            //
-            //CoinController::_CheckActivityRegister( $DaoMember->iId );
-        } else {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.register.fail' );
-        }
-
-        return response()->json( $this->rtndata );
-    }
-
-
-    /*
-     *
-     */
     public function edit ( $id )
     {
+        // 權限判斷 處理
         if (session('member.iAcType') > 9 && session('member.iId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
+        //
         if ($id == 1 && session('member.iId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
@@ -293,7 +174,7 @@ class IndexController extends _WebController
 
 
     /*
-     *
+     * 發送地震通知後，相關人員確認後傳送下一位
      */
     public function doSave ( Request $request )
     {
@@ -318,11 +199,12 @@ class IndexController extends _WebController
                 break;
         }
 
+        //重新編寫訊息概要
         $Dao->vSummary = '<h5>發生時間: ' . date( 'Y/m/d H:i:s',(strtotime($Dao->eventTime) + 28800)) . '</h5>' ;
 //        $Dao->vSummary .= '待確認後' . $message;
         $Dao->iCheck += 10; //有確認的目標權限人員
         $Dao->iHead += 10;  //目標人員權限再加10
-        $Dao->iUpdateTime = time();
+        $Dao->iStartTime = time();
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
@@ -342,98 +224,9 @@ class IndexController extends _WebController
     }
 
 
-    /*
-    *
-    */
-    function doSaveShow ( Request $request )
-    {
-        $id = $request->input( 'iId', 0 );
-        if ( !$id) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-
-        $Dao = SysMember::query()->find( $id );
-        if ( !$Dao) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-        if ($request->input( 'bActive' )) {
-            $Dao->bActive = ( $request->input( 'bActive' ) == "change" ) ? !$Dao->bActive : $request->input( 'bActive' );
-        }
-        if ($request->input( 'iStatus' )) {
-            $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
-        }
-        $Dao->iRank = $request->input( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
-        $Dao->iUpdateTime = time();
-        if ($Dao->save()) {
-            if ($request->input( 'iStatus' )) {
-                $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
-                $DaoInfo->iMemberId = 0;
-                $DaoInfo->save();
-            }
-
-            $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.save_success' );
-            $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
-            //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
-        } else {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.save_fail' );
-        }
-
-        return response()->json( $this->rtndata );
-    }
-
 
     /*
-     *
-     */
-    public function doSavePassword ( Request $request )
-    {
-        $vPassword    = ( $request->exists( 'vPassword' ) ) ? $request->input( 'vPassword' ) : "";
-        $vPasswordNew = ( $request->exists( 'vPasswordNew' ) ) ? $request->input( 'vPasswordNew' ) : "";
-
-        $id = $request->input( 'iId', 0 );
-        if ( !$id) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-        $DaoMember = SysMember::query()->find( $id );
-        if ( !$DaoMember) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.register.account_not_empty' );
-            return response()->json( $this->rtndata );
-        }
-        if ($DaoMember->vPassword != hash( 'sha256', $DaoMember->vAgentCode . $vPassword . $DaoMember->vUserCode )) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.login.error_password' );
-            return response()->json( $this->rtndata );
-        }
-        $DaoMember->vPassword = hash( 'sha256', $DaoMember->vAgentCode . $vPasswordNew . $DaoMember->vUserCode );
-        $DaoMember->iUpdateTime = time();
-        if ($DaoMember->save()) {
-            $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.save_success' );
-            $this->rtndata ['rtnurl'] = url( 'web/login' );
-            //Logs
-            $this->_saveLogAction( $DaoMember->getTable(), $DaoMember->iId, 'edit', json_encode( $DaoMember ) );
-            session()->forget( 'member' );
-        } else {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.save_fail' );
-        }
-
-        return response()->json( $this->rtndata );
-    }
-
-
-    /*
-     *
+     * 詳情資料
      */
     public function attr (Request $request , $id)
     {
@@ -491,16 +284,19 @@ class IndexController extends _WebController
     }
 
 
+
     /*
-     *
+     * 隱藏的內建功能:刪除全部
      */
     public function doDelAll ( Request $request )
     {
+        // check sudo
         if ( session('member.iAcType' , 0) != 1) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+        //
         $mapMessage['bDel'] = 0;
         $Dao = ModMessage::query()->where($mapMessage)->get();
         if ( !$Dao) {

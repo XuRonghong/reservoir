@@ -171,11 +171,11 @@
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
-                <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search position-absolute">
-                        <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                    </form>
-                </li>
+                {{--<li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>--}}
+                    {{--<form class="app-search position-absolute">--}}
+                        {{--<input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>--}}
+                    {{--</form>--}}
+                {{--</li>--}}
             </ul>
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
@@ -200,12 +200,14 @@
                 <!-- Comment -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="mdi mdi-bell font-24"></i>
+                    <a title="地震通知" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-bell font-24 comment-count">
+                            {{$comment_total or 0}}
+                        </i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
                         <span class="with-arrow"><span class="bg-primary"></span></span>
-                        <ul class="list-style-none">
+                        <ul class="list-style-none ulComment">
                             <li>
                                 <div class="drop-title bg-primary text-white">
                                     <h4 class="m-b-0 m-t-5">1 New</h4>
@@ -231,12 +233,6 @@
                                             {{--<span class="time">9:30 AM</span>--}}
                                         {{--</div>--}}
                                     {{--</a>--}}
-                                    <!-- Message -->
-                                    {{--<a href="javascript:void(0)" class="message-item">--}}
-                                        {{--<span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>--}}
-                                        {{--<div class="mail-contnet">--}}
-                                            {{--<h5 class="message-title">Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>--}}
-                                    {{--</a>--}}
                                 </div>
                             </li>
                             <li>
@@ -252,7 +248,7 @@
                 <!-- Messages -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a title="訊息" class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="font-24 mdi mdi-comment-processing message-count">
                             {{$message_total or 0}}
                         </i>
@@ -285,24 +281,18 @@
                                 @empty
                                     <!-- Message -->
                                     <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img"> <img src="{{url('xtreme-admin/assets/images/users/2.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status busy pull-right"></span> </span>
+                                        <span class="user-img">
+                                            <img src="{{url('xtreme-admin/assets/images/users/2.jpg')}}" alt="user" class="rounded-circle">
+                                            <span class="profile-status busy pull-right"></span>
+                                        </span>
                                         <div class="mail-contnet">
-                                            <h5 class="message-title">Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                            <h5 class="message-title">Sonu Nigam</h5>
+                                            <span class="mail-desc">I've sung a song! See you at</span>
+                                            <span class="time">9:10 AM</span>
+                                        </div>
                                     </a>
                                 @endforelse
                                 @endif
-                                    {{--<!-- Message -->--}}
-                                    {{--<a href="javascript:void(0)" class="message-item">--}}
-                                        {{--<span class="user-img"> <img src="{{url('/xtreme-admin/assets/images/users/3.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status away pull-right"></span> </span>--}}
-                                        {{--<div class="mail-contnet">--}}
-                                            {{--<h5 class="message-title">Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>--}}
-                                    {{--</a>--}}
-                                    {{--<!-- Message -->--}}
-                                    {{--<a href="javascript:void(0)" class="message-item">--}}
-                                        {{--<span class="user-img"> <img src="{{url('/xtreme-admin/assets/images/users/4.jpg')}}" alt="user" class="rounded-circle"> <span class="profile-status offline pull-right"></span> </span>--}}
-                                        {{--<div class="mail-contnet">--}}
-                                            {{--<h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>--}}
-                                    {{--</a>--}}
                                 </div>
                             </li>
                             <li>

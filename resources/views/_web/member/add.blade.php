@@ -213,7 +213,6 @@
     <!-- end -->
     <script type="text/javascript">
         var current_data = [];
-        var url_index = "{{ url('web/'.implode( '/', $module ))}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_doresetpw = "{{ url('web/'.implode( '/', $module ).'/dosavepassword')}}";

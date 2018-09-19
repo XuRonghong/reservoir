@@ -156,7 +156,6 @@
     <!-- end -->
     <script type="text/javascript">
         var current_data = [];
-        var url_index = "{{ url('web/'.implode( '/', $module ))}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
@@ -165,7 +164,7 @@
             current_modal = modal.find('.memberInfo-modal');
             //
             $(".btn-cancel").click(function () {
-                location.href = url_index;
+                history.back();
             });
             //
             $(".btn-doadd").click(function () {

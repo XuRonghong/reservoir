@@ -384,7 +384,31 @@ Route::group(
                     } );
             } );
 
+            /*************************************
+             * 地震event資訊
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'event',
+//                    'namespace' => '',
+                ], function() {
 
+                Route::get( '', 'IndexController@eventView' );
+                Route::get( 'getlist', 'IndexController@getEventList' );
+                Route::get( 'add', 'IndexController@addEvent' );
+                Route::post( 'doadd', 'IndexController@doAddEvent' );
+                Route::get( 'edit/{id}', 'IndexController@editEvent' );
+                Route::post( 'dosave', 'IndexController@doSaveEvent' );
+                Route::post( 'dosaveshow', 'IndexController@doSaveShowEvent' );
+                Route::post( 'dodel', 'IndexController@doDelEvent' );
+                Route::get( 'attr/{id}', 'IndexController@attrEvent' );
+//                Route::post( 'dosaveattr', 'IndexController@doSaveAttributesEvent' );
+
+            } );
+
+            /*************************************
+             * Log資訊
+             *************************************/
             Route::group(
                 [
                     'prefix' => 'log',
@@ -428,8 +452,12 @@ Route::group(
             Route::get( 'shakemap2', 'IndexController@shakemap2' );
 
 
+            /* Ajax */
             Route::post( 'addmessage', 'IndexController@addMessage');
+            Route::post( 'savemessage', 'IndexController@doSaveMessage');
+            Route::post( 'getcomment', 'IndexController@getCommentList');
             Route::post( 'getmessage', 'IndexController@getMessageList');
+
 
             /*************************************
              * 通知訊息
@@ -451,6 +479,25 @@ Route::group(
                 Route::get( 'attr/{id}', 'IndexController@attr' );
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
 
+                Route::group(
+                    [
+                        'prefix' => 'center',
+//                    'namespace' => '',
+                    ], function() {
+
+                    Route::get( '', 'centerController@index' );
+                    Route::get( 'getlist', 'centerController@getList' );
+                    Route::get( 'add', 'centerController@add' );
+                    Route::post( 'doadd', 'centerController@doAdd' );
+                    Route::get( 'edit/{id}', 'centerController@edit' );
+                    Route::post( 'dosave', 'centerController@doSave' );
+//                    Route::post( 'dosaveshow', 'centerController@doSaveShow' );
+                    Route::post( 'dodel', 'centerController@doDel' );
+                    Route::get( 'dodelall', 'centerController@doDelAll' );
+                    Route::get( 'attr/{id}', 'centerController@attr' );
+//                Route::post( 'dosaveattr', 'IndexController@doSaveAttributesEvent' );
+
+                } );
             } );
 
 

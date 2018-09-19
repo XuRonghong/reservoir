@@ -88,6 +88,7 @@
                 history.back();
             });
         });
+
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->

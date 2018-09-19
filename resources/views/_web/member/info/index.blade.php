@@ -142,7 +142,7 @@
                     {"sTitle": "連絡電話", "mData": "vUserContact", "width": "15%", "sName": "vUserContact"},
                     {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "25%", "sName": "vUserAddress"},
                     {
-                        "sTitle": "Action",
+                        "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {

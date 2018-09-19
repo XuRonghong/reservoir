@@ -36,6 +36,9 @@ class _WebController extends Controller
     protected $breadcrumb = [];
     protected $module;
     protected $agent;
+    /* message category */
+    protected $message_total = 0;
+    protected $comment_total = 0;
 
 
     /*
@@ -44,64 +47,6 @@ class _WebController extends Controller
     public function _init ()
     {
 
-
-        // Message table
-//        session()->put( 'message', json_decode( json_encode( $DaoEvent ), true ) );
-//        foreach ($DaoEvent as $item){
-//            $item->meta = ModReservoirMeta::query()->where('vNumber','=', $item->id)
-//                ->select([
-//                    'iRank',
-//                    'vStructure',
-//                    'vLevel',
-//                    'iHeight',
-//                    'iStoreTotal',
-//                    'vGrade',
-//                    'vTrustRegion',
-//                    'vNumber',
-//                    'vNet',
-//                    'vAreaCode'])
-//                ->first();
-//            $item->reservoir = ModReservoir::query()->where('vName', 'LIKE', '%'.$item->meta->vStructure.'%')
-//                ->leftJoin( 'mod_reservoir_info', function ($join) {
-//                    $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
-//                })
-//                ->select([
-//                    'mod_reservoir.vRegion',
-//                    'mod_reservoir.vName',
-//                    'mod_reservoir.vLocation',
-//                    'mod_reservoir.vCounty',
-//                    'mod_reservoir.iSum',
-//                    'mod_reservoir_info.iType',
-//                    'mod_reservoir_info.vCode',
-//                    'mod_reservoir_info.vImages',
-//                    'mod_reservoir_info.iSafeValue'])
-//                ->first();
-//        }
-
-
-
-
-        /*
-         *  判斷裝置手機版或電腦版
-         */
-//        $this->agent = new Agent();
-//        if ( $this->agent->isMobile() && !$this->agent->isTablet() ) {
-//            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
-
-
-//        } else {
-//            $this->view = View()->make( "_template_portal." . implode( '.' , $this->module ) );
-
-
-
-//        }
-
-//        $map['iStatus'] = 1;
-//        $map['iId'] = session( 'member.iId' , '');
-//        $DaoMem = SysMember::query()->where($map)->get();
-//        $this->view->with( 'profile', $this->module );
-
-        return ;
     }
 
     /*
@@ -290,6 +235,11 @@ class _WebController extends Controller
             foreach ($DaoMessage as $var){
                 $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
                 $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
+                if ($var->iType > 50){
+                    $this->message_total ++ ;
+                } else {
+                    $this->comment_total ++ ;
+                }
             }
         }
 

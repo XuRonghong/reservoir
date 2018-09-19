@@ -21,8 +21,8 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-        @include('_web._layouts.breadcrumb')
-        <!-- ============================================================== -->
+    @include('_web._layouts.breadcrumb')
+    <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
 
@@ -38,7 +38,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
+                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
                             <h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
@@ -92,9 +92,9 @@
 <!-- ================== inline-js ================== -->
 @section('inline-js')
     <!-- Public Crop_Image -->
-{{--    @include('_web._js.crop_image_single_modal_340175')--}}
+    {{--    @include('_web._js.crop_image_single_modal_340175')--}}
     <!-- Public SummerNote -->
-{{--    @include('_web._js.summernote')--}}
+    {{--    @include('_web._js.summernote')--}}
     <!--  -->
     <script>
         var current_data = [];
@@ -106,7 +106,7 @@
         var url_edit = "{{ url('web/'.implode( '/', $module ).'/edit')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
-        var url_attributes = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
+        var url_attr = "{{ url('web/'.implode( '/', $module ).'/attr')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
         $(document).ready(function () {
             /* BASIC ;*/
@@ -118,55 +118,31 @@
                 // "scrollY": '65vh',
                 "aoColumns": [
                     {
-                        "sTitle": "ID",
-                        "mData": "iId",
+                        "sTitle": "keyValue",
+                        "mData": "keyValue",
                         "width": "5%",
-                        "sName": "iId",
+                        "sName": "keyValue",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
                         }
                     },
-                    {"sTitle": "地區別", "mData": "vRegion", /*"width": "8%", */"sName": "vRegion"},
-                    {"sTitle": "名稱", "mData": "vName", /*"width": "8%",*/ "sName": "vName"},
-                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "25%", "sName": "vLocation"},
-                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "12%", "sName": "vCounty"},
-                    // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "8%", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
-                    // {"sTitle": "Sum", "mData": "iSum", "width": "8%", "sName": "iSum"},
+                    {"sTitle": "eventTime", "mData": "eventTime", "width": "15%", "sName": "eventTime"},
+                    {"sTitle": "id", "mData": "id", "width": "5%", "sName": "id"},
                     {
-                        "sTitle": "圖片",
-                        "mData": "vImages",
-                        "sName": "vImages",
-                        "width": "10%",
-                        "bSortable": false,
+                        "sTitle": "Reservoir",
+                        "mData": "vStructure",
+                        "width": "20%",
+                        "sName": "vStructure",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
-                            var html_str = "";
-                            for (var key in data) {
-                                html_str += "<img width='75px' src=" + data[key] + " style='margin:5px;'>";
-                            }
-                            return html_str;
+                            // for(obj in row['reservoir'])
+                            return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "I/O",
-                    //     "mData": "iStatus",
-                    //     "sName": "iStatus",
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         var btn = "無狀態";
-                    //         switch (data) {
-                    //             case 1:
-                    //                 btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
-                    //                 break;
-                    //             default:
-                    //                 btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
-                    //                 break;
-                    //         }
-                    //         return btn;
-                    //     }
-                    // },
+                    {"sTitle": "NET", "mData": "NET", "width": "5%", "sName": "NET"},
+                    {"sTitle": "LOCATION", "mData": "LOCATION", "width": "5%", "sName": "LOCATION"},
+                    {"sTitle": "PGA", "mData": "PGA", "width": "5%", "sName": "PGA"},
                     {
                         "sTitle": "",
                         "bSortable": false,
@@ -174,17 +150,9 @@
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            switch (row.iStatus) {
-                                case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
-                                    break;
-                                default:
-                                    btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
-                                    break;
-                            }
-                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                            btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                            // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            // btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            // btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             return btn;
                         }
                     },
@@ -228,14 +196,14 @@
                 });
             });
             //
-            $("#dt_basic").on('click', '.btn-status', function () {
+            $("#dt_basic").on('click', '.btn-active', function () {
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };
                 data.iId = id;
-                data.iStatus = "change";
+                data.bActive = "change";
                 $.ajax({
                     url: url_dosave_show,
                     data: data,
@@ -267,6 +235,7 @@
                     "_token": "{{ csrf_token() }}"
                 };
                 data.iId = id;
+                data.iStatus = "change";
                 swal({
                     title: "{{trans('_web_alert.del.title')}}",
                     text: "{{trans('_web_alert.del.note')}}",
@@ -278,24 +247,37 @@
                     closeOnConfirm: true
                 }, function () {
                     $.ajax({
-                        url: url_dodel,
+                        url: url_dosave_show,
                         data: data,
                         type: "POST",
                         //async: false,
                         success: function (rtndata) {
                             if (rtndata.status) {
-                                //toastr.success(rtndata.message,"{{trans('_web_alert.notice')}}")
-                                swal("{{trans('_web_alert.notice')}}", rtndata.message, "success");
+                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")
                                 setTimeout(function () {
                                     table.api().ajax.reload(null, false);
                                 }, 100);
-
                             } else {
                                 swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");
                             }
                         }
                     });
                 });
+            });
+            //
+            $("#dt_basic").on('click', '.btn-attributes', function () {
+                //var id = $(this).closest('tr').attr('id');
+                var id = $(this).closest('tr').find('td').first().text();
+                location.href = url_attr + '/' + id;
+            });
+            //
+            var ii = 1;
+            $('thead>tr>th').each(function () {
+                if (ii==2){
+                    $(this).click();
+                    $(this).click();
+                }
+                ii++;
             });
         });
     </script>
