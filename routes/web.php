@@ -485,16 +485,16 @@ Route::group(
 //                    'namespace' => '',
                     ], function() {
 
-                    Route::get( '', 'centerController@index' );
-                    Route::get( 'getlist', 'centerController@getList' );
-                    Route::get( 'add', 'centerController@add' );
-                    Route::post( 'doadd', 'centerController@doAdd' );
-                    Route::get( 'edit/{id}', 'centerController@edit' );
-                    Route::post( 'dosave', 'centerController@doSave' );
+                    Route::get( '', 'CenterController@index' );
+                    Route::get( 'getlist', 'CenterController@getList' );
+                    Route::get( 'add', 'CenterController@add' );
+                    Route::post( 'doadd', 'CenterController@doAdd' );
+                    Route::get( 'edit/{id}', 'CenterController@edit' );
+                    Route::post( 'dosave', 'CenterController@doSave' );
 //                    Route::post( 'dosaveshow', 'centerController@doSaveShow' );
-                    Route::post( 'dodel', 'centerController@doDel' );
-                    Route::get( 'dodelall', 'centerController@doDelAll' );
-                    Route::get( 'attr/{id}', 'centerController@attr' );
+                    Route::post( 'dodel', 'CenterController@doDel' );
+                    Route::get( 'dodelall', 'CenterController@doDelAll' );
+                    Route::get( 'attr/{id}', 'CenterController@attr' );
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributesEvent' );
 
                 } );
