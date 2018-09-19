@@ -165,7 +165,7 @@
         _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
         _gaq.push(['_trackPageview']);
 
-        (function () {
+        $(function () {
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
             ga.async = true;
@@ -189,7 +189,7 @@
                 get_message_on_upbar();
             });
 
-        })();
+        });
 
         function get_new_message() {
             var data = {"_token": "{{ csrf_token() }}"};
