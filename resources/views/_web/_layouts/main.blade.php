@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
     <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
 
+    {{-- sudo view --}}
     @if(session('member.iAcType')==1)
         <style rel="stylesheet" type="text/css">
             #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
@@ -166,6 +167,7 @@
         _gaq.push(['_trackPageview']);
 
         $(function () {
+            //
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
             ga.async = true;
@@ -173,24 +175,30 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
 
+
             // ajax to new message
-            get_new_message();
-            get_message_on_upbar();
+            get_new_message();          //針對地震通知 get1 comment
+            get_message_on_upbar();     //針對系統訊息 get2 message
 
             //upbar reload on click
             // $('.topbartoggler').click(function () {
             $(this).click(function () {
+                //有 click event 觸發刷新上方列的訊息通知
                 get_new_message();
                 get_message_on_upbar();
             });
             //click message
             $('.message-count').click(function () {
+                //若點擊後標示已讀訊息 並重新標記未讀訊息數量
                 save_message();
                 get_message_on_upbar();
             });
 
         });
 
+        /*
+        * 新增最新的地震資料並且撈取訊息通知
+         */
         function get_new_message() {
             var data = {"_token": "{{ csrf_token() }}"};
             // data.iId = $(this).data('id');
@@ -203,6 +211,7 @@
                 success: function (rtndata) {
                     var html_str = "";
                     if (rtndata.status) {
+                        //撈取最新的訊息通知
                         get_comment_on_upbar();
                     } else {
                         {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
@@ -211,6 +220,9 @@
             });
         }
 
+        /*
+        儲存"通知訊息"資料為使用者已讀
+         */
         function save_message() {
             var data = {"_token": "{{ csrf_token() }}"};
             data.iId = $(this).data('id');
@@ -232,6 +244,9 @@
         }
 
         <!-- upperbar for comment -->
+        /*
+        上方列針對"通知"刷新功能
+         */
         function get_comment_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
             // data.iId = $(this).data('id');
@@ -277,13 +292,16 @@
                         $(".ulComment").html(html_str);
                         $('.comment-count').text(rtndata.total);
                     } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
                     }
                 }
             });
         }
 
         <!-- upperbar for message -->
+        /*
+        上方列針對"訊息"刷新功能
+         */
         function get_message_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
             // data.iId = $(this).data('id');
@@ -329,7 +347,7 @@
                         $(".ulMessage").html(html_str);
                         $('.message-count').text(rtndata.total_see);
                     } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
                     }
                 }
             });

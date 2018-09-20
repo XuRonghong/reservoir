@@ -88,7 +88,7 @@ class IndexController extends _WebController
                 $DaoMessage->vSummary .= '待確認後發送給水庫審查人員';
 //            $DaoMessage->vDetail = '有地震通知';
 //                $DaoMessage->vUrl = url('web/message/attr') . '/' . (ModMessage::query()->max('iId') + 1);
-//                $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
+                $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
 //                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
 //                $DaoMessage->iStartTime = time();
 //                $DaoMessage->iEndTime = time() + (60 * 30);   //30分鐘後
@@ -147,6 +147,10 @@ class IndexController extends _WebController
                 if ($var->iType < 50){
                     $Dao[] = $var;      //物件的重新組合
                 }
+                //圖片處理,假如NULL給他個預設值
+                if ( !$var->vImages){
+                    $var->vImages = env('APP_URL') . '/images/favicon.png';
+                }
             }
             //
             $this->rtndata ['status'] = 1;
@@ -185,6 +189,10 @@ class IndexController extends _WebController
                         $message_total ++;
                     }
                     $Dao[] = $var;      //物件的重新組合
+                }
+                //圖片處理,假如NULL給他個預設值
+                if ( !$var->vImages){
+                    $var->vImages = env('APP_URL') . '/images/favicon.png';
                 }
             }
             //
