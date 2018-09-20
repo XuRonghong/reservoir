@@ -247,7 +247,7 @@
 
 // 首頁先導向後臺登入頁
 Route::get( '', function (){
-    return redirect('web');
+    return redirect('web/login');
 } ) ;
 /*
  * 後台
