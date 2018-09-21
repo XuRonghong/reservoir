@@ -87,7 +87,7 @@ class IndexController extends _WebController
                 $DaoMessage->vSummary = '<h5>發生時間: ' . date( 'Y/m/d H:i:s',(strtotime($var->eventTime) + 28800)) . '</h5>' ;
                 $DaoMessage->vSummary .= '待確認後發送給水庫審查人員';
 //            $DaoMessage->vDetail = '有地震通知';
-//                $DaoMessage->vUrl = url('web/message/attr') . '/' . (ModMessage::query()->max('iId') + 1);
+//                $DaoMessage->vReadman = ';
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
 //                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
 //                $DaoMessage->iStartTime = time();
@@ -116,13 +116,13 @@ class IndexController extends _WebController
 
         foreach ($DaoMessage as $var) {
             //訊息已讀過存入使用者id，現在解析該欄位的已讀使用者
-            $tmp_arr = explode( ';', $var->vUrl );      // Array <-- String
+            $tmp_arr = explode( ';', $var->vReadman );      // Array <-- String
             //存在陣列裡標示有讀訊息了
             if ( in_array( session('member.iId'), $tmp_arr )) {
                 continue;
             }
             //新增對應員通知訊息
-            $var->vUrl .= session('member.iId') . ';';
+            $var->vReadman .= session('member.iId') . ';';
             $var->save();
         }
         $this->rtndata ['status'] = 1;
@@ -184,7 +184,7 @@ class IndexController extends _WebController
 
                 } else {
                     //若該使用者有點擊訊息，則紀錄為已讀訊息
-                    $tmp_arr = explode( ';', $var->vUrl );
+                    $tmp_arr = explode( ';', $var->vReadman );
                     if ( !in_array( session('member.iId'), $tmp_arr )) {
                         $message_total ++;
                     }

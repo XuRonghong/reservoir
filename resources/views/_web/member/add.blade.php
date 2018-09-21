@@ -233,7 +233,7 @@
             //
             $(".btn-next").click(function () {
                 modal.find('.modalTitle').text('Member Information Add');
-                current_modal.hide();
+                // current_modal.hide();
                 next_modal.show();
                 modal.find('.btn-doadd').show();
                 modal.find('.btn-next').hide();

@@ -392,8 +392,10 @@ class IndexController extends _WebController
         if ($Dao->save()) {
             if ($request->input( 'iStatus' )) {
                 $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
-                $DaoInfo->iMemberId = 0;
-                $DaoInfo->save();
+                if ($DaoInfo){
+                    $DaoInfo->iMemberId = 0;
+                    $DaoInfo->save();
+                }
             }
 
             $this->rtndata ['status'] = 1;

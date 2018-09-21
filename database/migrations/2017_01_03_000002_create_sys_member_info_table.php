@@ -38,8 +38,8 @@ class CreateSysMemberInfoTable extends Migration
             $data_arr = [
                 [
                     "vUserImage" => env('APP_URL') . "/images/admin.jpg",
-                    "vUserName" => "Admin",
-                    "vUserEmail" => "admin@kahap.com",
+                    "vUserName" => "Superdo",
+                    "vUserEmail" => "superdo@kahap.com",
                     "vUserContact" => ""
                 ],
                 [

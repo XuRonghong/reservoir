@@ -41,7 +41,7 @@ class CreateSysMemberTable extends Migration
             $data_arr = [
                 [
                     "iAcType" => 1,
-                    "vAccount" => "admin@kahap.com"
+                    "vAccount" => "superdo"
                 ],
                 [
                     "iAcType" => 2,

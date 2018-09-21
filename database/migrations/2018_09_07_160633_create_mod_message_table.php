@@ -28,8 +28,8 @@ class CreateModMessageTable extends Migration
                 $table->integer('iHead')->default(99)->comment('目標者');
                 $table->string( 'vTitle', 63)->nullable()->comment('標頭');
                 $table->string( 'vSummary', 127)->nullable()->comment('概要');
-                $table->longText('vDetail', 255 )->nullable()->comment('細節');
-                $table->string( 'vUrl', 255 )->nullable()->comment('址');
+                $table->longText('vDetail' )->nullable()->comment('細節');
+                $table->string( 'vReadman' )->nullable()->comment('已讀者');
                 $table->string( 'vImages', 255 )->nullable()->comment('圖');
                 $table->string( 'vNumber', 64)->nullable()->comment('編碼');
                 $table->integer('iStartTime' )->default(0)->comment('起始');
