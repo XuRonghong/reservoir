@@ -42,8 +42,13 @@
             }
         </style>
     @endif
+    <style>
+        #body01 {
+            {{--background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );--}}
+        }
+    </style>
 </head>
-<body>
+<body id="body01">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
