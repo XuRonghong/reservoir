@@ -18,6 +18,7 @@ class IndexController extends _WebController
     function __construct ()
     {
         $this->module = [ 'reservoir' ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -33,7 +34,8 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '水庫' );
+        session()->put( 'SEO.vTitle' , '水庫資料' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -143,6 +145,7 @@ class IndexController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '水庫add' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -153,10 +156,8 @@ class IndexController extends _WebController
      */
     public function doAdd ( Request $request )
     {
-//        $maxRank = ModReservoir::query()->max( 'iRank' );
         $Dao = new ModReservoir();
-//        $Dao->iMemberId = session()->get( 'member.iId' );
-        $Dao->iRank = null; //$maxRank + 1;
+        $Dao->iRank = 0; //$maxRank + 1;
         $Dao->iType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
         $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
         $Dao->vRegion = ( $request->input( 'vRegion' ) ) ? $request->input( 'vRegion' ) : "";
@@ -209,14 +210,15 @@ class IndexController extends _WebController
     public function edit ( $id )
     {
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . '/edit/' . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
         $mapReservoir['mod_reservoir.bDel'] = 0;
@@ -229,24 +231,20 @@ class IndexController extends _WebController
                 'mod_reservoir_info.vSafe',
                 'mod_reservoir_info.iSafeValue')
             ->find($id);
-        if (!$DaoReservoir) {
-            session()->put('check_empty.message', trans('_web_message.empty_id'));
-            return redirect('web/' . implode('/', $this->module));
+        if ($DaoReservoir) {
+            //圖片
+            $image_arr = [];
+            $tmp_arr = explode( ';', $DaoReservoir->vImages );
+            $tmp_arr = array_filter( $tmp_arr );
+            foreach ($tmp_arr as $item) {
+                $image_arr[$item] = FuncController::_getFilePathById( $item );
+            }
+            if ($tmp_arr){
+                $DaoReservoir->vImages = $image_arr;
+            } else {
+                $DaoReservoir->vImages = [];
+            }
         }
-
-        //圖片
-        $image_arr = [];
-        $tmp_arr = explode( ';', $DaoReservoir->vImages );
-        $tmp_arr = array_filter( $tmp_arr );
-        foreach ($tmp_arr as $item) {
-            $image_arr[$item] = FuncController::_getFilePathById( $item );
-        }
-        if ($tmp_arr){
-            $DaoReservoir->vImages = $image_arr;
-        } else {
-            $DaoReservoir->vImages = [];
-        }
-
         //水庫List
         $this->view->with( 'info', $DaoReservoir );
 
@@ -302,6 +300,7 @@ class IndexController extends _WebController
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
@@ -312,6 +311,7 @@ class IndexController extends _WebController
                 $this->rtndata ['message'] = trans( '_web_message.empty_id' ) . 'info';
                 return response()->json( $this->rtndata );
             }
+
             if ($request->input( 'vImages' )) {
                 $DaoInfo->vImages = $request->input( 'vImages' );
             }
@@ -319,6 +319,7 @@ class IndexController extends _WebController
                 $DaoInfo->iSafeValue = $request->input( 'iSafeValue' );
             }
             $DaoInfo->iUpdateTime = time();
+
             if ($DaoInfo->save()) {
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans( '_web_message.save_success' );
@@ -357,6 +358,7 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
@@ -365,6 +367,7 @@ class IndexController extends _WebController
 //        }
         $Dao->iRank = $request->exists( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
@@ -397,8 +400,10 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $Dao->bDel = 1;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );
@@ -419,15 +424,15 @@ class IndexController extends _WebController
     function attributes ( $id )
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.attributes' );
-
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
-            implode( '.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attributes' )
+            implode( '.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attributes/' . $id )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , '更多資訊' );
+        $this->view->with( 'vSummary', '' );
 
 
         $mapReservoir['bDel'] = 0;

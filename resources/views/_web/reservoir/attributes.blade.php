@@ -21,11 +21,10 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-    @include('_web._layouts.breadcrumb')
-    <!-- ============================================================== -->
+        @include('_web._layouts.breadcrumb')
+        <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -39,9 +38,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>
+                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
+
                                 </table>
                             </div>
                         </div>
@@ -50,13 +50,6 @@
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
@@ -69,11 +62,13 @@
 @endsection
 
 @section('aside')
+
 @endsection
 
 <!-- ================== page-js ================== -->
 @section('page-js')
     <!--This page plugins -->
+
     <!--  -->
 @endsection
 <!-- ================== /page-js ================== -->
@@ -257,27 +252,6 @@
                 //var id = $(this).closest('tr').attr('id');
                 var id = $(this).closest('tr').find('td').first().text();
                 location.href = url_edit + '/' + id;
-
-                {{--var data = {--}}
-                {{--"_token": "{{ csrf_token() }}"--}}
-                {{--};--}}
-                {{--data.id = id;--}}
-                {{--$.ajax({--}}
-                {{--url: url_edit,--}}
-                {{--data: data,--}}
-                {{--type: "GET",--}}
-                {{--//async: false,--}}
-                {{--success: function (rtndata) {--}}
-                {{--if (rtndata.status) {--}}
-                {{--toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")--}}
-                {{--setTimeout(function () {--}}
-                {{--table.api().ajax.reload(null, false);--}}
-                {{--}, 100);--}}
-                {{--} else {--}}
-                {{--swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");--}}
-                {{--}--}}
-                {{--}--}}
-                {{--});--}}
             });
             //
             $("#dt_basic").on('click', '.btn-del', function () {

@@ -23,6 +23,7 @@ class IndexController extends _WebController
     function __construct ()
     {
         $this->module = [ 'message' ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -40,8 +41,9 @@ class IndexController extends _WebController
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '通知訊息' );
+        $this->view->with( 'vSummary', '' );
 
-
+        //
         $DaoMessage = $this->getDaoMessage( false);
         foreach ($DaoMessage as $var){
             $var->url = url('web/message/attr') . '/' . $var->iId;
@@ -58,77 +60,11 @@ class IndexController extends _WebController
      */
     public function getList ( Request $request )
     {
-        $sort_arr = [];
-        $search_arr = [];
-        $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
-        $iDisplayLength = $request->input('iDisplayLength') ? $request->input('iDisplayLength') : 0 ;
-        $iDisplayStart =  $request->input('iDisplayStart') ? $request->input('iDisplayStart') : 0 ;
-        $sEcho =          $request->input('sEcho' ) ? $request->input('sEcho') : '' ;
-        $column_arr =     $request->input('sColumns' ) ? $request->input('sColumns') : '' ;
-        $column_arr = explode( ',', $column_arr );
-        foreach ($column_arr as $key => $item)
-        {
-            if ($item == "") {
-                unset( $column_arr[$key] );
-                continue;
-            }
-            if ($request->input( 'bSearchable_' . $key ) == "true") {
-                $search_arr[$key] = $item;
-            }
-            if ($request->input( 'bSortable_' . $key ) == "true") {
-                $sort_arr[$key] = $item;
-            }
-        }
-        $sort_name = $sort_arr[ $request->input( 'iSortCol_0' ) ];
-        $sort_dir = $request->input( 'sSortDir_0' );
+        $sEcho = '';
+        $total_count = 0 ;
+        $data_arr = [];
 
-
-        $map['iStatus'] = 1;
-        $total_count = SysMember::query()->where($map)
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
-                    $query->orWhere( $item, 'like', '%' . $search_word . '%' );
-                }
-            })->where('iAcType','<>',1)
-            ->count();
-
-        $data_arr = SysMember::query()->where($map)
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
-                    $query->orWhere( $item, 'like', '%' . $search_word . '%' );
-                }
-            })->where('iAcType','<>',1)
-            ->orderBy( $sort_name, $sort_dir )
-            ->skip( $iDisplayStart )
-            ->take( $iDisplayLength )
-            ->get();
-        if ( !$data_arr)
-        {
-            $this->rtndata['status'] = 0;
-            $this->rtndata['message'] = ['Oops! 沒有使用者資訊!'];
-            return $this->rtndata;
-        }
-        foreach ($data_arr as $key => $var)
-        {
-            $var->DT_RowId = $var->iId;
-            if ($var->iAcType < 10){
-                $var->iAcType = "網站管理員";
-            } elseif ($var->iAcType < 20){
-                $var->iAcType = "水庫管理員(各水庫負責人員)";
-            } elseif ($var->iAcType < 30){
-                $var->iAcType = "水庫審查人員(審核送審人員)";
-            } elseif ($var->iAcType < 40){
-                $var->iAcType = "中央水利署人員";
-            } else {
-                $var->iAcType = "一般人員";
-            }
-//            $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
-//            $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
-//            $var->iLoginTime = date( 'Y/m/d H:i:s' , $var->iLoginTime );
-        }
-
-
-        $this->rtndata ['status'] = 1;
+        $this->rtndata ['status'] = 0;
         $this->rtndata ['sEcho'] = $sEcho;
         $this->rtndata ['iTotalDisplayRecords'] = $total_count;
         $this->rtndata ['iTotalRecords'] = $total_count;
@@ -156,15 +92,17 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . '/edit/' . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
         $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
         if (!$DaoMember) {
-            session()->put('check_empty.message', trans('_web_message.empty_id'));
+//            session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
         }
         $this->view->with( 'info', $DaoMember );
@@ -224,7 +162,6 @@ class IndexController extends _WebController
     }
 
 
-
     /*
      * 詳情資料
      */
@@ -234,23 +171,27 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+            implode('.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attr/' . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '更多資訊' );
+        $this->view->with( 'vSummary', '' );
 
         //
-        $mapMessage['iStatus'] = 1;
+//        $mapMessage['iStatus'] = 1;
         $mapMessage['bDel'] = 0;
         $DaoMessage = ModMessage::query()->where($mapMessage)
             ->where('iHead' , '>', session('member.iAcType'))
             ->join('event', 'keyValue', '=', 'iSource')
             ->find($id);
         if ($DaoMessage){
+            //
             $DaoMessage->ReservoirMeta = ModReservoirMeta::query()->where('vNumber','=', $DaoMessage->id)->first();
             $DaoMessage->Reservoir = ModReservoir::query()->where('vName', 'LIKE', '%'.$DaoMessage->ReservoirMeta->vStructure.'%')->first();
             $DaoMessage->iCreateTime = date( 'Y/m/d H:i:s', $DaoMessage->iCreateTime );
             $DaoMessage->iUpdateTime = date( 'Y/m/d H:i:s', $DaoMessage->iUpdateTime );
-
+            //
             if($DaoMessage->PGA<=0.8){
                 $DaoMessage->shake="O 級地震";
             }else if($DaoMessage->PGA<=2.5){
@@ -282,7 +223,6 @@ class IndexController extends _WebController
 
         return $this->view;
     }
-
 
 
     /*

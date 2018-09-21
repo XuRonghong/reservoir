@@ -12,7 +12,16 @@ use App\Http\Controllers\_Web\_WebController;
 
 class MetaController extends _WebController
 {
-    public $module = [ 'reservoir', 'meta' ];
+
+    /*
+     *
+     */
+    function __construct ()
+    {
+        $this->module = [ 'reservoir', 'meta' ];
+        $this->vTitle = 'Index';
+    }
+
 
     /*
      *
@@ -20,15 +29,14 @@ class MetaController extends _WebController
     public function index ()
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.index' );
-        //
         $this->breadcrumb = [
-            '後臺首頁' => url( 'web/reservoir' ),
-            '水庫meta' => url( 'web/reservoir/meta' ),
+            $this->vTitle => url( 'web' ),
+            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '水庫meta' );
-
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -129,16 +137,15 @@ class MetaController extends _WebController
     public function add ()
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
             implode( '.', $this->module ) . '.add' => url( 'web/' . implode( '/', $this->module ) . "/add" )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '水庫meta新增' );
-
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -207,14 +214,15 @@ class MetaController extends _WebController
     public function edit ( $id )
     {
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
-            implode( '.', $this->module ) . '.edit' => url( 'web/' . implode( '/', $this->module ) . "/edit" )
+            implode( '.', $this->module ) . '.edit' => url( 'web/' . implode( '/', $this->module ) . '/edit/' . $id )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
         $map['bDel'] = 0;
@@ -224,10 +232,9 @@ class MetaController extends _WebController
             ->orWhere('vNumber', '=', $id)
             ->first();
         if ( !$Dao) {
-            session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
+//            session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
             return redirect( 'web/' . implode( '/', $this->module ) );
         }
-
         //圖片
 //        $image_arr = [];
 //        $tmp_arr = explode( ';', $DaoReservoir->vImages );
@@ -237,8 +244,7 @@ class MetaController extends _WebController
 //        }
 //        $DaoReservoir->vImages = $image_arr;
 
-
-        //商品
+        //
         $this->view->with( 'info', $Dao );
 
         return $this->view;
@@ -346,10 +352,6 @@ class MetaController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-//        if ( !in_array( session( 'member.iAcType' ), config( '_config.admin_access' ) )) {
-//            $map['iStoreId'] = session( 'store.iId' );
-//        }
-
 
         $map['bDel'] = 0;
         $Dao = ModReservoirMeta::query()->find( $id );
@@ -358,6 +360,7 @@ class MetaController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
@@ -366,6 +369,7 @@ class MetaController extends _WebController
 //        }
         $Dao->iRank = $request->exists( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
@@ -397,8 +401,10 @@ class MetaController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $Dao->bDel = 1;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );

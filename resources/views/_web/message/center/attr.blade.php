@@ -23,11 +23,10 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-    @include('_web._layouts.breadcrumb')
-    <!-- ============================================================== -->
+        @include('_web._layouts.breadcrumb')
+        <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -40,8 +39,8 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h3 class="card-title modalTitle">通知</h3>
-                            <h6 class="card-subtitle"></h6>
+                            <h4 class="card-title modalTitle">{{session()->get( 'SEO.vTitle')}}</h4>
+                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
                         {{--<hr>--}}
                         <form class="form-horizontal">

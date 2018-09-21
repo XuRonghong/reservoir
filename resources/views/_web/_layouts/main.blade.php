@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
     <title>{{session()->get( 'SEO.vTitle' , 'Kahap')}}</title>
-    {{--<meta http-equiv="X-UA-Compatible" content="IE=edge">--}}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -135,7 +135,7 @@
     <script src="{{url('xtreme-admin/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- apps -->
     <script src="{{url('xtreme-admin/dist/js/app.min.js')}}"></script>
-    <script src="{{url('xtreme-admin/dist/js/app.init.dark.js')}}"></script>
+    <script src="{{url('xtreme-admin/dist/js/app.init.boxed.js')}}"></script>
     <script src="{{url('xtreme-admin/dist/js/app-style-switcher.js')}}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{{url('xtreme-admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>

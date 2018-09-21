@@ -18,11 +18,10 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-    @include('_web._layouts.breadcrumb')
-    <!-- ============================================================== -->
+        @include('_web._layouts.breadcrumb')
+        <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -35,8 +34,8 @@
                 <div class="col-12">
                     <div class="card"  id="edit-modal">
                         <div class="card-body">
-                            <h4 class="card-title">Project Assigning</h4>
-                            <h6 class="card-subtitle">This is the basic horizontal form with labels on left and form controls on right in one line. To use add class <code>form-horizontal</code> to the form tag and give class <code>row</code> with form-group.</h6>
+                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
+                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
                         <hr>
                         <form class="form-horizontal">
@@ -191,6 +190,7 @@
 <!-- /content -->
 
 @section('aside')
+
 @endsection
 
 <!-- ================== page-js ================== -->

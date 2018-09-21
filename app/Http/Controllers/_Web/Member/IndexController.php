@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\_Web\Member;
 
-use App\LogLogin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
 use App\SysMember;
 use App\SysMemberInfo;
 use App\SysGroupMember;
+use App\LogLogin;
 
 
 class IndexController extends _WebController
@@ -20,6 +20,7 @@ class IndexController extends _WebController
     function __construct ()
     {
         $this->module = [ 'member' ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -37,6 +38,7 @@ class IndexController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '會員' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -141,6 +143,7 @@ class IndexController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '新增會員' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -264,17 +267,19 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit/" . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
         $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
-//        if (!$DaoMember) {
+        if (!$DaoMember) {
 //            session()->put('check_empty.message', trans('_web_message.empty_id'));
-//            return redirect('web/' . implode('/', $this->module));
-//        }
+            return redirect('web/' . implode('/', $this->module));
+        }
         $this->view->with( 'info', $DaoMember );
 
         return $this->view;
@@ -464,10 +469,12 @@ class IndexController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.meta' => url('web/' . implode('/', $this->module) . "/meta")
+            implode('.', $this->module) . '.meta' => url('web/' . implode('/', $this->module) . "/meta/" . $id)
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '更多資訊' );
+        $this->view->with( 'vSummary', '' );
 
 
         $DaoMember = SysMember::query()->find($id);

@@ -18,6 +18,7 @@ class InfoController extends _WebController
     function __construct ()
     {
         $this->module = [ 'member' , 'info' ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -29,18 +30,14 @@ class InfoController extends _WebController
 
         $this->view = View()->make( "_web." . implode( '.' , $this->module ) . '.index' );
         $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '' );
+        session()->put( 'SEO.vTitle' , '會員Information' );
+        $this->view->with( 'vSummary', '' );
 
-
-//        $DaoUserInfo = SysMember::join( 'sys_member_info', function( $join ) {
-//            $join->on( 'sys_member_info.iMemberId', '=', 'sys_member.iId' );
-//        } )->find( session( 'member.iId' ) );
-//        $this->view->with( 'meta', $DaoUserInfo );
-//
         return $this->view;
     }
 
@@ -127,27 +124,30 @@ class InfoController extends _WebController
      */
     public function edit ( $id )
     {
-//        $id = explode('l', $id );
+        //特定權限才可以編輯其他會員資料
         if (session('member.iAcType') > 9 && session('member.iId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
+        //
         if ($id == 1 && session('member.iUserId') != $id){
             return redirect ()->guest ( 'web/login' );
         };
 
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit/" . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
         $DaoMemberInfo = SysMemberInfo::query()->find($id[0]);
         if (!$DaoMemberInfo) {
-            session()->put('check_empty.message', trans('_web_message.empty_id'));
+//            session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
         }
 //        if ($DaoMemberInfo) {

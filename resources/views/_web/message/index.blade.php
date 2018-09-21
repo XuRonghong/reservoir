@@ -21,11 +21,10 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-    {{--@include('_web._layouts.breadcrumb')--}}
-    <!-- ============================================================== -->
+        {{--@include('_web._layouts.breadcrumb')--}}
+        <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -38,7 +37,7 @@
                     <div class="card">
                         <div class="card-body">
                             {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
-                            {{--<h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
                             <div class="table-responsive">
                                 <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                     <div class="row">
@@ -96,19 +95,10 @@
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
         <!-- ============================================================== -->
-
-
     </div>
     <!-- ============================================================== -->
     <!-- End Page wrapper  -->
@@ -116,22 +106,19 @@
 @endsection
 
 @section('aside')
+
 @endsection
 
 <!-- ================== page-js ================== -->
 @section('page-js')
     <!--This page plugins -->
+
     <!--  -->
 @endsection
 <!-- ================== /page-js ================== -->
 
 <!-- ================== inline-js ================== -->
 @section('inline-js')
-    <!-- Public Crop_Image -->
-    {{--    @include('_web._js.crop_image_single_modal_340175')--}}
-    <!-- Public SummerNote -->
-    {{--    @include('_web._js.summernote')--}}
-    <!--  -->
     <script>
         $(document).ready(function () {
             //

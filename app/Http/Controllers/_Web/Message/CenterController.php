@@ -23,6 +23,7 @@ class CenterController extends _WebController
     function __construct ()
     {
         $this->module = [ 'message' , 'center' ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -31,7 +32,6 @@ class CenterController extends _WebController
      */
     public function index ()
     {
-//        $this->module = [ 'member'  ];
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.index');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -40,14 +40,15 @@ class CenterController extends _WebController
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '通知中心' );
+        $this->view->with( 'vSummary', '' );
 
-
+        //撈取資訊資料表
         $DaoMessage = $this->getDaoMessage( false);
         foreach ($DaoMessage as $var){
             $var->url = url('web/message/attr') . '/' . $var->iId;
         }
         $this->view->with( 'info', $DaoMessage );
-        $this->view ->with('total',$DaoMessage->count() );
+        $this->view->with('total', $DaoMessage->count() );
 
         return $this->view;
     }
@@ -83,7 +84,6 @@ class CenterController extends _WebController
         $sort_dir = $request->input( 'sSortDir_0' );
 
         //
-        $map['iStatus'] = 1;
         $map['bDel'] = 0;
         $total_count = ModMessage::query()->where($map)
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
@@ -106,7 +106,7 @@ class CenterController extends _WebController
         if ( !$data_arr)
         {
             $this->rtndata['status'] = 0;
-            $this->rtndata['message'] = ['Oops! 沒有使用者資訊!'];
+            $this->rtndata['message'] = ['Oops! 沒有資料!'];
             return $this->rtndata;
         }
         foreach ($data_arr as $key => $var)
@@ -179,6 +179,7 @@ class CenterController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '新增通知' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -193,7 +194,6 @@ class CenterController extends _WebController
             $Dao = new ModMessage();
 //        $Dao->iRank = null; //$maxRank + 1;
 //        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-
             $Dao->iType = ($request->input('iType')) ? $request->input('iType') : 99;
             $Dao->iSource = ($request->input('iSource')) ? $request->input('iSource') : 0;
             $Dao->iHead = ($request->input('iHead')) ? $request->input('iHead') : 0;
@@ -206,7 +206,6 @@ class CenterController extends _WebController
             $Dao->iStartTime = ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
             $Dao->iEndTime = ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
 //        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
-
             $Dao->iCreateTime = $Dao->iUpdateTime = time();
             $Dao->iStatus = ($request->input('iStatus')) ? $request->input('iStatus') : 1;
             $Dao->bDel = 0;
@@ -237,17 +236,18 @@ class CenterController extends _WebController
     public function edit ( $id )
     {
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit" . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
 
 
-        $map['iStatus'] = 1;
+//        $map['iStatus'] = 1;
         $map['bDel'] = 0;
         $Dao = ModMessage::query()->where($map)->find($id);
         if ($Dao) {
@@ -308,7 +308,6 @@ class CenterController extends _WebController
 
 //        $Dao->iRank = null; //$maxRank + 1;
 //        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-
         $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 99;
         $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : 0;
         $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : 0;
@@ -321,7 +320,6 @@ class CenterController extends _WebController
         $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : 0;
         $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : 0;
 //        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
-
         $Dao->iUpdateTime = time();
 
         if ($Dao->save()) {
@@ -358,6 +356,7 @@ class CenterController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         if ($request->input( 'bActive' )) {
             $Dao->bActive = ( $request->input( 'bActive' ) == "change" ) ? !$Dao->bActive : $request->input( 'bActive' );
         }
@@ -366,6 +365,7 @@ class CenterController extends _WebController
         }
         $Dao->iRank = $request->input( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             if ($request->input( 'iStatus' )) {
                 $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
@@ -405,12 +405,13 @@ class CenterController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $Dao->bDel = 1;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );
-
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode( $Dao ) );
         } else {
@@ -431,12 +432,15 @@ class CenterController extends _WebController
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+            implode( '.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attr/' . $id )
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '更多資訊' );
+        $this->view->with( 'vSummary', '' );
 
         //
-        $mapMessage['iStatus'] = 1;
+//        $mapMessage['iStatus'] = 1;
         $mapMessage['bDel'] = 0;
         $DaoMessage = ModMessage::query()->where($mapMessage)->find($id);
         if ($DaoMessage){

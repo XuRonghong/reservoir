@@ -24,6 +24,7 @@ class IndexController extends _WebController
     function __construct ()
     {
         $this->module = [  ];
+        $this->vTitle = 'Index';
     }
 
 
@@ -40,6 +41,9 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , $this->vTitle );
+        $this->view->with( 'vSummary', '' );
+
         //
         $DaoMessage = $this->getDaoMessage();
         if ($DaoMessage){
@@ -47,7 +51,6 @@ class IndexController extends _WebController
             $this->view->with( 'message_total', $this->message_total );
             $this->view->with( 'comment_total', $this->comment_total );
         }
-        session()->put( 'SEO.vTitle' , $this->vTitle );
 
         return $this->view;
     }
@@ -271,6 +274,7 @@ class IndexController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '地震Event' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -338,9 +342,9 @@ class IndexController extends _WebController
 
         foreach ($data_arr as $key => $var)
         {
+            //
             $var->eventTime = date( 'Y/m/d H:i:s', (strtotime($var->eventTime) + 28800) );
             $var->reservoir = ModReservoir::query()->where('vName', 'LIKE', '%'.$var->vStructure.'%')->first()['vName'];
-
             //圖片
 //            $image_arr = [];
 //            $tmp_arr = explode( ';', $var->vImages );
@@ -379,6 +383,7 @@ class IndexController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , 'Event add' );
+        $this->view->with( 'vSummary', '' );
 
         return $this->view;
     }
@@ -392,17 +397,17 @@ class IndexController extends _WebController
 //        $Dao->iCreateTime = $Dao->iUpdateTime = time();
 //        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
 //        $Dao->bDel = 0;
-        if ($Dao->save()) {
-            //Logs
-            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
-
-            $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans('_web_message.add_success');
-            $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
-        } else {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.add_fail' );
-        }
+//        if ($Dao->save()) {
+//            //Logs
+//            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+//
+//            $this->rtndata ['status'] = 1;
+//            $this->rtndata ['message'] = trans('_web_message.add_success');
+//            $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
+//        } else {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.add_fail' );
+//        }
 
         return response()->json( $this->rtndata );
     }
@@ -412,41 +417,41 @@ class IndexController extends _WebController
      */
     public function editEvent ( $id )
     {
-        $this->module = [ 'event' ];
-        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
-
-        $this->breadcrumb = [
-            $this->module[0] => "#",
-            implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit")
-        ];
-        $this->view->with('breadcrumb', $this->breadcrumb);
-        $this->view->with('module', $this->module);
-
-
-
-        $map['mod_reservoir_meta.bDel'] = 0;
-        $Dao = ModEvent::query()->where($map)
-            ->Join( 'mod_reservoir_meta', function ($join) {
-                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
-            })
-            ->find( $id );
-        if ($Dao) {
-            //圖片
-//            $image_arr = [];
-//            $tmp_arr = explode( ';', $Dao->vImages );
-//            $tmp_arr = array_filter( $tmp_arr );
-//            foreach ($tmp_arr as $item) {
-//                $image_arr[$item] = FuncController::_getFilePathById( $item );
-//            }
-//            if ($tmp_arr){
-//                $Dao->vImages = $image_arr;
-//            } else {
-//                $Dao->vImages = [];
-//            }
-        }
-        //
-        $this->view->with( 'info', $Dao );
+//        $this->module = [ 'event' ];
+//        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
+//        $this->breadcrumb = [
+//            $this->vTitle => url( 'web' ),
+//            implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+//            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit" . $id )
+//        ];
+//        $this->view->with('breadcrumb', $this->breadcrumb);
+//        $this->view->with('module', $this->module);
+//        session()->put( 'SEO.vTitle' , '編輯' );
+//        $this->view->with( 'vSummary', '' );
+//
+//
+//        $map['mod_reservoir_meta.bDel'] = 0;
+//        $Dao = ModEvent::query()->where($map)
+//            ->Join( 'mod_reservoir_meta', function ($join) {
+//                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
+//            })
+//            ->find( $id );
+//        if ($Dao) {
+//            //圖片
+////            $image_arr = [];
+////            $tmp_arr = explode( ';', $Dao->vImages );
+////            $tmp_arr = array_filter( $tmp_arr );
+////            foreach ($tmp_arr as $item) {
+////                $image_arr[$item] = FuncController::_getFilePathById( $item );
+////            }
+////            if ($tmp_arr){
+////                $Dao->vImages = $image_arr;
+////            } else {
+////                $Dao->vImages = [];
+////            }
+//        }
+//        //
+//        $this->view->with( 'info', $Dao );
 
         return $this->view;
     }
@@ -544,6 +549,7 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $map['mod_reservoir_meta.bDel'] = 0;
         $Dao = ModEvent::query()->where($map)
             ->Join( 'mod_reservoir_meta', function ($join) {
@@ -555,8 +561,10 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $Dao->bDel = 1;
         $Dao->iUpdateTime = time();
+
         if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );
@@ -577,14 +585,15 @@ class IndexController extends _WebController
     {
         $this->module = [ 'event' ];
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.attr' );
-
         $this->breadcrumb = [
-            $this->module[0] => "#",
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
-            implode( '.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attributes' )
+            implode( '.', $this->module ) . '.attributes' => url( 'web/' . implode( '/', $this->module ) . '/attributes/' . $id )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
+        session()->put( 'SEO.vTitle' , '地震事件' );
+        $this->view->with( 'vSummary', '' );
 
 
         $map['bDel'] = 0;
@@ -628,42 +637,42 @@ class IndexController extends _WebController
      */
     function doSaveAttributes ( Request $request )
     {
-        $id = $request->input( 'iId', 0 );
-        if ( !$id) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-
-        $map['mod_reservoir_meta.bDel'] = 0;
-        $Dao = ModEvent::query()->where($map)
-            ->Join( 'mod_reservoir_meta', function ($join) {
-                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
-            })
-            ->find( $id );
-        if ( !$Dao) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-        $tmp_arr = $request->input( 'attr', [] );
-        foreach ($tmp_arr as $key => $var) {
-            $map['bDel'] = 0;
-            $oneReservoir = ModReservoir::query()->where($map)->where('vName', 'LIKE', '%'.$Dao->vStructure.'%')->first();
-            $oneReservoir->iUpdateTime = time();
-            if ( $oneReservoir->save() ) {
-                //Logs
-                $this->_saveLogAction( $oneReservoir->getTable(), $oneReservoir->iId, 'edit', json_encode( $oneReservoir ) );
-            } else {
-                $this->rtndata ['status'] = 0;
-                $this->rtndata ['message'] = trans( '_web_message.save_fail' );
-                return response()->json( $this->rtndata );
-            }
-        }
-        $this->rtndata ['status'] = 1;
-        $this->rtndata ['message'] = trans( '_web_message.save_success' );
-        $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
-
-        return response()->json( $this->rtndata );
+//        $id = $request->input( 'iId', 0 );
+//        if ( !$id) {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+//            return response()->json( $this->rtndata );
+//        }
+//
+//        $map['mod_reservoir_meta.bDel'] = 0;
+//        $Dao = ModEvent::query()->where($map)
+//            ->Join( 'mod_reservoir_meta', function ($join) {
+//                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
+//            })
+//            ->find( $id );
+//        if ( !$Dao) {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+//            return response()->json( $this->rtndata );
+//        }
+//        $tmp_arr = $request->input( 'attr', [] );
+//        foreach ($tmp_arr as $key => $var) {
+//            $map['bDel'] = 0;
+//            $oneReservoir = ModReservoir::query()->where($map)->where('vName', 'LIKE', '%'.$Dao->vStructure.'%')->first();
+//            $oneReservoir->iUpdateTime = time();
+//            if ( $oneReservoir->save() ) {
+//                //Logs
+//                $this->_saveLogAction( $oneReservoir->getTable(), $oneReservoir->iId, 'edit', json_encode( $oneReservoir ) );
+//            } else {
+//                $this->rtndata ['status'] = 0;
+//                $this->rtndata ['message'] = trans( '_web_message.save_fail' );
+//                return response()->json( $this->rtndata );
+//            }
+//        }
+//        $this->rtndata ['status'] = 1;
+//        $this->rtndata ['message'] = trans( '_web_message.save_success' );
+//        $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
+//
+//        return response()->json( $this->rtndata );
     }
 }

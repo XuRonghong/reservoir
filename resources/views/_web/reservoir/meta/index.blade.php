@@ -25,7 +25,6 @@
         <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -39,7 +38,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>
+                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
@@ -50,13 +49,6 @@
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
@@ -69,22 +61,19 @@
 @endsection
 
 @section('aside')
+
 @endsection
 
 <!-- ================== page-js ================== -->
 @section('page-js')
     <!--This page plugins -->
+
     <!--  -->
 @endsection
 <!-- ================== /page-js ================== -->
 
 <!-- ================== inline-js ================== -->
 @section('inline-js')
-    <!-- Public Crop_Image -->
-{{--    @include('_web._js.crop_image_single_modal_340175')--}}
-    <!-- Public SummerNote -->
-{{--    @include('_web._js.summernote')--}}
-    <!--  -->
     <script>
         var current_data = [];
         var ajax_source = "{{ url('web/'.implode( '/', $module ).'/getlist')}}";
@@ -117,14 +106,7 @@
                 data.vNumber = $(".vNumber").val();
                 data.vNet = $(".vNet").val();
                 data.vAreaCode = $(".vAreaCode").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-
+                //
                 $.ajax({
                     url: url_doadd,
                     type: "POST",
@@ -156,14 +138,7 @@
                 data.vNumber = $(".vNumber").val();
                 data.vNet = $(".vNet").val();
                 data.vAreaCode = $(".vAreaCode").val();
-                // data.vImages = "";
-                // $(".cropper_image").find('img').each(function () {
-                //     if ($(this).attr('id') != "Image") {
-                //         //data.vImages = data.vImages + $(this).attr('src') + ";";
-                //         data.vImages = data.vImages + $(this).attr('id') + ";";
-                //     }
-                // });
-
+                //
                 $.ajax({
                     url: url_dosave,
                     type: "POST",
@@ -181,7 +156,6 @@
                     }
                 });
             });
-
         });
         $(document).ready(function () {
             /* BASIC ;*/

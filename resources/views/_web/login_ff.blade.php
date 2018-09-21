@@ -22,7 +22,7 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="margin-right: 15%">
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -68,7 +68,9 @@
                                     {{--<input type="checkbox" class="custom-control-input" id="checkbox1" name="remember" value="">--}}
                                     {{--<label class="custom-control-label" for="checkbox1">Remeber Me</label>--}}
                                 {{--</div>--}}
-                                <button type="button" class="btn btn-primary doLogin">登入(Login)</button>
+                                <div class="form-group" style="text-align: center">
+                                    <button type="button" class="btn btn-primary doLogin">登入(Login)</button>
+                                </div>
                             </form>
                         </div>
                         <div class="card-body loginDiv2">
