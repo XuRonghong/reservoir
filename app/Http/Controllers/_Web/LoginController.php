@@ -42,7 +42,7 @@ class LoginController extends _WebController
         if ( $this->agent->isMobile() && !$this->agent->isTablet() ) {
 //            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
             if ($this->agent->browser()){
-                $this->view = View()->make( "_web." . implode( '.' , $this->module ) . '_ff' );
+//                $this->view = View()->make( "_web." . implode( '.' , $this->module ) . '_ff' );
                 $this->view->with( 'url_dologin', url('web/doLoginMobile'));
             } else {
                 $this->view->with('url_dologin', url('web/doLoginMobile'));

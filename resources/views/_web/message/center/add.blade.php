@@ -164,6 +164,9 @@
                     resetForm: true,
                     success: function (rtndata) {
                         if (rtndata.status) {
+                            //
+                            sendNotifyMessage(rtndata.newid , rtndata.heads_token , current_modal.find(".vTitle").val() , current_modal.find(".vSummary").val());
+                            //
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
                                 location.href = rtndata.rtnurl;
@@ -192,6 +195,9 @@
                     resetForm: true,
                     success: function (rtndata) {
                         if (rtndata.status) {
+                            //
+                            sendNotifyMessage(rtndata.newid , rtndata.heads_token , current_modal.find(".vTitle").val() , current_modal.find(".vSummary").val());
+                            //
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
                                 location.href = rtndata.rtnurl;
@@ -203,6 +209,51 @@
                 });
             });
         });
+        //
+        //送出推播、掛在WEB通知
+        function sendNotifyMessage( id , DeliverList , title , message){
+            //要送的標題
+            // var title = "緊急通知";
+            //要送的內文
+            // var message = "XX水庫因地震發現裂痕！";
+            //需要通知手機的token
+            // var token = "fk9IJMONhCs:APA91bGq9zJ9eYS5kXQjgyk2p3UUsRhOxehXBSifmFV65B1kyE6sGDJvtP4uMS8-mpc1XYkjOwHsYfV-1rZdCemh4KK2RrcnDMX7l3riqtwvM8u3o4YhfLIO7nkrLfwAMZm1Qk8WulO9";
+            //該則通知的所屬網址 如 http://reservoir.kahap.com/web/message/center/attr/2564
+            var url = "http://reservoir.kahap.com/web/message/center" + /attr/ + id;
+            //傳送token 找哪些是要收到的機子、A水庫所屬的管理員
+            // var DeliverList = [];
+            // DeliverList.push(token);//新增token
+            /*上方為所需變更之資料*/
+
+
+            //SERVER密鑰  存資料庫
+            var API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+
+            $.ajax({
+                type:"post",
+                url:"https://fcm.googleapis.com/fcm/send",
+                cache:false,
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"key="+API_SERVER_ACCESS_KEY
+                },
+                data:JSON.stringify({
+                    "priority":"high",
+                    "data":{
+                        "Title" : title,
+                        "body" : message,
+                        "url" : url
+                    },
+                    "registration_ids":DeliverList
+                }),
+                success:function(result){
+                    JSON.stringify(result);
+                },
+                error:function(result){
+                    JSON.stringify(result);
+                }
+            });
+        }
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->

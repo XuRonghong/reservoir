@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\_Web\Message;
 
 use App\LogLogin;
+use App\ModDeviceToken;
 use App\ModMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
@@ -217,6 +218,15 @@ class CenterController extends _WebController
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans('_web_message.add_success');
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
+
+                // Android app 端要得到的資料
+                $this->rtndata ['newid'] = $Dao->iId;
+
+                $map['bDel'] = 0;
+                $arr_memberid = SysMember::query()->where($map)->where('iAcType', '<', $Dao->iHead)->pluck('iId');
+                $arr_token = ModDeviceToken::query()->where($map)->whereIn('iMemberId', $arr_memberid)->pluck('vToken');
+
+                $this->rtndata ['heads_token'] = $arr_token;
             } else {
                 $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = trans('_web_message.add_fail');
