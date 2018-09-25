@@ -222,8 +222,8 @@ class CenterController extends _WebController
                 // Android app 端要得到的資料
                 $this->rtndata ['newid'] = $Dao->iId;
 
+                $arr_memberid = SysMember::query()->where('iStatis' , 1)->where('iAcType', '<', $Dao->iHead)->pluck('iId');
                 $map['bDel'] = 0;
-                $arr_memberid = SysMember::query()->where($map)->where('iAcType', '<', $Dao->iHead)->pluck('iId');
                 $arr_token = ModDeviceToken::query()->where($map)->whereIn('iMemberId', $arr_memberid)->pluck('vToken');
 
                 $this->rtndata ['heads_token'] = $arr_token;

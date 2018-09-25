@@ -8,7 +8,7 @@
     <!--  -->
     <style rel="stylesheet">
         #body01 {
-            background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );
+{{--            background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );--}}
         }
         .warning {
             color: red;
