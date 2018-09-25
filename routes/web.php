@@ -279,7 +279,7 @@ Route::group(
         Route::post( 'doResetPassword', 'LoginController@doResetPassword' );
 
         //
-        Route::get( 'logout', 'LoginController@logoutView' );
+        Route::any( 'logout', 'LoginController@logoutView' );
         Route::post( 'dologout', 'LoginController@doLogout' );
 
         //

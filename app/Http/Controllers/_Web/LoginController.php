@@ -43,7 +43,7 @@ class LoginController extends _WebController
 //            $this->view = View()->make( "_template_mobile." . implode( '.' , $this->module ) );
             if ($this->agent->browser()){
 //                $this->view = View()->make( "_web." . implode( '.' , $this->module ) . '_ff' );
-                $this->view->with( 'url_dologin', url('web/doLoginMobile'));
+                $this->view->with('url_dologin', url('web/doLoginMobile'));
             } else {
                 $this->view->with('url_dologin', url('web/doLoginMobile'));
             }
@@ -792,9 +792,10 @@ class LoginController extends _WebController
     /*
      * View blade of account logout
      */
-    public function logoutView ()
+    public function logoutView (Request $request)
     {
-        session()->flush();
+        $request->session()->flush();
+        $request->session()->regenerate();
 //        $request->session()->regenerate();
 //        session()->forget( 'shop_member' );
 //        session()->forget( 'shop_member.iId' );
@@ -805,11 +806,10 @@ class LoginController extends _WebController
     /*
      * logout process
      */
-    public function doLogout ()
+    public function doLogout (Request $request)
     {
         session()->flush();
-//        session()->forget( 'shop_member' );
-//        session()->forget( 'shop_member.iId' );
+        session()->regenerate();
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.logout.success' );
         $this->rtndata ['rtnurl'] = url('web');
