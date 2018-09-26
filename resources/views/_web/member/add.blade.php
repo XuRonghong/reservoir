@@ -45,8 +45,8 @@
                         <hr>
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
-                                <h4 class="card-title">沒有要更改密碼,不需填寫</h4>
                                 @if(isset($info))
+                                <h4 class="card-title">沒有要更改密碼,不需填寫</h4>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">帳號</label>
                                         <div class="col-sm-9">

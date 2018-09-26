@@ -66,13 +66,13 @@
                                         {{$info->shake or ''}}
                                     </div>
                                 </div>
-                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 40)
+                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 20)
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
                                     <div class="col-sm-9" style="text-align: center;">
                                         <br>
                                         <h3>
-                                            <a href="{{url('web/trace/add')}}">填寫相關追蹤查核內容</a>
+                                            <a href="{{url('web/trace/add')}}">填寫蓄水庫與引水建造物安全檢查</a>
                                         </h3>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
                                     @if(isset($info->iCheck))
-                                        @if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<30)
+                                        @if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<80)
                                         <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">
                                             Check & Send
                                         </button>

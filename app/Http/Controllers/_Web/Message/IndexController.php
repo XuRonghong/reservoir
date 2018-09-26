@@ -32,6 +32,7 @@ class IndexController extends _WebController
      */
     public function index ()
     {
+        $this->_init();
 //        $this->module = [ 'member'  ];
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.index');
         $this->breadcrumb = [
@@ -42,6 +43,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '通知訊息' );
         $this->view->with( 'vSummary', '' );
+        $this->view->with( 'permission', $this->Permission );
 
         //
         $DaoMessage = $this->getDaoMessage( false);
@@ -60,6 +62,7 @@ class IndexController extends _WebController
      */
     public function doSave ( Request $request )
     {
+        $this->_init();
         $id = $request->input( 'iId', 0 );
         if ( !$id) {
             $this->rtndata ['status'] = 0;
@@ -74,10 +77,22 @@ class IndexController extends _WebController
         }
         switch (session('member.iAcType')){
             case 10:
-                $message = '發送給 水庫審查人員';
+                $message = '發送給 ' . $this->Permission['10'];
                 break;
             case 20:
-                $message = '發送給 中央水利署人';
+                $message = '發送給 ' . $this->Permission['20'];
+                break;
+            case 30:
+                $message = '發送給 ' . $this->Permission['30'];
+                break;
+            case 40:
+                $message = '發送給 ' . $this->Permission['40'];
+                break;
+            case 50:
+                $message = '發送給 ' . $this->Permission['50'];
+                break;
+            case 60:
+                $message = '發送給 ' . $this->Permission['60'];
                 break;
         }
 
@@ -111,6 +126,7 @@ class IndexController extends _WebController
      */
     public function attr (Request $request , $id)
     {
+        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -121,6 +137,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '更多資訊' );
         $this->view->with( 'vSummary', '' );
+        $this->view->with( 'permission', $this->Permission );
 
         //
 //        $mapMessage['iStatus'] = 1;

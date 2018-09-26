@@ -220,15 +220,34 @@ class TraceController extends _WebController
                 $this->rtndata ['message'] = trans('_web_message.add_success');
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
 
-                // Android app 端要得到的資料
-                $this->rtndata ['newid'] = $Dao->iId;
 
-                $arr_memberid = SysMember::query()->where('iStatus' , 1)->where('iAcType', '<', $Dao->iHead)->pluck('iId');
-                $map['bDel'] = 0;
-                $arr_token = ModDeviceToken::query()->where($map)->whereIn('iMemberId', $arr_memberid)->pluck('vToken');
 
-                $this->rtndata ['heads_token'] = $arr_token;
-                //
+                //************************************************************************
+                $DaoMessage = new ModMessage();
+                $DaoMessage->iType = 0;     //已通知(15)、已回報(10)、未回報(5)
+                $DaoMessage->iSource = 10;
+                $DaoMessage->iHead = 20;    //目標人員權限小於20
+                $DaoMessage->vTitle = '蓄水庫與引水建造物安全檢查彙整表';
+                $DaoMessage->vSummary = '<h5>請確認審查表並簽核'.url('web/trace/attributes/'). $Dao->iId .'</h5>';
+                $DaoMessage->vSummary .= '待確認後發送給' . $this->Permission['20'];
+//            $DaoMessage->vDetail = '有地震通知';
+//                $DaoMessage->vReadman = ';
+                $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
+//                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
+//                $DaoMessage->iStartTime = time();
+//                $DaoMessage->iEndTime = time() + (60 * 30);   //30分鐘後
+                $DaoMessage->iCheck = 0;    //目標人員是否確認
+                $DaoMessage->iCreateTime = time();
+                $DaoMessage->iUpdateTime = time();
+                $DaoMessage->iStatus = 1;
+                $DaoMessage->bDel = 0;
+                $DaoMessage->save();
+                //************************************************************************
+
+
+
+
+
 
             } else {
                 $this->rtndata ['status'] = 0;
@@ -306,46 +325,103 @@ class TraceController extends _WebController
      */
     public function doSave ( Request $request )
     {
+        //************************************************************************
+        $this->_init();
         $id = $request->input( 'iId', 0 );
         if ( !$id) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        $Dao = ModMessage::query()->find( $id );
+        $Dao = ModMessage::query()->join('event', 'iSource', '=', 'keyValue')->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+        switch (session('member.iAcType')){
+            case 10:
+                $message = '發送給 ' . $this->Permission['10'];
+                break;
+            case 20:
+                $message = '發送給 ' . $this->Permission['20'];
+                break;
+            case 30:
+                $message = '發送給 ' . $this->Permission['30'];
+                break;
+            case 40:
+                $message = '發送給 ' . $this->Permission['40'];
+                break;
+            case 50:
+                $message = '發送給 ' . $this->Permission['50'];
+                break;
+            case 60:
+                $message = '發送給 ' . $this->Permission['60'];
+                break;
+        }
 
-//        $Dao->iRank = null; //$maxRank + 1;
-//        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 99;
-        $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : 0;
-        $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : 0;
-        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
-        $Dao->vSummary = ( $request->input( 'vSummary' ) ) ? $request->input( 'vSummary' ) : "";
-        $Dao->vDetail = ( $request->input( 'vDetail' ) ) ? $request->input( 'vDetail' ) : '';
-//        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
-        $Dao->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
-        $Dao->vNumber = rand( 1000000001, 1099999999 );
-        $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : 0;
-        $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : 0;
-//        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
-        $Dao->iUpdateTime = time();
-
+        //重新編寫訊息概要
+        $Dao->vSummary = '<h5>請確認審查表並簽核'.url('web/trace/attributes/'). $Dao->iId .'</h5>';
+        $Dao->iCheck += 10; //有確認的目標權限人員
+        $Dao->iHead += 10;  //目標人員權限再加10
+        $Dao->iStartTime = time();
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
 
             $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.save_success' );
-            $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
+            $this->rtndata ['message'] = $message;
+            $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
+
         } else {
             $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.save_fail' );
+            $this->rtndata ['message'] = '發送確認失敗';
         }
+
+
+        //**********************************************************************
+
+
+//        $id = $request->input( 'iId', 0 );
+//        if ( !$id) {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+//            return response()->json( $this->rtndata );
+//        }
+//        $Dao = ModMessage::query()->find( $id );
+//        if ( !$Dao) {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+//            return response()->json( $this->rtndata );
+//        }
+//
+////        $Dao->iRank = null; //$maxRank + 1;
+////        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
+//        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 99;
+//        $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : 0;
+//        $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : 0;
+//        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
+//        $Dao->vSummary = ( $request->input( 'vSummary' ) ) ? $request->input( 'vSummary' ) : "";
+//        $Dao->vDetail = ( $request->input( 'vDetail' ) ) ? $request->input( 'vDetail' ) : '';
+////        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
+//        $Dao->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
+//        $Dao->vNumber = rand( 1000000001, 1099999999 );
+//        $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : 0;
+//        $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : 0;
+////        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
+//        $Dao->iUpdateTime = time();
+//
+//        if ($Dao->save()) {
+//            //Logs
+//            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+//
+//            $this->rtndata ['status'] = 1;
+//            $this->rtndata ['message'] = trans( '_web_message.save_success' );
+//            $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
+//        } else {
+//            $this->rtndata ['status'] = 0;
+//            $this->rtndata ['message'] = trans( '_web_message.save_fail' );
+//        }
 
         return response()->json( $this->rtndata );
     }

@@ -145,11 +145,11 @@
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    {{--@if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<30)--}}
-                                    {{--<button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">--}}
-                                        {{--Check & Send--}}
-                                    {{--</button>--}}
-                                    {{--@endif--}}
+                                    @if( $info->iCheck < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<70)
+                                    <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">
+                                        Check & Send
+                                    </button>
+                                    @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
                             </div>
@@ -182,6 +182,9 @@
 @section('inline-js')
     <!--  -->
     <script>
+        var current_data = [];
+        var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
+        var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
             //
             $(".btn-back").click(function () {
@@ -192,7 +195,7 @@
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
                 $.ajax({
-                    url: '{{url('web/message/dosave')}}',
+                    url: url_dosave,
                     type: 'POST',
                     data: data,
                     success: function (rtndata) {

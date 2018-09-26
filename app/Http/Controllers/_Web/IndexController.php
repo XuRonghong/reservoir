@@ -61,6 +61,7 @@ class IndexController extends _WebController
      */
     public function addMessage ()
     {
+        $this->_init();
         //目前的最新地震事件
         $DaoEvent = ModEvent::query()
 //            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
@@ -88,7 +89,7 @@ class IndexController extends _WebController
                 $DaoMessage->iHead = 20;    //目標人員權限小於20
                 $DaoMessage->vTitle = '有地震通知: ' . $oneReservoir->vName . '';
                 $DaoMessage->vSummary = '<h5>發生時間: ' . date( 'Y/m/d H:i:s',(strtotime($var->eventTime) + 28800)) . '</h5>' ;
-                $DaoMessage->vSummary .= '待確認後發送給水庫審查人員';
+                $DaoMessage->vSummary .= '待確認後發送給' . $this->Permission['10'];
 //            $DaoMessage->vDetail = '有地震通知';
 //                $DaoMessage->vReadman = ';
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';

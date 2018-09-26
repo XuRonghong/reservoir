@@ -213,7 +213,542 @@
                                         <br>
                                         <br>
                                     </div>
+                                    <div class="col-sm-9">
+                                        <b>6.觀測儀器及記錄：</b>
+                                        <br>
+                                        項目
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
+                                        <br>紀錄：
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        項目
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
+                                        <br>紀錄：
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        項目
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
+                                        <br>紀錄：
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        項目
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
+                                        <br>紀錄：
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        項目
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
+                                        <br>紀錄：
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        <b>建議加設之觀測儀器：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <b>7.廊道：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">裂縫</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">表面剝落</option>
+                                            <option value="4" title="">凹陷</option>
+                                        </select>
+                                        <br>
+                                        <b>滲流及排水情形：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">正常</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>混凝土一般狀況：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">正常</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>通氣及照明設備：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">正常</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>金屬工：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>※重要事項記述：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <h6>（二）溢洪道</h6>
+                                    <div class="col-sm-9">
+                                        <b>1.入口渠道：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">植物生長</option>
+                                            <option value="2" title="">渠道滑動</option>
+                                            <option value="3" title="">漂流物</option>
+                                        </select>
+                                        <br>
+                                        <b>邊坡保護：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>2.溢洪道護坦：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>3.溢洪道頂：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>4.溢洪道牆：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>5.溢洪道底板：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>6.附屬設備：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">破損待修</option>
+                                        </select>
+                                        <br>
+                                        <b>7.下游放水路：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">暢通</option>
+                                            <option value="1" title="">被侵佔</option>
+                                            <option value="2" title="">高莖物</option>
+                                            <option value="3" title="">待疏浚</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">固定結構物阻流</option>
+                                        </select>
+                                        <br>
+                                        <b>8.靜水池：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>9.溢洪道底板：</b>
+                                            <input type="radio" id="com3" name="feature4" value="1" />無
+                                            <input type="radio" id="com3" name="feature4" value="1" />有
+                                            （
+                                            <input type="radio" id="com3" name="feature4" value="1" />完整
+                                            <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                            ）
+                                        <br>
+                                        <b>10.設計洪水量：</b>
+                                            <input type="radio" id="com3" name="feature4" value="1" />重新檢討
+                                            <input type="radio" id="com3" name="feature4" value="0" />不需檢討
+                                        <br>
+                                        <b>11.排洪能力：</b>
+                                            <input type="radio" id="com3" name="feature4" value="1" />足夠
+                                            <input type="radio" id="com3" name="feature4" value="0" />不足
+                                            <input type="radio" id="com3" name="feature4" value="0" />待檢討
+                                        <br>
+                                        <b>※重要事項記述：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <h6>（三）取水工及出水工</h6>
+                                    <div class="col-sm-9">
+                                        <b>1.進水口結構：</b><br>
+                                        <b>攔污柵：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />待增設
+                                        <br>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                            （
+                                            <input type="radio" id="com3" name="feature4" value="1" />完整
+                                            <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                            <input type="radio" id="com3" name="feature4" value="1" />漂流物待清除
+                                            ）
+                                        <br>
+                                        <b>混凝土結構：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="3" title="">凹陷</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                        </select>
+                                        <br>
+                                        <b>閘門結構物：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">滲漏</option>
+                                            <option value="2" title="">待修補</option>
+                                        </select>
+                                        <br>
+                                        <b>金屬工：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="2" title="">待修補</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <b>2.緊急控制設施：</b><br>
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                            （
+                                            <input type="radio" id="com3" name="feature4" value="1" />完整
+                                            <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                            ）
+                                        <br>
+                                        <b>3.出水管道：</b>
+                                        <br>
+                                        <b>金屬工：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">穴蝕</option>
+                                            <option value="2" title="">待修補</option>
+                                        </select>
+                                        <br>
+                                        <b>混凝土工：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="1" title="">滲漏</option>
+                                            <option value="2" title="">待修補</option>
+                                        </select>
+                                        <br>
+                                        <b>4.操作設備：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>閘門室：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="1" title="">滲漏</option>
+                                            <option value="1" title="">穴蝕</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>閘門：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="1" title="">滲漏</option>
+                                            <option value="1" title="">穴蝕</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>閥門：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="12" title="">待改善</option>
+                                        </select>
+                                        <br>
+                                        <b>控制系統：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="12" title="">待改善</option>
+                                            <option value="12" title="">其他</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <b>5.靜水池：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="0" title="">完整</option>
+                                            <option value="3" title="">雜物</option>
+                                            <option value="1" title="">表面剝落</option>
+                                            <option value="2" title="">裂縫</option>
+                                            <option value="2" title="">移動</option>
+                                            <option value="3" title="">接縫滲水</option>
+                                            <option value="2" title="">回填方待修補</option>
+                                            <option value="2" title="">材料老化</option>
+                                            <option value="1" title="">穴蝕</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <b>6.出水渠道：</b>
+                                        <select class="form-sel iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="3" title="">植物生長</option>
+                                            <option value="1" title="">邊坡不穩定</option>
+                                            <option value="2" title="">護岸待修</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <b>※重要事項記述：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
                                 </div>
+                                <h6>（四）發電設備</h6>
+                                <div class="col-sm-9">
+                                    <b>1.進水口結構：</b><br>
+                                    <b>攔污柵：</b>
+                                    <input type="radio" id="com3" name="feature4" value="1" />無
+                                    <input type="radio" id="com3" name="feature4" value="1" />待增設
+                                    <input type="radio" id="com3" name="feature4" value="1" />有
+                                    （
+                                    <input type="radio" id="com3" name="feature4" value="1" />完整
+                                    <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                    ）
+                                    <br>
+                                    <b>閘門設備：</b>
+                                    <select class=" iHead" id="com2" >
+                                        <option value="11" title="">良好</option>
+                                        <option value="2" title="">待修補</option>
+                                        <option value="3" title="">需維護</option>
+                                    </select>
+                                    <br>
+                                    <b>操作手冊：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />待增補
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                    <br>
+                                    <b>2.壓力綱管：</b><br>
+                                    <select class=" iHead" id="com2" >
+                                        <option value="11" title="">良好</option>
+                                        <option value="2" title="">移動</option>
+                                        <option value="2" title="">裂縫</option>
+                                        <option value="1" title="">穴蝕</option>
+                                    </select>
+                                    <br>
+                                    <b>3.發電廠結構：</b><br>
+                                    <select class=" iHead" id="com2" >
+                                        <option value="11" title="">良好</option>
+                                        <option value="2" title="">待修</option>
+                                    </select>
+                                    <br>
+                                    <b>4.尾水道：</b><br>
+                                    <select class=" iHead" id="com2" >
+                                        <option value="11" title="">良好</option>
+                                        <option value="2" title="">待修</option>
+                                    </select>
+                                    <br>
+                                    <b>5.備用電力設備：</b><br>
+                                    <input type="radio" id="com3" name="feature4" value="1" />無
+                                    <input type="radio" id="com3" name="feature4" value="1" />有
+                                        （
+                                        <input type="radio" id="com3" name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" name="feature4" value="1" />待修
+                                        ）
+                                    <br>
+                                    <br>
+                                    <b>※重要事項記述：</b>
+                                    <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                    <br>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="com4" class="col-sm-3 text-right control-label col-form-label">二、放水設施安全檢查</label>
+
+                                    <h6>（一）閘閥及機電設備</h6>
+                                    <div class="col-sm-9">
+                                        <b>1.檢查：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        <b>定期檢查：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        <b>檢查記錄：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br>
+                                        <br>
+                                        <b>2.動力來源：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />台電
+                                        <input type="radio" id="com3" name="feature4" value="1" />自備電源
+                                        <input type="radio" id="com3" name="feature4" value="1" />人力
+                                        <br>
+                                        <br>
+                                        <b>3.維護：</b><br>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="2" title="">尚可</option>
+                                            <option value="2" title="">待加強</option>
+                                        </select>
+                                        <br>
+                                        <b>記錄：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br><br>
+                                        <b>4.暴雨前後之檢查：</b><br>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>，紀錄
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br><br>
+                                        <b>5.地震前後之檢查：</b><br>
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <br>，紀錄
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br>
+                                        <br><br>
+                                        <b>6.啟用年份：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 20%" value="{{$info->vCheckMan or ''}}">年啟用
+                                        <input type="text" id="com3" name="feature4" value="1" />已逾齡
+                                        <input type="radio" id="com3" name="feature4" value="1" />未逾齡
+                                        <br>
+                                        <b>7.河道放水口：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        <b>維護：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <option value="2" title="">待加強</option>
+                                        <br>
+                                        <b>記錄：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br>
+
+                                        <b>8.定期操作試驗：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>，紀錄
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br>
+                                        <br>
+                                        <b>9.其它放水設施：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        名稱：<input type="text" class=" vCheckMan" style="width: 20%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <b>維護：</b>
+                                        <select class=" iHead" id="com2" >
+                                            <option value="11" title="">良好</option>
+                                            <option value="2" title="">尚可</option>
+                                            <option value="2" title="">待加強</option>
+                                        </select>
+                                        <br>
+                                        紀錄
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <br>
+                                        <b>10.閘閥之水密性：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" name="feature4" value="1" />漏水待改善
+                                        <br>
+                                        <b>11.閘閥開度指示器：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />位置正確
+                                        <input type="radio" id="com3" name="feature4" value="1" />偏差待訂正
+                                        <br>
+                                        <b>12.閘閥插板及吊放設備：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        <b>維護：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        <br>
+                                        <br>
+                                        <b>13.欄污柵：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <br>
+                                        <b>維護：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        <br>
+                                        <br>
+                                        <b>※重要事項記述：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
+
+                                    <h6>（二）閘閥操作</h6>
+                                    <div class="col-sm-9">
+                                        <b>1.設置地點與外界隔絕：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />是
+                                        <input type="radio" id="com3" name="feature4" value="1" />外人可靠近
+                                        <br>
+                                        <b>2.操作規則：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="1" />待訂
+                                        <input type="radio" id="com3" name="feature4" value="1" />待修正
+                                        <br>
+                                        <b>3.水門啟閉之標準：</b>
+                                        <input type="radio" id="com3" name="feature4" value="1" />己辦
+                                        <input type="radio" id="com3" name="feature4" value="1" />辦理中
+                                        <input type="radio" id="com3" name="feature4" value="1" />待辦
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <b>※重要事項記述：</b>
+                                        <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
+
+                                </div>
+
+
                                 <div class="form-group row">
                                     <label for="img1" class="col-sm-3 text-right control-label col-form-label">圖片</label>
                                     <div class="col-sm-9">
@@ -301,9 +836,6 @@
                     resetForm: true,
                     success: function (rtndata) {
                         if (rtndata.status) {
-                            //
-                            sendNotifyMessage(rtndata.newid , rtndata.heads_token , current_modal.find(".vTitle").val() , current_modal.find(".vSummary").val());
-                            //
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
                                 location.href = rtndata.rtnurl;
@@ -332,9 +864,6 @@
                     resetForm: true,
                     success: function (rtndata) {
                         if (rtndata.status) {
-                            //
-                            sendNotifyMessage(rtndata.newid , rtndata.heads_token , current_modal.find(".vTitle").val() , current_modal.find(".vSummary").val());
-                            //
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
                                 location.href = rtndata.rtnurl;
@@ -346,51 +875,6 @@
                 });
             });
         });
-        //
-        //送出推播、掛在WEB通知
-        function sendNotifyMessage( id , DeliverList , title , message){
-            //要送的標題
-            // var title = "緊急通知";
-            //要送的內文
-            // var message = "XX水庫因地震發現裂痕！";
-            //需要通知手機的token
-            // var token = "fk9IJMONhCs:APA91bGq9zJ9eYS5kXQjgyk2p3UUsRhOxehXBSifmFV65B1kyE6sGDJvtP4uMS8-mpc1XYkjOwHsYfV-1rZdCemh4KK2RrcnDMX7l3riqtwvM8u3o4YhfLIO7nkrLfwAMZm1Qk8WulO9";
-            //該則通知的所屬網址 如 http://reservoir.kahap.com/web/message/center/attr/2564
-            var url = "http://reservoir.kahap.com/web/message/center" + /attr/ + id;
-            //傳送token 找哪些是要收到的機子、A水庫所屬的管理員
-            // var DeliverList = [];
-            // DeliverList.push(token);//新增token
-            /*上方為所需變更之資料*/
-
-
-            //SERVER密鑰  存資料庫
-            var API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
-
-            $.ajax({
-                type:"post",
-                url:"https://fcm.googleapis.com/fcm/send",
-                cache:false,
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"key="+API_SERVER_ACCESS_KEY
-                },
-                data:JSON.stringify({
-                    "priority":"high",
-                    "data":{
-                        "Title" : title,
-                        "body" : message,
-                        "url" : url
-                    },
-                    "registration_ids":DeliverList
-                }),
-                success:function(result){
-                    JSON.stringify(result);
-                },
-                error:function(result){
-                    JSON.stringify(result);
-                }
-            });
-        }
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->
