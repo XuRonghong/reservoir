@@ -49,6 +49,7 @@ class IndexController extends _WebController
      */
     public function getList ( Request $request )
     {
+        $this->_init();
         $sort_arr = [];
         $search_arr = [];
         $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -101,15 +102,21 @@ class IndexController extends _WebController
         }
         foreach ($data_arr as $key => $var)
         {
-            $var->DT_RowId = $var->iId;
+//            $var->DT_RowId = $var->iId;
             if ($var->iAcType < 10){
-                $var->iAcType = "網站管理員";
+                $var->iAcType = $this->Permission['2'];
             } elseif ($var->iAcType < 20){
-                $var->iAcType = "水庫管理員(各水庫負責人員)";
+                $var->iAcType = $this->Permission['10'];
             } elseif ($var->iAcType < 30){
-                $var->iAcType = "水庫審查人員(審核送審人員)";
+                $var->iAcType = $this->Permission['20'];
             } elseif ($var->iAcType < 40){
-                $var->iAcType = "中央水利署人員";
+                $var->iAcType = $this->Permission['30'];
+            } elseif ($var->iAcType < 50){
+                $var->iAcType = $this->Permission['40'];
+            } elseif ($var->iAcType < 60){
+                $var->iAcType = $this->Permission['50'];
+            } elseif ($var->iAcType < 70){
+                $var->iAcType = $this->Permission['60'];
             } else {
                 $var->iAcType = "一般人員";
             }
@@ -134,6 +141,7 @@ class IndexController extends _WebController
      */
     public function add (Request $request)
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -144,7 +152,7 @@ class IndexController extends _WebController
         $this->view->with( 'module', $this->module );
         session()->put( 'SEO.vTitle' , '新增會員' );
         $this->view->with( 'vSummary', '' );
-
+        $this->view->with( 'permission', $this->Permission );
         return $this->view;
     }
 
@@ -263,6 +271,7 @@ class IndexController extends _WebController
             return redirect ()->guest ( 'web/login' );
         };
 
+        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -273,6 +282,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '編輯' );
         $this->view->with( 'vSummary', '' );
+        $this->view->with( 'permission', $this->Permission );
 
 
         $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
@@ -465,6 +475,7 @@ class IndexController extends _WebController
      */
     public function attr (Request $request , $id)
     {
+        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -475,6 +486,7 @@ class IndexController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '更多資訊' );
         $this->view->with( 'vSummary', '' );
+        $this->view->with( 'permission', $this->Permission );
 
 
         $DaoMember = SysMember::query()->find($id);

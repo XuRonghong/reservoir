@@ -407,6 +407,29 @@ Route::group(
             } );
 
             /*************************************
+             * 追蹤查核內容
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'trace',
+                    'namespace' => 'Record',
+                ], function() {
+
+                Route::get( '', 'MetaController@index' );
+                Route::get( 'getlist', 'MetaController@getList' );
+                Route::get( 'add', 'TraceController@add' );
+                Route::post( 'doadd', 'MetaController@doAdd' );
+                Route::get( 'edit/{id}', 'MetaController@edit' );
+                Route::post( 'dosave', 'MetaController@doSave' );
+                Route::post( 'dosaveshow', 'MetaController@doSaveShow' );
+                Route::post( 'dodel', 'MetaController@doDel' );
+                Route::get( 'attributes/{id}', 'MetaController@attributes' );
+                Route::post( 'dosaveattr', 'MetaController@doSaveAttributes' );
+
+            } );
+
+
+            /*************************************
              * Log資訊
              *************************************/
             Route::group(

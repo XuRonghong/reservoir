@@ -46,6 +46,10 @@
         #body01 {
             {{--background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );--}}
         }
+
+        .margin-left-10 li {
+            margin-left: 5%;
+        }
     </style>
 </head>
 <body id="body01">

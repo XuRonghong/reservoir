@@ -70,14 +70,11 @@
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">目標階層</label>
                                     <div class="col-sm-9" style="text-align: center;">
-                                        @if($info->iHead<20) {{$permission['2'] or ''}} @endif
-                                        @if($info->iHead<30 && $info->iHead>19) 1.{{$permission['10'] or ''}} @endif
-                                        @if($info->iHead<40 && $info->iHead>29) 2.{{$permission['20'] or ''}} @endif
-                                        @if($info->iHead<50 && $info->iHead>39) 3.{{$permission['30'] or ''}} @endif
-                                        @if($info->iHead<60 && $info->iHead>49) 4.{{$permission['40'] or ''}} @endif
-                                        @if($info->iHead<70 && $info->iHead>59) 5.{{$permission['50'] or ''}} @endif
-                                        @if($info->iHead<80 && $info->iHead>69) 6.{{$permission['60'] or ''}} @endif
-                                        @if($info->iHead>79) 全體人員 @endif
+                                        @if($info->iHead<20) 網站管理員 @endif
+                                        @if($info->iHead<30 && $info->iHead>19) 1.水庫管理員 @endif
+                                        @if($info->iHead<40 && $info->iHead>29) 2.水庫審查員 @endif
+                                        @if($info->iHead<50 && $info->iHead>39) 3.中央水利署人員 @endif
+                                        @if($info->iHead>49) 全體人員 @endif
                                     </div>
                                 </div>
                                 <br>

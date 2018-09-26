@@ -39,6 +39,7 @@ class _WebController extends Controller
     /* message category */
     protected $message_total = 0;
     protected $comment_total = 0;
+    protected $Permission = [];
 
 
     /*
@@ -46,7 +47,15 @@ class _WebController extends Controller
      */
     public function _init ()
     {
-
+        $this->Permission = [
+            '2'     =>  '網站系統管理員',
+            '10'    =>  '管理局-承辦人員',
+            '20'    =>  '管理局-中階主管',
+            '30'    =>  '管理局-高階主管',
+            '40'    =>  '水利署-承辦人員',
+            '50'    =>  '水利署-中階主管',
+            '60'    =>  '水利署-高階主管',
+        ];
     }
 
     /*

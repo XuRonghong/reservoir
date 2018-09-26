@@ -103,11 +103,9 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">權限</label>
                                     <div class="col-sm-9">
                                         <select class="form-control iAcType">
-                                            {{--<option value="0" selected>Choose...</option>--}}
-                                            <option value="2">網站系統管理員</option>
-                                            <option value="10">水庫管理員(各水庫負責人員)</option>
-                                            <option value="20">水庫審查人員(審核送審人員)</option>
-                                            <option value="30">中央水利署人員</option>
+                                            @foreach($permission as $key => $value)
+                                                <option value="{{$key or 10}}">{{$value or ''}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

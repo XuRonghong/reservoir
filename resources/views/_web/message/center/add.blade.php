@@ -52,15 +52,17 @@
                                     <div class="col-sm-9">
                                         <select class="form-control iHead" id="com2" >
                                             @if(isset($info))
-                                            <option value="10" @if($info->iHead<20) selected @endif>網站管理員</option>
-                                            <option value="20" @if($info->iHead<30 && $info->iHead>19) selected @endif>1.水庫管理員</option>
-                                            <option value="30" @if($info->iHead<40 && $info->iHead>29) selected @endif>2.水庫審查員</option>
-                                            <option value="40" @if($info->iHead<50 && $info->iHead>39) selected @endif>3.中央水利署人員</option>
+                                            <option value="10" @if($info->iHead<20) selected @endif>{{$permission['2'] or ''}}</option>
+                                            <option value="20" @if($info->iHead<30 && $info->iHead>19) selected @endif>1.{{$permission['10'] or ''}}</option>
+                                            <option value="30" @if($info->iHead<40 && $info->iHead>29) selected @endif>2.{{$permission['20'] or ''}}</option>
+                                            <option value="40" @if($info->iHead<50 && $info->iHead>39) selected @endif>3.{{$permission['30'] or ''}}</option>
+                                            <option value="50" @if($info->iHead<60 && $info->iHead>49) selected @endif>4.{{$permission['40'] or ''}}</option>
+                                            <option value="60" @if($info->iHead<70 && $info->iHead>59) selected @endif>5.{{$permission['50'] or ''}}</option>
+                                            <option value="70" @if($info->iHead<80 && $info->iHead>69) selected @endif>6.{{$permission['60'] or ''}}</option>
                                             @else
-                                                <option value="10" title="只有網站管理員才看到">網站管理員</option>
-                                                <option value="20" title="水庫管理員看得到">1.水庫管理員</option>
-                                                <option value="30" title="水庫相關人員看得到">2.水庫審查員</option>
-                                                <option value="40" title="相關人員看得到">3.中央水利署人員</option>
+                                                @foreach($permission as $key => $value)
+                                                    <option value="{{$key or 10}}">{{$value or ''}}</option>
+                                                @endforeach
                                             @endif
                                         </select>
                                     </div>

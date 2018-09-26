@@ -22,11 +22,13 @@
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="{{url('xtreme-admin/assets/images/logo-text.png')}}" alt="homepage" class="dark-logo" />
+                    <!-- dark Logo text -->
+                    {{--<img src="{{url('xtreme-admin/assets/images/logo-text.png')}}" alt="homepage" class="dark-logo" />--}}
+                    <div class="dark-logo" style="color: white; font-family: 'Courier New', Monospace;">管理查詢系統</div>
                     <!-- Light Logo text -->
-                             <img src="{{url('xtreme-admin/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />
-                        </span>
+                    {{--<img src="{{url('xtreme-admin/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />--}}
+                    {{--<div class="light-logo" style="color: white; font-size: larger">管理查詢系統</div>--}}
+                </span>
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->

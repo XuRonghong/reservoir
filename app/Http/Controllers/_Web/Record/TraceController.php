@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_Web\Message;
+namespace App\Http\Controllers\_Web\Record;
 
 use App\LogLogin;
 use App\ModDeviceToken;
@@ -15,7 +15,7 @@ use App\ModReservoirMeta;
 use App\ModReservoir;
 
 
-class CenterController extends _WebController
+class TraceController extends _WebController
 {
 
     /*
@@ -23,7 +23,7 @@ class CenterController extends _WebController
      */
     function __construct ()
     {
-        $this->module = [ 'message' , 'center' ];
+        $this->module = [];
         $this->vTitle = 'Index';
     }
 
@@ -33,7 +33,6 @@ class CenterController extends _WebController
      */
     public function index ()
     {
-        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.index');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -43,7 +42,6 @@ class CenterController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '通知中心' );
         $this->view->with( 'vSummary', '' );
-        $this->view->with( 'permission', $this->Permission );
 
         //撈取資訊資料表
         $DaoMessage = $this->getDaoMessage( false);
@@ -62,7 +60,6 @@ class CenterController extends _WebController
      */
     public function getList ( Request $request )
     {
-        $this->_init();
         $sort_arr = [];
         $search_arr = [];
         $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -174,7 +171,7 @@ class CenterController extends _WebController
      */
     public function add (Request $request)
     {
-        $this->_init();
+        $this->module = [ 'record' , 'trace' ];
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -183,9 +180,8 @@ class CenterController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '新增通知' );
-        $this->view->with( 'vSummary', '' );
-        $this->view->with( 'permission', $this->Permission );
+        session()->put( 'SEO.vTitle' , '追蹤查核簽核' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表' );
 
         return $this->view;
     }
@@ -252,7 +248,6 @@ class CenterController extends _WebController
      */
     public function edit ( $id )
     {
-        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -263,7 +258,6 @@ class CenterController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '編輯' );
         $this->view->with( 'vSummary', '' );
-        $this->view->with( 'permission', $this->Permission );
 
 
 //        $map['iStatus'] = 1;
@@ -447,7 +441,6 @@ class CenterController extends _WebController
      */
     public function attr (Request $request , $id)
     {
-        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -458,7 +451,6 @@ class CenterController extends _WebController
         $this->view->with('module', $this->module);
         session()->put( 'SEO.vTitle' , '更多資訊' );
         $this->view->with( 'vSummary', '' );
-        $this->view->with( 'permission', $this->Permission );
 
         //
 //        $mapMessage['iStatus'] = 1;
@@ -473,20 +465,10 @@ class CenterController extends _WebController
             $var = $DaoMessage;
             switch ($var->iSource){
                 case 2:
-                    //'網站管理員'
-                    $var->iSource = $this->Permission['2'];
+                    $var->iSource = '網站管理員';
                     break;
                 case 10:
-                    //'水庫管理員';
-                    $var->iSource = $this->Permission['10'];
-                    break;
-                case 20:
-                    //'水庫管理員';
-                    $var->iSource = $this->Permission['20'];
-                    break;
-                case 30:
-                    //'水庫管理員';
-                    $var->iSource = $this->Permission['30'];
+                    $var->iSource = '水庫管理員';
                     break;
                 default:
                     $var->iSource = 'event';//.$var->iSource
@@ -512,27 +494,16 @@ class CenterController extends _WebController
                 case 0:
                     $var->iCheck = '無';
                     break;
-                //'水庫管理員';
                 case 10:
-                    $var->iCheck = $this->Permission['10'];
+                    $var->iCheck = '水庫管理員';
                     break;
                 case 20:
-                    $var->iCheck = $this->Permission['20'];
+                    $var->iCheck = '水庫審查員';
                     break;
                 case 30:
-                    $var->iCheck = $this->Permission['30'];
+                    $var->iCheck = '中央水利署人員';
                     break;
-                //'水利署人員';
                 case 40:
-                    $var->iCheck = $this->Permission['40'];
-                    break;
-                case 50:
-                    $var->iCheck = $this->Permission['50'];
-                    break;
-                case 60:
-                    $var->iCheck = $this->Permission['60'];
-                    break;
-                case 70:
                     $var->iCheck = '全體人員';
                     break;
             }

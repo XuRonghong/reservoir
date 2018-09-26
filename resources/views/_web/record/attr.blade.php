@@ -66,7 +66,7 @@
                                         {{$info->shake or ''}}
                                     </div>
                                 </div>
-                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 40)
+                                @if( 9 < session('member.iAcType') && session('member.iAcType') < 30)
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
                                     <div class="col-sm-9" style="text-align: center;">

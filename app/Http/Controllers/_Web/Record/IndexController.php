@@ -56,6 +56,62 @@ class IndexController extends _WebController
 
 
     /*
+     * all list ajax
+     */
+    public function getList ( Request $request )
+    {
+        $sEcho = '';
+        $total_count = 0 ;
+        $data_arr = [];
+
+        $this->rtndata ['status'] = 0;
+        $this->rtndata ['sEcho'] = $sEcho;
+        $this->rtndata ['iTotalDisplayRecords'] = $total_count;
+        $this->rtndata ['iTotalRecords'] = $total_count;
+        $this->rtndata ['aaData'] = $total_count ? $data_arr : [];
+
+        return response()->json( $this->rtndata );
+    }
+
+
+    /*
+     *
+     */
+    public function edit ( $id )
+    {
+        // 權限判斷 處理
+        if (session('member.iAcType') > 9 && session('member.iId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+        //
+        if ($id == 1 && session('member.iId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+
+        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
+        $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
+            implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . '/edit/' . $id )
+        ];
+        $this->view->with('breadcrumb', $this->breadcrumb);
+        $this->view->with('module', $this->module);
+        session()->put( 'SEO.vTitle' , '編輯' );
+        $this->view->with( 'vSummary', '' );
+
+
+        $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
+        if (!$DaoMember) {
+//            session()->put('check_empty.message', trans('_web_message.empty_id'));
+            return redirect('web/' . implode('/', $this->module));
+        }
+        $this->view->with( 'info', $DaoMember );
+
+        return $this->view;
+    }
+
+
+    /*
      * 發送地震通知後，相關人員確認後傳送下一位
      */
     public function doSave ( Request $request )

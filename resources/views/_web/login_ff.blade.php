@@ -22,7 +22,7 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div class="page-wrapper" style="margin-right: 15%">
+    <div class="page-wrapper" style="margin-right: 0%">
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -51,10 +51,13 @@
                                     <label>使用者權限</label>
                                     <select class="custom-select col-12 iAcType" id="inlineFormCustomSelect">
                                         {{--<option value="0" selected>Choose...</option>--}}
-                                        <option value="2">網站系統管理員</option>
-                                        <option value="10">水庫管理員(各水庫負責人員)</option>
-                                        <option value="20">水庫審查人員(審核送審人員)</option>
-                                        <option value="30">中央水利署人員</option>
+                                        {{--<option value="2">網站系統管理員</option>--}}
+                                        {{--<option value="10">水庫管理員(各水庫負責人員)</option>--}}
+                                        {{--<option value="20">水庫審查人員(審核送審人員)</option>--}}
+                                        {{--<option value="30">中央水利署人員</option>--}}
+                                        @foreach($permission as $key => $value)
+                                            <option value="{{$key or 10}}">{{$value or ''}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 {{--<div class="form-group">--}}
