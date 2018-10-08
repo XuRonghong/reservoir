@@ -30,7 +30,7 @@ class TraceController extends _WebController
 
 
     /*
-     *
+     * on
      */
     public function index ()
     {
@@ -41,7 +41,7 @@ class TraceController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '追蹤水庫表' );
+        session()->put( 'SEO.vTitle' , '追蹤水庫列表' );
         $this->view->with( 'vSummary', '' );
 
         //撈取資訊資料表
@@ -183,7 +183,7 @@ class TraceController extends _WebController
 
 
     /*
-     *
+     * on
      */
     public function add (Request $request)
     {
@@ -204,7 +204,7 @@ class TraceController extends _WebController
 
 
     /*
-    *
+    * on
     */
     public function doAdd ( Request $request )
     {
@@ -237,22 +237,24 @@ class TraceController extends _WebController
                 $DaoMessage = new ModMessage();
                 $DaoMessage->iType = 89;     //已通知(15)、已回報(10)、未回報(5)
                 $DaoMessage->iSource = 10;
-                $DaoMessage->iHead = 20;    //目標人員權限小於20
+                $DaoMessage->iHead = 30;    //目標人員權限小於20
                 $DaoMessage->vTitle = '蓄水庫與引水建造物安全檢查彙整表';
-                $DaoMessage->vSummary = '<h5>請確認審查表並簽核'.url('web/record/trace/edit/'). $Dao->iId .'</h5>';
+                $DaoMessage->vSummary = '<h5>請確認審查表並簽核</h5>';
                 $DaoMessage->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
-//            $DaoMessage->vDetail = '有地震通知';
-//                $DaoMessage->vReadman = ';
+                $DaoMessage->vDetail = ''.url('web/record/trace/edit'). '/'. $Dao->iId;
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
-//                $DaoMessage->vNumber = 'ME' . rand(00000001, 99999999);
+//                $DaoMessage->vNumber = '';
 //                $DaoMessage->iStartTime = time();
 //                $DaoMessage->iEndTime = time() + (60 * 30);   //30分鐘後
-                $DaoMessage->iCheck = 0;    //目標人員是否確認
+                $DaoMessage->iCheck = 10;    //目標人員是否確認
                 $DaoMessage->iCreateTime = time();
                 $DaoMessage->iUpdateTime = time();
                 $DaoMessage->iStatus = 1;
                 $DaoMessage->bDel = 0;
                 $DaoMessage->save();
+
+                $Dao->iSource = $DaoMessage->iId;
+                $Dao->save();
                 //************************************************************************
 
                 $this->rtndata ['status'] = 1;
@@ -272,7 +274,7 @@ class TraceController extends _WebController
 
 
     /*
-     *
+     * on
      */
     public function edit ( $id )
     {
@@ -292,50 +294,51 @@ class TraceController extends _WebController
         $map['bDel'] = 0;
         $Dao = ModTraceCheck::query()->where($map)->find($id);
         if ($Dao) {
+            $Dao->iCheck_message = ModMessage::query()->find($Dao->iSource) ->iCheck;
             //
-            $var = $Dao;
-            switch ($var->iSource){
-                case 2:
-                    $var->iSource = '網站管理員';
-                    break;
-                case 10:
-                    $var->iSource = '管理局-承辦人員';
-                    break;
-                case 20:
-                    $var->iSource = '管理局-中階主館';
-                    break;
-                case 30:
-                    $var->iSource = '管理局-高階主管';
-                    break;
-                case 40:
-                    $var->iSource = '水利署-承辦人員';
-                    break;
-                case 50:
-                    $var->iSource = '水利署-中階主館';
-                    break;
-                case 60:
-                    $var->iSource = '水利署-高階主管';
-                    break;
-                default:
-                    $var->iSource = 'event';//.$var->iSource
-            }
-            switch ($var->iType){
-                case 99:
-                    $var->iType = '訊息';
-                    break;
-                case 15:
-                    $var->iType = '已通知';
-                    break;
-                case 10:
-                    $var->iType = '已回報';
-                    break;
-                case 5:
-                    $var->iType = '未回報';
-                    break;
-                case 0:
-                    $var->iType = '已發送';
-                    break;
-            }
+//            $var = $Dao;
+//            switch ($var->iSource){
+//                case 2:
+//                    $var->iSource = '網站管理員';
+//                    break;
+//                case 10:
+//                    $var->iSource = '管理局-承辦人員';
+//                    break;
+//                case 20:
+//                    $var->iSource = '管理局-中階主館';
+//                    break;
+//                case 30:
+//                    $var->iSource = '管理局-高階主管';
+//                    break;
+//                case 40:
+//                    $var->iSource = '水利署-承辦人員';
+//                    break;
+//                case 50:
+//                    $var->iSource = '水利署-中階主館';
+//                    break;
+//                case 60:
+//                    $var->iSource = '水利署-高階主管';
+//                    break;
+//                default:
+//                    $var->iSource = 'event';//.$var->iSource
+//            }
+//            switch ($var->iType){
+//                case 99:
+//                    $var->iType = '訊息';
+//                    break;
+//                case 15:
+//                    $var->iType = '已通知';
+//                    break;
+//                case 10:
+//                    $var->iType = '已回報';
+//                    break;
+//                case 5:
+//                    $var->iType = '未回報';
+//                    break;
+//                case 0:
+//                    $var->iType = '已發送';
+//                    break;
+//            }
         }
         //
         $this->view->with( 'info', $Dao );
@@ -345,7 +348,7 @@ class TraceController extends _WebController
 
 
     /*
-     *
+     * on
      */
     public function doSave ( Request $request )
     {
@@ -357,7 +360,7 @@ class TraceController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        $Dao = ModMessage::query()->join('event', 'iSource', '=', 'keyValue')->find( $id );
+        $Dao = ModMessage::query()->where( 'iType', '=', 89)->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
@@ -365,27 +368,31 @@ class TraceController extends _WebController
         }
         switch (session('member.iAcType')){
             case 10:
-                $message = '發送給 ' . $this->Permission['10'];
-                break;
-            case 20:
                 $message = '發送給 ' . $this->Permission['20'];
                 break;
-            case 30:
+            case 20:
                 $message = '發送給 ' . $this->Permission['30'];
                 break;
-            case 40:
+            case 30:
                 $message = '發送給 ' . $this->Permission['40'];
                 break;
-            case 50:
+            case 40:
                 $message = '發送給 ' . $this->Permission['50'];
                 break;
-            case 60:
+            case 50:
                 $message = '發送給 ' . $this->Permission['60'];
+                break;
+            case 60:
+//                $message = '發送給 ' . $this->Permission['70'];
+                $message = '已確認';
                 break;
         }
 
+        //************************************************************************
+
         //重新編寫訊息概要
-        $Dao->vSummary = '<h5>請確認審查表並簽核'.url('web/trace/edit/'). $Dao->iId .'</h5>';
+        $Dao->vSummary = '<h5>請確認審查表並簽核</h5>';
+        $Dao->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
         $Dao->iCheck += 10; //有確認的目標權限人員
         $Dao->iHead += 10;  //目標人員權限再加10
         $Dao->iStartTime = time();

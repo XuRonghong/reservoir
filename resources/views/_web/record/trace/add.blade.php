@@ -671,7 +671,7 @@
                                         <br>
                                         <br>
                                         <b>9.其它放水設施：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" name="feature4" value="有" />有
                                         <input type="radio" id="com3" name="feature4" value="1" />無
                                         <br>
                                         名稱：<input type="text" class=" vCheckMan" style="width: 20%" value="{{$info->vCheckMan or ''}}">
@@ -751,7 +751,17 @@
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
+                                    {{--@if(isset($info->iCheck))--}}
+                                        @if( session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<20)
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
+                                                Add & Send
+                                            </button>
+                                        @elseif( isset($info) && $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>19 && session('member.iAcType')<80)
+                                            <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
+                                                Check & Send
+                                            </button>
+                                        @endif
+                                    {{--@endif--}}
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
                             </div>
@@ -830,6 +840,32 @@
                 //
                 data.vDetail = {
                     'a': {
+                        'title': '壹 、水庫基本資料',
+                        'a1': {
+                            'title': '一、 概況',
+                            'a11': {
+                                'title': '水庫名稱',
+                                'data': $('.a111').val()
+                            },
+                            'a12': {
+                                'title': '檢查日期',
+                                'data': ''
+                            },
+                            'a13': {
+                                'title': '管理機關',
+                                'data': ''
+                            },
+                            'a14': {
+                                'title': '檢查人員',
+                                'data': ''
+                            },
+                        },
+                        'a2': {
+                            'title': modeal1_a2_title,
+                            'data': modeal1_a2_content
+                        }
+                    },
+                    'b': {
                         'a1': {
                             'title': modal1_title,
                             'data': {
@@ -841,7 +877,20 @@
                             'title': modeal1_a2_title,
                             'data': modeal1_a2_content
                         }
-                    }
+                    },
+                    'a': {
+                        'a1': {
+                            'title': modal1_title,
+                            'data': {
+                                'title': modeal1_a1_title,
+                                'data': modeal1_a1_content
+                            }
+                        },
+                        'a2': {
+                            'title': modeal1_a2_title,
+                            'data': modeal1_a2_content
+                        }
+                    },
                 };
                 //
                 $.ajax({
@@ -874,6 +923,10 @@
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             //button hide
                             $(".btn-check").hide();
+                            //
+                            setTimeout(function () {
+                                location.href = rtndata.rtnurl;
+                            }, 1000)
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
@@ -887,11 +940,11 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
-                data.iSource = current_modal.find(".iSource").val();
-                data.iHead = current_modal.find(".iHead").val();
-                data.vTitle = current_modal.find(".vTitle").val();
-                data.vSummary = current_modal.find(".vSummary").val();
-                data.vImages = current_modal.find("img").attr('src');
+                // data.iSource = current_modal.find(".iSource").val();
+                // data.iHead = current_modal.find(".iHead").val();
+                // data.vTitle = current_modal.find(".vTitle").val();
+                // data.vSummary = current_modal.find(".vSummary").val();
+                // data.vImages = current_modal.find("img").attr('src');
                 //
                 $.ajax({
                     url: url_dosave,

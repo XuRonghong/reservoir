@@ -87,7 +87,12 @@
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">內容</label>
                                     <div class="col-sm-9" style="text-align: center;">
                                         @if(isset($info->vSummary))
-                                            {!! $info->vSummary !!}
+
+                                            @if($info->iType==89)
+                                                <a href="{{$info->vDetail or ''}}">請確認審查表並簽核</a>
+                                            @else
+                                                {!! $info->vSummary !!}
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

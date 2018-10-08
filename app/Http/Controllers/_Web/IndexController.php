@@ -116,7 +116,7 @@ class IndexController extends _WebController
     public function doSaveMessage ()
     {
         //系統的訊息通知
-        $DaoMessage = ModMessage::query()->where('iType', '=', 99)->get();
+        $DaoMessage = ModMessage::query()->where('iType', '>', 50)->get();
 
         foreach ($DaoMessage as $var) {
             //訊息已讀過存入使用者id，現在解析該欄位的已讀使用者
@@ -181,8 +181,6 @@ class IndexController extends _WebController
             $Dao = [];
             $message_total = 0;         //重新計算訊息數量
             foreach ($DaoMessage as $var){
-                //
-                $var->url = url('web/message/center/attr') . '/' . $var->iId;
                 //主要分 系統訊息 與 地震通知 種類
                 if ($var->iType < 50){
 
@@ -193,6 +191,11 @@ class IndexController extends _WebController
                         $message_total ++;
                     }
                     $Dao[] = $var;      //物件的重新組合
+                    //
+                    $var->url = url('web/message/center/attr') . '/' . $var->iId;
+                    if($var->iType == 89){
+                        $var->url = $var->vDetail;         // 訊息type=89 : 連結存在Detail內
+                    }
                 }
                 //圖片處理,假如NULL給他個預設值
                 if ( !$var->vImages){

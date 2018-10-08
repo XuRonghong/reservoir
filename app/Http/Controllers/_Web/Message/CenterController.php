@@ -95,6 +95,7 @@ class CenterController extends _WebController
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
+            ->where('iType', '>', 50)
             ->count();
 
         $data_arr = ModMessage::query()->where($map)
@@ -103,6 +104,7 @@ class CenterController extends _WebController
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
+            ->where('iType', '>', 50)
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )

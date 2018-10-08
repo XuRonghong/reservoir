@@ -79,6 +79,12 @@
                                         <input type="text" class="form-control vSummary" id="com4" placeholder="" value="{{ $info->vSummary or ''}}">
                                     </div>
                                 </div>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="com5" class="col-sm-3 text-right control-label col-form-label">Detail</label>--}}
+                                    {{--<div class="col-sm-9">--}}
+                                        {{--<input type="text" class="form-control vDetail" id="com5" placeholder="" value="{{ $info->vDetail or ''}}">--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div class="form-group row">
                                     <label for="img1" class="col-sm-3 text-right control-label col-form-label">圖片</label>
                                     <div class="col-sm-9">
