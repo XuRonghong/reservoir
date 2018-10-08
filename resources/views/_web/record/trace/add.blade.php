@@ -39,28 +39,28 @@
                         </div>
                         <hr>
                         <form class="form-horizontal">
-                            <div class="card-body messageInfo-modal">
-                                <h4 class="card-title">壹 、水庫基本資料</h4>
-                                <div class="form-group row">
-                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">一、 概況</label>
-                                    <div class="col-sm-9">
-                                        水庫名稱：
-                                        <input type="text" class="form-control vTitle" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
-                                        檢查日期：
-                                        <input type="date" class="form-control vDate" id="com1" placeholder="" value="{{$info->vDate or ''}}">
-                                        管理機關：
-                                        <input type="text" class="form-control vCompany" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
-                                        檢查人員：
-                                        <input type="text" class="form-control vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">
-                                        位置：
-                                        <input type="text" class="form-control vLocation" id="com1" placeholder="" value="{{$info->vLocation or ''}}">
-                                        河系（主支流）：
-                                        <input type="text" class="form-control vMainFlow" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">
+                            <div class="card-body messageInfo-modal1">
+                                <h4 class="card-title Title">壹 、水庫基本資料</h4>
+                                <div class="form-group row a1">
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label title">一、 概況</label>
+                                    <div class="col-sm-9 a11">
+                                        <div class="t1">水庫名稱：</div>
+                                        <input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
+                                        <div class="t2">檢查日期：</div>
+                                        <input type="date" class="form-control a112" id="com1" placeholder="" value="{{$info->vDate or ''}}">
+                                        <div class="t3">管理機關：</div>
+                                        <input type="text" class="form-control a113" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
+                                        <div class="t4">檢查人員：</div>
+                                        <input type="text" class="form-control a114" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">
+                                        <div class="t5">位置：</div>
+                                        <input type="text" class="form-control a115" id="com1" placeholder="" value="{{$info->vLocation or ''}}">
+                                        <div class="t6">河系（主支流）：</div>
+                                        <input type="text" class="form-control a116" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="com2" class="col-sm-3 text-right control-label col-form-label">二、檢查時操作狀況</label>
-                                    <div class="col-sm-9">
+                                <div class="form-group row a2">
+                                    <label for="com2" class="col-sm-3 text-right control-label col-form-label title">二、檢查時操作狀況</label>
+                                    <div class="col-sm-9 a21">
                                         水庫水位：
                                         <input type="text" class="form-control vTitle" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
                                         水庫蓄水量：
@@ -110,17 +110,17 @@
                                         <input type="radio" id="com3" name="feature3" value="0" />無
                                         <input type="radio" id="com3" name="feature3" value="1" />有
                                         （
-                                            <input type="radio" id="com3" name="feature3" value="10" />活動斷層
-                                            <input type="radio" id="com3" name="feature3" value="11" />不活動斷層
+                                        <input type="radio" id="com3" name="feature3" value="10" />活動斷層
+                                        <input type="radio" id="com3" name="feature3" value="11" />不活動斷層
                                         ）
                                     </div>
                                 </div>
                             </div>
                             <hr>
                             <div class="card-body messageInfo-modal2">
-                                <h4 class="card-title">貳、檢查內容</h4>
-                                <div class="form-group row">
-                                    <label for="com4" class="col-sm-3 text-right control-label col-form-label">一、結構物安全檢查</label>
+                                <h4 class="card-title title">貳、檢查內容</h4>
+                                <div class="form-group row b1">
+                                    <label for="com4" class="col-sm-3 text-right control-label col-form-label ">一、結構物安全檢查</label>
                                     <h6>（一）壩體</h6>
                                     <div class="col-sm-9">
                                         <b>1.上游坡面：</b>
@@ -193,13 +193,13 @@
                                         </select>
                                         <br>
                                         <b>欄杆及護網等安全措施：</b>
-                                            <br>
-                                            <input type="radio" id="com3" name="feature4" value="1" />有
-                                            （
-                                            <input type="radio" id="com3" name="feature41" value="11" />良好
-                                            <input type="radio" id="com3" name="feature41" value="10" />待改善
-                                            ）
-                                            <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <br>
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        （
+                                        <input type="radio" id="com3" name="feature41" value="11" />良好
+                                        <input type="radio" id="com3" name="feature41" value="10" />待改善
+                                        ）
+                                        <input type="radio" id="com3" name="feature4" value="0" />無
                                         <br>
                                         <br>
                                     </div>
@@ -378,21 +378,21 @@
                                         </select>
                                         <br>
                                         <b>9.溢洪道底板：</b>
-                                            <input type="radio" id="com3" name="feature4" value="1" />無
-                                            <input type="radio" id="com3" name="feature4" value="1" />有
-                                            （
-                                            <input type="radio" id="com3" name="feature4" value="1" />完整
-                                            <input type="radio" id="com3" name="feature4" value="1" />待修補
-                                            ）
+                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        （
+                                        <input type="radio" id="com3" name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                        ）
                                         <br>
                                         <b>10.設計洪水量：</b>
-                                            <input type="radio" id="com3" name="feature4" value="1" />重新檢討
-                                            <input type="radio" id="com3" name="feature4" value="0" />不需檢討
+                                        <input type="radio" id="com3" name="feature4" value="1" />重新檢討
+                                        <input type="radio" id="com3" name="feature4" value="0" />不需檢討
                                         <br>
                                         <b>11.排洪能力：</b>
-                                            <input type="radio" id="com3" name="feature4" value="1" />足夠
-                                            <input type="radio" id="com3" name="feature4" value="0" />不足
-                                            <input type="radio" id="com3" name="feature4" value="0" />待檢討
+                                        <input type="radio" id="com3" name="feature4" value="1" />足夠
+                                        <input type="radio" id="com3" name="feature4" value="0" />不足
+                                        <input type="radio" id="com3" name="feature4" value="0" />待檢討
                                         <br>
                                         <b>※重要事項記述：</b>
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
@@ -408,11 +408,11 @@
                                         <input type="radio" id="com3" name="feature4" value="1" />待增設
                                         <br>
                                         <input type="radio" id="com3" name="feature4" value="1" />有
-                                            （
-                                            <input type="radio" id="com3" name="feature4" value="1" />完整
-                                            <input type="radio" id="com3" name="feature4" value="1" />待修補
-                                            <input type="radio" id="com3" name="feature4" value="1" />漂流物待清除
-                                            ）
+                                        （
+                                        <input type="radio" id="com3" name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                        <input type="radio" id="com3" name="feature4" value="1" />漂流物待清除
+                                        ）
                                         <br>
                                         <b>混凝土結構：</b>
                                         <select class=" iHead" id="com2" >
@@ -441,10 +441,10 @@
                                         <b>2.緊急控制設施：</b><br>
                                         <input type="radio" id="com3" name="feature4" value="1" />無
                                         <input type="radio" id="com3" name="feature4" value="1" />有
-                                            （
-                                            <input type="radio" id="com3" name="feature4" value="1" />完整
-                                            <input type="radio" id="com3" name="feature4" value="1" />待改善
-                                            ）
+                                        （
+                                        <input type="radio" id="com3" name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        ）
                                         <br>
                                         <b>3.出水管道：</b>
                                         <br>
@@ -548,9 +548,9 @@
                                     </select>
                                     <br>
                                     <b>操作手冊：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />待增補
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                    <input type="radio" id="com3" name="feature4" value="1" />無
+                                    <input type="radio" id="com3" name="feature4" value="1" />待增補
+                                    <input type="radio" id="com3" name="feature4" value="1" />有
                                     <br>
                                     <b>2.壓力綱管：</b><br>
                                     <select class=" iHead" id="com2" >
@@ -575,10 +575,10 @@
                                     <b>5.備用電力設備：</b><br>
                                     <input type="radio" id="com3" name="feature4" value="1" />無
                                     <input type="radio" id="com3" name="feature4" value="1" />有
-                                        （
-                                        <input type="radio" id="com3" name="feature4" value="1" />良好
-                                        <input type="radio" id="com3" name="feature4" value="1" />待修
-                                        ）
+                                    （
+                                    <input type="radio" id="com3" name="feature4" value="1" />良好
+                                    <input type="radio" id="com3" name="feature4" value="1" />待修
+                                    ）
                                     <br>
                                     <br>
                                     <b>※重要事項記述：</b>
@@ -747,25 +747,11 @@
                                     </div>
 
                                 </div>
-
-
-                                <div class="form-group row">
-                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">圖片</label>
-                                    <div class="col-sm-9">
-                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img src="{{$info->vImages or url('images/empty.jpg')}}" style="height:140px">
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    @if(isset($info))
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
-                                    @else
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
-                                    @endif
+                                    <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
                             </div>
@@ -823,11 +809,40 @@
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.iSource = current_modal.find(".iSource").val();
-                data.iHead = current_modal.find(".iHead").val();
-                data.vTitle = current_modal.find(".vTitle").val();
-                data.vSummary = current_modal.find(".vSummary").val();
-                data.vImages = current_modal.find("img").attr('src');
+                // data.iSource = current_modal.find(".iSource").val();
+                // data.iHead = current_modal.find(".iHead").val();
+                // data.vTitle = current_modal.find(".vTitle").val();
+                // data.vSummary = current_modal.find(".vSummary").val();
+                // data.vImages = current_modal.find("img").attr('src');
+                //
+                var modal1 = $('.messageInfo-modal1');
+                var modal1_title = modal1.find('.Title').val();
+                    var a1 = modal1.find('.a1');
+                    var modeal1_a1_title = a1.find('.title').val();
+                    var modeal1_a1_content = a1.find('.a11').text();
+                    var a2 = modal1.find('.a2');
+                    var modeal1_a2_title = a2.find('.title').val();
+                    var modeal1_a2_content = a2.find('.a21').text();
+
+                var modal2 = $('.messageInfo-modal2');
+                var modal2_title = modal2.find('.title').val();
+                    var b1 = modal2.find('.b1').text();
+                //
+                data.vDetail = {
+                    'a': {
+                        'a1': {
+                            'title': modal1_title,
+                            'data': {
+                                'title': modeal1_a1_title,
+                                'data': modeal1_a1_content
+                            }
+                        },
+                        'a2': {
+                            'title': modeal1_a2_title,
+                            'data': modeal1_a2_content
+                        }
+                    }
+                };
                 //
                 $.ajax({
                     url: url_doadd,
@@ -846,6 +861,27 @@
                     }
                 });
             });
+            //
+            $(".btn-check").click(function () {
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.iId = $(this).data('id');
+                $.ajax({
+                    url: url_dosave,
+                    type: 'POST',
+                    data: data,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                            //button hide
+                            $(".btn-check").hide();
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    }
+                })
+            });
+
+
             //
             $(".btn-dosave").click(function () {
                 //

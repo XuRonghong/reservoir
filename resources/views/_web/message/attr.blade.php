@@ -70,10 +70,10 @@
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
                                     <div class="col-sm-9" style="text-align: center;">
-                                        <br>
-                                        <h3>
-                                            <a href="{{url('web/trace/add')}}">填寫蓄水庫與引水建造物安全檢查</a>
-                                        </h3>
+                                        {{--<br>--}}
+                                        {{--<h3>--}}
+                                            {{--<a href="{{url('web/trace/add')}}">填寫蓄水庫與引水建造物安全檢查</a>--}}
+                                        {{--</h3>--}}
                                     </div>
                                 </div>
                                 @endif

@@ -244,6 +244,7 @@ class _WebController extends Controller
             foreach ($DaoMessage as $var){
                 $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
                 $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
+                //分類 : 大於50是 訊息  小於50是地震通知
                 if ($var->iType > 50){
                     $this->message_total ++ ;
                 } else {

@@ -166,20 +166,27 @@ Route::group(
              *************************************/
             Route::group(
                 [
-                    'prefix' => 'trace',
+                    'prefix' => 'record',
                     'namespace' => 'Record',
                 ], function() {
 
-                Route::get( '', 'MetaController@index' );
-                Route::get( 'getlist', 'MetaController@getList' );
-                Route::get( 'add', 'TraceController@add' );
-                Route::post( 'doadd', 'MetaController@doAdd' );
-                Route::get( 'edit/{id}', 'MetaController@edit' );
-                Route::post( 'dosave', 'MetaController@doSave' );
-                Route::post( 'dosaveshow', 'MetaController@doSaveShow' );
-                Route::post( 'dodel', 'MetaController@doDel' );
-                Route::get( 'attributes/{id}', 'MetaController@attributes' );
-                Route::post( 'dosaveattr', 'MetaController@doSaveAttributes' );
+                Route::group(
+                    [
+                        'prefix' => 'trace',
+                    ], function() {
+
+                    Route::get( '', 'TraceController@index' );
+                    Route::get( 'getlist', 'TraceController@getList' );
+                    Route::get( 'add', 'TraceController@add' );
+                    Route::post( 'doadd', 'TraceController@doAdd' );
+                    Route::get( 'edit/{id}', 'TraceController@edit' );
+                    Route::post( 'dosave', 'TraceController@doSave' );
+                    Route::post( 'dosaveshow', 'TraceController@doSaveShow' );
+                    Route::post( 'dodel', 'TraceController@doDel' );
+                    Route::get( 'attributes/{id}', 'TraceController@attributes' );
+                    Route::post( 'dosaveattr', 'TraceController@doSaveAttributes' );
+
+                } );
 
             } );
 
