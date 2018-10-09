@@ -1,1 +1,0 @@
-@include('_template_web._admin.group._layout.index')

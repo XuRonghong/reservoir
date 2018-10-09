@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
+    <title>{{session()->get( 'SEO.vTitle' , 'Kahap')}}</title>
     <meta charset="utf-8">
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
-    <title>{{session()->get( 'SEO.vTitle' , 'Kahap')}}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +12,6 @@
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{url('xtreme-admin/assets/images/favicon.png')}}">
-    {{--<title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>--}}
-
-    <!-- This page plugin CSS -->
-    @yield('page-css')
-
     <!-- Custom CSS -->
     <link href="{{url('xtreme-admin/dist/css/style.min.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -26,27 +21,23 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    {{--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">--}}
     <!-- dataTables -->
-    {{--<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="{{url('css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
-    <link href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}} " rel="stylesheet">
+    <link rel="stylesheet" href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
+
+    <!-- This page plugin CSS -->
+    @yield('page-css')
 
     {{-- sudo view --}}
     @if(session('member.iAcType')==1)
         <style rel="stylesheet" type="text/css">
             #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
                 background-color: #d69d00;
-                /*background-color: #2962FF; */
             }
         </style>
     @endif
     <style>
-        #body01 {
-            {{--background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );--}}
-        }
-
         .margin-left-10 li {
             margin-left: 5%;
         }
@@ -115,24 +106,6 @@
     <!-- ============================================================== -->
     @yield('aside')
 
-
-
-    <!-- dataTables -->
-    {{--<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>--}}
-
-    {{--<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->--}}
-    {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
-    {{--<script>--}}
-    {{--if (!window.jQuery) {--}}
-    {{--document.write('<script src="{{url('/js/jquery-2.1.1.min.js')}}"><\/script>');--}}
-    {{--}--}}
-    {{--</script>--}}
-    {{--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>--}}
-    {{--<script>--}}
-    {{--if (!window.jQuery.ui) {--}}
-    {{--document.write('<script src="{{url('/js/jquery-ui-1.10.3.min.js')}}"><\/script>');--}}
-    {{--}--}}
-    {{--</script>--}}
 
     <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
     <!-- ============================================================== -->
@@ -230,7 +203,7 @@
         }
 
         /*
-        儲存"通知訊息"資料為使用者已讀
+        * 儲存"通知訊息"資料為使用者已讀
          */
         function save_message() {
             var data = {"_token": "{{ csrf_token() }}"};
@@ -254,7 +227,7 @@
 
         <!-- upperbar for comment -->
         /*
-        上方列針對"通知"刷新功能
+        * 上方列針對"通知"刷新功能
          */
         function get_comment_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
@@ -309,7 +282,7 @@
 
         <!-- upperbar for message -->
         /*
-        上方列針對"訊息"刷新功能
+        * 上方列針對"訊息"刷新功能
          */
         function get_message_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
