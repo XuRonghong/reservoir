@@ -181,6 +181,7 @@ class IndexController extends _WebController
             $Dao = [];
             $message_total = 0;         //重新計算訊息數量
             foreach ($DaoMessage as $var){
+
                 //主要分 系統訊息 與 地震通知 種類
                 if ($var->iType < 50){
 
@@ -193,10 +194,13 @@ class IndexController extends _WebController
                     $Dao[] = $var;      //物件的重新組合
                     //
                     $var->url = url('web/message/center/attr') . '/' . $var->iId;
-                    if($var->iType == 89){
-                        $var->url = $var->vDetail;         // 訊息type=89 : 連結存在Detail內
-                    }
+
+                        // 訊息type=89 : 連結存在Detail內
+                        if($var->iType == 89){
+                            $var->url = $var->vDetail;
+                        }
                 }
+
                 //圖片處理,假如NULL給他個預設值
                 if ( !$var->vImages){
                     $var->vImages = env('APP_URL') . '/images/favicon.png';
@@ -629,54 +633,12 @@ class IndexController extends _WebController
             $this->view->with( 'info', $Dao );
 
             $map['bDel'] = 0;
-            $oneReservoir = ModReservoir::query()->where($map)->where('vName', 'LIKE', '%'.$Dao->vStructure.'%')->first();
+            $oneReservoir = ModReservoir::query()->where($map)
+                ->where('vName', 'LIKE', '%'.$Dao->vStructure.'%')
+                ->first();
             $this->view->with( 'attributes', $oneReservoir );
         }
 
         return $this->view;
-    }
-
-    /*
-     *
-     */
-    function doSaveAttributes ( Request $request )
-    {
-//        $id = $request->input( 'iId', 0 );
-//        if ( !$id) {
-//            $this->rtndata ['status'] = 0;
-//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-//            return response()->json( $this->rtndata );
-//        }
-//
-//        $map['mod_reservoir_meta.bDel'] = 0;
-//        $Dao = ModEvent::query()->where($map)
-//            ->Join( 'mod_reservoir_meta', function ($join) {
-//                $join->on('event.id', '=', 'mod_reservoir_meta.vNumber');
-//            })
-//            ->find( $id );
-//        if ( !$Dao) {
-//            $this->rtndata ['status'] = 0;
-//            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-//            return response()->json( $this->rtndata );
-//        }
-//        $tmp_arr = $request->input( 'attr', [] );
-//        foreach ($tmp_arr as $key => $var) {
-//            $map['bDel'] = 0;
-//            $oneReservoir = ModReservoir::query()->where($map)->where('vName', 'LIKE', '%'.$Dao->vStructure.'%')->first();
-//            $oneReservoir->iUpdateTime = time();
-//            if ( $oneReservoir->save() ) {
-//                //Logs
-//                $this->_saveLogAction( $oneReservoir->getTable(), $oneReservoir->iId, 'edit', json_encode( $oneReservoir ) );
-//            } else {
-//                $this->rtndata ['status'] = 0;
-//                $this->rtndata ['message'] = trans( '_web_message.save_fail' );
-//                return response()->json( $this->rtndata );
-//            }
-//        }
-//        $this->rtndata ['status'] = 1;
-//        $this->rtndata ['message'] = trans( '_web_message.save_success' );
-//        $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
-//
-//        return response()->json( $this->rtndata );
     }
 }

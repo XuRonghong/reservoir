@@ -61,6 +61,8 @@ class TraceController extends _WebController
      */
     public function getList ( Request $request )
     {
+        $this->_init();
+        
         $sort_arr = [];
         $search_arr = [];
         $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -87,7 +89,7 @@ class TraceController extends _WebController
 
         //
         $map['bDel'] = 0;
-        $total_count = ModMessage::query()->where($map)
+        $total_count = ModTraceCheck::query()->where($map)
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -96,6 +98,7 @@ class TraceController extends _WebController
             ->count();
 
         $data_arr = ModTraceCheck::query()->where($map)
+//            ->join('mod_message', 'mod_message.iId', '=', 'mod_tracecheck.iSource')
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -113,51 +116,59 @@ class TraceController extends _WebController
         }
         foreach ($data_arr as $key => $var)
         {
+            $var->DT_RowId = $var->iId;
             //
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
             $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
-            switch ($var->iSource){
-                case 2:
-                    $var->iSource = '網站管理員';
-                    break;
-                case 10:
-                    $var->iSource = '管理局-承辦人員';
-                    break;
-                case 20:
-                    $var->iSource = '管理局-中階主館';
-                    break;
-                case 30:
-                    $var->iSource = '管理局-高階主管';
-                    break;
-                case 40:
-                    $var->iSource = '水利署-承辦人員';
-                    break;
-                case 50:
-                    $var->iSource = '水利署-中階主館';
-                    break;
-                case 60:
-                    $var->iSource = '水利署-高階主管';
-                    break;
-                default:
-                    $var->iSource = 'event';//.$var->iSource
+            //
+            $var->message = ModMessage::query()->find($var->iSource);       //用來源去找是哪個訊息存進來            
+            if ($var->message) {
+                switch ($var->message->iSource) {
+                    case 2:
+                        $var->message->iSource = $this->Permission['2'];
+                        break;
+                    case 10:
+                        $var->message->iSource = $this->Permission['10'];
+                        break;
+                    case 20:
+                        $var->message->iSource = $this->Permission['20'];
+                        break;
+                    case 30:
+                        $var->message->iSource = $this->Permission['30'];
+                        break;
+                    case 40:
+                        $var->message->iSource = $this->Permission['40'];
+                        break;
+                    case 50:
+                        $var->message->iSource = $this->Permission['50'];
+                        break;
+                    case 60:
+                        $var->message->iSource = $this->Permission['60'];
+                        break;
+                }
+                switch ($var->message->iType) {
+                    case 99:
+                        $var->message->iType = '訊息';
+                        break;
+                    case 15:
+                        $var->message->iType = '已通知';
+                        break;
+                    case 10:
+                        $var->message->iType = '已回報';
+                        break;
+                    case 5:
+                        $var->message->iType = '未回報';
+                        break;
+                    case 0:
+                        $var->message->iType = '已發送';
+                        break;
+                }
+                //
+                $var->message->iCreateTime = date( 'Y/m/d H:i:s', $var->message->iCreateTime );
+            } else {
+                $var->message = null;
             }
-            switch ($var->iType){
-                case 99:
-                    $var->iType = '訊息';
-                    break;
-                case 15:
-                    $var->iType = '已通知';
-                    break;
-                case 10:
-                    $var->iType = '已回報';
-                    break;
-                case 5:
-                    $var->iType = '未回報';
-                    break;
-                case 0:
-                    $var->iType = '已發送';
-                    break;
-            }
+            
             //圖片
             $image_arr = [];
             $tmp_arr = explode( ';', $var->vImages );
@@ -217,13 +228,15 @@ class TraceController extends _WebController
             $Dao->iHead = ($request->input('iHead')) ? $request->input('iHead') : 0;
 //            $Dao->vTitle = ($request->input('vTitle')) ? $request->input('vTitle') : "";
 //            $Dao->vSummary = ($request->input('vSummary')) ? $request->input('vSummary') : "";
+
             $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';
             $Dao->vDetail = json_encode($Dao->vDetail);
+
 //        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
             $Dao->vImages = ($request->input('vImages')) ? $request->input('vImages') : "";
             $Dao->vNumber = rand(1000000001, 1099999999);
-            $Dao->iStartTime = ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
-            $Dao->iEndTime = ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
+//            $Dao->iStartTime = ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
+//            $Dao->iEndTime = ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
 //        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
             $Dao->iCreateTime = $Dao->iUpdateTime = time();
             $Dao->iStatus = ($request->input('iStatus')) ? $request->input('iStatus') : 1;
@@ -233,7 +246,7 @@ class TraceController extends _WebController
                 $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
 
 
-                //************************************************************************
+            //************************************************************************
                 $DaoMessage = new ModMessage();
                 $DaoMessage->iType = 89;     //已通知(15)、已回報(10)、未回報(5)
                 $DaoMessage->iSource = 10;
@@ -241,7 +254,7 @@ class TraceController extends _WebController
                 $DaoMessage->vTitle = '蓄水庫與引水建造物安全檢查彙整表';
                 $DaoMessage->vSummary = '<h5>請確認審查表並簽核</h5>';
                 $DaoMessage->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
-                $DaoMessage->vDetail = ''.url('web/record/trace/edit'). '/'. $Dao->iId;
+                $DaoMessage->vDetail = ''.url('web/record/trace/attr'). '/'. $Dao->iId;
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
 //                $DaoMessage->vNumber = '';
 //                $DaoMessage->iStartTime = time();
@@ -255,7 +268,7 @@ class TraceController extends _WebController
 
                 $Dao->iSource = $DaoMessage->iId;
                 $Dao->save();
-                //************************************************************************
+            //************************************************************************
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans('_web_message.add_success');
@@ -294,51 +307,12 @@ class TraceController extends _WebController
         $map['bDel'] = 0;
         $Dao = ModTraceCheck::query()->where($map)->find($id);
         if ($Dao) {
-            $Dao->iCheck_message = ModMessage::query()->find($Dao->iSource) ->iCheck;
+            // json to html ...
+
+
+
             //
-//            $var = $Dao;
-//            switch ($var->iSource){
-//                case 2:
-//                    $var->iSource = '網站管理員';
-//                    break;
-//                case 10:
-//                    $var->iSource = '管理局-承辦人員';
-//                    break;
-//                case 20:
-//                    $var->iSource = '管理局-中階主館';
-//                    break;
-//                case 30:
-//                    $var->iSource = '管理局-高階主管';
-//                    break;
-//                case 40:
-//                    $var->iSource = '水利署-承辦人員';
-//                    break;
-//                case 50:
-//                    $var->iSource = '水利署-中階主館';
-//                    break;
-//                case 60:
-//                    $var->iSource = '水利署-高階主管';
-//                    break;
-//                default:
-//                    $var->iSource = 'event';//.$var->iSource
-//            }
-//            switch ($var->iType){
-//                case 99:
-//                    $var->iType = '訊息';
-//                    break;
-//                case 15:
-//                    $var->iType = '已通知';
-//                    break;
-//                case 10:
-//                    $var->iType = '已回報';
-//                    break;
-//                case 5:
-//                    $var->iType = '未回報';
-//                    break;
-//                case 0:
-//                    $var->iType = '已發送';
-//                    break;
-//            }
+            $Dao->iCheck_message = ModMessage::query()->find($Dao->iSource) ->iCheck;
         }
         //
         $this->view->with( 'info', $Dao );
@@ -544,9 +518,9 @@ class TraceController extends _WebController
 
 
     /*
-     *
+     * on
      */
-    public function attr (Request $request , $id)
+    public function attributes (Request $request , $id)
     {
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
         $this->breadcrumb = [
@@ -561,61 +535,24 @@ class TraceController extends _WebController
 
         //
 //        $mapMessage['iStatus'] = 1;
-        $mapMessage['bDel'] = 0;
-        $DaoMessage = ModMessage::query()->where($mapMessage)->find($id);
-        if ($DaoMessage){
+        $map['bDel'] = 0;
+        $Dao = ModTraceCheck::query()->where($map)->find($id);
+        if ($Dao){
+            // json to html ...
+
+
+
             //
-            $DaoMessage->iCreateTime = date( 'Y/m/d H:i:s', $DaoMessage->iCreateTime );
-            $DaoMessage->iUpdateTime = date( 'Y/m/d H:i:s', $DaoMessage->iUpdateTime );
-            $DaoMessage->iStartTime = date( 'Y/m/d H:i:s', $DaoMessage->iStartTime );
-            //
-            $var = $DaoMessage;
-            switch ($var->iSource){
-                case 2:
-                    $var->iSource = '網站管理員';
-                    break;
-                case 10:
-                    $var->iSource = '水庫管理員';
-                    break;
-                default:
-                    $var->iSource = 'event';//.$var->iSource
-            }
-            switch ($var->iType){
-                case 99:
-                    $var->iType = '訊息';
-                    break;
-                case 15:
-                    $var->iType = '已通知';
-                    break;
-                case 10:
-                    $var->iType = '已回報';
-                    break;
-                case 5:
-                    $var->iType = '未回報';
-                    break;
-                case 0:
-                    $var->iType = '已發送';
-                    break;
-            }
-            switch ($var->iCheck){
-                case 0:
-                    $var->iCheck = '無';
-                    break;
-                case 10:
-                    $var->iCheck = '水庫管理員';
-                    break;
-                case 20:
-                    $var->iCheck = '水庫審查員';
-                    break;
-                case 30:
-                    $var->iCheck = '中央水利署人員';
-                    break;
-                case 40:
-                    $var->iCheck = '全體人員';
-                    break;
+            $Dao->iCheck_message = 10; //預設值: 只有第一線(權限:10)確認過訊息
+            $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來          
+            if($Dao->message) {
+                $Dao->message->iCreateTime = date('Y/m/d H:i:s', $Dao->message->iCreateTime);
+                $Dao->message->iUpdateTime = date('Y/m/d H:i:s', $Dao->message->iUpdateTime);
+                //
+                $Dao->iCheck_message = $Dao->message->iCheck;
             }
         }
-        $this->view->with( 'info', $DaoMessage );
+        $this->view->with( 'info', $Dao );
 
         return $this->view;
     }

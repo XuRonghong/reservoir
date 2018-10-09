@@ -474,21 +474,29 @@ class CenterController extends _WebController
             //
             $var = $DaoMessage;
             switch ($var->iSource){
+                //'網站管理員'
                 case 2:
-                    //'網站管理員'
                     $var->iSource = $this->Permission['2'];
                     break;
+                //'水庫管理員';
                 case 10:
-                    //'水庫管理員';
                     $var->iSource = $this->Permission['10'];
                     break;
                 case 20:
-                    //'水庫管理員';
                     $var->iSource = $this->Permission['20'];
                     break;
                 case 30:
-                    //'水庫管理員';
                     $var->iSource = $this->Permission['30'];
+                    break;
+                //'水利署人員';
+                case 40:
+                    $var->iSource = $this->Permission['40'];
+                    break;
+                case 50:
+                    $var->iSource = $this->Permission['50'];
+                    break;
+                case 60:
+                    $var->iSource = $this->Permission['60'];
                     break;
                 default:
                     $var->iSource = 'event';//.$var->iSource

@@ -37,8 +37,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
+                            {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
@@ -84,7 +84,7 @@
         var url_edit = "{{ url('web/'.implode( '/', $module ).'/edit')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
-        var url_attr = "{{ url('web/'.implode( '/', $module ).'/attr')}}";
+        var url_attr = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
         $(document).ready(function () {
             /* BASIC ;*/
@@ -95,16 +95,16 @@
                 "scrollX": true,
                 // "scrollY": '65vh',
                 "aoColumns": [
-                    {
-                        "sTitle": "ID",
-                        "mData": "iId",
-                        "width": "5%",
-                        "sName": "iId",
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            return data;
-                        }
-                    },
+                    // {
+                    //     "sTitle": "ID",
+                    //     "mData": "iId",
+                    //     "width": "5%",
+                    //     "sName": "iId",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         return data;
+                    //     }
+                    // },
                     // {
                     //     "sTitle": "圖片",
                     //     "mData": "vImages",
@@ -115,14 +115,41 @@
                     //         return "<img width='100%' src=" + data + ">";
                     //     }
                     // },
-                    {"sTitle": "標頭", "mData": "vTitle", /*"width": "25%",*/ "sName": "vTitle"},
-                    {"sTitle": "發送者", "mData": "iSource", "width": "10%", "sName": "iSource"},
-                    {"sTitle": "狀態分類", "mData": "iType", "width": "10%", "sName": "iType"},
-                    {"sTitle": "創立時間", "mData": "iCreateTime", "width": "15%", "sName": "iCreateTime"},
+                    {
+                        "sTitle": "標頭",
+                        "mData": "message",
+                        "width": "280px",
+                        "sName": "vTitle",
+                        "bSearchable": false,
+                        "mRender": function (data, type, row) {
+                            if (row.message) {
+                                return row.message.vTitle;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    {
+                        "sTitle": "發送者",
+                        "mData": "message",
+                        "width": "140px",
+                        "sName": "iSource",
+                        "bSearchable": false,
+                        "mRender": function (data, type, row) {
+                            if (row.message) {
+                                return row.message.iSource;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                    // {"sTitle": "狀態分類", "mData": "iType", "width": "10%", "sName": "iType"},
+                    // {"sTitle": "創立時間", "mData": "iCreateTime", "width": "15%", "sName": "iCreateTime"},
                     {
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
+                        "width": "40px",
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
@@ -132,10 +159,24 @@
                                 btn += '<button class="pull-right btn btn-xs btn-success btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             } else {
                                 btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
-                                btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                                btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                                // btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                                // btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             }
                             return btn;
+                        }
+                    },
+                    {
+                        "sTitle": "時間",
+                        "mData": "message",
+                        "width": "200px",
+                        "sName": "iCreateTime",
+                        "bSearchable": false,
+                        "mRender": function (data, type, row) {
+                            if (row.message) {
+                                return row.message.iCreateTime;
+                            } else {
+                                return '';
+                            }
                         }
                     },
                 ],
@@ -152,14 +193,12 @@
             /* END BASIC */
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 location.href = url_edit + '/' + id;
             });
             //
             $("#dt_basic").on('click', '.btn-del', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };
@@ -194,14 +233,13 @@
             });
             //
             $("#dt_basic").on('click', '.btn-attributes', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 location.href = url_attr + '/' + id;
             });
             //
             var ii = 1;
             $('thead>tr>th').each(function () {
-                if (ii==5){
+                if (ii==4){
                     $(this).click();
                     $(this).click();
                 }
