@@ -38,10 +38,15 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="{{url('web/reservoir/story')}}" aria-expanded="false">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-border-left"></i>
                         <span class="hide-menu">水庫故事</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item"><a href="{{url('web/reservoir/story')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
+                        <li class="sidebar-item"><a href="{{url('web/reservoir/story/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+                        {{--<li class="sidebar-item"><a href="{{url('web/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>--}}
+                    </ul>
                 </li>
             {{-- End Nast --}}
             </ul>

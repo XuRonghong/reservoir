@@ -52,6 +52,7 @@ Route::group(
              *********************************************************/
             Route::post( 'upload_image', 'UploadController@doUploadImage' );
             Route::post( 'upload_image_base64', 'UploadController@doUploadImageBase64' );
+            Route::post( 'upload_file_base64', 'UploadController@doUploadFileBase64' );
 
             /**********************************************************
              * Import Excel
@@ -130,6 +131,21 @@ Route::group(
                         Route::post( 'dosave', 'MetaController@doSave' );
                         Route::post( 'dosaveshow', 'MetaController@doSaveShow' );
                         Route::post( 'dodel', 'MetaController@doDel' );
+                    } );
+                    
+                    Route::group(
+                        [
+                            'prefix' => 'story',
+                        ], function () {
+
+                        Route::get( '', 'StoryController@index' );
+                        Route::get( 'getlist', 'StoryController@getList' );
+                        Route::get( 'add', 'StoryController@add' );
+                        Route::post( 'doadd', 'StoryController@doAdd' );
+                        Route::get( 'edit/{id}', 'StoryController@edit' );
+                        Route::post( 'dosave', 'StoryController@doSave' );
+                        Route::post( 'dosaveshow', 'StoryController@doSaveShow' );
+                        Route::post( 'dodel', 'StoryController@doDel' );
                     } );
             } );
 

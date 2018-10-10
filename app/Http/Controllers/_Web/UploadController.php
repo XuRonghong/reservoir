@@ -146,6 +146,95 @@ class UploadController extends Controller
     /*
      *
      */
+    public function doUploadFileBase64 ( Request $request )
+    {
+        if ( !$request->hasFile('file') || !$request->file( 'file' ) || !$request->file('file')->isValid() ) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = trans( '_web_message.upload.fail' );
+            return response()->json( $this->rtndata );
+        }
+
+        try {
+            //取得上傳檔案所在的路徑
+            $path = $request->file('file')->getRealPath();
+            //取得上傳檔案的原始名稱
+            $name = $request->file('file')->getClientOriginalName();
+            //取得上傳檔案的大小
+            $size = $request->file('file')->getSize();
+            //取得上傳檔案的副檔名
+            $extension = $request->file('file')->getClientOriginalExtension();
+            //取得上傳檔案的 MIME 類型
+            $mime = $request->file('file')->getMimeType();
+
+//            $image = explode(',', $request->file('file'));
+//            $data = base64_decode($image [1]);
+
+            switch (config('filesystems.default')) {
+//            case 's3':
+//                $storage = Storage::disk( 's3' );
+//                $filename = date( 'YmdHis' ) . uniqid() . '.jpg';
+//                $filePath = '/' . config()->get( '_config.file_path' ) . session()->get( 'member.vUserCode' );
+//                $storage->put( $filePath . '/' . $filename, $data );
+//                //
+//                $Dao = new SysFiles ();
+//                $Dao->iMemberId = session()->get( 'member.iId' );
+//                $Dao->iType = 3;
+//                $Dao->vFileType = 'image/jpeg';
+//                $Dao->vFileServer = env( 'AWS_S3_SERVER' );
+//                $Dao->vFilePath = '/' . env( 'AWS_BUCKET' ) . $filePath . '/';
+//                $Dao->vFileName = $filename;
+//                $Dao->iFileSize = $storage->size( $filePath . '/' . $filename );
+//                $Dao->iCreateTime = $Dao->iUpdateTime = time();
+//                $Dao->iStatus = 1;
+//                $Dao->save();
+//                $rtndata = [
+//                    'fileid' => $Dao->iId,
+//                    'path' => $Dao->vFileServer . $Dao->vFilePath . $Dao->vFileName
+//                ];
+//                break;
+                default:
+                    $storage = Storage::disk('public');
+                    $filename = date('YmdHis') . uniqid() . '.'.$extension;
+                    $filePath = session()->get('member.vUserCode');
+//                    $storage->put($filePath . '/' . $filename, $path);
+
+
+                    $request->file('file')->move( public_path('/upload/userdata/' . $filePath ) , $filename);
+
+                    //
+                    $Dao = new SysFiles ();
+                    $Dao->iMemberId = session()->get('member.iId');
+                    $Dao->iType = 4;
+                    $Dao->vFileType = $mime;
+                    $Dao->vFileServer = env('APP_URL');
+                    $Dao->vFilePath = '/upload/userdata/' . $filePath . '/';
+                    $Dao->vFileName = $filename;
+                    $Dao->iFileSize = $storage->size($filePath . '/' . $filename);
+                    $Dao->iCreateTime = $Dao->iUpdateTime = time();
+                    $Dao->iStatus = 1;
+                    $Dao->save();
+//                    $rtndata = [
+//                        'fileid' => $Dao->iId,
+//                        'path' => $Dao->vFileServer . $Dao->vFilePath . $Dao->vFileName
+//                    ];
+            }
+        } catch (\Exception $e) {
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = $e->getMessage();
+            return response()->json( $this->rtndata );
+        }
+
+        $this->rtndata ['status'] = 1;
+        $this->rtndata ['message'] = trans( '_web_message.upload.success' );;
+        $this->rtndata ['fileid'] = $Dao->iId;
+
+        return response()->json( $this->rtndata );
+    }
+
+
+    /*
+     *
+     */
     public function _addFile ( $file_info )
     {
         $Dao = new SysFiles ();

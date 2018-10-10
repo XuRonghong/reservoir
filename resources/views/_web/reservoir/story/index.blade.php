@@ -95,7 +95,7 @@
                 "stateSave": true,
                 "scrollX": true,
                 "scrollY": '65vh',
-                // 'bProcessing': true,
+                'bProcessing': true,
                 // 'sServerMethod': 'GET',
                 "aoColumns": [
                     {
@@ -108,25 +108,20 @@
                             return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "Rank",
-                    //     "mData": "iRank",
-                    //     "sName": "iRank",
-                    //     "bSearchable": false,
-                    //     "width": "30px",
-                    //     "mRender": function (data, type, row) {
-                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                    //     }
-                    // },
-                    {"sTitle": "蓄水建造物", "mData": "vStructure", "width": "120px", "sName": "vStructure"},
-                    {"sTitle": "災害潛勢", "mData": "vLevel", "width": "80px", "sName": "vLevel"},
-                    {"sTitle": "壩高(m)", "mData": "iHeight", "width": "80px", "sName": "iHeight"},
-                    {"sTitle": "總蓄水量 (萬m3)", "mData": "iStoreTotal", "width": "150px", "sName": "iStoreTotal"},
-                    {"sTitle": "分級", "mData": "vGrade", "width": "40px", "sName": "vGrade"},
-                    {"sTitle": "責任區", "mData": "vTrustRegion", "width": "60px", "sName": "vTrustRegion"},
-                    {"sTitle": "站碼", "mData": "vNumber", /*"width": "10%",*/ "sName": "vNumber"},
-                    {"sTitle": "NET", "mData": "vNet", /*"width": "5%",*/ "sName": "vNet"},
-                    {"sTitle": "區碼", "mData": "vAreaCode", "width": "40px", "sName": "vAreaCode"},
+                    {
+                        "sTitle": "Rank",
+                        "mData": "iRank",
+                        "sName": "iRank",
+                        "bSearchable": false,
+                        "width": "40px",
+                        "mRender": function (data, type, row) {
+                            return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
+                        }
+                    },
+                    {"sTitle": "名稱", "mData": "vName", "width": "100px", "sName": "vName"},
+                    // {"sTitle": "Code", "mData": "vCode", "width": "50px", "sName": "vCode"},
+                    {"sTitle": "file", "mData": "vFile", "width": "80px", "sName": "vFile"},
+                    // {"sTitle": "vNum", "mData": "vNum", "width": "50px", "sName": "vNum"},
                     {
                         "sTitle": "",
                         "bSortable": false,
