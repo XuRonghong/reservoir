@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{url('reservoir2/dist/style/style.min.css')}}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{url('xtreme-admin/assets/images/favicon.png')}}">
+    {{-- loading .... --}}
+    <link type="text/css" rel="stylesheet" href="{{asset('css/waitMe.css')}}">
 </head>
 <body>
     <div class="page">
@@ -277,12 +279,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-098-1-a" class="reservoir level1" transform="matrix(1,0,0,1,267,85)" data-id="SD002">
                             <circle r="4.5"></circle>
                             <text class="text" x="35" y="-25">
                                 翡翠水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -295,12 +299,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-162-1-a" class="reservoir level1" transform="matrix(1,0,0,1,187,115.5)" data-id="SD004">
                             <circle r="4.5"></circle>
                             <text class="text" x="30" y="20">
                                 寶山第二水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -313,12 +319,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-114-2-a" class="reservoir level1" transform="matrix(1,0,0,1,161,127)" data-id="SD005">
                             <circle r="4.5"></circle>
                             <text class="text" x="-110" y="-25">
                                 永和山水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -331,12 +339,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-026-1-a" class="reservoir level1" transform="matrix(1,0,0,1,110,289)" data-id="SD018">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="-45">
                                 湖山水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -349,12 +359,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-102-2-a" class="reservoir level1" transform="matrix(1,0,0,1,163,260)" data-id="SD009">
                             <circle r="4.5"></circle>
                             <text class="text" x="30" y="10">
                                 日月潭水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -367,12 +379,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-186-1-a" class="reservoir level1" transform="matrix(1,0,0,1,92,326)" data-id="SD011">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="-25">
                                 蘭潭水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -385,12 +399,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-062-2-a" class="reservoir level1" transform="matrix(1,0,0,1,94,351)" data-id="SD012">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="-5">
                                 白河水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -403,12 +419,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-062-4-a" class="reservoir level1" transform="matrix(1,0,0,1,105,385)" data-id="SD015">
                             <circle r="4.5"></circle>
                             <text class="text" x="30" y="-4">
                                 南化水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -421,12 +439,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l1-078-1-a" class="reservoir level1" transform="matrix(1,0,0,1,140,555)" data-id="SD017">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="25">
                                 牡丹水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -440,12 +460,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-098-1-a" class="reservoir level1" transform="matrix(1,0,0,1,254,81)" data-id="MD002">
                             <circle r="4.5"></circle>
                             <text class="text" x="50" y="30">
                                 直潭壩
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -458,12 +480,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-098-3-a" class="reservoir level1" transform="matrix(1,0,0,1,261,75)" data-id="MD003">
                             <circle r="4.5"></circle>
                             <text class="text" x="50" y="5">
                                 青潭堰
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -476,12 +500,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-158-1-a" class="reservoir level2" transform="matrix(1,0,0,1,189,105)" data-id="MD006">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="-55">
                                 寶山水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -494,12 +520,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-158-3-a" class="reservoir level2" transform="matrix(1,0,0,1,180,125)" data-id="MD008">
                             <circle r="4.5"></circle>
                             <text class="text" x="30" y="30">
                                 大埔水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -512,12 +540,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-114-2-a" class="reservoir level2" transform="matrix(1,0,0,1,166.5,173.5)" data-id="MD010">
                             <circle r="4.5"></circle>
                             <text class="text" x="100" y="0">
                                 士林攔河堰
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -530,12 +560,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-074-2-a" class="reservoir level2" transform="matrix(1,0,0,1,189,195)" data-id="MD012">
                             <circle r="4.5"></circle>
                             <text class="text" x="-95" y="20">
                                 谷關水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -548,12 +580,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-074-4-a" class="reservoir level2" transform="matrix(1,0,0,1,170,200)" data-id="MD014">
                             <circle r="4.5"></circle>
                             <text class="text" x="-140" y="-5">
                                 馬鞍壩
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -566,12 +600,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-106-1-a" class="reservoir level2" transform="matrix(1,0,0,1,155,257)" data-id="MD016">
                             <circle r="4.5"></circle>
                             <text class="text" x="125" y="20">
                                 明湖水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -584,12 +620,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-106-3-a" class="reservoir level2" transform="matrix(1,0,0,1,138,270)" data-id="MD018">
                             <circle r="4.5"></circle>
                             <text class="text" x="60" y="50">
                                 集集攔河堰
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -602,12 +640,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-062-1-a" class="reservoir level2" transform="matrix(1,0,0,1,94,341)" data-id="MD020">
                             <circle r="4.5"></circle>
                             <text class="text" x="-100" y="-20">
                                 鹿寮溪水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -620,12 +660,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-062-3-a" class="reservoir level2" transform="matrix(1,0,0,1,99,393)" data-id="MD023">
                             <circle r="4.5"></circle>
                             <text class="text" x="25" y="10">
                                 鏡面水庫
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -638,12 +680,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-142-1-a" class="reservoir level2" transform="matrix(1,0,0,1,104,402)" data-id="MD022">
                             <circle r="4.5"></circle>
                             <text class="text" x="35" y="30">
                                 甲仙攔河堰
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -656,6 +700,7 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-142-3-a" class="reservoir level2" transform="matrix(1,0,0,1,75,439)" data-id="MD025">
                             <circle r="4.5"></circle>
@@ -665,12 +710,14 @@
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
+                            <text class="text " x="15" y="15"></text>
                         </g>
                         <g id="l2-142-4-a" class="reservoir level2" transform="matrix(1,0,0,1,87,459)" data-id="MD027">
                             <circle r="4.5"></circle>
                             <text class="text" x="15" y="15">
                                 高屏溪攔河堰
                             </text>
+                            <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
                             <text class="text " x="15" y="15"></text>
@@ -687,16 +734,52 @@
                 <div class="info title ">水庫</div>
                 <div class="info info1 font-level1">震度</div>
                 <div class="info info2 font-level2">區域</div>
-                <div class="info info3 font-level2">位置</div>
+                <div class="info info3 font-level3">位置</div>
+                <div class="info info4 font-level4"></div>
             </div>
         </div>
     </div>
 
-    <script src="{{asset('reservoir2/dist/script/jquery.min.js')}}" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="{{asset('js/waitMe.js')}}"></script>
+    <script>
+        // none, bounce, rotateplane, stretch, orbit,
+        // roundBounce, win8, win8_linear or ios
+        function run_waitMe(selector='body', effect='roundBounce'){
+            $(selector).waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8,
+                //win8_linear, ios, facebook, rotation, timer, pulse,
+                //progressBar, bouncePulse or img
+                effect: effect,
+                //place text under the effect (string).
+                text: 'Please waiting...',
+                //background for container (string).
+                bg: 'rgba(255,255,255,0.7)',
+                //color for background animation and text (string).
+                color: '#000',
+                //max size
+                maxSize: '',
+                //wait time im ms to close
+                waitTime: -1,
+                //url to image
+                source: '',
+                //or 'horizontal'
+                textPos: 'vertical',
+                //font size
+                fontSize: '',
+                // callback
+                onClose: function() {}
+            });
+        }
+    </script>
+    {{--<script src="{{asset('reservoir2/dist/script/jquery.min.js')}}" type="text/javascript"></script>--}}
     <script src="{{asset('reservoir2/dist/script/lodash.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('reservoir2/dist/script/script.js')}}" type="text/javascript"></script>
     <script>
         (function(d) {
+
+            run_waitMe($('body'));
+
             var lock = 0;
 
             $("g[data-id] text").each(function () {
@@ -723,10 +806,11 @@
                             // $("[data-id='"+src.data[i].id+"']").find("[data-name='info1']").each(function(){
                             //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
                             // });
-                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
-                                $(this).text($(this).attr("data-title")+"NET:"+src.data[i].NET);
+                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
+                                $(this).html($(this).attr("data-title")+""+"<a href='"+src.url_1[i]+"'>連結1</a>");
+                                // $(this).append('<a href="www">連結1</a>');
                             });
-                            // $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
+                            // $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
                             //     $(this).text($(this).attr("data-title")+"LOCATION:"+src.data[i].LOCATION);
                             // });
 
@@ -763,7 +847,7 @@
                                 $(this).find("[data-name='info1']").each(function(){
                                     $(this).text("震度:"+earthquake);
                                 });
-                                $(this).find("[data-name='info3']").each(function(){
+                                $(this).find("[data-name='info2']").each(function(){
                                     $(this).text(""+src.data2[i].vLocation);
                                 });
                             });
@@ -776,7 +860,7 @@
 
                             if (!lock){
                                 $(this).find("circle").click();
-                                $(".box>.info3").after('<div class="info hide" style="background-color:#62110d;">震度最大水庫</div>');
+                                $(".box>.info4").after('<div class="info hide" style="background-color:#62110d;">震度最大水庫</div>');
                                 lock = 1;
                             }else{
                                 $('.hide').hide();
@@ -797,13 +881,17 @@
                                 $(this).text($(this).attr("data-title")+"scale:"+src.data[i].scale);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
-                                $(this).text($(this).attr("data-title")+"NET:"+src.data[i].NET);
+                                $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
+                                $(this).html("<a href='"+src.url_1[i]+"'>link</a>");
+                                // $(this).append('<a href="www">連結1</a>');
                             });
                         }
                     }
+
+                    $('body').waitMe('hide');
+
                     //
                     $('.alert .date').text(src.date);
                     $('.alert .time').text(src.time);

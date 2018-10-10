@@ -34,7 +34,7 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '水庫資料' );
+        $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '' );
 
         return $this->view;
@@ -118,6 +118,21 @@ class IndexController extends _WebController
             } else {
                 $var->vImages = [];
             }
+
+            switch ($DaoInfo->iType){
+                case 1:
+                    $var->iType = $this->ReservoirType[1];
+                    break;
+                case 2:
+                    $var->iType = $this->ReservoirType[2];
+                    break;
+                case 3:
+                    $var->iType = $this->ReservoirType[3];
+                    break;
+                case 4:
+                    $var->iType = $this->ReservoirType[4];
+                    break;
+            }
         }
 
 
@@ -136,6 +151,7 @@ class IndexController extends _WebController
      */
     public function add ()
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -144,9 +160,10 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '水庫add' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '新增水庫資料' );
 
+        $this->view->with( 'reservori_category', $this->ReservoirType );
         return $this->view;
     }
 
@@ -157,8 +174,8 @@ class IndexController extends _WebController
     public function doAdd ( Request $request )
     {
         $Dao = new ModReservoir();
-        $Dao->iRank = 0; //$maxRank + 1;
-        $Dao->iType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
+        $Dao->iRank = 0;
+//        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
         $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
         $Dao->vRegion = ( $request->input( 'vRegion' ) ) ? $request->input( 'vRegion' ) : "";
         $Dao->vName = ( $request->input( 'vName' ) ) ? $request->input( 'vName' ) : '';
@@ -174,7 +191,7 @@ class IndexController extends _WebController
 
             $DaoInfo = new ModReservoirInfo();
             $DaoInfo->iReservoirId = $Dao->iId;
-            $DaoInfo->iRank = null;
+            $DaoInfo->iRank = 0;
             $DaoInfo->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
             $DaoInfo->vCode = 0; //( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
             $DaoInfo->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
@@ -209,16 +226,17 @@ class IndexController extends _WebController
      */
     public function edit ( $id )
     {
+        $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
             implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . '/edit/' . $id )
         ];
-        $this->view->with('breadcrumb', $this->breadcrumb);
-        $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '編輯' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
+        $this->view->with( 'module', $this->module );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '編輯水庫資料' );
 
 
         $mapReservoir['mod_reservoir.bDel'] = 0;
@@ -226,7 +244,16 @@ class IndexController extends _WebController
             ->leftJoin('mod_reservoir_info', function ($join) {
                 $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
             })
-            ->select('mod_reservoir.*',
+            ->select('mod_reservoir.vCode',
+                'mod_reservoir.vRegion',
+                'mod_reservoir.vName',
+                'mod_reservoir.vLocation',
+                'mod_reservoir.vCounty',
+                'mod_reservoir.iCreateTime',
+                'mod_reservoir.iUpdateTime',
+                'mod_reservoir.iSum',
+                'mod_reservoir.iStatus',
+                'mod_reservoir.bDel',
                 'mod_reservoir_info.vImages',
                 'mod_reservoir_info.vSafe',
                 'mod_reservoir_info.iSafeValue')
@@ -244,9 +271,25 @@ class IndexController extends _WebController
             } else {
                 $DaoReservoir->vImages = [];
             }
+
+            switch ($DaoReservoir->iType){
+                case 1:
+                    $DaoReservoir->iType = $this->ReservoirType[1];
+                    break;
+                case 2:
+                    $DaoReservoir->iType = $this->ReservoirType[2];
+                    break;
+                case 3:
+                    $DaoReservoir->iType = $this->ReservoirType[3];
+                    break;
+                case 4:
+                    $DaoReservoir->iType = $this->ReservoirType[4];
+                    break;
+            }
         }
-        //水庫List
+        //
         $this->view->with( 'info', $DaoReservoir );
+        $this->view->with( 'reservori_category', $this->ReservoirType );
 
         return $this->view;
     }
@@ -274,9 +317,6 @@ class IndexController extends _WebController
 
         if ($request->input( 'iRank' )) {
             $Dao->iRank = $request->input( 'iRank' );
-        }
-        if ($request->input( 'iType' )) {
-            $Dao->iType = $request->input( 'iType' );
         }
         if ($request->input( 'vCode' )) {
             $Dao->vCode = $request->input( 'vCode' );
@@ -312,6 +352,9 @@ class IndexController extends _WebController
                 return response()->json( $this->rtndata );
             }
 
+            if ($request->input( 'iType' )) {
+                $DaoInfo->iType = $request->input( 'iType' );
+            }
             if ($request->input( 'vImages' )) {
                 $DaoInfo->vImages = $request->input( 'vImages' );
             }
@@ -362,9 +405,6 @@ class IndexController extends _WebController
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
-//        if ($request->exists( 'bOpen' )) {
-//            $Dao->bOpen = ( $request->input( 'bOpen' ) == "change" ) ? !$Dao->bOpen : $request->input( 'bOpen' );
-//        }
         $Dao->iRank = $request->exists( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
 
@@ -431,8 +471,8 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '更多資訊' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '水庫資料更多資訊' );
 
 
         $mapReservoir['bDel'] = 0;
@@ -453,45 +493,4 @@ class IndexController extends _WebController
         return $this->view;
     }
 
-    /*
-     *
-     */
-    function doSaveAttributes ( Request $request )
-    {
-        $id = $request->input( 'iId', 0 );
-        if ( !$id) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-
-        $mapReservoir['bDel'] = 0;
-        $DaoReservoir = ModReservoir::query()->where( $mapReservoir )->find( $id );
-        if ( !$DaoReservoir) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-        $tmp_arr = $request->input( 'attr', [] );
-        foreach ($tmp_arr as $key => $var) {
-            $mapReservoirInfo['iReservoirId'] = $var['iId'];
-            $DaoReservoirInfo = ModReservoirInfo::query()->where( $mapReservoirInfo )->first();
-            $DaoReservoirInfo->vImages = $var['vImages'];
-            $DaoReservoirInfo->iSafeValue = $var['iSafeValue'];
-            $DaoReservoirInfo->iUpdateTime = time();
-            if ( $DaoReservoirInfo->save() ) {
-                //Logs
-                $this->_saveLogAction( $DaoReservoirInfo->getTable(), $DaoReservoirInfo->iId, 'edit', json_encode( $DaoReservoirInfo ) );
-            } else {
-                $this->rtndata ['status'] = 0;
-                $this->rtndata ['message'] = trans( '_web_message.save_fail' );
-                return response()->json( $this->rtndata );
-            }
-        }
-        $this->rtndata ['status'] = 1;
-        $this->rtndata ['message'] = trans( '_web_message.save_success' );
-        $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
-
-        return response()->json( $this->rtndata );
-    }
 }

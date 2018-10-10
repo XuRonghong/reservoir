@@ -128,6 +128,7 @@
     <script>
         $(document).ready(function () {
             var table = $('#zero_config');
+            table.api().bProcessing = true;
             //
             var init = $('.initClick');
             init.click();

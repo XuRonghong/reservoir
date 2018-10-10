@@ -67,11 +67,8 @@ Route::group(
                 [
                     'prefix' => 'member',
                     'namespace' => 'Member',
-//                    'middleware' => 'CheckAuthLogin'
+                    'middleware' => 'CheckAuthLogin'
                 ], function() {
-//                Route::get( 'userinfo', 'IndexController@index' );
-//                Route::post( 'userinfo/dosave', 'IndexController@doSave' );
-//                Route::post( 'userinfo/dosavepassword', 'IndexController@doSavePassword' );
 
                 //
                 Route::get( '', 'IndexController@index' );
@@ -118,7 +115,6 @@ Route::group(
                     Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
                     Route::post( 'dodel', 'IndexController@doDel' );
                     Route::get( 'attr/{id}', 'IndexController@attr' );
-                    Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
 
                     Route::group(
                         [
@@ -134,13 +130,31 @@ Route::group(
                         Route::post( 'dosave', 'MetaController@doSave' );
                         Route::post( 'dosaveshow', 'MetaController@doSaveShow' );
                         Route::post( 'dodel', 'MetaController@doDel' );
-                        Route::get( 'attributes/{id}', 'MetaController@attributes' );
-                        Route::post( 'dosaveattr', 'MetaController@doSaveAttributes' );
                     } );
             } );
 
+
             /*************************************
-             * 地震event資訊
+             * 地震回報系統
+             *************************************/
+            Route::get( 'shakemap', 'IndexController@shakemap' );
+            Route::get( 'shakemap2', 'IndexController@shakemap2' );
+
+
+
+            /*************************************
+             * Asynchronous JavaScript And XML
+             *************************************/
+            Route::post( 'addmessage', 'IndexController@addMessage');
+            Route::post( 'savemessage', 'IndexController@doSaveMessage');
+            Route::post( 'savecomment', 'IndexController@doSaveComment');
+            Route::post( 'getcomment', 'IndexController@getCommentList');
+            Route::post( 'getmessage', 'IndexController@getMessageList');
+
+
+
+            /*************************************
+             * 地震event資訊 (已關閉)
              *************************************/
             Route::group(
                 [
@@ -148,21 +162,20 @@ Route::group(
 //                    'namespace' => '',
                 ], function() {
 
-                Route::get( '', 'IndexController@eventView' );
+                Route::get( '', 'IndexController@index' );
                 Route::get( 'getlist', 'IndexController@getEventList' );
-                Route::get( 'add', 'IndexController@addEvent' );
-                Route::post( 'doadd', 'IndexController@doAddEvent' );
-                Route::get( 'edit/{id}', 'IndexController@editEvent' );
-                Route::post( 'dosave', 'IndexController@doSaveEvent' );
-                Route::post( 'dosaveshow', 'IndexController@doSaveShowEvent' );
-                Route::post( 'dodel', 'IndexController@doDelEvent' );
+//                Route::get( 'add', 'IndexController@addEvent' );
+//                Route::post( 'doadd', 'IndexController@doAddEvent' );
+//                Route::get( 'edit/{id}', 'IndexController@editEvent' );
+//                Route::post( 'dosave', 'IndexController@doSaveEvent' );
+//                Route::post( 'dodel', 'IndexController@doDelEvent' );
                 Route::get( 'attr/{id}', 'IndexController@attrEvent' );
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributesEvent' );
-
             } );
 
+
             /*************************************
-             * 追蹤查核內容
+             * 追蹤查核內容 (安全管考系統)
              *************************************/
             Route::group(
                 [
@@ -181,7 +194,7 @@ Route::group(
                     Route::post( 'doadd', 'TraceController@doAdd' );
                     Route::get( 'edit/{id}', 'TraceController@edit' );
                     Route::post( 'dosave', 'TraceController@doSave' );
-                    Route::post( 'dosaveshow', 'TraceController@doSaveShow' );
+                    Route::post( 'dosave2', 'TraceController@doSave2' );
                     Route::post( 'dodel', 'TraceController@doDel' );
                     Route::get( 'attributes/{id}', 'TraceController@attributes' );
                     Route::post( 'dosaveattr', 'TraceController@doSaveAttributes' );
@@ -192,60 +205,7 @@ Route::group(
 
 
             /*************************************
-             * Log資訊
-             *************************************/
-            Route::group(
-                [
-                    'prefix' => 'log',
-                    'middleware' => 'CheckSuperLogin',
-                    'namespace' => 'LOG',
-                ], function() {
-
-                //
-                Route::group(
-                    [
-                        'prefix' => 'login',
-                    ], function() {
-                    //
-                    Route::get( '', 'LogController@index' );
-//                    Route::any( 'getlist', 'LogController@getList' );
-//                    Route::get( 'add', 'LogController@add' );
-//                    Route::post( 'doadd', 'LogController@doAdd' );
-//                    Route::get( 'edit/{id}', 'LogController@edit' );
-//                    Route::post( 'dosave', 'LogController@doSave' );
-//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
-                } );
-                //
-                Route::group(
-                    [
-                        'prefix' => 'edit',
-                    ], function() {
-                    //
-                    Route::get( '', 'LogController@edit' );
-                    Route::get( 'attr/{id}', 'LogController@attr' );
-//                    Route::any( 'getlist', 'LogController@getList' );
-//                    Route::get( 'add', 'LogController@add' );
-//                    Route::post( 'doadd', 'LogController@doAdd' );
-//                    Route::get( 'edit/{id}', 'LogController@edit' );
-//                    Route::post( 'dosave', 'LogController@doSave' );
-//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
-                } );
-
-            } );
-
-            Route::get( 'shakemap', 'IndexController@shakemap' );
-            Route::get( 'shakemap2', 'IndexController@shakemap2' );
-
-
-            /* Ajax */
-            Route::post( 'addmessage', 'IndexController@addMessage');
-            Route::post( 'savemessage', 'IndexController@doSaveMessage');
-            Route::post( 'getcomment', 'IndexController@getCommentList');
-            Route::post( 'getmessage', 'IndexController@getMessageList');
-
-
-            /*************************************
-             * 通知訊息
+             * 通知訊息 (Comment and Message)
              *************************************/
             Route::group(
                 [
@@ -284,6 +244,52 @@ Route::group(
 
                 } );
             } );
+
+
+
+            /*************************************
+             * Log
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'log',
+                    'middleware' => 'CheckSuperLogin',
+                    'namespace' => 'LOG',
+                ], function() {
+
+                //
+                Route::group(
+                    [
+                        'prefix' => 'login',
+                    ], function() {
+                    //
+                    Route::get( '', 'LogController@index' );
+//                    Route::any( 'getlist', 'LogController@getList' );
+//                    Route::get( 'add', 'LogController@add' );
+//                    Route::post( 'doadd', 'LogController@doAdd' );
+//                    Route::get( 'edit/{id}', 'LogController@edit' );
+//                    Route::post( 'dosave', 'LogController@doSave' );
+//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
+//                    Route::get( 'attr/{id}', 'LogController@attr' );
+                } );
+                //
+                Route::group(
+                    [
+                        'prefix' => 'edit',
+                    ], function() {
+                    //
+                    Route::get( '', 'LogController@edit' );
+//                    Route::any( 'getlist', 'LogController@getList' );
+//                    Route::get( 'add', 'LogController@add' );
+//                    Route::post( 'doadd', 'LogController@doAdd' );
+//                    Route::get( 'edit/{id}', 'LogController@edit' );
+//                    Route::post( 'dosave', 'LogController@doSave' );
+//                    Route::post( 'dosaveshow', 'LogController@doSaveShow' );
+                    Route::get( 'attr/{id}', 'LogController@attr' );
+                } );
+
+            } );
+
 
         } );
 });

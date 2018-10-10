@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\_Web;
 
 use App\Http\Controllers\Controller;
-use App\SysFiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\SysFiles;
+
 
 class UploadController extends Controller
 {
@@ -16,6 +17,7 @@ class UploadController extends Controller
     {
         parent::__construct();
     }
+
 
     /*
      *
@@ -72,6 +74,7 @@ class UploadController extends Controller
 
         return response()->json( $this->rtndata );
     }
+
 
     /*
      *
@@ -138,6 +141,7 @@ class UploadController extends Controller
 
         return response()->json( $this->rtndata );
     }
+
 
     /*
      *

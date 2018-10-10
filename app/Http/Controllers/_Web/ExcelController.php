@@ -30,11 +30,13 @@ class ExcelController extends _WebController
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.import_export' );
         //
         $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '試算表系統' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '試算表系統' );
 
         return $this->view;
     }

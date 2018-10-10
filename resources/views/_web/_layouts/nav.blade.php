@@ -50,6 +50,7 @@
             {{--<i class="mdi mdi-dots-horizontal"></i>--}}
             {{--<span class="hide-menu">Extra</span>--}}
         {{--</li>--}}
+        @if(session('member.iAcType')<19)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="mdi mdi-border-left"></i>
@@ -61,6 +62,7 @@
 
             </ul>
         </li>
+        @endif
         <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
                 <i class="mdi mdi-content-paste"></i>

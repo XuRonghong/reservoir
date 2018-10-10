@@ -34,11 +34,27 @@
                 <div class="col-12">
                     <div class="card"  id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
                         <hr>
                         <form class="form-horizontal">
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control iType">
+                                            @foreach($reservori_category as $key => $var)
+                                                <option value="{{$key or 0}}" @if($info->iType==$key) selected @endif >
+                                                    {{$var or ''}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="card-body">
                                 <h4 class="card-title">Personal Info</h4>
                                 <div class="form-group row">
@@ -104,31 +120,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                    {{--<label for="img1" class="col-sm-3 text-right control-label col-form-label">UserPicture</label>--}}
-                                    {{--<div class="col-sm-9">--}}
-                                        {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                                            {{--<img src="{{$info->vUserImage or url('images/empty.jpg')}}" style="height:140px">--}}
-                                        {{--</a>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 text-right control-label col-form-label">Interested In</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<select class="form-control">--}}
-                                {{--<option>Choose Your Option</option>--}}
-                                {{--<option>Desiging</option>--}}
-                                {{--<option>Development</option>--}}
-                                {{--<option>Videography</option>--}}
-                                {{--</select>--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="abpro" class="col-sm-3 text-right control-label col-form-label">About Project</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="text" class="form-control" id="abpro" placeholder="About Project Here">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
                             <hr>
                             <div class="card-body">
@@ -196,6 +187,7 @@
             $(".btn-doadd").click(function () {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
+                data.iType = current_modal.find(".iType").val();
                 data.vRegion = current_modal.find(".vRegion").val();
                 data.vName = current_modal.find(".vName").val();
                 data.vLocation = current_modal.find(".vLocation").val();
@@ -231,6 +223,7 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
+                data.iType = current_modal.find(".iType").val();
                 data.vRegion = current_modal.find(".vRegion").val();
                 data.vName = current_modal.find(".vName").val();
                 data.vLocation = current_modal.find(".vLocation").val();

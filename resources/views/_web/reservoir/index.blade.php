@@ -6,7 +6,7 @@
     <!-- This page plugin CSS -->
     <style type="text/css" rel="stylesheet">
         .btn {
-            margin-left: 10px;
+            margin-left: 5px;
         }
     </style>
 @endsection
@@ -25,7 +25,6 @@
         <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
@@ -38,9 +37,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
-                            <h6 class="card-subtitle">DataTables has most features enabled by default, so all you need to do to use it with your own tables is to call the construction function:<code> $().DataTable();</code>. You can refer full documentation from here <a href="https://datatables.net/">Datatables</a></h6>
-                            <div class="table-responsive">
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
+                            <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
                             </div>
@@ -50,13 +49,6 @@
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
@@ -80,11 +72,6 @@
 
 <!-- ================== inline-js ================== -->
 @section('inline-js')
-    <!-- Public Crop_Image -->
-{{--    @include('_web._js.crop_image_single_modal_340175')--}}
-    <!-- Public SummerNote -->
-{{--    @include('_web._js.summernote')--}}
-    <!--  -->
     <script>
         var current_data = [];
         var ajax_source = "{{ url('web/'.implode( '/', $module ).'/getlist')}}";
@@ -96,38 +83,41 @@
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
         var url_attributes = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
-        var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
+
         $(document).ready(function () {
             /* BASIC ;*/
+            // loading .....
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                // "scrollY": '65vh',
+                "scrollY": '65vh',
+                // 'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "5%",
+                        "width": "80px",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
                         }
                     },
-                    {"sTitle": "地區別", "mData": "vRegion", /*"width": "8%", */"sName": "vRegion"},
-                    {"sTitle": "名稱", "mData": "vName", /*"width": "8%",*/ "sName": "vName"},
-                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "25%", "sName": "vLocation"},
-                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "12%", "sName": "vCounty"},
+                    {"sTitle": "地區別", "mData": "vRegion", "width": "100px", "sName": "vRegion"},
+                    {"sTitle": "名稱", "mData": "vName", "width": "100px", "sName": "vName"},
+                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "100%", "sName": "vLocation"},
+                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "200px", "sName": "vCounty"},
                     // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "8%", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
+                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "100px", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
                     // {"sTitle": "Sum", "mData": "iSum", "width": "8%", "sName": "iSum"},
                     {
                         "sTitle": "圖片",
                         "mData": "vImages",
                         "sName": "vImages",
-                        "width": "10%",
+                        "width": "100px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -138,28 +128,11 @@
                             return html_str;
                         }
                     },
-                    // {
-                    //     "sTitle": "I/O",
-                    //     "mData": "iStatus",
-                    //     "sName": "iStatus",
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         var btn = "無狀態";
-                    //         switch (data) {
-                    //             case 1:
-                    //                 btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
-                    //                 break;
-                    //             default:
-                    //                 btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
-                    //                 break;
-                    //         }
-                    //         return btn;
-                    //     }
-                    // },
                     {
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
+                        "width": "200px",
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
@@ -174,6 +147,7 @@
                             btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            $('.waitme').waitMe('hide');
                             return btn;
                         }
                     },
@@ -188,11 +162,17 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 }
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout( $('.waitme').waitMe('hide') , 10000);   //逾時10秒關閉讀取
             /* END BASIC */
             //
             $("#dt_basic").on('change', '.irank', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 var irank = $(this).val();
                 var data = {
                     "_token": "{{ csrf_token() }}"
@@ -218,8 +198,7 @@
             });
             //
             $("#dt_basic").on('click', '.btn-status', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };
@@ -244,14 +223,12 @@
             });
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 location.href = url_edit + '/' + id;
             });
             //
             $("#dt_basic").on('click', '.btn-del', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };

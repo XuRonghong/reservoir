@@ -70,10 +70,14 @@
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
                                     <div class="col-sm-9" style="text-align: center;">
-                                        {{--<br>--}}
-                                        {{--<h3>--}}
-                                            {{--<a href="{{url('web/trace/add')}}">填寫蓄水庫與引水建造物安全檢查</a>--}}
-                                        {{--</h3>--}}
+                                        <br>
+                                        <h3>
+                                            @if(session('member.iAcType') < 19)
+                                            <a href="{{url('web/record/trace/add')}}">填寫蓄水庫與引水建造物安全檢查</a>
+                                            @else
+                                            <h4>待承辦人員填寫完檢查表後審核確認</h4>
+                                            @endif
+                                        </h3>
                                     </div>
                                 </div>
                                 @endif
@@ -139,12 +143,35 @@
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             //button hide
                             $(".btn-check").hide();
+                            //
+                            save_comment_read();
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
                     }
                 })
             });
+            /*
+            * 儲存"通知訊息"資料為使用者已讀
+             */
+            function save_comment_read() {
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.iId = $(this).data('id');
+                //
+                $.ajax({
+                    url: '{{url('web/savecomment')}}',
+                    type: "POST",
+                    data: data,
+                    resetForm: true,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+
+                        } else {
+                            {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
+                        }
+                    }
+                });
+            }
         });
     </script>
 @endsection

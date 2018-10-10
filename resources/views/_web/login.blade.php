@@ -8,7 +8,7 @@
     <!--  -->
     <style rel="stylesheet">
         #body01 {
-{{--            background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );--}}
+            background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );
         }
         .warning {
             color: red;
@@ -25,7 +25,7 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div class="page-wrapper" style="margin: 0%">
+    <div class="page-wrapper" style="margin-left: 0; margin-top: 35%">
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->

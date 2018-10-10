@@ -87,6 +87,7 @@
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
         var url_attributes = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
+
         $(document).ready(function () {
             /* BASIC ;*/
             var i = 0;
@@ -94,7 +95,8 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                // "scrollY": '65vh',
+                "scrollY": '65vh',
+                'bProcessing': true,
                 "aoColumns": [
                     {
                         "sTitle": "ID",

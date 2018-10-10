@@ -37,9 +37,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
-                            <div class="table-responsive">
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
+                            <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
                             </div>
@@ -88,12 +88,16 @@
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
         $(document).ready(function () {
             /* BASIC ;*/
+            // loading .....
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                // "scrollY": '65vh',
+                "scrollY": '65vh',
+                'bProcessing': true,
+                // 'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "keyValue",
@@ -107,17 +111,17 @@
                     },
                     {"sTitle": "eventTime", "mData": "eventTime", "width": "15%", "sName": "eventTime"},
                     {"sTitle": "id", "mData": "id", "width": "5%", "sName": "id"},
-                    {
-                        "sTitle": "Reservoir",
-                        "mData": "vStructure",
-                        "width": "20%",
-                        "sName": "vStructure",
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            // for(obj in row['reservoir'])
-                            return data;
-                        }
-                    },
+                    // {
+                    //     "sTitle": "Reservoir",
+                    //     "mData": "vStructure",
+                    //     "width": "20%",
+                    //     "sName": "vStructure",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         // for(obj in row['reservoir'])
+                    //         return data;
+                    //     }
+                    // },
                     {"sTitle": "NET", "mData": "NET", "width": "5%", "sName": "NET"},
                     {"sTitle": "LOCATION", "mData": "LOCATION", "width": "5%", "sName": "LOCATION"},
                     {"sTitle": "PGA", "mData": "PGA", "width": "5%", "sName": "PGA"},
@@ -131,6 +135,7 @@
                             btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             // btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             // btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            $('.waitme').waitMe('hide');
                             return btn;
                         }
                     },
@@ -145,6 +150,13 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 }
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout( $('.waitme').waitMe('hide') , 10000);   //逾時10秒關閉讀取
             /* END BASIC */
             //
             $("#dt_basic").on('change', '.irank', function () {

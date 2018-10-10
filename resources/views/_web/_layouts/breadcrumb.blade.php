@@ -1,7 +1,7 @@
 
 <div class="page-breadcrumb">
     <div class="row">
-        <div class="col-5 align-self-center">
+        <div class="col-7 align-self-center">
             <h4 class="page-title">{{session('SEO.vTitle')}}</h4>
             <div class="d-flex align-items-center">
                 <nav aria-label="breadcrumb">
@@ -14,7 +14,7 @@
                 </nav>
             </div>
         </div>
-        <div class="col-7 align-self-center">
+        <div class="col-5 align-self-center">
             <div class="d-flex no-block justify-content-end align-items-center">
                 <div class="m-r-10">
                     {{--<div class="lastmonth"></div>--}}

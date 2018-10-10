@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\_Web\Message;
 
-use App\LogLogin;
-use App\ModMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
-use App\SysMember;
-use App\SysMemberInfo;
-use App\SysGroupMember;
+use App\ModMessage;
 use App\ModReservoirMeta;
 use App\ModReservoir;
 
@@ -41,14 +37,31 @@ class IndexController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '通知訊息' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '訊息' );
         $this->view->with( 'permission', $this->Permission );
 
         //
         $DaoMessage = $this->getDaoMessage( false);
-        foreach ($DaoMessage as $var){
-            $var->url = url('web/message/attr') . '/' . $var->iId;
+        if ($DaoMessage){
+            //
+            $Dao = [];
+            foreach ($DaoMessage as $var){
+                //訊息連結
+                $var->url = url('web/message/attr') . '/' . $var->iId;
+                //主要分 系統訊息 與 地震通知 種類
+                if ($var->iType < 50){
+                    $Dao[] = $var;      //物件的重新組合
+                }
+                //圖片處理,假如NULL給他個預設值
+                if ( !$var->vImages){
+                    $var->vImages = env('APP_URL') . '/images/favicon.png';
+                }
+            }
+            //
+            $this->rtndata ['status'] = 1;
+            $this->rtndata ['aaData'] = $Dao ? $Dao : [];
+            $this->rtndata ['total'] = $this->comment_total;    //通知的數量
         }
         $this->view->with( 'info', $DaoMessage );
         $this->view ->with('total',$DaoMessage->count() );
@@ -135,8 +148,8 @@ class IndexController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '更多資訊' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '訊息詳情' );
         $this->view->with( 'permission', $this->Permission );
 
         //

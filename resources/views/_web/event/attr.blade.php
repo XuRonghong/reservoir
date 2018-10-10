@@ -39,8 +39,8 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title modalTitle">{{$attributes->vName or ''}}</h4>
-                            <h6 class="card-subtitle">{{$attributes->vLocation or ''}}</h6>
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
                         </div>
                         <hr>
                         <form class="form-horizontal">

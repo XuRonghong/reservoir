@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\_Web\Message;
 
-use App\LogLogin;
-use App\ModDeviceToken;
-use App\ModMessage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
+use App\ModDeviceToken;
+use App\ModMessage;
 use App\SysMember;
 use App\SysMemberInfo;
-use App\SysGroupMember;
-use App\ModReservoirMeta;
-use App\ModReservoir;
 
 
 class CenterController extends _WebController
@@ -41,17 +37,41 @@ class CenterController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '通知中心' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '通知中心' );
         $this->view->with( 'permission', $this->Permission );
 
         //撈取資訊資料表
         $DaoMessage = $this->getDaoMessage( false);
-        foreach ($DaoMessage as $var){
-            $var->url = url('web/message/attr') . '/' . $var->iId;
+        if ($DaoMessage){
+            //
+            $Dao = [];
+            $message_total = 0;         //重新計算訊息數量
+            foreach ($DaoMessage as $var)
+            {
+                //主要分 系統訊息 與 地震通知 種類
+                if ($var->iType > 50){
+                    $message_total ++;
+                    $Dao[] = $var;      //物件的重新組合
+                    //
+                    $var->url = url('web/message/center/attr') . '/' . $var->iId;
+
+                    // 訊息type=89 : 連結存在Detail內 ， 關於地震水庫審核表
+                    if($var->iType == 89){
+                        $var->url = $var->vDetail;
+                    }
+                }
+                //圖片處理,假如NULL給他個預設值
+                if ( !$var->vImages){
+                    $var->vImages = env('APP_URL') . '/images/favicon.png';
+                }
+            }
         }
-        $this->view->with( 'info', $DaoMessage );
-        $this->view->with('total', $DaoMessage->count() );
+//        foreach ($DaoMessage as $var){
+//            $var->url = url('web/message/attr') . '/' . $var->iId;
+//        }
+        $this->view->with( 'info', $Dao );
+        $this->view->with('total', $message_total );
 
         return $this->view;
     }
@@ -183,10 +203,10 @@ class CenterController extends _WebController
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
             implode( '.', $this->module ) . '.add' => url( 'web/' . implode( '/', $this->module ) . "/add" )
         ];
-        $this->view->with( 'breadcrumb', $this->breadcrumb );
-        $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '新增通知' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('breadcrumb', $this->breadcrumb);
+        $this->view->with('module', $this->module);
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '新增通知' );
         $this->view->with( 'permission', $this->Permission );
 
         return $this->view;
@@ -200,20 +220,18 @@ class CenterController extends _WebController
     {
         try {
             $Dao = new ModMessage();
-//        $Dao->iRank = null; //$maxRank + 1;
-//        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-            $Dao->iType = ($request->input('iType')) ? $request->input('iType') : 99;
+            $Dao->iType =   ($request->input('iType')) ? $request->input('iType') : 99;     // type:99 預設message訊息
             $Dao->iSource = ($request->input('iSource')) ? $request->input('iSource') : 0;
-            $Dao->iHead = ($request->input('iHead')) ? $request->input('iHead') : 0;
-            $Dao->vTitle = ($request->input('vTitle')) ? $request->input('vTitle') : "";
-            $Dao->vSummary = ($request->input('vSummary')) ? $request->input('vSummary') : "";
+            $Dao->iHead =   ($request->input('iHead')) ? $request->input('iHead') : 0;
+            $Dao->vTitle =  ($request->input('vTitle')) ? $request->input('vTitle') : "";
+            $Dao->vSummary =($request->input('vSummary')) ? $request->input('vSummary') : "";
             $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';
-//        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
             $Dao->vImages = ($request->input('vImages')) ? $request->input('vImages') : "";
-            $Dao->vNumber = rand(1000000001, 1099999999);
-            $Dao->iStartTime = ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
-            $Dao->iEndTime = ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
-//        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
+            $Dao->vNumber = 'MESS'.date('ymd',time()).rand(000, 999);
+            $Dao->vReadman = session('member.iId') . ';';     //紀錄哪些使用者讀過
+            $Dao->iStartTime =  ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
+            $Dao->iEndTime =    ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
+            $Dao->iCheck = 0;
             $Dao->iCreateTime = $Dao->iUpdateTime = time();
             $Dao->iStatus = ($request->input('iStatus')) ? $request->input('iStatus') : 1;
             $Dao->bDel = 0;
@@ -226,7 +244,8 @@ class CenterController extends _WebController
                 $this->rtndata ['message'] = trans('_web_message.add_success');
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
 
-                // Android app 端要得到的資料
+
+                //************** Android app 端要的資料
                 $this->rtndata ['newid'] = $Dao->iId;
 
                 $arr_memberid = SysMember::query()->where('iStatus' , 1)->where('iAcType', '<', $Dao->iHead)->pluck('iId');
@@ -234,7 +253,7 @@ class CenterController extends _WebController
                 $arr_token = ModDeviceToken::query()->where($map)->whereIn('iMemberId', $arr_memberid)->pluck('vToken');
 
                 $this->rtndata ['heads_token'] = $arr_token;
-                //
+                //**************
 
             } else {
                 $this->rtndata ['status'] = 0;
@@ -263,8 +282,8 @@ class CenterController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '編輯' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '編輯通知' );
         $this->view->with( 'permission', $this->Permission );
 
 
@@ -458,8 +477,8 @@ class CenterController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '更多資訊' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with('vTitle', $this->vTitle);
+        $this->view->with('vSummary', '通知中心更多詳細' );
         $this->view->with( 'permission', $this->Permission );
 
         //
@@ -565,24 +584,16 @@ class CenterController extends _WebController
         }
 
         $mapMessage['bDel'] = 0;
-        $Dao = ModMessage::query()->where($mapMessage)->get();
+        $Dao = ModMessage::query()->where($mapMessage)->where('iType','>', 50)->update(array('bDel'=>1,'iUpdateTime'=>time()));
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        foreach ($Dao as $var){
-            $var->bDel = 1;
-            $var->iUpdateTime = time();
-            if (!$var->save()) {
-                //Logs
-                $this->_saveLogAction( $var->getTable(), $var->iId, 'delete', json_encode( $var ) );
-            } else {
-                $this->rtndata ['status'] = 0;
-                $this->rtndata ['message'] = trans( '_web_message.delete_fail' );
-                return response()->json( $this->rtndata );
-            }
-        }
+
+        //Logs
+        $this->_saveLogAction( 'mod_tracecheck', 9999999999, 'delete', json_encode( $Dao ) );
+
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.delete_success' );
 

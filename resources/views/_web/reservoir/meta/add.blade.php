@@ -34,7 +34,7 @@
                 <div class="col-12">
                     <div class="card"  id="edit-modal">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
                         <hr>
@@ -95,73 +95,7 @@
                                         <input type="text" class="form-control vAreaCode" id="lname" placeholder="區碼" value="{{$info->vAreaCode or ''}}">
                                     </div>
                                 </div>
-                                {{--<div class="form-group row">--}}
-                                {{--<label for="email1" class="col-sm-3 text-right control-label col-form-label">Email</label>--}}
-                                {{--<div class="col-sm-9">--}}
-                                {{--<input type="email" class="form-control" id="email1" placeholder="Email Here">--}}
-                                {{--</div>--}}
-                                {{--</div>--}}
                             </div>
-                            <hr>
-                            {{--<div class="card-body">--}}
-                            {{--<h4 class="card-title">Info</h4>--}}
-                            {{--<div class="form-group row">--}}
-                            {{--<label for="com1" class="col-sm-3 text-right control-label col-form-label">安全值</label>--}}
-                            {{--<div class="col-sm-9">--}}
-                            {{--<input type="number" class="form-control iSafeValue" id="com1" placeholder="安全值" value="{{$info->iSafeValue or ''}}">--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group row">--}}
-                            {{--<label class="col-sm-3 text-right control-label col-form-label">Interested In</label>--}}
-                            {{--<div class="col-sm-9">--}}
-                            {{--<select class="form-control">--}}
-                            {{--<option>Choose Your Option</option>--}}
-                            {{--<option>Desiging</option>--}}
-                            {{--<option>Development</option>--}}
-                            {{--<option>Videography</option>--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group row">--}}
-                            {{--<label class="col-sm-3 text-right control-label col-form-label">Budget</label>--}}
-                            {{--<div class="col-sm-9">--}}
-                            {{--<select class="form-control">--}}
-                            {{--<option>Choose Your Option</option>--}}
-                            {{--<option>Less then $5000</option>--}}
-                            {{--<option>$5000 - $10000</option>--}}
-                            {{--<option>$10000 - $20000</option>--}}
-                            {{--</select>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group">--}}
-                            {{--<label class="col-sm-1 col-md-1 col-lg-1 control-label">{{trans('web.images')}}</label>--}}
-                            {{--<div class="col-md-10 cropper_image">--}}
-                            {{--<a class="btn-image-modal" data-modal="image-form" data-id="">--}}
-                            {{--<img id="Image" data-data="" src="{{url('images/empty.jpg')}}" style="width: 15%">--}}
-                            {{--</a>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group row">--}}
-                            {{--<label class="col-sm-3 text-right control-label col-form-label">水庫照片</label>--}}
-                            {{--<div class="col-sm-9">--}}
-                            {{--<div class="input-group mb-3">--}}
-                            {{--<div class="input-group-prepend">--}}
-                            {{--<span class="input-group-text">Upload</span>--}}
-                            {{--</div>--}}
-                            {{--<div class="custom-file">--}}
-                            {{--<input type="file" class="custom-file-input vImages" id="inputGroupFile01">--}}
-                            {{--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="form-group row">--}}
-                            {{--<label for="abpro" class="col-sm-3 text-right control-label col-form-label">About Project</label>--}}
-                            {{--<div class="col-sm-9">--}}
-                            {{--<input type="text" class="form-control" id="abpro" placeholder="About Project Here">--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
@@ -215,6 +149,7 @@
         var url_index = "{{ url('web/'.implode( '/', $module ))}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
+
         $(document).ready(function () {
             //
             var modal = $("#edit-modal");
@@ -222,7 +157,6 @@
             //
             $(".btn-cancel").click(function () {
                 history.back();
-                // location.href = url_index;
             });
             //
             $(".btn-doadd").click(function () {
@@ -244,7 +178,6 @@
                 //         data.vImages = data.vImages + $(this).attr('id') + ";";
                 //     }
                 // });
-
                 $.ajax({
                     url: url_doadd,
                     type: "POST",
@@ -283,7 +216,6 @@
                 //         data.vImages = data.vImages + $(this).attr('id') + ";";
                 //     }
                 // });
-
                 $.ajax({
                     url: url_dosave,
                     type: "POST",
@@ -301,7 +233,7 @@
                     }
                 });
             });
-
+            //
         });
     </script>
 @endsection

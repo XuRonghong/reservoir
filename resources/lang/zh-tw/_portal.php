@@ -33,22 +33,16 @@ return [
             'my_fly_money' => "我的飛幣",
             'app' => "手機APP",
             'home' => "商城首頁",
-            'credit_card' => "EZ信用卡館",
+            'credit_card' => "信用卡館",
             'games' => "數位娛樂館",
             'japan' => "日本完稅館",
             'travel' => "佳品旅遊館",
-            'duty_free' => "馬祖免稅館",
+            'duty_free' => "免稅館",
             'specialty' => "台灣名物館",
             'logoTitle' => 'MARKET',
             'storeType' => '商城館別',
             'about' => '關於商城',
             'howareyou' => '您好',
-        ],
-    'home_main' =>
-        [
-            'pageTitle' => '飛買家TraveltoBuy',
-            'dataLoading' => '資料讀取中...',
-            'description' => '飛買家TraveltoBuy 給你旅遊購物新體驗！出國前下訂人氣商品，回程機場取貨，免扛貨又省時間，出國前必逛!',
         ],
     'home' =>
         [
@@ -64,7 +58,6 @@ return [
                     'travel' => "旅遊淘寶館",
                     'duty_free' => "馬袓免稅館",
                     'specialty' => "台灣名物館",
-                    'fly_money_notice' => "每筆消費皆可累積飛幣(Fly Money),不可兌現、僅使用於ezFly商城兌換相對應商品/折抵金額",
                     'tip1_1' => '中文服務',
                     'tip1_2' => '溝通無障礙',
                     'tip2_1' => '保證正貨',
@@ -297,7 +290,7 @@ return [
     'footer' =>
         [
             'title' => '關於商城',
-            'about' => '關於EZ全球樂購網',
+            'about' => '關於全球樂購網',
             'announcement' => '商城公告',
             'userGuide' => '商城使用指南',
             'alert' => '防詐騙須知',

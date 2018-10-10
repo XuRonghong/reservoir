@@ -40,6 +40,11 @@
         .margin-left-10 li {
             margin-left: 5%;
         }
+        #main-wrapper {
+            width: 480px;
+            height: 720px;
+            text-align: center;
+        }
     </style>
 </head>
 <body id="body01">

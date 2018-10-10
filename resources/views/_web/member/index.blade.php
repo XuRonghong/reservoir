@@ -37,8 +37,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
                             <div class="table-responsive">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
@@ -49,13 +49,6 @@
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Right sidebar -->
-            <!-- ============================================================== -->
-            <!-- .right-sidebar -->
-            <!-- ============================================================== -->
-            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
@@ -93,6 +86,7 @@
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
         var url_attr = "{{ url('web/'.implode( '/', $module ).'/attr')}}";
         var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
+
         $(document).ready(function () {
             /* BASIC ;*/
             var i = 0;
@@ -100,7 +94,8 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                // "scrollY": '65vh',
+                "scrollY": '65vh',
+                'bProcessing': true,
                 "aoColumns": [
                     {
                         "sTitle": "ID",

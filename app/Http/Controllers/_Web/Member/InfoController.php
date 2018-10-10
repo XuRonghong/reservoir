@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\_Web\Member;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\FuncController;
 use App\Http\Controllers\_Web\_WebController;
 use App\SysMember;
 use App\SysMemberInfo;
 use App\SysGroupMember;
-use Illuminate\Http\Request;
-use App\Http\Controllers\FuncController;
+
 
 class InfoController extends _WebController
 {

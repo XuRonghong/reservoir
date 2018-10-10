@@ -5,13 +5,8 @@ namespace App\Http\Controllers\_Web\LOG;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
-use App\SysMember;
-use App\SysMemberInfo;
-use App\SysGroupMember;
 use App\LogLogin;
 use App\LogAction;
-use App\LogOrder;
-use App\LogProductClick;
 
 
 class LogController extends _WebController

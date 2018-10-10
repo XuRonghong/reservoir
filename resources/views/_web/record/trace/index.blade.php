@@ -37,9 +37,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
-                            <div class="table-responsive">
+                            <div class="table-responsive ">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
                             </div>
@@ -85,7 +85,7 @@
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
         var url_attr = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
-        var url_sub = "{{ url('web/'.implode( '/', $module ).'/sub')}}";
+
         $(document).ready(function () {
             /* BASIC ;*/
             var i = 0;
@@ -93,7 +93,9 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                // "scrollY": '65vh',
+                "scrollY": '65vh',
+                'bProcessing': true,
+                // 'sServerMethod': 'GET',
                 "aoColumns": [
                     // {
                     //     "sTitle": "ID",
@@ -143,8 +145,6 @@
                             }
                         }
                     },
-                    // {"sTitle": "狀態分類", "mData": "iType", "width": "10%", "sName": "iType"},
-                    // {"sTitle": "創立時間", "mData": "iCreateTime", "width": "15%", "sName": "iCreateTime"},
                     {
                         "sTitle": "",
                         "bSortable": false,
@@ -156,11 +156,9 @@
                             if (row.iType === '訊息'){
                                 btn = '<button class="btn btn-xs btn-success btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                                 btn += '<button class="btn btn-xs btn-success btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                                btn += '<button class="pull-right btn btn-xs btn-success btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                                btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             } else {
                                 btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
-                                // btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                                // btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             }
                             return btn;
                         }
@@ -236,7 +234,7 @@
                 var id = $(this).closest('tr').attr('id');
                 location.href = url_attr + '/' + id;
             });
-            //
+            // 第4欄位遞增排序
             var ii = 1;
             $('thead>tr>th').each(function () {
                 if (ii==4){

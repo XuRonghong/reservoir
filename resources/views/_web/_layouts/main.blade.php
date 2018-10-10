@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
     <link rel="stylesheet" href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
 
-
+    {{-- loading .... --}}
     <link type="text/css" rel="stylesheet" href="{{asset('css/waitMe.css')}}">
 
 
@@ -45,11 +45,18 @@
         </style>
     @endif
     <style>
+        #body01 {
+            background: url( '{{url("images/kalen-emsley-99666-unsplash.jpg")}}' );
+            font-family: "微軟正黑體", Arial !important;
+            font-weight: bold;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
         .margin-left-10 li {
             margin-left: 3%;
         }
         * {
-            font-family: "微軟正黑體",Arial!important;
+            /*font-family: "微軟正黑體",Arial!important;*/
         }
     </style>
 </head>
@@ -186,7 +193,6 @@
                 save_message();
                 get_message_on_upbar();
             });
-
         });
 
         /*
@@ -242,7 +248,6 @@
          */
         function get_comment_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
-            // data.iId = $(this).data('id');
             //
             $.ajax({
                 url: '{{url('web/getcomment')}}',
@@ -297,7 +302,6 @@
          */
         function get_message_on_upbar() {
             var data = {"_token": "{{ csrf_token() }}"};
-            // data.iId = $(this).data('id');
             //
             $.ajax({
                 url: '{{url('web/getmessage')}}',
@@ -310,8 +314,8 @@
                         //
                         html_str += '<li>';
                         html_str +=     '<div class="drop-title text-white bg-danger">';
-                        html_str +=         '<h4 class="m-b-0 m-t-5">' + rtndata.total + ' New</h4>';
-                        html_str +=         '<span class="font-light">Messages</span>';
+                        html_str +=         '<h4 class="m-b-0 m-t-5">' + rtndata.total + ' Messages</h4>';
+                        // html_str +=         '<span class="font-light">Messages</span>';
                         html_str +=     '</div>';
                         html_str += '</li>';
                         html_str += '<li>';
@@ -340,7 +344,7 @@
                         $(".ulMessage").html(html_str);
                         $('.message-count').text(rtndata.total_see);
                     } else {
-                        {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
+
                     }
                 }
             });

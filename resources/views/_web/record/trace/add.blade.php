@@ -34,10 +34,9 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            {{--<h4 class="card-title">{{$vSummary or ''}}</h4>--}}
+                            <h4 class="card-title">{{$vSummary or ''}}</h4>
                             {{--<h6 class="card-subtitle">{{session()->get( 'SEO.vTitle')}}</h6>--}}
                         </div>
-                        <hr>
                         <form class="form-horizontal">
                             <div class="card-body messageInfo-modal1">
                                 <h4 class="card-title Title">壹 、水庫基本資料</h4>
@@ -754,17 +753,19 @@
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    {{--@if(isset($info->iCheck))--}}
-                                        @if( session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<20)
-                                            <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
-                                                Add & Send
-                                            </button>
-                                        @elseif( isset($info) && $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>19 && session('member.iAcType')<80)
-                                            <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
-                                                Check & Send
-                                            </button>
-                                        @endif
-                                    {{--@endif--}}
+                                    @if( session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<20)
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
+                                            Add & Send
+                                        </button>
+                                    @elseif( isset($info) && $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>19 && session('member.iAcType')<80)
+                                        <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
+                                            Check & Send
+                                        </button>
+                                    @elseif( session('member.iAcType') < 10 )
+                                        <button type="button" class="btn btn-warning waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">
+                                            Save
+                                        </button>
+                                    @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
                             </div>
@@ -810,6 +811,7 @@
         var current_data = [];
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
+        var url_dosave2 = "{{ url('web/'.implode( '/', $module ).'/dosave2')}}";
         $(document).ready(function () {
             //
             var modal = $("#manage-modal");
@@ -870,8 +872,6 @@
                     }
                 })
             });
-
-
             //
             $(".btn-dosave").click(function () {
                 //
@@ -883,8 +883,10 @@
                 // data.vSummary = current_modal.find(".vSummary").val();
                 // data.vImages = current_modal.find("img").attr('src');
                 //
+                data.vDetail = getInputToJson();
+                //
                 $.ajax({
-                    url: url_dosave,
+                    url: url_dosave2,
                     type: "POST",
                     data: data,
                     resetForm: true,
@@ -901,6 +903,7 @@
                 });
             });
         });
+
 
         function getInputToJson()
         {

@@ -40,6 +40,7 @@ class _WebController extends Controller
     protected $message_total = 0;
     protected $comment_total = 0;
     protected $Permission = [];
+    protected $ReservoirType = [];
 
 
     /*
@@ -65,6 +66,14 @@ class _WebController extends Controller
             '40'    =>  '水利署-承辦人員',
             '50'    =>  '水利署-中階主管',
             '60'    =>  '水利署-高階主管',
+        ];
+        $this->ReservoirType = [
+//            0    =>  'type 0',
+            1    =>  'type 1',
+            2    =>  'type 2',
+            3    =>  'type 3',
+            4    =>  'type 4',
+            5    =>  'type 5',
         ];
     }
 
