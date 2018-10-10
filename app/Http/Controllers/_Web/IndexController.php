@@ -4,15 +4,10 @@ namespace App\Http\Controllers\_Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\FuncController;
-use App\SysMember;
-use App\SysMemberInfo;
-use App\SysGroupMember;
 use App\ModEvent;
 use App\ModMessage;
 use App\ModReservoirMeta;
 use App\ModReservoir;
-use Jenssegers\Agent\Agent;
-use PHPUnit\Exception;
 
 
 class IndexController extends _WebController
@@ -24,7 +19,6 @@ class IndexController extends _WebController
     function __construct ()
     {
         $this->module = [  ];
-        $this->vTitle = 'Index';
     }
 
 
@@ -64,7 +58,7 @@ class IndexController extends _WebController
         $this->_init();
         //目前的最新地震事件
         $DaoEvent = ModEvent::query()
-//            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
+            ->where('eventTime', '>=',date("Y-m-d H:i:s",time()-32400))   //北美中部時區的時差-8小時
             ->orderBy('eventTime', 'DESC')
             ->take(45)
             ->get();

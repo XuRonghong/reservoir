@@ -220,7 +220,7 @@
                         //async: false,
                         success: function (rtndata) {
                             if (rtndata.status) {
-                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")
+                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                                 setTimeout(function () {
                                     table.api().ajax.reload(null, false);
                                 }, 100);

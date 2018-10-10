@@ -260,7 +260,7 @@ Route::group(
 //                Route::get( 'edit/{id}', 'IndexController@edit' );
                 Route::post( 'dosave', 'IndexController@doSave' );
 //                Route::post( 'dosaveshow', 'IndexController@doSaveShow' );
-                Route::get( 'dodelall', 'IndexController@doDelAll' );
+                Route::delete( 'dodelall', 'IndexController@doDelAll' );
                 Route::get( 'attr/{id}', 'IndexController@attr' );
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributes' );
 

@@ -7,6 +7,7 @@
     <style type="text/css" rel="stylesheet">
         .btn {
             margin-left: 10px;
+            margin-bottom: 10px;
         }
     </style>
 @endsection
@@ -38,6 +39,11 @@
                         <div class="card-body">
                             {{--<h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>--}}
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
+                            @if( session('member.iAcType') == 1 )
+                                <button type="button" class="btn btn-warning waves-effect waves-light btn-check btn-dodelall" data-id="{{$info->iId or ''}}">
+                                    Delete All Comment
+                                </button>
+                            @endif
                             <div class="table-responsive">
                                 <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                                     <div class="row">
@@ -121,15 +127,54 @@
 @section('inline-js')
     <script>
         $(document).ready(function () {
+            var table = $('#zero_config');
             //
             var init = $('.initClick');
             init.click();
             init.click();
+
             //
             $('.goMess').click(function () {
                url = $(this).data('href');
                location.href = url;
             });
+
+            //
+            $('.btn-dodelall').click(function () {
+                var data = {
+                    "_token": "{{ csrf_token() }}"
+                };
+                swal({
+                    title: "{{trans('_web_alert.del.title')}}" + '全部',
+                    text: "{{trans('_web_alert.del.note')}}",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "{{trans('_web_alert.cancel')}}",
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "{{trans('_web_alert.ok')}}",
+                    closeOnConfirm: true
+                }, function () {
+                    run_waitMe('body');
+                    $.ajax({
+                        url: '{{url('web/message/dodelall')}}',
+                        data: data,
+                        type: "delete",
+                        success: function (rtndata) {
+                            if (rtndata.status){
+                                toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                                setTimeout(function () {
+                                    location.reload();
+                                    $('body').waitMe('hide');
+                                }, 1000);
+                            }
+                        },
+                        error: function (rtndata) {
+                            toastr.error(rtndata.responseJSON.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    });
+                });
+            });
+            //
         });
     </script>
 @endsection

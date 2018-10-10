@@ -45,6 +45,16 @@ class _WebController extends Controller
     /*
      *
      */
+    function __construct ()
+    {
+        $this->vTitle = '水庫管理系統';
+        session()->put( 'SEO.vTitle' , $this->vTitle );
+    }
+
+
+    /*
+     *
+     */
     public function _init ()
     {
         $this->Permission = [
@@ -238,7 +248,7 @@ class _WebController extends Controller
         if ($set_check) $mapMessage['iCheck'] = session('member.iAcType') < 10 ? 0 : session('member.iAcType') - 10;
         $DaoMessage = ModMessage::query()->where($mapMessage)
             ->where('iHead' , '>', session('member.iAcType'))
-            ->orderBy('iUpdateTime' , 'desc')
+            ->orderBy('iCreateTime' , 'desc')
             ->get();
         if ($DaoMessage){
             foreach ($DaoMessage as $var){

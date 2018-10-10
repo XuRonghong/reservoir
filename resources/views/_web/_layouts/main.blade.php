@@ -26,20 +26,30 @@
     <link rel="stylesheet" href="{{url('css/sweetalert.css')}}">
     <link rel="stylesheet" href="{{url('xtreme-admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
 
+
+    <link type="text/css" rel="stylesheet" href="{{asset('css/waitMe.css')}}">
+
+
     <!-- This page plugin CSS -->
     @yield('page-css')
 
     {{-- sudo view --}}
     @if(session('member.iAcType')==1)
         <style rel="stylesheet" type="text/css">
-            #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin1], #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin1] {
+            #main-wrapper[data-layout=vertical] .topbar .navbar-collapse[data-navbarbg=skin6],
+            #main-wrapper[data-layout=vertical] .topbar[data-navbarbg=skin6],
+            #main-wrapper[data-layout=horizontal] .topbar .navbar-collapse[data-navbarbg=skin6],
+            #main-wrapper[data-layout=horizontal] .topbar[data-navbarbg=skin6] {
                 background-color: #d69d00;
             }
         </style>
     @endif
     <style>
         .margin-left-10 li {
-            margin-left: 5%;
+            margin-left: 3%;
+        }
+        * {
+            font-family: "微軟正黑體",Arial!important;
         }
     </style>
 </head>
@@ -148,7 +158,7 @@
         _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
         _gaq.push(['_trackPageview']);
 
-        $(function () {
+        $(document).ready(function () {
             //
             var ga = document.createElement('script');
             ga.type = 'text/javascript';
@@ -169,6 +179,7 @@
                 get_new_message();
                 get_message_on_upbar();
             });
+
             //click message
             $('.message-count').click(function () {
                 //若點擊後標示已讀訊息 並重新標記未讀訊息數量
@@ -332,6 +343,40 @@
                         {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
                     }
                 }
+            });
+        }
+    </script>
+
+    {{--  loading ....  --}}
+    {{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>--}}
+    <script src="{{asset('js/waitMe.js')}}"></script>
+    <script>
+        // none, bounce, rotateplane, stretch, orbit,
+        // roundBounce, win8, win8_linear or ios
+        function run_waitMe(selector='body', effect='roundBounce'){
+            $(selector).waitMe({
+                //none, rotateplane, stretch, orbit, roundBounce, win8,
+                //win8_linear, ios, facebook, rotation, timer, pulse,
+                //progressBar, bouncePulse or img
+                effect: effect,
+                //place text under the effect (string).
+                text: 'Please waiting...',
+                //background for container (string).
+                bg: 'rgba(255,255,255,0.7)',
+                //color for background animation and text (string).
+                color: '#000',
+                //max size
+                maxSize: '',
+                //wait time im ms to close
+                waitTime: -1,
+                //url to image
+                source: '',
+                //or 'horizontal'
+                textPos: 'vertical',
+                //font size
+                fontSize: '',
+                // callback
+                onClose: function() {}
             });
         }
     </script>

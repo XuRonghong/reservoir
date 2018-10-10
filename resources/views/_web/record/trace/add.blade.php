@@ -69,10 +69,13 @@
                                         <input type="text" class="form-control vCompany" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
                                         <br>
                                         <h5>放水量：</h5>
-                                        溢洪道<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        出水工<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        渠  道<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        發電廠<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
+                                        <div class="form-inline">
+                                            <div>溢洪道<input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>出水工<input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>渠  道<input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>發電廠<input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">

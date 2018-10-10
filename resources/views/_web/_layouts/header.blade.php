@@ -208,38 +208,11 @@
                         </i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
-                        <span class="with-arrow"><span class="bg-primary"></span></span>
+                        <span class="with-arrow">
+                            <span class="bg-primary"></span>
+                        </span>
                         <ul class="list-style-none ulComment">
-                            <li>
-                                <div class="drop-title bg-primary text-white">
-                                    <h4 class="m-b-0 m-t-5">1 New</h4>
-                                    <span class="font-light">Notifications</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="message-center notifications" style="height: 100%;">
-                                    <a href="javascript:void(0)" class="message-item">
-                                        <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                        <div class="mail-contnet">
-                                            <h5 class="message-title">Hello Admin</h5>
-                                            <span class="mail-desc">Welcome to admin!</span>
-                                            <span class="time">0:00 AM</span>
-                                        </div>
-                                    </a>
-                                    <!-- Message -->
-                                    {{--<a href="javascript:void(0)" class="message-item">--}}
-                                        {{--<span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>--}}
-                                        {{--<div class="mail-contnet">--}}
-                                            {{--<h5 class="message-title">Luanch Admin</h5>--}}
-                                            {{--<span class="mail-desc">Just see the my new admin!</span>--}}
-                                            {{--<span class="time">9:30 AM</span>--}}
-                                        {{--</div>--}}
-                                    {{--</a>--}}
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center m-b-5" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>
@@ -256,50 +229,11 @@
                         </i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
-                        <span class="with-arrow"><span class="bg-danger"></span></span>
+                        <span class="with-arrow">
+                            <span class="bg-danger"></span>
+                        </span>
                         <ul class="list-style-none ulMessage">
-                            <li>
-                                <div class="drop-title text-white bg-danger">
-                                    <h4 class="m-b-0 m-t-5">{{$message_total or 0}} New</h4>
-                                    <span class="font-light">Messages</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="message-center message-body">
-                                @if(isset($message))
-                                @forelse($message as $item)
-                                    <!-- Message -->
-                                    <a href="{{$item->vUrl or ''}}" class="message-item">
-                                        <span class="user-img">
-                                            <img src="{{$item->vImages or url('xtreme-admin/assets/images/users/1.jpg')}}" alt="user" class="rounded-circle">
-                                            <span class="profile-status online pull-right"></span>
-                                        </span>
-                                        <div class="mail-contnet">
-                                            <h5 class="message-title">{{$item->vTitle or ''}}</h5>
-                                            <span class="mail-desc">{!! $item->vSummary !!}</span>
-                                            <span class="time">{{$item->iCreateTime or ''}} AM</span>
-                                        </div>
-                                    </a>
-                                @empty
-                                    <!-- Message -->
-                                    <a href="javascript:void(0)" class="message-item">
-                                        <span class="user-img">
-                                            <img src="{{url('xtreme-admin/assets/images/users/2.jpg')}}" alt="user" class="rounded-circle">
-                                            <span class="profile-status busy pull-right"></span>
-                                        </span>
-                                        <div class="mail-contnet">
-                                            <h5 class="message-title">Sonu Nigam</h5>
-                                            <span class="mail-desc">I've sung a song! See you at</span>
-                                            <span class="time">9:10 AM</span>
-                                        </div>
-                                    </a>
-                                @endforelse
-                                @endif
-                                </div>
-                            </li>
-                            <li>
-                                <a class="nav-link text-center link" href="javascript:void(0);"> <b>See all e-Mails</b> <i class="fa fa-angle-right"></i> </a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>

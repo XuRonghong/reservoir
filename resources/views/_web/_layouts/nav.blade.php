@@ -16,7 +16,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-border-left"></i>
-                        <span class="hide-menu">水庫</span>
+                        <span class="hide-menu">水庫資料</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item"><a href="{{url('web/reservoir')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
@@ -29,7 +29,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-border-left"></i>
-                        <span class="hide-menu">水庫Meta</span>
+                        <span class="hide-menu">水庫規格</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item"><a href="{{url('web/reservoir/meta')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
@@ -51,43 +51,29 @@
             {{--<span class="hide-menu">Extra</span>--}}
         {{--</li>--}}
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
-                <i class="mdi mdi-content-paste"></i>
-                <span class="hide-menu">安全管考系統</span>
-            </a>
-        </li>
-        @if(session('member.iAcType')<10)
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                    <i class="mdi mdi-border-left"></i>
-                    <span class="hide-menu">地震回報系統</span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level">
-                    <li class="sidebar-item"><a href="{{url('web/message/center')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
-                    <li class="sidebar-item"><a href="{{url('web/message/center/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
-                    <li class="sidebar-item"><a href="{{url('web/event')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> Event</span></a></li>
-                </ul>
-            </li>
-        @endif
-        <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap')}}" aria-expanded="false">
-                <i class="mdi mdi-content-paste"></i>
-                <span class="hide-menu">重要監測運整</span>
-            </a>
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/trace')}}" aria-expanded="false">
-                <i class="mdi mdi-content-paste"></i>
-                <span class="hide-menu">系統操作說明</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="mdi mdi-border-left"></i>
-                <span class="hide-menu">安全檢查填寫</span>
+                <span class="hide-menu">安全管考系統</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item"><a href="{{url('web/record/trace')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/record/trace/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+
             </ul>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">地震回報系統</span>
+            </a>
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/index')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">重要監測運整</span>
+            </a>
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/index')}}" aria-expanded="false">
+                <i class="mdi mdi-content-paste"></i>
+                <span class="hide-menu">系統操作說明</span>
+            </a>
         </li>
         @if(session('member.iAcType')<10)
         <li class="sidebar-item">
@@ -115,6 +101,5 @@
             </ul>
         </li>
         @endif
-        {{--<li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="" aria-expanded="false"><i class="mdi mdi-directions"></i><span class="hide-menu">Log Out</span></a></li>--}}
     </ul>
 </nav>

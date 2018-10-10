@@ -199,27 +199,14 @@ class IndexController extends _WebController
         }
         //
         $mapMessage['bDel'] = 0;
-        $Dao = ModMessage::query()->where($mapMessage)->get();
-        if ( !$Dao) {
-            $this->rtndata ['status'] = 0;
-            $this->rtndata ['message'] = trans( '_web_message.empty_id' );
-            return response()->json( $this->rtndata );
-        }
-        foreach ($Dao as $var){
-            $var->bDel = 1;
-            $var->iUpdateTime = time();
-            if (!$var->save()) {
-                //Logs
-                $this->_saveLogAction( $var->getTable(), $var->iId, 'delete', json_encode( $var ) );
-            } else {
-                $this->rtndata ['status'] = 0;
-                $this->rtndata ['message'] = trans( '_web_message.delete_fail' );
-                return response()->json( $this->rtndata );
-            }
-        }
-        $this->rtndata ['status'] = 1;
-        $this->rtndata ['message'] = trans( '_web_message.delete_success' );
+        $Dao = ModMessage::query()->where($mapMessage)
+            ->where('iType', '<', 50)
+            ->update( array('bDel'=>1, 'iUpdateTime'=>time()) );
+        //Logs
+        $this->_saveLogAction('mod_message', 9999999999, 'delete', json_encode($Dao));
 
+        $this->rtndata ['status'] = 1;
+        $this->rtndata ['message'] = trans('_web_message.delete_success');
         return response()->json( $this->rtndata );
     }
 }
