@@ -6,6 +6,11 @@
     <!--  -->
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid-theme.min.css')}}" rel="stylesheet">
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid.min.css')}}" rel="stylesheet">
+    <style>
+        .btn {
+            margin-left: 20px;
+        }
+    </style>
 @endsection
 <!-- ================== /page-css ================== -->
 

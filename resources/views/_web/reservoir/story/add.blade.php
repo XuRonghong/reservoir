@@ -6,6 +6,11 @@
     <!--  -->
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid-theme.min.css')}}" rel="stylesheet">
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid.min.css')}}" rel="stylesheet">
+    <style>
+        .btn {
+            margin-left: 20px;
+        }
+    </style>
 @endsection
 <!-- ================== /page-css ================== -->
 
@@ -50,7 +55,7 @@
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">上傳PDF</label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control uploadfile" id="lname" name="files[]" multiple="multiple" >
+                                        <input type="file" class="form-control uploadfile" id="lname" name="files[]" multiple="multiple" value="">
                                     </div>
                                 </div>
                             </div>
@@ -118,9 +123,6 @@
             });
             //
             $(".btn-doadd").click(function () {
-                data = new FormData();
-                data.append("_token", "{{ csrf_token() }}");
-                data.append("file", $(".uploadfile"));
                 //
                 var file_data = $('.uploadfile').prop('files')[0];
                 var data = new FormData();
@@ -129,15 +131,15 @@
                 $.ajax({
                     data: data,
                     type: "POST",
-                    url: "{{url('web/upload_file_base64')}}",
+                    url: "{{url('web/upload_file')}}",
                     cache: false,
                     contentType: false,
                     processData: false,
                     async: false,
                     success: function (rtndata) {
                         if (rtndata.status){
-                            var upload_id = rtndata.fileid;
-                            doAdd(upload_id);
+                            var fileid = rtndata.fileid;
+                            doAdd(fileid);
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
@@ -145,10 +147,10 @@
                 });
             });
             //
-            function doAdd(id) {
+            function doAdd(fileid) {
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.vName = $(".vName").val();
-                data.vFile = id;
+                data.vFile = fileid;
                 $.ajax({
                     url: url_doadd,
                     type: "POST",
@@ -168,11 +170,37 @@
             }
             //
             $(".btn-dosave").click(function () {
+                id = $(this).data('id');
+                //
+                var file_data = $('.uploadfile').prop('files')[0];
+                var data = new FormData();
+                data.append("_token", "{{ csrf_token() }}");
+                data.append('file', file_data);
+                $.ajax({
+                    data: data,
+                    type: "POST",
+                    url: "{{url('web/upload_file')}}",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    success: function (rtndata) {
+                        if (rtndata.status){
+                            var fileid = rtndata.fileid;
+                            doSave(id,fileid);
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    }
+                });
+            });
+            //
+            function doSave(id,fileid) {
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.iId = $(this).data('id');
+                data.iId = id;
                 data.vName = $(".vName").val();
-                data.vFile = $(".vFile").val();
+                data.vFile = fileid;
                 //
                 $.ajax({
                     url: url_dosave,
@@ -190,7 +218,7 @@
                         }
                     }
                 });
-            });
+            }
             //
         });
     </script>

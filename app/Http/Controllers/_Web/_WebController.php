@@ -48,7 +48,7 @@ class _WebController extends Controller
      */
     function __construct ()
     {
-        $this->vTitle = '水庫管理系統';
+        $this->vTitle = '水庫安全資訊管理系統';
         session()->put( 'SEO.vTitle' , $this->vTitle );
     }
 

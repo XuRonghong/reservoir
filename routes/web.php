@@ -52,7 +52,7 @@ Route::group(
              *********************************************************/
             Route::post( 'upload_image', 'UploadController@doUploadImage' );
             Route::post( 'upload_image_base64', 'UploadController@doUploadImageBase64' );
-            Route::post( 'upload_file_base64', 'UploadController@doUploadFileBase64' );
+            Route::post( 'upload_file', 'UploadController@doUploadFile' );
 
             /**********************************************************
              * Import Excel

@@ -101,6 +101,19 @@ class StoryController extends _WebController
             $var->DT_RowId = $var->iId;
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
             $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
+            //
+            //檔案路徑
+            $image_arr = [];
+            $tmp_arr = explode( ';', $var->vFile );
+            $tmp_arr = array_filter( $tmp_arr );
+            foreach ($tmp_arr as $item) {
+                $image_arr[] = FuncController::_getFilePathById( $item );
+            }
+            if ($tmp_arr){
+                $var->vFile = $image_arr;
+            } else {
+                $var->vFile = [];
+            }
         }
 
         $this->rtndata ['status'] = 1;
@@ -189,6 +202,19 @@ class StoryController extends _WebController
         if ( !$Dao) {
 //            session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
             return redirect( 'web/' . implode( '/', $this->module ) );
+        }
+
+        //檔案路徑
+        $image_arr = [];
+        $tmp_arr = explode( ';', $Dao->vFile );
+        $tmp_arr = array_filter( $tmp_arr );
+        foreach ($tmp_arr as $item) {
+            $image_arr[] = FuncController::_getFilePathById( $item );
+        }
+        if ($tmp_arr){
+            $Dao->vFile = $image_arr;
+        } else {
+            $Dao->vFile = [];
         }
 
         //

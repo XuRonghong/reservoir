@@ -118,9 +118,18 @@
                             return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
                         }
                     },
-                    {"sTitle": "名稱", "mData": "vName", "width": "100px", "sName": "vName"},
+                    {"sTitle": "名稱", "mData": "vName", "width": "270px", "sName": "vName"},
                     // {"sTitle": "Code", "mData": "vCode", "width": "50px", "sName": "vCode"},
-                    {"sTitle": "file", "mData": "vFile", "width": "80px", "sName": "vFile"},
+                    {
+                        "sTitle": "File",
+                        "mData": "vFile",
+                        "sName": "vFile",
+                        "bSearchable": false,
+                        "width": "80px",
+                        "mRender": function (data, type, row) {
+                            return '<a class="btn btn-xs btn-danger" href="'+data+'"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>';
+                        }
+                    },
                     // {"sTitle": "vNum", "mData": "vNum", "width": "50px", "sName": "vNum"},
                     {
                         "sTitle": "",
@@ -132,7 +141,7 @@
                             var btn = "無功能";
                             switch (row.iStatus) {
                                 case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                                    btn = '<button class="btn btn-xs btn-success btn-status">已開啟</button>';
                                     break;
                                 default:
                                     btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
@@ -190,6 +199,31 @@
                 });
             });
             //
+            $("#dt_basic").on('click', '.btn-status', function () {
+                var id = $(this).closest('tr').attr('id');
+                var data = {
+                    "_token": "{{ csrf_token() }}"
+                };
+                data.iId = id;
+                data.iStatus = "change";
+                $.ajax({
+                    url: url_dosave_show,
+                    data: data,
+                    type: "POST",
+                    //async: false,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}")
+                            setTimeout(function () {
+                                table.api().ajax.reload(null, false);
+                            }, 100);
+                        } else {
+                            swal("{{trans('_web_alert.notice')}}", rtndata.message, "error");
+                        }
+                    }
+                });
+            });
+            //
             $("#dt_basic").on('click', '.btn-edit', function () {
                 var id = $(this).closest('tr').attr('id');
                 location.href = url_edit + '/' + id;
@@ -231,6 +265,7 @@
                     });
                 });
             });
+            $('iRank').click();
         });
     </script>
 @endsection

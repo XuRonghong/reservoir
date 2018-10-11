@@ -46,7 +46,7 @@
                                     <div class="col-sm-9">
                                         <select class="form-control iType">
                                             @foreach($reservori_category as $key => $var)
-                                                <option value="{{$key or 0}}" @if($info->iType==$key) selected @endif >
+                                                <option value="{{$key or 0}}" @if(isset($info) && $info->iType==$key) selected @endif >
                                                     {{$var or ''}}
                                                 </option>
                                             @endforeach

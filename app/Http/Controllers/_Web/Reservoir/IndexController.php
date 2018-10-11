@@ -118,7 +118,7 @@ class IndexController extends _WebController
             } else {
                 $var->vImages = [];
             }
-
+            //
             switch ($DaoInfo->iType){
                 case 1:
                     $var->iType = $this->ReservoirType[1];

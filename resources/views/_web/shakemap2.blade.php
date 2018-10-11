@@ -778,7 +778,6 @@
     <script>
         (function(d) {
 
-            run_waitMe($('body'));
 
             var lock = 0;
 
@@ -786,12 +785,22 @@
                 $(this).attr("data-title", $(this).text());
             });
 
+            run_waitMe($('body'));
+
             var apiRead=function(){
                 $.post("{{url('api/shakemap_event_api')}}", {}, function(src) {
+                    //
+                    $('body').waitMe('hide');
+                    //
                     $("[data-id]").removeAttr("style").each(function(){
                         // $(this).find("polyline").removeAttr("class");
                         $(this).find("text").attr("class","text");
                     });
+                    //
+                    // setTimeout(function () {
+                    //     $('body').waitMe('hide');
+                    // }, 500);
+                    //
                     if(src.type=="event"){
                         var maxPGAIndex=0;
                         for(var i in src.data){
@@ -807,12 +816,13 @@
                             //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
                             // });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).html($(this).attr("data-title")+""+"<a href='"+src.url_1[i]+"'>連結1</a>");
+                                $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
                                 // $(this).append('<a href="www">連結1</a>');
                             });
-                            // $("[data-id='"+src.data[i].id+"']").find("[data-name='info2']").each(function(){
-                            //     $(this).text($(this).attr("data-title")+"LOCATION:"+src.data[i].LOCATION);
-                            // });
+                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info4']").each(function(){
+                                // $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
+                                $(this).html("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
+                            });
 
                             //
                             $("[data-id='"+src.data[i].id+"']").each(function(){
@@ -884,13 +894,15 @@
                                 $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).html("<a href='"+src.url_1[i]+"'>link</a>");
-                                // $(this).append('<a href="www">連結1</a>');
+                                $(this).html("<a href='"+src.url_1+src.data2[i].iId+"'>link1:"+src.url_1+src.data2[i].iId+"</a></div>\n");
+                                $(this).append("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
+                            });
+                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info4']").each(function(){
+                                // $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
+                                $(this).text("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
                             });
                         }
                     }
-
-                    $('body').waitMe('hide');
 
                     //
                     $('.alert .date').text(src.date);

@@ -258,9 +258,9 @@ class _APIController extends Controller
         foreach ($returnList["data"] as $key => $item){
             $oneReservoirMeta = ModReservoirMeta::query()->where('vNumber','=', $item->id)->first();
             $returnList['data2'][$key] = ModReservoir::query()->where('vName', 'LIKE', '%'.$oneReservoirMeta->vStructure.'%')->first();
-            $returnList['url_1'][$key] = url('web/reservoir/edit').'/'. $returnList['data2'][$key]->iId ;
-            $returnList['url_2'][$key] = url('web/reservoir/meta/edit').'/'. $item->id ;
         }
+        $returnList['url_1'] = url('web/reservoir/edit').'/';
+        $returnList['url_2'] = url('web/reservoir/meta/edit').'/';
         $returnList['date'] = date('Y') . '年' . date('m') . '月' . date('d') . '日';
         $returnList['time'] = date('H') . '時' . date('i') . '分' . date('s') . '秒';
 

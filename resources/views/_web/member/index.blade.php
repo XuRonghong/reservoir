@@ -134,7 +134,7 @@
                             var btn = "無狀態";
                             switch (data) {
                                 case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-active">已啟用</button>';
+                                    btn = '<button class="btn btn-xs btn-success btn-active">已啟用</button>';
                                     break;
                                 default:
                                     btn = '<button class="btn btn-xs btn-primary btn-active">未啟用</button>';

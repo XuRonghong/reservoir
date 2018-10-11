@@ -36,8 +36,8 @@ class InfoController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '會員Information' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '會員Information' );
 
         return $this->view;
     }
@@ -142,8 +142,8 @@ class InfoController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '編輯' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '編輯會員Information' );
 
 
         $DaoMemberInfo = SysMemberInfo::query()->find($id[0]);

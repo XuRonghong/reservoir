@@ -42,7 +42,7 @@
         }
         #main-wrapper {
             width: 480px;
-            height: 720px;
+            height: 715px;
             text-align: center;
         }
     </style>

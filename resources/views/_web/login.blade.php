@@ -25,20 +25,20 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div class="page-wrapper" style="margin-left: 0; margin-top: 35%">
+    <div class="page-wrapper" style="margin-left: 0; margin-top: 40%">
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-top: -20px;">
             <!-- ============================================================== -->
             <!-- Start Page Content -->
             <!-- ============================================================== -->
+            <h3 class="card-subtitle" style="margin-top: -35px; margin-bottom: 10px;">{{$vTitle or ''}}</h3>
             <div class="row login">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body loginDiv1">
-                            <h3 class="card-title">水庫安全資訊管理系統</h3>
-                            <h6 class="card-subtitle"> 電腦版僅「網站系統管理員」可登入 </h6>
+                            {{--<h3 class="card-title">{{$vTitle or ''}}</h3>--}}
                             <form class="m-t-30" id="login-form1">
                                 <div class="warning"></div>
                                 <div class="form-group">

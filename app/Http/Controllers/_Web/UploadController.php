@@ -146,7 +146,28 @@ class UploadController extends Controller
     /*
      *
      */
-    public function doUploadFileBase64 ( Request $request )
+    public function _addFile ( $file_info )
+    {
+        $Dao = new SysFiles ();
+        $Dao->iMemberId = session()->get( 'member.iId' );
+        $Dao->iType = 2;
+        $Dao->vFileType = $file_info->type;
+        $tmp_arr = explode( config()->get( '_config.file_path' ), dirname( $file_info->url ), 2 );
+        $Dao->vFileServer = $tmp_arr [0];
+        $Dao->vFilePath = config()->get( '_config.file_path' ) . $tmp_arr [1];
+        $Dao->vFileName = $file_info->name;
+        $Dao->iFileSize = $file_info->size;
+        $Dao->iCreateTime = $Dao->iUpdateTime = time();
+        $Dao->save();
+
+        return $Dao->iId;
+    }
+
+
+    /*
+     * 這裡做上傳檔案 *.pdf
+     */
+    public function doUploadFile ( Request $request )
     {
         if ( !$request->hasFile('file') || !$request->file( 'file' ) || !$request->file('file')->isValid() ) {
             $this->rtndata ['status'] = 0;
@@ -155,6 +176,7 @@ class UploadController extends Controller
         }
 
         try {
+            $data = $request->file('file');
             //取得上傳檔案所在的路徑
             $path = $request->file('file')->getRealPath();
             //取得上傳檔案的原始名稱
@@ -170,35 +192,34 @@ class UploadController extends Controller
 //            $data = base64_decode($image [1]);
 
             switch (config('filesystems.default')) {
-//            case 's3':
-//                $storage = Storage::disk( 's3' );
-//                $filename = date( 'YmdHis' ) . uniqid() . '.jpg';
-//                $filePath = '/' . config()->get( '_config.file_path' ) . session()->get( 'member.vUserCode' );
-//                $storage->put( $filePath . '/' . $filename, $data );
-//                //
-//                $Dao = new SysFiles ();
-//                $Dao->iMemberId = session()->get( 'member.iId' );
-//                $Dao->iType = 3;
-//                $Dao->vFileType = 'image/jpeg';
-//                $Dao->vFileServer = env( 'AWS_S3_SERVER' );
-//                $Dao->vFilePath = '/' . env( 'AWS_BUCKET' ) . $filePath . '/';
-//                $Dao->vFileName = $filename;
-//                $Dao->iFileSize = $storage->size( $filePath . '/' . $filename );
-//                $Dao->iCreateTime = $Dao->iUpdateTime = time();
-//                $Dao->iStatus = 1;
-//                $Dao->save();
-//                $rtndata = [
-//                    'fileid' => $Dao->iId,
-//                    'path' => $Dao->vFileServer . $Dao->vFilePath . $Dao->vFileName
-//                ];
-//                break;
+            case 's3':
+                $storage = Storage::disk( 's3' );
+                $filename = date( 'YmdHis' ) . uniqid() . '.jpg';
+                $filePath = '/' . config()->get( '_config.file_path' ) . session()->get( 'member.vUserCode' );
+                $storage->put( $filePath . '/' . $filename, $data );
+                //
+                $Dao = new SysFiles ();
+                $Dao->iMemberId = session()->get( 'member.iId' );
+                $Dao->iType = 3;
+                $Dao->vFileType = 'image/jpeg';
+                $Dao->vFileServer = env( 'AWS_S3_SERVER' );
+                $Dao->vFilePath = '/' . env( 'AWS_BUCKET' ) . $filePath . '/';
+                $Dao->vFileName = $filename;
+                $Dao->iFileSize = $storage->size( $filePath . '/' . $filename );
+                $Dao->iCreateTime = $Dao->iUpdateTime = time();
+                $Dao->iStatus = 1;
+                $Dao->save();
+                $rtndata = [
+                    'fileid' => $Dao->iId,
+                    'path' => $Dao->vFileServer . $Dao->vFilePath . $Dao->vFileName
+                ];
+                break;
                 default:
                     $storage = Storage::disk('public');
                     $filename = date('YmdHis') . uniqid() . '.'.$extension;
                     $filePath = session()->get('member.vUserCode');
+
 //                    $storage->put($filePath . '/' . $filename, $path);
-
-
                     $request->file('file')->move( public_path('/upload/userdata/' . $filePath ) , $filename);
 
                     //
@@ -229,26 +250,5 @@ class UploadController extends Controller
         $this->rtndata ['fileid'] = $Dao->iId;
 
         return response()->json( $this->rtndata );
-    }
-
-
-    /*
-     *
-     */
-    public function _addFile ( $file_info )
-    {
-        $Dao = new SysFiles ();
-        $Dao->iMemberId = session()->get( 'member.iId' );
-        $Dao->iType = 2;
-        $Dao->vFileType = $file_info->type;
-        $tmp_arr = explode( config()->get( '_config.file_path' ), dirname( $file_info->url ), 2 );
-        $Dao->vFileServer = $tmp_arr [0];
-        $Dao->vFilePath = config()->get( '_config.file_path' ) . $tmp_arr [1];
-        $Dao->vFileName = $file_info->name;
-        $Dao->iFileSize = $file_info->size;
-        $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->save();
-
-        return $Dao->iId;
     }
 }

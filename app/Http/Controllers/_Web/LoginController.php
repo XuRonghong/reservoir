@@ -33,7 +33,7 @@ class LoginController extends _WebController
         $this->module = [ 'login' ];
         $this->view = View()->make( "_web." . implode( '.' , $this->module ) );
         $this->view->with('vTitle', $this->vTitle);
-        $this->view->with('vSummary', '' );
+        $this->view->with('vSummary', ' 電腦版僅「網站系統管理員」可登入 ' );
 
         /*
          *  判斷裝置手機版或電腦版

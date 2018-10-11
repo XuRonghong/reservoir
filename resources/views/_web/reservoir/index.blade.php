@@ -138,7 +138,7 @@
                             var btn = "無功能";
                             switch (row.iStatus) {
                                 case 1:
-                                    btn = '<button class="btn btn-xs btn-danger btn-status">已開啟</button>';
+                                    btn = '<button class="btn btn-xs btn-success btn-status">已開啟</button>';
                                     break;
                                 default:
                                     btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';

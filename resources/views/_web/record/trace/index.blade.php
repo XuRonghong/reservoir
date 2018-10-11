@@ -234,7 +234,7 @@
                 var id = $(this).closest('tr').attr('id');
                 location.href = url_attr + '/' + id;
             });
-            // 第4欄位遞增排序
+            // 第4欄位遞減排序
             var ii = 1;
             $('thead>tr>th').each(function () {
                 if (ii==4){

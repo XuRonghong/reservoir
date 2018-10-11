@@ -28,11 +28,11 @@ class IndexController extends _WebController
     public function index ()
     {
 
-        $this->module = [ 'event' ];
+        $this->module = [ '' ];
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.index' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
-            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
+//            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
@@ -59,7 +59,7 @@ class IndexController extends _WebController
         $sort_arr = [];
         $search_arr = [];
         $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
-        $iDisplayLength = $request->input('iDisplayLength') ? $request->input('iDisplayLength') : 0 ;
+        $iDisplayLength = $request->exists('iDisplayLength') ? $request->input('iDisplayLength') : 0 ;
         $iDisplayStart =  $request->input('iDisplayStart') ? $request->input('iDisplayStart') : 0 ;
         $sEcho =          $request->input('sEcho' ) ? $request->input('sEcho') : '' ;
         $column_arr =     $request->input('sColumns' ) ? $request->input('sColumns') : '' ;

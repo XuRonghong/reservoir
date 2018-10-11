@@ -37,7 +37,7 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '會員' );
+        $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '' );
 
         return $this->view;
@@ -150,8 +150,8 @@ class IndexController extends _WebController
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
-        session()->put( 'SEO.vTitle' , '新增會員' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '新增會員' );
         $this->view->with( 'permission', $this->Permission );
         return $this->view;
     }
@@ -280,8 +280,8 @@ class IndexController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '編輯' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '編輯會員' );
         $this->view->with( 'permission', $this->Permission );
 
 
@@ -484,8 +484,8 @@ class IndexController extends _WebController
         ];
         $this->view->with('breadcrumb', $this->breadcrumb);
         $this->view->with('module', $this->module);
-        session()->put( 'SEO.vTitle' , '更多資訊' );
-        $this->view->with( 'vSummary', '' );
+        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'vSummary', '更多資訊' );
         $this->view->with( 'permission', $this->Permission );
 
 

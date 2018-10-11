@@ -43,6 +43,7 @@
     $('.box>.info1').text($(this).nextAll('[data-name="info1"]').text())
     $('.box>.info2').text($(this).nextAll('[data-name="info2"]').text())
     $('.box>.info3').text($(this).nextAll('[data-name="info3"]').text())
+    $('.box>.info4').text($(this).nextAll('[data-name="info4"]').text())
       //
     $('circle').attr('style', '')
     $(this).css({fill: '#fff', stroke: '#3a3837', strokeWidth: '2'})
