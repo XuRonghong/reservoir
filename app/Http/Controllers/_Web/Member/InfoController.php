@@ -226,9 +226,9 @@ class InfoController extends _WebController
 
                 // session
                 $DaoMember = SysMember::query()->find( $id/*session()->get( 'member.iId')*/ );
-                $DaoMemberInfo = SysMemberInfo::query()->find( $id/*session()->get( 'member.iId')*/ );
+//                $DaoMemberInfo = SysMemberInfo::query()->find( $id/*session()->get( 'member.iId')*/ );
                 // Member
-                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+//                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
                 // MemberInfo
                 session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 

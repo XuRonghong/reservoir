@@ -362,9 +362,9 @@ class IndexController extends _WebController
             $DaoMember = SysMember::query()->find( $id/*session()->get( 'member.iId')*/ );
             $DaoMemberInfo = SysMemberInfo::query()->find( $id/*session()->get( 'member.iId')*/ );
             // Member
-            session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+            session()->put( 'member', json_decode( json_encode( $Dao ), true ) );
             // MemberInfo
-            session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+//            session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
             //
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
