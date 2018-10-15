@@ -101,7 +101,7 @@
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "50px",
+                        "width": "40px",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -118,7 +118,7 @@
                     //         return "<img width='100%' src=" + data + ">";
                     //     }
                     // },
-                    {"sTitle": "標頭", "mData": "vTitle", "width": "280px", "sName": "vTitle"},
+                    {"sTitle": "標頭", "mData": "vTitle", "width": "270px", "sName": "vTitle"},
                     {"sTitle": "發送者", "mData": "iSource", "width": "80px", "sName": "iSource"},
                     {"sTitle": "分類", "mData": "iType", "width": "40px", "sName": "iType"},
                     {"sTitle": "時間", "mData": "iCreateTime", "width": "", "sName": "iCreateTime"},
@@ -133,7 +133,7 @@
                             if (row.iType === '訊息'){
                                 btn = '<button class="btn btn-xs btn-success btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                                 btn += '<button class="btn btn-xs btn-success btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                                btn += '<button class="pull-right btn btn-xs btn-success btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                                btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             } else {
                                 btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                                 btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';

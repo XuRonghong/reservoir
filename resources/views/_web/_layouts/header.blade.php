@@ -115,7 +115,7 @@
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{session('member.meta.vUserImage' , url('xtreme-admin/assets/images/users/1.jpg'))}}" alt="user" class="rounded-circle" width="31">
+                        <img src="{{session()->get('member.meta.vUserImage' , url('xtreme-admin/assets/images/users/1.jpg'))}}" alt="user" class="rounded-circle" width="31">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <span class="with-arrow">
@@ -123,7 +123,7 @@
                         </span>
                         <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                             <div class="">
-                                <img src="{{session('member.meta.vUserImage' , url('xtreme-admin/assets/images/users/1.jpg'))}}" alt="user" class="img-circle" width="60">
+                                <img src="{{session()->get('member.meta.vUserImage' , url('xtreme-admin/assets/images/users/1.jpg'))}}" alt="user" class="img-circle" width="60">
                             </div>
                             <div class="m-l-10">
                                 <h4 class="m-b-0">{{session('member.vAccount' , '')}}</h4>

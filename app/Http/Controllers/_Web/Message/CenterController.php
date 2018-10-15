@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\_Web\Message;
 
+use App\ModTraceCheck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
@@ -450,10 +451,23 @@ class CenterController extends _WebController
         $Dao->iUpdateTime = time();
 
         if ($Dao->save()) {
-            $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.delete_success' );
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode( $Dao ) );
+
+            /* 訊息刪除 連考核表予刪除 */
+            $mapTC['bDel'] = 0;
+            $DaoTC = ModTraceCheck::query()->where( $mapTC )->where('iSource', '=', $id )->first();
+            if ( !$DaoTC) {
+                $this->rtndata ['status'] = 0;
+                $this->rtndata ['message'] = trans( '_web_message.empty_id' );
+                return response()->json( $this->rtndata );
+            }
+            $DaoTC->bDel = 1;
+            $DaoTC->iUpdateTime = time();
+            $DaoTC->save();
+
+            $this->rtndata ['status'] = 1;
+            $this->rtndata ['message'] = trans( '_web_message.delete_success' );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.delete_fail' );
