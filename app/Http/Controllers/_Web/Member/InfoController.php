@@ -146,7 +146,7 @@ class InfoController extends _WebController
         $this->view->with( 'vSummary', '編輯會員Information' );
 
 
-        $DaoMemberInfo = SysMemberInfo::query()->find($id[0]);
+        $DaoMemberInfo = SysMemberInfo::query()->find($id);
         if (!$DaoMemberInfo) {
 //            session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
@@ -185,7 +185,7 @@ class InfoController extends _WebController
 
 
             $DaoMemberInfo = SysMemberInfo::query()->find( $id );
-            $DaoMemberInfo->vUserImage = ( $request->input( 'vUserImage' ) ) ? $request->input( 'vUserImage' ) : "";
+            $DaoMemberInfo->vUserImage = ( $request->exists( 'vUserImage' ) ) ? $request->input( 'vUserImage' ) : "";
             if ($request->exists( 'vUserName' )) {
                 $DaoMemberInfo->vUserName = $request->input( 'vUserName' );
             }
@@ -224,13 +224,20 @@ class InfoController extends _WebController
                 //Logs
                 $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
 
-                // session
-                $DaoMember = SysMember::query()->find( $id/*session()->get( 'member.iId')*/ );
-//                $DaoMemberInfo = SysMemberInfo::query()->find( $id/*session()->get( 'member.iId')*/ );
-                // Member
-//                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
-                // MemberInfo
-                session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+
+                // session reload
+                if($id == session()->get( 'member.iId')){
+                    // session()->flush();
+                    // session()->regenerate();
+                    $DaoMember = SysMember::query()->find(  session()->get( 'member.iId') );
+                    // $DaoMemberInfo = SysMemberInfo::query()->find(  session()->get( 'member.iId') );
+                    // Member
+                    // session()->forget('member');    
+                    session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+                    // MemberInfo
+                    session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+                }
+
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans( '_web_message.save_success' );

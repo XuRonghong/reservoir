@@ -123,15 +123,19 @@
                         </span>
                         <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                             <div class="">
-                                <img src="{{session('member.meta.vUserImage' , url('/xtreme-admin/assets/images/users/1.jpg'))}}" alt="user" class="img-circle" width="60">
+                                <img src="{{session('member.meta.vUserImage') or url('/xtreme-admin/assets/images/users/1.jpg')}}" alt="user" class="img-circle" width="60">
                             </div>
                             <div class="m-l-10">
                                 <h4 class="m-b-0">{{session('member.vAccount' , '')}}</h4>
                                 <p class=" m-b-0">{{session('member.meta.vUserEmail' , '')}}</p>
                             </div>
                         </div>
-                        <a class="dropdown-item" href="{{url('web/member/edit').'/'.session('member.iId' , '')}}"><i class="ti-user m-r-5 m-l-5"></i> My Confidential</a>
-                        <a class="dropdown-item" href="{{url('web/member/info/edit').'/'.session('member.iId' , '')}}"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                        <a class="dropdown-item" href="{{url('web/member/edit').'/'.session('member.iId' , '')}}">
+                            <i class="ti-user m-r-5 m-l-5"></i> My Confidential
+                        </a>
+                        <a class="dropdown-item" href="{{url('web/member/info/edit').'/'.session('member.meta.iMemberId' , '')}}">
+                            <i class="ti-user m-r-5 m-l-5"></i> My Profile
+                        </a>
                         {{--<a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>--}}
                         {{--<a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>--}}
                         <div class="dropdown-divider"></div>
