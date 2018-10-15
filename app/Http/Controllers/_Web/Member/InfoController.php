@@ -224,19 +224,12 @@ class InfoController extends _WebController
                 //Logs
                 $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
 
-
-                // session reload
-                if($id == session()->get( 'member.iId')){
-                    // session()->flush();
-                    // session()->regenerate();
-                    $DaoMember = SysMember::query()->find(  session()->get( 'member.iId') );
-                    // $DaoMemberInfo = SysMemberInfo::query()->find(  session()->get( 'member.iId') );
-                    // Member
-                    // session()->forget('member');    
-                    session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
-                    // MemberInfo
-                    session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
-                }
+                // session
+                $DaoMemberInfo = SysMemberInfo::query()->find( session()->get('member.iId') );
+                // Member
+//                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+                // MemberInfo
+                session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
 
                 $this->rtndata ['status'] = 1;

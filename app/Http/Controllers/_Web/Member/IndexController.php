@@ -320,57 +320,13 @@ class IndexController extends _WebController
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
-//            $DaoMemberInfo = SysMemberInfo::find( session( 'member.iId' ) );
-//            if ($request->exists( 'vUserName' )) {
-//                $DaoMemberInfo->vUserName = $request->input( 'vUserName' );
-//            }
-//            if ($request->exists( 'vUserNameE' )) {
-//                $DaoMemberInfo->vUserNameE = $request->input( 'vUserNameE' );
-//            }
-//            if ($request->exists( 'vUserTitle' )) {
-//                $DaoMemberInfo->vUserTitle = $request->input( 'vUserTitle' );
-//            }
-//            if ($request->exists( 'vUserID' )) {
-//                $DaoMemberInfo->vUserID = $request->input( 'vUserID' );
-//            }
-//            if ($request->exists( 'iUserBirthday' )) {
-//                $DaoMemberInfo->iUserBirthday = strtotime( $request->input( 'iUserBirthday' ) );
-//            }
-//            if ($request->exists( 'vUserEmail' )) {
-//                $DaoMemberInfo->vUserEmail = $request->input( 'vUserEmail' );
-//            }
-//            if ($request->exists( 'vUserContact' )) {
-//                $DaoMemberInfo->vUserContact = $request->input( 'vUserContact' );
-//            }
-//            if ($request->exists( 'vUserZipCode' )) {
-//                $DaoMemberInfo->vUserZipCode = $request->input( 'vUserZipCode' );
-//            }
-//            if ($request->exists( 'vUserCity' )) {
-//                $DaoMemberInfo->vUserCity = $request->input( 'vUserCity' );
-//            }
-//            if ($request->exists( 'vUserArea' )) {
-//                $DaoMemberInfo->vUserArea = $request->input( 'vUserArea' );
-//            }
-//            if ($request->exists( 'vUserAddress' )) {
-//                $DaoMemberInfo->vUserAddress = $request->input( 'vUserAddress' );
-//            }
-//            $DaoMemberInfo->save();
-//            //Logs
-//            $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
 
-
-            // session reload
-            if($id == session()->get( 'member.iId')){
-                session()->flush();
-                session()->regenerate();
-                $DaoMember = SysMember::query()->find( $id );
-                $DaoMemberInfo = SysMemberInfo::query()->find( $id );
-                // Member
-                // session()->forget('member');    
-                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
-                // MemberInfo
-                session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
-            }
+            // session
+            $DaoMemberInfo = SysMemberInfo::query()->find( session()->get('member.iId') );
+            // Member
+//                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+            // MemberInfo
+            session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
             //
             $this->rtndata ['status'] = 1;
