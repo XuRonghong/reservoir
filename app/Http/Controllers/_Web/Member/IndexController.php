@@ -359,8 +359,8 @@ class IndexController extends _WebController
 //            $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
 
             // session
-            $DaoMember = SysMember::query()->find( session()->get( 'member.iId') );
-            $DaoMemberInfo = SysMemberInfo::query()->find( session()->get( 'member.iId') );
+            $DaoMember = SysMember::query()->find( $id/*session()->get( 'member.iId')*/ );
+            $DaoMemberInfo = SysMemberInfo::query()->find( $id/*session()->get( 'member.iId')*/ );
             // Member
             session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
             // MemberInfo
