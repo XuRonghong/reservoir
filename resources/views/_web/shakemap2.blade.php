@@ -735,7 +735,7 @@
                 <div class="info info1 font-level1">震度</div>
                 <div class="info info2 font-level2">區域</div>
                 <div class="info info3 font-level3">位置</div>
-                <div class="info info4 font-level4"></div>
+                {{--<div class="info info4 font-level4"></div>--}}
             </div>
         </div>
     </div>
@@ -816,12 +816,8 @@
                             //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
                             // });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
-                                // $(this).append('<a href="www">連結1</a>');
-                            });
-                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info4']").each(function(){
-                                // $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
-                                $(this).html("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
+                                $('.info3').html("<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>link1</a></div>\n");
+                                $('.info3').append("<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>link2</a></div>");
                             });
 
                             //
@@ -894,12 +890,8 @@
                                 $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $(this).html("<a href='"+src.url_1+src.data2[i].iId+"'>link1:"+src.url_1+src.data2[i].iId+"</a></div>\n");
-                                $(this).append("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
-                            });
-                            $("[data-id='"+src.data[i].id+"']").find("[data-name='info4']").each(function(){
-                                // $(this).html("<div><a href='"+src.url_1+src.data2[i].iId+"'>link:"+src.url_1+src.data2[i].iId+"</a><br>");
-                                $(this).text("<a href='"+src.url_2+src.data[i].id+"'>link2:"+src.url_2+src.data[i].id+"</a></div>");
+                                $('.info3').html("<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>link1</a></div>\n");
+                                $('.info3').append("<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>link2</a></div>");
                             });
                         }
                     }
