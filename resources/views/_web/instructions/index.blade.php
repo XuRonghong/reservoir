@@ -118,16 +118,16 @@
                             return data;
                         }
                     },
-                    {
-                        "sTitle": "Rank",
-                        "mData": "iRank",
-                        "sName": "iRank",
-                        "bSearchable": false,
-                        "width": "40px",
-                        "mRender": function (data, type, row) {
-                            return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                        }
-                    },
+                    // {
+                    //     "sTitle": "Rank",
+                    //     "mData": "iRank",
+                    //     "sName": "iRank",
+                    //     "bSearchable": false,
+                    //     "width": "40px",
+                    //     "mRender": function (data, type, row) {
+                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
+                    //     }
+                    // },
                     {
                         "sTitle": "Title",
                         "mData": "vTitle",

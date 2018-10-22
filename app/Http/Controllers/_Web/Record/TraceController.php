@@ -248,7 +248,7 @@ class TraceController extends _WebController
                 $DaoMessage->vTitle = date('Y',time()).'年'.$reservoir_name.'上半年度安全檢查表';//蓄水庫與引水建造物安全檢查彙整表';
                 $DaoMessage->vSummary = '<h5>請確認審查表並簽核</h5>';
                 $DaoMessage->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
-                $DaoMessage->vDetail = ''.url('web/record/trace/attr'). '/'. $Dao->iId;
+                $DaoMessage->vDetail = ''.url('web/record/trace/attributes'). '/'. $Dao->iId;
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
                 $DaoMessage->vNumber = 'TRACE'.date('ymd',time()).rand(000, 999);
                 $DaoMessage->vReadman = session('member.iId') . ';';     //紀錄哪些使用者讀過
