@@ -262,6 +262,25 @@ Route::group(
             } );
 
 
+            /*************************************
+             * 系統操作說明
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'instructions',
+                ], function () {
+
+                Route::get( '', 'InstructionsController@index' );
+                Route::get( 'getlist', 'InstructionsController@getList' );
+                Route::get( 'add', 'InstructionsController@add' );
+                Route::post( 'doadd', 'InstructionsController@doAdd' );
+                Route::get( 'edit/{id}', 'InstructionsController@edit' );
+                Route::post( 'dosave', 'InstructionsController@doSave' );
+                Route::post( 'dosaveshow', 'InstructionsController@doSaveShow' );
+                Route::post( 'dodel', 'InstructionsController@doDel' );
+            } );
+
+
 
             /*************************************
              * Log

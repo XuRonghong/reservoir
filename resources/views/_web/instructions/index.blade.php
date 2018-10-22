@@ -98,11 +98,21 @@
                 'bProcessing': true,
                 // 'sServerMethod': 'GET',
                 "aoColumns": [
+                    // {
+                    //     "sTitle": "ID",
+                    //     "mData": "iId",
+                    //     "width": "40px",
+                    //     "sName": "iId",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         return data;
+                    //     }
+                    // },
                     {
-                        "sTitle": "ID",
-                        "mData": "iId",
+                        "sTitle": "發送者",
+                        "mData": "iMemberId",
                         "width": "40px",
-                        "sName": "iId",
+                        "sName": "iMemberId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
@@ -119,13 +129,13 @@
                         }
                     },
                     {
-                        "sTitle": "名稱",
-                        "mData": "vName",
-                        "sName": "vName",
+                        "sTitle": "Title",
+                        "mData": "vTitle",
+                        "sName": "vTitle",
                         "bSearchable": true,
                         "width": "270px",
                         "mRender": function (data, type, row) {
-                            return '<input class="vName" size="10" style="width: 100%; display: none;" type="text" value="' + data + '"></input>'+'<div class="aaa">'+data+'</div>';
+                            return '<input class="vTitle" size="10" style="width: 100%; display: none;" type="text" value="' + data + '"></input>'+'<div class="aaa">'+data+'</div>';
                         }
                     },
                     // {"sTitle": "Code", "mData": "vCode", "width": "50px", "sName": "vCode"},
@@ -210,22 +220,22 @@
             // 按一下進入編輯模式
             $("#dt_basic").on('click', '.aaa', function () {
                 $('.aaa').show();
-                $('input.vName').hide();
-                $(this).parent().find('input.vName').show();
+                $('input.vTitle').hide();
+                $(this).parent().find('input.vTitle').show();
                 $(this).hide();
             });
             // 編輯完成退回瀏覽模式
-            $("#dt_basic").on('change', '.vName', function () {
+            $("#dt_basic").on('change', '.vTitle', function () {
                 $(this).hide();
                 $(this).parent().find('.aaa').show();
                 //
                 var id = $(this).closest('tr').attr('id');
-                var vName = $(this).val();
+                var vTitle = $(this).val();
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };
                 data.iId = id;
-                data.vName = vName;
+                data.vTitle = vTitle;
                 $.ajax({
                     url: url_dosave_show,
                     data: data,

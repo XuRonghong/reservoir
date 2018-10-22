@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\_Web\Reservoir;
+namespace App\Http\Controllers\_Web;
 
+use App\SysMember;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
-use App\ModReservoir;
-use App\ModReservoirInfo;
-use App\ModReservoirMeta;
-use App\ModReservoirStory;
+use App\ModInstructions;
 
 
-class StoryController extends _WebController
+class InstructionsController extends _WebController
 {
 
     /*
@@ -19,7 +17,7 @@ class StoryController extends _WebController
      */
     function __construct ()
     {
-        $this->module = [ 'reservoir', 'story' ];
+        $this->module = [ 'instructions' ];
         $this->vTitle = 'Index';
     }
 
@@ -37,14 +35,14 @@ class StoryController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '水庫故事' );
+        $this->view->with( 'vSummary', '系統操作說明' );
 
         return $this->view;
     }
 
 
     /*
-     * 所有水庫meta ajax
+     *  ajax
      */
     public function getList ( Request $request )
     {
@@ -72,8 +70,8 @@ class StoryController extends _WebController
         $sort_dir = $request->input( 'sSortDir_0' );
 
 
-        $mapReservoirMeta['bDel'] = 0;
-        $total_count = ModReservoirStory::query()->where( $mapReservoirMeta )
+        $map['bDel'] = 0;
+        $total_count = ModInstructions::query()->where( $map )
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -81,7 +79,7 @@ class StoryController extends _WebController
             })
             ->count();
 
-        $data_arr = ModReservoirStory::query()->where( $mapReservoirMeta )
+        $data_arr = ModInstructions::query()->where( $map )
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -102,6 +100,7 @@ class StoryController extends _WebController
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
             $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
             //
+            $var->iMemberId = SysMember::query()->where('iId', '=', $var->iMemberId)->first() ->vAccount;
             //檔案路徑
             $image_arr = [];
             $tmp_arr = explode( ';', $var->vFile );
@@ -140,7 +139,7 @@ class StoryController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '新增水庫故事' );
+        $this->view->with( 'vSummary', '新增操作說明' );
 
         return $this->view;
     }
@@ -151,10 +150,10 @@ class StoryController extends _WebController
      */
     public function doAdd ( Request $request )
     {
-        $Dao = new ModReservoirStory();
+        $Dao = new ModInstructions();
         $Dao->iRank = 0;         //順序 越大越後面
         $Dao->iMemberId = session('member.iId');
-        $Dao->vName = ( $request->input( 'vName' ) ) ? $request->input( 'vName' ) : "";
+        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
         $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
         $Dao->vFile = ( $request->input( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
         $Dao->vNum = ( $request->input( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
@@ -195,7 +194,7 @@ class StoryController extends _WebController
 
 
         $map['bDel'] = 0;
-        $Dao = ModReservoirStory::query()->where($map)
+        $Dao = ModInstructions::query()->where($map)
             ->where( 'iId', '=', $id )
             ->orWhere('vNum', '=', $id)
             ->first();
@@ -236,15 +235,15 @@ class StoryController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        $Dao = ModReservoirStory::query()->find( $id );
+        $Dao = ModInstructions::query()->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'vName' )) {
-            $Dao->vName = $request->input( 'vName' );
+        if ($request->input( 'vTitle' )) {
+            $Dao->vTitle = $request->input( 'vTitle' );
         }
         if ($request->input( 'vCode' )) {
             $Dao->vCode = $request->input( 'vCode' );
@@ -288,15 +287,15 @@ class StoryController extends _WebController
             return response()->json( $this->rtndata );
         }
         $map['bDel'] = 0;
-        $Dao = ModReservoirStory::query()->find( $id );
+        $Dao = ModInstructions::query()->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
 
-        if ($request->exists( 'vName' )) {
-            $Dao->vName = $request->input( 'vName' );
+        if ($request->exists( 'vTitle' )) {
+            $Dao->vTitle = $request->input( 'vTitle' );
         }
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
@@ -330,7 +329,7 @@ class StoryController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        $Dao = ModReservoirStory::query()->find( $id );
+        $Dao = ModInstructions::query()->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );

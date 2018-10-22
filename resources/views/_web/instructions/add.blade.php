@@ -47,9 +47,9 @@
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
                                 <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">名稱</label>
+                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Title</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control vName" id="fname" placeholder="" value="{{$info->vName or ''}}">
+                                        <input type="text" class="form-control vTitle" id="fname" placeholder="" value="{{$info->vTitle or ''}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -149,7 +149,7 @@
             //
             function doAdd(fileid) {
                 var data = {"_token": "{{ csrf_token() }}"};
-                data.vName = $(".vName").val();
+                data.vTitle = $(".vTitle").val();
                 data.vFile = fileid;
                 $.ajax({
                     url: url_doadd,
@@ -199,7 +199,7 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = id;
-                data.vName = $(".vName").val();
+                data.vTitle = $(".vTitle").val();
                 data.vFile = fileid;
                 //
                 $.ajax({

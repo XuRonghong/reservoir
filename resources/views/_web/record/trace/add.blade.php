@@ -49,7 +49,7 @@
                                     <label for="com1" class="col-sm-3 text-right control-label col-form-label title">一、 概況</label>
                                     <div class="col-sm-9 a11">
                                         <div class="t1">水庫名稱：</div>
-                                        <input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
+                                        <input type="text" class="form-control a111 reservoir_name" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
                                         <div class="t2">檢查日期：</div>
                                         <input type="date" class="form-control a112" id="com1" placeholder="" value="{{$info->vDate or ''}}">
                                         <div class="t3">管理機關：</div>
@@ -767,9 +767,12 @@
                                             Check & Send
                                         </button>
                                     @elseif( session('member.iAcType') < 10 )
-                                        <button type="button" class="btn btn-warning waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">
-                                            Save
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
+                                            Add & Send
                                         </button>
+                                        {{--<button type="button" class="btn btn-warning waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">--}}
+                                            {{--Save--}}
+                                        {{--</button>--}}
                                     @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
@@ -835,7 +838,9 @@
                 // data.vSummary = current_modal.find(".vSummary").val();
                 // data.vImages = current_modal.find("img").attr('src');
                 //
-                data.vDetail = getInputToJson();
+
+                data.reservoir = $('.reservoir_name').val();
+                data.vDetail = getInputToJson().toString();
                 //
                 $.ajax({
                     url: url_doadd,
@@ -888,7 +893,9 @@
                 // data.vSummary = current_modal.find(".vSummary").val();
                 // data.vImages = current_modal.find("img").attr('src');
                 //
-                data.vDetail = getInputToJson();
+
+                data.reservoir = $('.reservoir_name').val();
+                data.vDetail = getInputToJson().toString();
                 //
                 $.ajax({
                     url: url_dosave2,
@@ -1422,8 +1429,7 @@
                         },
                     }
                 },
-            }
-
+            };
         }
     </script>
 @endsection

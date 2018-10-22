@@ -224,6 +224,7 @@ class TraceController extends _WebController
 
             $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';
             $Dao->vDetail = json_encode($Dao->vDetail);
+            $reservoir_name = ($request->input('reservoir')) ? $request->input('reservoir') : '';
 
 //        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
             $Dao->vImages = ($request->input('vImages')) ? $request->input('vImages') : "";
@@ -244,7 +245,7 @@ class TraceController extends _WebController
                 $DaoMessage->iType = 89;     // type:89 蓄水庫與引水建造物安全檢查彙整表
                 $DaoMessage->iSource = 10;
                 $DaoMessage->iHead = 30;    //目標人員權限小於20
-                $DaoMessage->vTitle = '蓄水庫與引水建造物安全檢查彙整表';
+                $DaoMessage->vTitle = date('Y',time()).'年'.$reservoir_name.'上半年度安全檢查表';//蓄水庫與引水建造物安全檢查彙整表';
                 $DaoMessage->vSummary = '<h5>請確認審查表並簽核</h5>';
                 $DaoMessage->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
                 $DaoMessage->vDetail = ''.url('web/record/trace/attr'). '/'. $Dao->iId;
