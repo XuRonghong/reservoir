@@ -55,7 +55,7 @@
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">上傳PDF</label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control uploadfile" id="lname" name="files[]" multiple="multiple" value="{{$info->vFile[0] or ''}}">
+                                        <input type="file" accept="application/*" class="form-control uploadfile" id="lname" name="files[]" multiple="multiple" value="{{$info->vFile[0] or ''}}">
                                     </div>
                                 </div>
                             </div>
