@@ -72,7 +72,7 @@
             <option value="member">會員資料庫</option>
             {{--<option value=""></option>--}}
         </select>
-        Choose your xls/csv File : <input type="file" name="file" class="form-control">
+        Choose your xls/csv File : <input type="file" name="file" class="form-control" accept="*/*">
 
         <a href="{{url('/web/reservoir')}}" class="btn btn-primary btn-lg" style="margin-top: 3%">Back</a>
         <input type="submit" class="btn btn-primary btn-lg" style="margin-top: 3%;margin-left: 2%">
