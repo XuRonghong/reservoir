@@ -25,6 +25,10 @@
             </div>
             <ul class="nav-list">
                 <li class="nav-item">
+                    <a href="{{url('getcwb.php')}}" class="nav-link">氣象局地震報告</a>
+                    <div class="indicator"></div>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link active">水庫地圖</a>
                     <div class="indicator"></div>
                 </li>
@@ -816,8 +820,10 @@
                             //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
                             // });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $('.info3').html("<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>link1</a></div>\n");
-                                $('.info3').append("<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>link2</a></div>");
+                                $(this).text(
+                                    "<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>水庫</a></div>\n"+
+                                    "<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>規格</a></div>"
+                                );
                             });
 
                             //
@@ -890,8 +896,12 @@
                                 $(this).text($(this).attr("data-title")+""+src.data2[i].vLocation);
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info3']").each(function(){
-                                $('.info3').html("<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>link1</a></div>\n");
-                                $('.info3').append("<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>link2</a></div>");
+                                $(this).text(
+                                    "<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>水庫</a></div>\n"+
+                                    "<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>規格</a></div>"
+                                );
+                                // $(this).text("<a href='"+src.url_1+src.data2[i].iId+"' style='color: white;'>link1</a></div>\n");
+                                // $(this).find('.info3').append("<a href='"+src.url_2+src.data[i].id+"' style='color: white;'>link2</a></div>");
                             });
                         }
                     }

@@ -221,6 +221,84 @@ Route::group(
 
 
             /*************************************
+             * 系統操作說明
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'instructions',
+                ], function () {
+
+                Route::get( '', 'InstructionsController@index' );
+                Route::get( 'getlist', 'InstructionsController@getList' );
+                Route::get( 'add', 'InstructionsController@add' );
+                Route::post( 'doadd', 'InstructionsController@doAdd' );
+                Route::get( 'edit/{id}', 'InstructionsController@edit' );
+                Route::post( 'dosave', 'InstructionsController@doSave' );
+                Route::post( 'dosaveshow', 'InstructionsController@doSaveShow' );
+                Route::post( 'dodel', 'InstructionsController@doDel' );
+            } );
+
+
+            /*************************************
+             * 歷史資料
+             *************************************/
+            Route::group(
+                [
+                    'prefix' => 'history',
+                    'namespace' => 'History',
+                ], function () {
+                                
+                Route::group(
+                    [
+                        'prefix' => 'silt',
+                    ], function () {
+
+                    $Controller = 'SiltController';
+                    Route::get( '', $Controller.'@index' );
+                    Route::get( 'getlist', $Controller.'@getList' );
+                    Route::get( 'add', $Controller.'@add' );
+                    Route::post( 'doadd', $Controller.'@doAdd' );
+                    Route::get( 'edit/{id}', $Controller.'@edit' );
+                    Route::post( 'dosave', $Controller.'@doSave' );
+                    Route::post( 'dosaveshow', $Controller.'@doSaveShow' );
+                    Route::post( 'dodel', $Controller.'@doDel' );                
+                } );
+
+                Route::group(
+                    [
+                        'prefix' => 'safe',
+                    ], function () {
+
+                    $Controller = 'SafeController';
+                    Route::get( '', $Controller.'@index' );
+                    Route::get( 'getlist', $Controller.'@getList' );
+                    Route::get( 'add', $Controller.'@add' );
+                    Route::post( 'doadd', $Controller.'@doAdd' );
+                    Route::get( 'edit/{id}', $Controller.'@edit' );
+                    Route::post( 'dosave', $Controller.'@doSave' );
+                    Route::post( 'dosaveshow', $Controller.'@doSaveShow' );
+                    Route::post( 'dodel', $Controller.'@doDel' );
+                } );
+
+                Route::group(
+                    [
+                        'prefix' => 'other',
+                    ], function () {
+
+                    $Controller = 'OtherController';
+                    Route::get( '', $Controller.'@index' );
+                    Route::get( 'getlist', $Controller.'@getList' );
+                    Route::get( 'add', $Controller.'@add' );
+                    Route::post( 'doadd', $Controller.'@doAdd' );
+                    Route::get( 'edit/{id}', $Controller.'@edit' );
+                    Route::post( 'dosave', $Controller.'@doSave' );
+                    Route::post( 'dosaveshow', $Controller.'@doSaveShow' );
+                    Route::post( 'dodel', $Controller.'@doDel' );
+                } );
+            } );
+
+
+            /*************************************
              * 通知訊息 (Comment and Message)
              *************************************/
             Route::group(
@@ -259,25 +337,6 @@ Route::group(
 //                Route::post( 'dosaveattr', 'IndexController@doSaveAttributesEvent' );
 
                 } );
-            } );
-
-
-            /*************************************
-             * 系統操作說明
-             *************************************/
-            Route::group(
-                [
-                    'prefix' => 'instructions',
-                ], function () {
-
-                Route::get( '', 'InstructionsController@index' );
-                Route::get( 'getlist', 'InstructionsController@getList' );
-                Route::get( 'add', 'InstructionsController@add' );
-                Route::post( 'doadd', 'InstructionsController@doAdd' );
-                Route::get( 'edit/{id}', 'InstructionsController@edit' );
-                Route::post( 'dosave', 'InstructionsController@doSave' );
-                Route::post( 'dosaveshow', 'InstructionsController@doSaveShow' );
-                Route::post( 'dodel', 'InstructionsController@doDel' );
             } );
 
 
