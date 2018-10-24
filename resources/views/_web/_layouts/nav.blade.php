@@ -90,6 +90,18 @@
             </ul>
         </li>
         @if(session('member.iAcType')<10)
+            <li class="sidebar-item">
+                <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                    <i class="mdi mdi-border-all"></i>
+                    <span class="hide-menu">訊息中心</span>
+                </a>
+                <ul aria-expanded="false" class="collapse first-level">
+                    <li class="sidebar-item"><a href="{{url('web/message/center')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">全部訊息 </span></a></li>
+                    <li class="sidebar-item"><a href="{{url('web/message/center/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">發送訊息 </span></a></li>
+                </ul>
+            </li>
+        @endif
+        @if(session('member.iAcType')<10)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="mdi mdi-border-all"></i>

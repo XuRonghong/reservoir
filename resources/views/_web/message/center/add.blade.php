@@ -61,7 +61,11 @@
                                             <option value="70" @if($info->iHead<80 && $info->iHead>69) selected @endif>6.{{$permission['60'] or ''}}</option>
                                             @else
                                                 @foreach($permission as $key => $value)
-                                                    <option value="{{$key or 10}}">{{$value or ''}}</option>
+                                                    @if($key=='2')
+                                                    <option value="10">{{$value or ''}}</option>
+                                                    @else
+                                                        <option value="{{ intval($key)+10 }}">{{$value or ''}}</option>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -233,18 +237,11 @@
             // DeliverList.push(token);//新增token
             /*上方為所需變更之資料*/
 
-
-            //SERVER密鑰  存資料庫
-            var API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
-
             $.ajax({
                 type:"post",
                 url:"https://fcm.googleapis.com/fcm/send",
                 cache:false,
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"key="+API_SERVER_ACCESS_KEY
-                },
+                headers: {!! urldecode($sendNotifyMessageHeaders) !!},
                 data:JSON.stringify({
                     "priority":"high",
                     "data":{

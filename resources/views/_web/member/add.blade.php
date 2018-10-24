@@ -334,8 +334,8 @@
             $(".iAcType").change(function () {
                 swal({
                     title: '提醒',//"{{trans('_web_alert.del.title')}}",
-                    text: '更改權限的話,某些權限的功能可能無法使用.\n' +
-                        '(網頁版只有網站管理員可以登入)',//"{{trans('_web_alert.del.note')}}",
+                    text: '權限不同,權限的功能也不盡相同.\n' +
+                        '',//"{{trans('_web_alert.del.note')}}",
                     type: "warning",
                     showCancelButton: false,
                     cancelButtonText: "{{trans('_web_alert.cancel')}}",
@@ -376,140 +376,140 @@
             next_modal.hide();
             modal.find('.btn-doadd').hide();
             modal.find('.btn-back').hide();
+            //
+            $(".btn-cancel").click(function () {
+                // location.href = url_index;
+                history.back();
+            });
+            //
+            $(".btn-back").click(function () {
+                next_modal.hide();
+                current_modal.show();
+                modal.find('.btn-doadd').hide();
+                modal.find('.btn-next').show();
+                modal.find('.btn-back').hide();
+                modal.find('.btn-cancel').show();
+                modal.find('.modalTitle').text('Member Add');
+            });
+            //
+            $(".btn-next").click(function () {
+                modal.find('.modalTitle').text('Member Information Add');
+                // current_modal.hide();
+                next_modal.show();
+                modal.find('.btn-doadd').show();
+                modal.find('.btn-next').hide();
+                modal.find('.btn-back').show();
+                modal.find('.btn-cancel').hide();
+                current_modal = modal;
+            });
+            //
+            $(".btn-doadd").click(function () {
+                check_field_no_empty(modal);
+                //
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.vAccount = current_modal.find(".vAccount").val();
+                data.vPassword1 = current_modal.find(".vPassword1").val();
+                data.vPassword2 = current_modal.find(".vPassword2").val();
+                data.iAcType = current_modal.find(".iAcType").val();
+                // data.iSum = $(".iSum").val();
+                data.vUserName = current_modal.find(".vUserName").val();
+                data.vUserEmail = current_modal.find(".vUserEmail").val();
+                data.vUserContact = current_modal.find(".vUserContact").val();
+                data.vUserAddress = current_modal.find(".vUserAddress").val();
+                data.vUserImage = current_modal.find("img").attr('src');
+                //
+                $.ajax({
+                    url: url_doadd,
+                    type: "POST",
+                    data: data,
+                    resetForm: true,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                            setTimeout(function () {
+                                location.href = rtndata.rtnurl;
+                            }, 1000)
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    }
+                });
+            });
+            //
+            $(".btn-dosave").click(function () {
+                //
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.iId = $(this).data('id');
+                data.iAcType = $(".iAcType").val();
+                //
+                $.ajax({
+                    url: url_dosave,
+                    type: "POST",
+                    data: data,
+                    resetForm: true,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                            setTimeout(function () {
+                                location.href = rtndata.rtnurl;
+                            }, 1000)
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    }
+                });
+            });
+            //
+            $(".btn-doresetpw").click(function () {
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.iId = $(this).data('id');
+                data.vPassword = current_modal.find(".vPassword").val();
+                data.vPassword1 = current_modal.find(".vPassword1").val();
+                data.vPasswordNew = current_modal.find(".vPassword2").val();
+                if (data.vPassword1 != data.vPasswordNew) {
+                    toastr.error('確認密碼錯誤', "{{trans('_web_alert.notice')}}");
+                    return ;
+                }
+                $.ajax({
+                    url: url_doresetpw,
+                    type: "POST",
+                    data: data,
+                    resetForm: true,
+                    success: function (rtndata) {
+                        if (rtndata.status) {
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                            setTimeout(function () {
+                                location.href = rtndata.rtnurl;
+                            }, 1000)
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    },
+                    error: function (rtndata) {
+                        toastr.error(rtndata, "{{trans('_web_alert.notice')}}");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1000)
+                    }
+                });
+            });
+            //
+            $(".iAcType").change(function () {
+                swal({
+                    title: '提醒',//"{{trans('_web_alert.del.title')}}",
+                    text: '更改權限的話,某些權限的功能可能無法使用.\n' +
+                        '(網頁版只有網站管理員可以登入)',//"{{trans('_web_alert.del.note')}}",
+                    type: "warning",
+                    showCancelButton: false,
+                    cancelButtonText: "{{trans('_web_alert.cancel')}}",
+                    confirmButtonColor: "#0c9b00",
+                    confirmButtonText: "{{trans('_web_alert.ok')}}",
+                    closeOnConfirm: true
+                }, );
+            });
         }
 
 
-        //
-        $(".btn-cancel").click(function () {
-            // location.href = url_index;
-            history.back();
-        });
-        //
-        $(".btn-back").click(function () {
-            next_modal.hide();
-            current_modal.show();
-            modal.find('.btn-doadd').hide();
-            modal.find('.btn-next').show();
-            modal.find('.btn-back').hide();
-            modal.find('.btn-cancel').show();
-            modal.find('.modalTitle').text('Member Add');
-        });
-        //
-        $(".btn-next").click(function () {
-            modal.find('.modalTitle').text('Member Information Add');
-            // current_modal.hide();
-            next_modal.show();
-            modal.find('.btn-doadd').show();
-            modal.find('.btn-next').hide();
-            modal.find('.btn-back').show();
-            modal.find('.btn-cancel').hide();
-            current_modal = modal;
-        });
-        //
-        $(".btn-doadd").click(function () {
-            check_field_no_empty(modal);
-            //
-            var data = {"_token": "{{ csrf_token() }}"};
-            data.vAccount = current_modal.find(".vAccount").val();
-            data.vPassword1 = current_modal.find(".vPassword1").val();
-            data.vPassword2 = current_modal.find(".vPassword2").val();
-            data.iAcType = current_modal.find(".iAcType").val();
-            // data.iSum = $(".iSum").val();
-            data.vUserName = current_modal.find(".vUserName").val();
-            data.vUserEmail = current_modal.find(".vUserEmail").val();
-            data.vUserContact = current_modal.find(".vUserContact").val();
-            data.vUserAddress = current_modal.find(".vUserAddress").val();
-            data.vUserImage = current_modal.find("img").attr('src');
-            //
-            $.ajax({
-                url: url_doadd,
-                type: "POST",
-                data: data,
-                resetForm: true,
-                success: function (rtndata) {
-                    if (rtndata.status) {
-                        toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
-                        setTimeout(function () {
-                            location.href = rtndata.rtnurl;
-                        }, 1000)
-                    } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
-                    }
-                }
-            });
-        });
-        //
-        $(".btn-dosave").click(function () {
-            //
-            var data = {"_token": "{{ csrf_token() }}"};
-            data.iId = $(this).data('id');
-            data.iAcType = $(".iAcType").val();
-            //
-            $.ajax({
-                url: url_dosave,
-                type: "POST",
-                data: data,
-                resetForm: true,
-                success: function (rtndata) {
-                    if (rtndata.status) {
-                        toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
-                        setTimeout(function () {
-                            location.href = rtndata.rtnurl;
-                        }, 1000)
-                    } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
-                    }
-                }
-            });
-        });
-        //
-        $(".btn-doresetpw").click(function () {
-            var data = {"_token": "{{ csrf_token() }}"};
-            data.iId = $(this).data('id');
-            data.vPassword = current_modal.find(".vPassword").val();
-            data.vPassword1 = current_modal.find(".vPassword1").val();
-            data.vPasswordNew = current_modal.find(".vPassword2").val();
-            if (data.vPassword1 != data.vPasswordNew) {
-                toastr.error('確認密碼錯誤', "{{trans('_web_alert.notice')}}");
-                return ;
-            }
-            $.ajax({
-                url: url_doresetpw,
-                type: "POST",
-                data: data,
-                resetForm: true,
-                success: function (rtndata) {
-                    if (rtndata.status) {
-                        toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
-                        setTimeout(function () {
-                            location.href = rtndata.rtnurl;
-                        }, 1000)
-                    } else {
-                        toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
-                    }
-                },
-                error: function (rtndata) {
-                    toastr.error(rtndata, "{{trans('_web_alert.notice')}}");
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1000)
-                }
-            });
-        });
-        //
-        $(".iAcType").change(function () {
-            swal({
-                title: '提醒',//"{{trans('_web_alert.del.title')}}",
-                text: '更改權限的話,某些權限的功能可能無法使用.\n' +
-                    '(網頁版只有網站管理員可以登入)',//"{{trans('_web_alert.del.note')}}",
-                type: "warning",
-                showCancelButton: false,
-                cancelButtonText: "{{trans('_web_alert.cancel')}}",
-                confirmButtonColor: "#0c9b00",
-                confirmButtonText: "{{trans('_web_alert.ok')}}",
-                closeOnConfirm: true
-            }, );
-        });
     </script>
 @endsection
 <!-- ================== /inline-js ================== -->

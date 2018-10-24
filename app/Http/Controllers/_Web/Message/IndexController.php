@@ -63,8 +63,8 @@ class IndexController extends _WebController
             $this->rtndata ['aaData'] = $Dao ? $Dao : [];
             $this->rtndata ['total'] = $this->comment_total;    //通知的數量
         }
-        $this->view->with( 'info', $DaoMessage );
-        $this->view ->with('total',$DaoMessage->count() );
+        $this->view->with( 'info', $Dao ? $Dao : [] );
+        $this->view->with( 'total',$this->comment_total );
 
         return $this->view;
     }
@@ -90,22 +90,23 @@ class IndexController extends _WebController
         }
         switch (session('member.iAcType')){
             case 10:
-                $message = '發送給 ' . $this->Permission['10'];
-                break;
-            case 20:
                 $message = '發送給 ' . $this->Permission['20'];
                 break;
-            case 30:
+            case 20:
                 $message = '發送給 ' . $this->Permission['30'];
                 break;
-            case 40:
+            case 30:
                 $message = '發送給 ' . $this->Permission['40'];
                 break;
-            case 50:
+            case 40:
                 $message = '發送給 ' . $this->Permission['50'];
                 break;
-            case 60:
+            case 50:
                 $message = '發送給 ' . $this->Permission['60'];
+                break;
+            case 60:
+//                $message = '發送給 ' . $this->Permission['70'];
+                $message = '全部已確認';
                 break;
         }
 

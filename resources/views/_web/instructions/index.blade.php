@@ -129,7 +129,7 @@
                     //     }
                     // },
                     {
-                        "sTitle": "Title",
+                        "sTitle": "Title (點擊即可修改)",
                         "mData": "vTitle",
                         "sName": "vTitle",
                         "bSearchable": true,

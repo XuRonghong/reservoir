@@ -58,6 +58,12 @@
                                         <input type="file" accept="application/*" class="form-control uploadfile" id="lname" name="files[]" multiple="multiple" value="{{$info->vFile[0] or ''}}">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label"></label>
+                                    <div class="col-sm-9">
+                                        PS: 此編輯頁面，需要重新上傳PDF檔案，否則無法上傳更新資料!!
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="card-body">

@@ -38,10 +38,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card" id="manage-modal">
-                        <div class="card-body">
-                            <h4 class="card-title modalTitle">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
-                        </div>
+                        {{--<div class="card-body">--}}
+                            {{--<h4 class="card-title modalTitle">{{session()->get( 'SEO.vTitle')}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
+                        {{--</div>--}}
                         {{--<hr>--}}
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
@@ -52,6 +52,13 @@
                                     <div class="col-sm-9" style="text-align: center;">
                                         <h3>{{$info->vTitle or ''}}</h3>
                                         {{$info->vNumber or ''}}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group row">
+                                    {{--<label for="fname" class="col-sm-3 text-right control-label col-form-label">圖片</label>--}}
+                                    <div class="col-sm-9" style="text-align: center;">
+                                        <img src="{{$info->vImages or url('images/empty.jpg')}}" style="height:280px">
                                     </div>
                                 </div>
                                 <br>
@@ -67,22 +74,22 @@
                                         {{$info->iStartTime or ''}}
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">目標階層</label>
-                                    <div class="col-sm-9" style="text-align: center;">
-                                        @if($info->iHead<20) {{$permission['2'] or ''}} @endif
-                                        @if($info->iHead<30 && $info->iHead>19) 1.{{$permission['10'] or ''}} @endif
-                                        @if($info->iHead<40 && $info->iHead>29) 2.{{$permission['20'] or ''}} @endif
-                                        @if($info->iHead<50 && $info->iHead>39) 3.{{$permission['30'] or ''}} @endif
-                                        @if($info->iHead<60 && $info->iHead>49) 4.{{$permission['40'] or ''}} @endif
-                                        @if($info->iHead<70 && $info->iHead>59) 5.{{$permission['50'] or ''}} @endif
-                                        @if($info->iHead<80 && $info->iHead>69) 6.{{$permission['60'] or ''}} @endif
-                                        @if($info->iHead>79) 全體人員 @endif
-                                    </div>
-                                </div>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="fname" class="col-sm-3 text-right control-label col-form-label">目標階層</label>--}}
+                                    {{--<div class="col-sm-9" style="text-align: center;">--}}
+                                        {{--@if($info->iHead<20) {{$permission['2'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<30 && $info->iHead>19) 1.{{$permission['10'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<40 && $info->iHead>29) 2.{{$permission['20'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<50 && $info->iHead>39) 3.{{$permission['30'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<60 && $info->iHead>49) 4.{{$permission['40'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<70 && $info->iHead>59) 5.{{$permission['50'] or ''}} @endif--}}
+                                        {{--@if($info->iHead<80 && $info->iHead>69) 6.{{$permission['60'] or ''}} @endif--}}
+                                        {{--@if($info->iHead>79) 全體人員 @endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <br>
                                 <br>
-                                <h3 class="card-title">詳情</h3>
+                                <h3 class="card-title"><hr></h3>
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">內容</label>
                                     <div class="col-sm-9" style="text-align: center;">
@@ -113,22 +120,22 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">誰已讀確認</label>
-                                    <div class="col-sm-9" style="text-align: center;">
-                                        {{$info->iCheck or ''}}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">狀態</label>
-                                    <div class="col-sm-9" style="text-align: center;">
-                                        @if($info->iStatus) 開放
-                                        @else 關閉
-                                        @endif
-                                    </div>
-                                </div>
-                                <br>
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="fname" class="col-sm-3 text-right control-label col-form-label">誰已讀確認</label>--}}
+                                    {{--<div class="col-sm-9" style="text-align: center;">--}}
+                                        {{--{{$info->iCheck or ''}}--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<br>--}}
+                                {{--<div class="form-group row">--}}
+                                    {{--<label for="fname" class="col-sm-3 text-right control-label col-form-label">狀態</label>--}}
+                                    {{--<div class="col-sm-9" style="text-align: center;">--}}
+                                        {{--@if($info->iStatus) 開放--}}
+                                        {{--@else 關閉--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                                {{--<br>--}}
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">創建時間</label>
                                     <div class="col-sm-9" style="text-align: center;">
@@ -140,13 +147,6 @@
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">更新時間</label>
                                     <div class="col-sm-9" style="text-align: center;">
                                         {{$info->iUpdateTime or ''}}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group row">
-                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">圖片</label>
-                                    <div class="col-sm-9" style="text-align: center;">
-                                        <img src="{{$info->vImages or url('images/empty.jpg')}}" style="height:140px">
                                     </div>
                                 </div>
                             </div>

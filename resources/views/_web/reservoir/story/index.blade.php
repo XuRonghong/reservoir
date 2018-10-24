@@ -119,7 +119,7 @@
                     //     }
                     // },
                     {
-                        "sTitle": "名稱",
+                        "sTitle": "名稱 (點擊即可修改名稱)",
                         "mData": "vName",
                         "sName": "vName",
                         "bSearchable": true,

@@ -120,7 +120,7 @@
                     // },
                     {"sTitle": "標頭", "mData": "vTitle", "width": "270px", "sName": "vTitle"},
                     {"sTitle": "發送者", "mData": "iSource", "width": "80px", "sName": "iSource"},
-                    {"sTitle": "分類", "mData": "iType", "width": "40px", "sName": "iType"},
+                    // {"sTitle": "分類", "mData": "iType", "width": "40px", "sName": "iType"},
                     {"sTitle": "時間", "mData": "iCreateTime", "width": "", "sName": "iCreateTime"},
                     {
                         "sTitle": "",
@@ -132,12 +132,16 @@
                             var btn = "無功能";
                             if (row.iType === '訊息'){
                                 btn = '<button class="btn btn-xs btn-success btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                                <?php if (session("member.iAcType")<10){ ?>
                                 btn += '<button class="btn btn-xs btn-success btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                                 btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                                <?php } ?>
                             } else {
                                 btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                                <?php if (session("member.iAcType")<10){ ?>
                                 btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                                 btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                                <?php } ?>
                             }
                             return btn;
                         }
@@ -205,7 +209,7 @@
             //
             var ii = 1;
             $('thead>tr>th').each(function () {
-                if (ii==5){
+                if (ii==4){
                     $(this).click();
                     $(this).click();
                 }

@@ -222,8 +222,8 @@ class TraceController extends _WebController
 //            $Dao->vTitle = ($request->input('vTitle')) ? $request->input('vTitle') : "";
 //            $Dao->vSummary = ($request->input('vSummary')) ? $request->input('vSummary') : "";
 
-            $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';
-            $Dao->vDetail = json_encode($Dao->vDetail);
+            $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';     //json
+//            $Dao->vDetail = json_encode($Dao->vDetail);
             $reservoir_name = ($request->input('reservoir')) ? $request->input('reservoir') : '';
 
 //        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
@@ -483,6 +483,7 @@ class TraceController extends _WebController
         if ($Dao){
             // json to html ...
 
+            $Dao->vDetail = json_decode($Dao->vDetail, true);
 
 
             //

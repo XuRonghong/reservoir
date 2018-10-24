@@ -45,24 +45,33 @@
                         <hr>
                         <form class="form-horizontal">
                             <div class="card-body messageInfo-modal1">
-                                <h4 class="card-title Title">壹 、水庫基本資料</h4>
+                                @foreach($info->vDetail as $k => $a)
+                                <h4 class="card-title Title">{{$a->title or ''}}</h4>
+                                @if($k<1) continue @endif
+                                    @foreach($a['a1'] as $kk =>  $a1)
                                 <div class="form-group row a1">
                                     <label for="com1" class="col-sm-3 text-right control-label col-form-label title">一、 概況</label>
+                                    @if($kk<1) continue @endif
                                     <div class="col-sm-9 a11">
-                                        <div class="t1">水庫名稱：</div>
-                                        <input type="text" class="form-control a111" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
-                                        <div class="t2">檢查日期：</div>
-                                        <input type="date" class="form-control a112" id="com1" placeholder="" value="{{$info->vDate or ''}}">
-                                        <div class="t3">管理機關：</div>
-                                        <input type="text" class="form-control a113" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
-                                        <div class="t4">檢查人員：</div>
-                                        <input type="text" class="form-control a114" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">
-                                        <div class="t5">位置：</div>
-                                        <input type="text" class="form-control a115" id="com1" placeholder="" value="{{$info->vLocation or ''}}">
-                                        <div class="t6">河系（主支流）：</div>
-                                        <input type="text" class="form-control a116" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">
+                                        @foreach($a1->a11 as $kkk => $a11)
+                                        <div class="t1">{{$a11['title'] or ''}}：</div>
+                                            @if($kkk<1) continue @endif
+                                        <input type="text" class="form-control a111" id="com1" placeholder="" value="{{$a11['data'] or ''}}">
+                                        @endforeach
+                                        {{--<div class="t2">檢查日期：</div>--}}
+                                        {{--<input type="date" class="form-control a112" id="com1" placeholder="" value="{{$info->vDate or ''}}">--}}
+                                        {{--<div class="t3">管理機關：</div>--}}
+                                        {{--<input type="text" class="form-control a113" id="com1" placeholder="" value="{{$info->vCompany or ''}}">--}}
+                                        {{--<div class="t4">檢查人員：</div>--}}
+                                        {{--<input type="text" class="form-control a114" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">--}}
+                                        {{--<div class="t5">位置：</div>--}}
+                                        {{--<input type="text" class="form-control a115" id="com1" placeholder="" value="{{$info->vLocation or ''}}">--}}
+                                        {{--<div class="t6">河系（主支流）：</div>--}}
+                                        {{--<input type="text" class="form-control a116" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">--}}
                                     </div>
                                 </div>
+                                    @endforeach
+                                @endforeach
                                 <div class="form-group row a2">
                                     <label for="com2" class="col-sm-3 text-right control-label col-form-label title">二、檢查時操作狀況</label>
                                     <div class="col-sm-9 a21">

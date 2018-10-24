@@ -240,7 +240,7 @@ class IndexController extends _WebController
             $DaoGroupMember->save();
 
             $this->rtndata ['status'] = 1;
-            $this->rtndata ['message'] = trans( '_web_message.register.success' ).trans( '_web_message.register.verification' );
+            $this->rtndata ['message'] = trans( '_web_message.register.success' );//.trans( '_web_message.register.verification' );
 //            $this->rtndata ['rtnurl'] = ( session()->has( 'rtnurl' ) ) ? session()->pull( 'rtnurl' ) : url( 'login' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
 

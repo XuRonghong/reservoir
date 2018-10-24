@@ -258,7 +258,7 @@ class IndexController extends _WebController
                 $DaoMessage->iHead = 20;    //發送的目標人員權限小於20
                 $DaoMessage->vTitle = '有地震通知: ' . $oneReservoir->vName . '';
                 $DaoMessage->vSummary = '<h5>發生時間: ' . date('Y/m/d H:i:s', (strtotime($var->eventTime) + 28800)) . '</h5>';
-                $DaoMessage->vSummary .= '待確認後發送給' . $this->Permission['10'];
+                $DaoMessage->vSummary .= '待 '.$this->Permission['10'].' 確認後發送給 ' . $this->Permission['20'];
                 $DaoMessage->vDetail = '';
                 $DaoMessage->vImages = env('APP_URL').'/images/kalen-emsley-99666-unsplash.jpg';
                 $DaoMessage->vNumber = 'ENVEN'.date('ymd',time()).rand(000, 999);
@@ -373,7 +373,7 @@ class IndexController extends _WebController
      */
     public function getMessageList ()
     {
-        $DaoMessage = $this->getDaoMessage();
+        $DaoMessage = $this->getDaoMessage(false);
         if ($DaoMessage){
             //
             $Dao = [];

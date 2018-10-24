@@ -127,12 +127,13 @@
 @section('inline-js')
     <script>
         $(document).ready(function () {
-            var table = $('#zero_config');
-            table.api().bProcessing = true;
             //
             var init = $('.initClick');
             init.click();
             init.click();
+
+            var table = $('#zero_config');
+            table.api().bProcessing = true;
 
             //
             $('.goMess').click(function () {

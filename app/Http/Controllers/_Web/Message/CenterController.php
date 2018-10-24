@@ -43,7 +43,13 @@ class CenterController extends _WebController
         $this->view->with( 'permission', $this->Permission );
 
         //撈取資訊資料表
-        $DaoMessage = $this->getDaoMessage( false);
+        if (session('member.iAcType')<10){
+            $DaoMessage = $this->getDaoMessage( false , false);     //網站管理員不用階級check
+        } else {
+
+            $DaoMessage = $this->getDaoMessage( false , true);
+        }
+
         if ($DaoMessage){
             //
             $Dao = [];
@@ -128,14 +134,22 @@ class CenterController extends _WebController
             ->where('iType', '>', 50)
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
-            ->take( $iDisplayLength )
-            ->get();
+            ->take( $iDisplayLength );
         if ( !$data_arr)
         {
             $this->rtndata['status'] = 0;
             $this->rtndata['message'] = ['Oops! 沒有資料!'];
             return $this->rtndata;
         }
+        //---------------------------------------------------------------
+            if (session('member.iAcType')>9){
+                $data_arr = $data_arr
+                    ->where('iHead', '>', session('member.iAcType'))
+                    ->get();     //階級check
+            } else {
+                $data_arr = $data_arr->get();
+            }
+        //---------------------------------------------------------------
         foreach ($data_arr as $key => $var)
         {
             //
@@ -149,7 +163,7 @@ class CenterController extends _WebController
                     $var->iSource = '水庫管理員';
                     break;
                 default:
-                    $var->iSource = 'event';//.$var->iSource
+                    $var->iSource = 'System';//.$var->iSource
             }
             switch ($var->iType){
                 case 99:
@@ -210,6 +224,21 @@ class CenterController extends _WebController
         $this->view->with('vSummary', '新增通知' );
         $this->view->with( 'permission', $this->Permission );
 
+        //////
+        //SERVER密鑰  存資料庫
+        //送出推播、掛在WEB通知 (Android)
+        ///////
+        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+        $sendNotifyMessageHeaders = '
+        {
+            "Content-Type":"application/json",
+            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+        }';
+        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+        //////
+
+
+
         return $this->view;
     }
 
@@ -222,7 +251,7 @@ class CenterController extends _WebController
         try {
             $Dao = new ModMessage();
             $Dao->iType =   ($request->input('iType')) ? $request->input('iType') : 99;     // type:99 預設message訊息
-            $Dao->iSource = ($request->input('iSource')) ? $request->input('iSource') : 0;
+            $Dao->iSource = ($request->input('iSource')) ? $request->input('iSource') : 2;
             $Dao->iHead =   ($request->input('iHead')) ? $request->input('iHead') : 0;
             $Dao->vTitle =  ($request->input('vTitle')) ? $request->input('vTitle') : "";
             $Dao->vSummary =($request->input('vSummary')) ? $request->input('vSummary') : "";
@@ -287,6 +316,19 @@ class CenterController extends _WebController
         $this->view->with('vSummary', '編輯通知' );
         $this->view->with( 'permission', $this->Permission );
 
+        //////
+        //SERVER密鑰  存資料庫
+        //送出推播、掛在WEB通知 (Android)
+        ///////
+        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+        $sendNotifyMessageHeaders = '
+        {
+            "Content-Type":"application/json",
+            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+        }';
+        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+        //////
+
 
 //        $map['iStatus'] = 1;
         $map['bDel'] = 0;
@@ -349,17 +391,17 @@ class CenterController extends _WebController
 
 //        $Dao->iRank = null; //$maxRank + 1;
 //        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 99;
-        $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : 0;
-        $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : 0;
-        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
-        $Dao->vSummary = ( $request->input( 'vSummary' ) ) ? $request->input( 'vSummary' ) : "";
-        $Dao->vDetail = ( $request->input( 'vDetail' ) ) ? $request->input( 'vDetail' ) : '';
-//        $Dao->vUrl = ( $request->input( 'vUrl' ) ) ? $request->input( 'vUrl' ) : "";
-        $Dao->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
-        $Dao->vNumber = rand( 1000000001, 1099999999 );
-        $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : 0;
-        $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : 0;
+        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : $Dao->iType;
+        $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : $Dao->iSource;
+        $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : $Dao->iHead;
+        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : $Dao->vTitle;
+        $Dao->vSummary = ( $request->input( 'vSummary' ) ) ? $request->input( 'vSummary' ) : $Dao->vSummary;
+        $Dao->vDetail = ( $request->input( 'vDetail' ) ) ? $request->input( 'vDetail' ) : $Dao->vDetail;
+        $Dao->vReadman = session('member.iAcType').";";
+        $Dao->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : $Dao->vImages;
+//        $Dao->vNumber = rand( 1000000001, 1099999999 );
+        $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : $Dao->iStartTime;
+        $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : $Dao->iEndTime;
 //        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
         $Dao->iUpdateTime = time();
 
@@ -537,6 +579,9 @@ class CenterController extends _WebController
             switch ($var->iType){
                 case 99:
                     $var->iType = '訊息';
+                    break;
+                case 89:
+                    $var->iType = '確認訊息';
                     break;
                 case 15:
                     $var->iType = '已通知';

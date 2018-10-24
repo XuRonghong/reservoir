@@ -766,10 +766,10 @@
                                         <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
                                             Check & Send
                                         </button>
-                                    @elseif( session('member.iAcType') < 10 )
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
-                                            Add & Send
-                                        </button>
+                                    {{--@elseif( session('member.iAcType') < 10 )--}}
+                                        {{--<button type="button" class="btn btn-info waves-effect waves-light btn-doadd">--}}
+                                            {{--Add & Send--}}
+                                        {{--</button>--}}
                                         {{--<button type="button" class="btn btn-warning waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">--}}
                                             {{--Save--}}
                                         {{--</button>--}}
@@ -840,7 +840,7 @@
                 //
 
                 data.reservoir = $('.reservoir_name').val();
-                data.vDetail = getInputToJson().toString();
+                data.vDetail = getInputToJson();
                 //
                 $.ajax({
                     url: url_doadd,
@@ -919,7 +919,7 @@
 
         function getInputToJson()
         {
-            return {
+            var data = {
                 'a': {
                     'title': '壹 、水庫基本資料',
                     'a1': {
@@ -1430,6 +1430,7 @@
                     }
                 },
             };
+            return JSON.stringify(data);
         }
     </script>
 @endsection
