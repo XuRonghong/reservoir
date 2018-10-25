@@ -230,6 +230,23 @@ class TraceController extends _WebController
         $this->view->with( 'vTitle', '追蹤查核簽核' );
         $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 2/2' );
 
+
+        ///
+        ///  /////
+        //SERVER密鑰  存資料庫
+        //送出推播、掛在WEB通知 (Android)
+        ///////
+        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+        $sendNotifyMessageHeaders = '
+        {
+            "Content-Type":"application/json",
+            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+        }';
+        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+        //////
+
+
+
         $Dao = ModReservoir::query()->find($id);
         $this->view->with( 'reservoir_name', $Dao? $Dao->vName : '' );
 
@@ -328,6 +345,21 @@ class TraceController extends _WebController
         $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表' );
 
 
+        //////
+        //SERVER密鑰  存資料庫
+        //送出推播、掛在WEB通知 (Android)
+        ///////
+        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+        $sendNotifyMessageHeaders = '
+        {
+            "Content-Type":"application/json",
+            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+        }';
+        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+        //////
+
+
+
 //        $map['iStatus'] = 1;
         $map['bDel'] = 0;
         $Dao = ModTraceCheck::query()->where($map)->find($id);
@@ -360,6 +392,9 @@ class TraceController extends _WebController
     {
         //************************************************************************
         $this->_init();
+        //送審退回
+        $doRefuse = $request->exists( 'iId')? $request->input( 'iId') : false;
+
         $id = $request->input( 'iId', 0 );
         if ( !$id) {
             $this->rtndata ['status'] = 0;
@@ -372,38 +407,75 @@ class TraceController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
-        switch (session('member.iAcType')){
-            case 10:
-                $message = '發送給 ' . $this->Permission['20'];
-                break;
-            case 20:
-                $message = '發送給 ' . $this->Permission['30'];
-                break;
-            case 30:
-                $message = '發送給 ' . $this->Permission['40'];
-                break;
-            case 40:
-                $message = '發送給 ' . $this->Permission['50'];
-                break;
-            case 50:
-                $message = '發送給 ' . $this->Permission['60'];
-                break;
-            case 60:
-//                $message = '發送給 ' . $this->Permission['70'];
-                $message = '已確認';
-                break;
+        if (!$doRefuse) {
+            switch (session('member.iAcType')) {
+                case 10:
+                    $message = '發送給 ' . $this->Permission['20'];
+                    $vSummary = '待'.$this->Permission['20'].'確認';
+                    break;
+                case 20:
+                    $message = '發送給 ' . $this->Permission['30'];
+                    $vSummary = '待'.$this->Permission['30'].'確認';
+                    break;
+                case 30:
+                    $message = '發送給 ' . $this->Permission['40'];
+                    $vSummary = '待'.$this->Permission['40'].'確認';
+                    break;
+                case 40:
+                    $message = '發送給 ' . $this->Permission['50'];
+                    $vSummary = '待'.$this->Permission['50'].'確認';
+                    break;
+                case 50:
+                    $message = '發送給 ' . $this->Permission['60'];
+                    $vSummary = '待'.$this->Permission['60'].'確認';
+                    break;
+                case 60:
+//                    $message = '發送給 ' . $this->Permission['70'];
+                    $message = '表單已通過全部審核';
+                    $vSummary = '表單已通過全部審核';
+                    break;
+            }
+        } else {
+            switch (session('member.iAcType')) {
+                case 10:
+                    $message = '表單重新填寫';
+                    $vSummary = '表單重新填寫';
+                    break;
+                case 20:
+                    $message = '退還給 ' . $this->Permission['10'];
+                    $vSummary = '拒絕表單，請'.$this->Permission['10'].'重新審核';
+                    break;
+                case 30:
+                    $message = '退還給 ' . $this->Permission['20'];
+                    $vSummary = '拒絕表單，請'.$this->Permission['20'].'重新審核';
+                    break;
+                case 40:
+                    $message = '退還給 ' . $this->Permission['30'];
+                    $vSummary = '拒絕表單，請'.$this->Permission['30'].'重新審核';
+                    break;
+                case 50:
+                    $message = '退還給 ' . $this->Permission['40'];
+                    $vSummary = '拒絕表單，請'.$this->Permission['40'].'重新審核';
+                    break;
+                case 60:
+                    $message = '退還給 ' . $this->Permission['50'];
+                    $vSummary = '拒絕表單，請'.$this->Permission['50'].'重新審核';
+                    break;
+            }
         }
 
         //************************************************************************
+        if (!$doRefuse)
+        {
             //重新編寫訊息概要
             $Dao->vSummary = '<h5>請確認審查表並簽核</h5>';
-            $Dao->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
+            $Dao->vSummary .= $vSummary;// . $this->Permission['20'];
             $Dao->iCheck += 10; //有確認的目標權限人員
             $Dao->iHead += 10;  //目標人員權限再加10
             $Dao->iStartTime = time();
             if ($Dao->save()) {
                 //Logs
-                $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao));
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = $message;
@@ -413,6 +485,28 @@ class TraceController extends _WebController
                 $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = '發送確認失敗';
             }
+        }
+        else
+        {
+            //重新編寫訊息概要
+            $Dao->vSummary = '<h5>請確認審查表並簽核</h5>';
+            $Dao->vSummary .= $vSummary;// . $this->Permission['20'];
+            $Dao->iCheck -= 10; //有確認的目標權限人員
+            $Dao->iHead -= 10;  //目標人員權限再加10
+            $Dao->iStartTime = time();
+            if ($Dao->save()) {
+                //Logs
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao));
+
+                $this->rtndata ['status'] = 1;
+                $this->rtndata ['message'] = $message;
+                $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
+
+            } else {
+                $this->rtndata ['status'] = 0;
+                $this->rtndata ['message'] = '發送退回失敗';
+            }
+        }
         //**********************************************************************
 
         return response()->json( $this->rtndata );
@@ -512,6 +606,21 @@ class TraceController extends _WebController
         $this->view->with('module', $this->module);
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '更多資訊' );
+
+
+        //////
+        //SERVER密鑰  存資料庫
+        //送出推播、掛在WEB通知 (Android)
+        ///////
+        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+        $sendNotifyMessageHeaders = '
+        {
+            "Content-Type":"application/json",
+            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+        }';
+        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+        //////
+
 
         //
 //        $mapMessage['iStatus'] = 1;
