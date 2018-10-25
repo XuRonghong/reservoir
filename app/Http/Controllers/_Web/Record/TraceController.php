@@ -192,6 +192,12 @@ class TraceController extends _WebController
      */
     public function add (Request $request)
     {
+        if (session('member.iAcType')<10 || session('member.iAcType')>19){
+            return redirect()->back();
+        }
+
+
+
         $this->module = [ 'record' , 'trace' ];
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
@@ -216,6 +222,11 @@ class TraceController extends _WebController
      */
     public function add2 (Request $request)
     {
+        if (session('member.iAcType')<10 || session('member.iAcType')>19){
+            return redirect()->back();
+        }
+
+
         $id = $request->get('reservoir') ? $request->get('reservoir') : 0;
 
         $this->module = [ 'record' , 'trace' ];
@@ -259,6 +270,8 @@ class TraceController extends _WebController
     */
     public function doAdd ( Request $request )
     {
+        $this->_init();
+
         try {
             $Dao = new ModTraceCheck();
 //        $Dao->iRank = null; //$maxRank + 1;
@@ -288,13 +301,17 @@ class TraceController extends _WebController
 
 
             //************************************************************************
+                $message = '發送給 ' . $this->Permission['20'];
+                $vSummary = '待'.$this->Permission['20'].'確認';
+
+
                 $DaoMessage = new ModMessage();
                 $DaoMessage->iType = 89;     // type:89 蓄水庫與引水建造物安全檢查彙整表
                 $DaoMessage->iSource = 10;
                 $DaoMessage->iHead = 30;    //目標人員權限小於20
                 $DaoMessage->vTitle = date('Y',time()).'年'.$reservoir_name.'上半年度安全檢查表';//蓄水庫與引水建造物安全檢查彙整表';
-                $DaoMessage->vSummary = '<h5>請確認審查表並簽核</h5>';
-                $DaoMessage->vSummary .= '待確認後發送給下一位';// . $this->Permission['20'];
+                $DaoMessage->vSummary = '<h5>'.$vSummary.'</h5>';
+                //$DaoMessage->vSummary .= $vSummary;// . $this->Permission['20'];
                 $DaoMessage->vDetail = ''.url('web/record/trace/attributes'). '/'. $Dao->iId;
                 $DaoMessage->vImages = env('APP_URL') . '/images/favicon.png';
                 $DaoMessage->vNumber = 'TRACE'.date('ymd',time()).rand(000, 999);
@@ -313,7 +330,7 @@ class TraceController extends _WebController
             //************************************************************************
 
                 $this->rtndata ['status'] = 1;
-                $this->rtndata ['message'] = trans('_web_message.add_success');
+                $this->rtndata ['message'] = $message;
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
             } else {
                 $this->rtndata ['status'] = 0;
@@ -333,7 +350,11 @@ class TraceController extends _WebController
      */
     public function edit ( $id )
     {
-        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add');
+        if (session('member.iAcType')<10 || session('member.iAcType')>19){
+            return redirect()->back();
+        }
+
+        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add2');
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode('.', $this->module) => url('web/' . implode('/', $this->module)),
@@ -393,9 +414,10 @@ class TraceController extends _WebController
         //************************************************************************
         $this->_init();
         //送審退回
-        $doRefuse = $request->exists( 'iId')? $request->input( 'iId') : false;
+        $doRefuse = $request->exists( 'refuse')? $request->input( 'refuse') : false;
 
         $id = $request->input( 'iId', 0 );
+
         if ( !$id) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
@@ -440,26 +462,32 @@ class TraceController extends _WebController
                 case 10:
                     $message = '表單重新填寫';
                     $vSummary = '表單重新填寫';
+                    $Dao->vReadman = '';
                     break;
                 case 20:
                     $message = '退還給 ' . $this->Permission['10'];
                     $vSummary = '拒絕表單，請'.$this->Permission['10'].'重新審核';
+                    $Dao->vReadman = '';
                     break;
                 case 30:
                     $message = '退還給 ' . $this->Permission['20'];
                     $vSummary = '拒絕表單，請'.$this->Permission['20'].'重新審核';
+                    $Dao->vReadman = '';
                     break;
                 case 40:
                     $message = '退還給 ' . $this->Permission['30'];
                     $vSummary = '拒絕表單，請'.$this->Permission['30'].'重新審核';
+                    $Dao->vReadman = '';
                     break;
                 case 50:
                     $message = '退還給 ' . $this->Permission['40'];
                     $vSummary = '拒絕表單，請'.$this->Permission['40'].'重新審核';
+                    $Dao->vReadman = '';
                     break;
                 case 60:
                     $message = '退還給 ' . $this->Permission['50'];
                     $vSummary = '拒絕表單，請'.$this->Permission['50'].'重新審核';
+                    $Dao->vReadman = '';
                     break;
             }
         }
@@ -468,8 +496,8 @@ class TraceController extends _WebController
         if (!$doRefuse)
         {
             //重新編寫訊息概要
-            $Dao->vSummary = '<h5>請確認審查表並簽核</h5>';
-            $Dao->vSummary .= $vSummary;// . $this->Permission['20'];
+            $Dao->vSummary = '<h5>'.$vSummary.'</h5>';
+            //$Dao->vSummary .= $vSummary;// . $this->Permission['20'];
             $Dao->iCheck += 10; //有確認的目標權限人員
             $Dao->iHead += 10;  //目標人員權限再加10
             $Dao->iStartTime = time();
@@ -489,8 +517,8 @@ class TraceController extends _WebController
         else
         {
             //重新編寫訊息概要
-            $Dao->vSummary = '<h5>請確認審查表並簽核</h5>';
-            $Dao->vSummary .= $vSummary;// . $this->Permission['20'];
+            $Dao->vSummary = '<h5>'.$vSummary.'</h5>';
+            //$Dao->vSummary .= $vSummary;// . $this->Permission['20'];
             $Dao->iCheck -= 10; //有確認的目標權限人員
             $Dao->iHead -= 10;  //目標人員權限再加10
             $Dao->iStartTime = time();
@@ -498,7 +526,7 @@ class TraceController extends _WebController
                 //Logs
                 $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao));
 
-                $this->rtndata ['status'] = 1;
+                $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = $message;
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
 

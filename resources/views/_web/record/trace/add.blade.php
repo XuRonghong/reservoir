@@ -118,6 +118,16 @@
                 var id = $('.reservoir').val();
                 location.href = url + '?reservoir=' + id;
             });
+
+            /************************************************
+             *  JQuery serializeArray decode :
+             */
+                dd = {!! $info->vDetail !!};
+                $.each(dd, function(i, field){
+                    $("[name='"+field.name+"']").val(field.value);
+                });
+            /*
+             ***********************************************/
         });
     </script>
 @endsection
