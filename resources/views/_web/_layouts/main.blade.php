@@ -181,11 +181,9 @@
 
             //upbar reload on click
             // $('.topbartoggler').click(function () {
-            $(this).click(function () {
+            // $(this).click(function () {
                 //有 click event 觸發刷新上方列的訊息通知
-                get_new_message();
-                get_message_on_upbar();
-            });
+
 
             //click message
             $('.message-count').click(function () {
@@ -292,6 +290,11 @@
                     } else {
                         {{--toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");--}}
                     }
+                    //
+
+                    setTimeout(function () {
+                        get_new_message();
+                    }, 2000);
                 }
             });
         }
@@ -346,6 +349,10 @@
                     } else {
 
                     }
+                    //
+                    setTimeout(function () {
+                        get_message_on_upbar();
+                    }, 1500);
                 }
             });
         }

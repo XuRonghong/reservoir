@@ -76,6 +76,12 @@
 
         <a href="{{url('/web/reservoir')}}" class="btn btn-primary btn-lg" style="margin-top: 3%">Back</a>
         <input type="submit" class="btn btn-primary btn-lg" style="margin-top: 3%;margin-left: 2%">
+
+        <h4>
+            PS: 上傳的檔案內的欄位名稱要與
+            <b><a href="{{asset('template/2017水庫調查_1207.xls')}}">2017水庫調查_1207.xls</a></b>
+            的一樣 <b>! !</b>
+        </h4>
     </form>
 
 </div>
