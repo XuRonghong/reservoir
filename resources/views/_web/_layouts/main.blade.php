@@ -342,7 +342,7 @@
                         html_str +=     '<a class="nav-link text-center link" href="{{url('web/message/center')}}"> <b>看更多訊息</b> <i class="fa fa-angle-right"></i> </a>';
                         html_str += '</li>';
                         $(".ulMessage").html(html_str);
-                        $('.message-count').text(rtndata.total_see);
+                        $('.message-count').text(rtndata.total+'('+rtndata.total_see+')');
                     } else {
 
                     }

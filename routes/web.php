@@ -22,7 +22,7 @@ Route::group(
 
         Route::get( 'login', 'LoginController@indexView') ;
         Route::group([
-                'middleware'=> ['LoginThrottle:5,10']
+//                'middleware'=> ['LoginThrottle:5,10']
             ], function(){
             Route::post('doLogin', 'LoginController@doLogin' );
             Route::post('doLoginMobile', 'LoginController@doLoginMobile' );
