@@ -159,6 +159,27 @@ class TraceController extends _WebController
                 }
                 //
                 $var->message->iCreateTime = date( 'Y/m/d H:i:s', $var->message->iCreateTime );
+                //
+                switch ($var->message->iHead) {
+                    case 20:
+                        $var->message->iHead = '待'.$this->Permission['10'].'確認';
+                        break;
+                    case 30:
+                        $var->message->iHead = '待'.$this->Permission['20'].'確認';
+                        break;
+                    case 40:
+                        $var->message->iHead = '待'.$this->Permission['30'].'確認';
+                        break;
+                    case 50:
+                        $var->message->iHead = '待'.$this->Permission['40'].'確認';
+                        break;
+                    case 60:
+                        $var->message->iHead = '待'.$this->Permission['50'].'確認';
+                        break;
+                    case 70:
+                        $var->message->iHead = '表單已通過全部審核';
+                        break;
+                }
             } else {
                 $var->message = null;
             }
@@ -302,7 +323,7 @@ class TraceController extends _WebController
 
             //************************************************************************
                 $message = '發送給 ' . $this->Permission['20'];
-                $vSummary = '待'.$this->Permission['20'].'確認';
+                $vSummary = '<h5>待'.$this->Permission['20'].'確認</h5>';
 
 
                 $DaoMessage = new ModMessage();

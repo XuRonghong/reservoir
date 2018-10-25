@@ -131,15 +131,29 @@
                             }
                         }
                     },
+                    // {
+                    //     "sTitle": "發送者",
+                    //     "mData": "message",
+                    //     "width": "140px",
+                    //     "sName": "iSource",
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         if (row.message) {
+                    //             return row.message.iSource;
+                    //         } else {
+                    //             return '';
+                    //         }
+                    //     }
+                    // },
                     {
-                        "sTitle": "發送者",
+                        "sTitle": "狀態",
                         "mData": "message",
-                        "width": "140px",
-                        "sName": "iSource",
+                        "width": "160px",
+                        "sName": "iCheck",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             if (row.message) {
-                                return row.message.iSource;
+                                return row.message.vSummary;
                             } else {
                                 return '';
                             }
