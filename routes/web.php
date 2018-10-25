@@ -207,6 +207,7 @@ Route::group(
                     Route::get( '', 'TraceController@index' );
                     Route::get( 'getlist', 'TraceController@getList' );
                     Route::get( 'add', 'TraceController@add' );
+                    Route::get( 'add2', 'TraceController@add2' );
                     Route::post( 'doadd', 'TraceController@doAdd' );
                     Route::get( 'edit/{id}', 'TraceController@edit' );
                     Route::post( 'dosave', 'TraceController@doSave' );
@@ -237,6 +238,7 @@ Route::group(
                 Route::post( 'dosaveshow', 'InstructionsController@doSaveShow' );
                 Route::post( 'dodel', 'InstructionsController@doDel' );
             } );
+
 
 
             /*************************************
@@ -296,6 +298,8 @@ Route::group(
                     Route::post( 'dodel', $Controller.'@doDel' );
                 } );
             } );
+
+
 
 
             /*************************************

@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="reservoir2/dist/style/style.min.css">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="xtreme-admin/assets/images/favicon.png">
-    <link type="text/css" rel="stylesheet" href="css/waitMe.css">
+<!--    <link type="text/css" rel="stylesheet" href="css/waitMe.css">-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="reservoir2/dist/script/lodash.min.js" type="text/javascript"></script>
+    <script src="reservoir2/dist/script/script.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="page">
@@ -29,6 +32,7 @@
         </ul>
     </div>
 
+    <div class="main">
 
 <?php
 	$dd=file_get_contents("https://www.cwb.gov.tw/V7/modules/MOD_EC_Home.htm?_=".time());
@@ -45,6 +49,7 @@
 		echo "<img src='https://www.cwb.gov.tw/V7/earthquake/Data/quake/".$cc[1][0]."_H.png'><br>";
 ?>
 
-
+    </div>
+</div>
 </body>
 </html>

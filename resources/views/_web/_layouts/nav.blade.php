@@ -97,7 +97,7 @@
             <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item"><a href="{{url('web/history/silt')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫淤積濬渫執行成果</span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/history/safe')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫歷屆定期安全評估報告</span></a></li>
-                <li class="sidebar-item"><a href="{{url('web/history/other')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫其他重要文件</span></a></li>
+                <li class="sidebar-item"><a href="{{url('web/history/other')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">水庫其他重要文件</span></a></li>
             </ul>
         </li>
         @if(session('member.iAcType')<10)

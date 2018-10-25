@@ -39,54 +39,47 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            {{--<h4 class="card-title">{{$vSummary or ''}}</h4>--}}
-                            {{--<h6 class="card-subtitle">{{session()->get( 'SEO.vTitle')}}</h6>--}}
+                            <h4 class="card-title">{{$vSummary or ''}}</h4>
                         </div>
                         <hr>
-                        <form class="form-horizontal">
+                        <form class="form-horizontal  trace_table">
                             <div class="card-body messageInfo-modal1">
-                                @foreach($info->vDetail as $k => $a)
-                                <h4 class="card-title Title">{{$a->title or ''}}</h4>
-                                @if($k<1) continue @endif
-                                    @foreach($a['a1'] as $kk =>  $a1)
+                                <h4 class="card-title Title">壹 、水庫基本資料</h4>
                                 <div class="form-group row a1">
                                     <label for="com1" class="col-sm-3 text-right control-label col-form-label title">一、 概況</label>
-                                    @if($kk<1) continue @endif
                                     <div class="col-sm-9 a11">
-                                        @foreach($a1->a11 as $kkk => $a11)
-                                        <div class="t1">{{$a11['title'] or ''}}：</div>
-                                            @if($kkk<1) continue @endif
-                                        <input type="text" class="form-control a111" id="com1" placeholder="" value="{{$a11['data'] or ''}}">
-                                        @endforeach
-                                        {{--<div class="t2">檢查日期：</div>--}}
-                                        {{--<input type="date" class="form-control a112" id="com1" placeholder="" value="{{$info->vDate or ''}}">--}}
-                                        {{--<div class="t3">管理機關：</div>--}}
-                                        {{--<input type="text" class="form-control a113" id="com1" placeholder="" value="{{$info->vCompany or ''}}">--}}
-                                        {{--<div class="t4">檢查人員：</div>--}}
-                                        {{--<input type="text" class="form-control a114" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">--}}
-                                        {{--<div class="t5">位置：</div>--}}
-                                        {{--<input type="text" class="form-control a115" id="com1" placeholder="" value="{{$info->vLocation or ''}}">--}}
-                                        {{--<div class="t6">河系（主支流）：</div>--}}
-                                        {{--<input type="text" class="form-control a116" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">--}}
+                                        <div class="t1">水庫名稱：</div>
+                                        <input type="text" disabled name="a111" class="form-control a111 reservoir_name" id="com1" placeholder="" value="">
+                                        <div class="t2">檢查日期：</div>
+                                        <input type="date" disabled name="a112" class="form-control a112" id="com1" placeholder="" value="">
+                                        <div class="t3">管理機關：</div>
+                                        <input type="text" disabled name="a113" class="form-control a113" id="com1" placeholder="" value="">
+                                        <div class="t4">檢查人員：</div>
+                                        <input type="text" disabled name="a114" class="form-control a114" id="com1" placeholder="" value="">
+                                        <div class="t5">位置：</div>
+                                        <input type="text" disabled name="a115" class="form-control a115" id="com1" placeholder="" value="">
+                                        <div class="t6">河系（主支流）：</div>
+                                        <input type="text" disabled name="a116" class="form-control a116" id="com1" placeholder="" value="{{$info->vMainFlow or ''}}">
                                     </div>
                                 </div>
-                                    @endforeach
-                                @endforeach
                                 <div class="form-group row a2">
                                     <label for="com2" class="col-sm-3 text-right control-label col-form-label title">二、檢查時操作狀況</label>
                                     <div class="col-sm-9 a21">
                                         水庫水位：
-                                        <input type="text" class="form-control vTitle" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
+                                        <input type="text" disabled name="a211" class="form-control vTitle" id="com1" placeholder="" value="{{$info->vTitle or ''}}">
                                         水庫蓄水量：
-                                        <input type="date" class="form-control vDate" id="com1" placeholder="" value="{{$info->vDate or ''}}">
+                                        <input type="date" disabled name="a212" class="form-control vDate" id="com1" placeholder="" value="{{$info->vDate or ''}}">
                                         最高記錄水位：
-                                        <input type="text" class="form-control vCompany" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
+                                        <input type="text" disabled name="a213" class="form-control vCompany" id="com1" placeholder="" value="{{$info->vCompany or ''}}">
                                         <br>
                                         <h5>放水量：</h5>
-                                        溢洪道<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        出水工<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        渠  道<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
-                                        發電廠<input type="text" class=" vCheckMan" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br>
+                                        <div class="form-inline">
+                                            <div>溢洪道<input type="text" disabled name="a214" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>出水工<input type="text" disabled name="a215" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>渠  道<input type="text" disabled name="a216" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                            <div>發電廠<input type="text" disabled name="a217" class="form-control a111" id="com1" placeholder="" value="{{$info->vCheckMan or ''}}">秒立方公尺<br></div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -97,40 +90,41 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <h6>基岩孔隙度：</h6>
-                                        <input type="radio" id="com3" name="feature" value="1" />極小
-                                        <input type="radio" id="com3" name="feature" value="2" />小
-                                        <input type="radio" id="com3" name="feature" value="3" />中
-                                        <input type="radio" id="com3" name="feature" value="4" />大
+                                        <input type="radio" id="com3" disabled name="feature" value="1" />極小
+                                        <input type="radio" id="com3" disabled name="feature" value="2" />小
+                                        <input type="radio" id="com3" disabled name="feature" value="3" />中
+                                        <input type="radio" id="com3" disabled name="feature" value="4" />大
                                     </div>
                                     <div class="col-sm-9">
                                         <h6>基岩節理或劈理：</h6>
-                                        <input type="radio" id="com3" name="feature2" value="1" />發達
-                                        <input type="radio" id="com3" name="feature2" value="0" />不發達
+                                        <input type="radio" id="com3" disabled name="feature2" value="1" />發達
+                                        <input type="radio" id="com3" disabled name="feature2" value="0" />不發達
                                     </div>
                                     <div class="col-sm-9">
                                         <h6>主壩與地層走向：</h6>
-                                        <input type="radio" id="com3" name="feature3" value="0" />平行
-                                        <input type="radio" id="com3" name="feature3" value="1" />小角度斜交
-                                        <input type="radio" id="com3" name="feature3" value="2" />大角度斜交
+                                        <input type="radio" id="com3" disabled name="feature3" value="0" />平行
+                                        <input type="radio" id="com3" disabled name="feature3" value="1" />小角度斜交
+                                        <input type="radio" id="com3" disabled name="feature3" value="2" />大角度斜交
                                     </div>
                                     <br>
                                     <div class="col-sm-9">
                                         <h6>地層傾斜與主壩關係：</h6>
-                                        <input type="radio" id="com3" name="feature3" value="up" />向上游傾斜
-                                        <input type="radio" id="com3" name="feature3" value="down" />向下游傾斜
+                                        <input type="radio" id="com3" disabled name="feature3" value="up" />向上游傾斜
+                                        <input type="radio" id="com3" disabled name="feature3" value="down" />向下游傾斜
                                     </div>
                                     <div class="col-sm-9">
                                         <h6>附近有無斷層通過：</h6>
-                                        <input type="radio" id="com3" name="feature3" value="0" />無
-                                        <input type="radio" id="com3" name="feature3" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature3" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature3" value="1" />有
                                         （
-                                        <input type="radio" id="com3" name="feature3" value="10" />活動斷層
-                                        <input type="radio" id="com3" name="feature3" value="11" />不活動斷層
+                                        <input type="radio" id="com3" disabled name="feature3" value="10" />活動斷層
+                                        <input type="radio" id="com3" disabled name="feature3" value="11" />不活動斷層
                                         ）
                                     </div>
                                 </div>
                             </div>
                             <hr>
+                            <?php /* ?>
                             <div class="card-body messageInfo-modal2">
                                 <h4 class="card-title title">貳、檢查內容</h4>
                                 <div class="form-group row b1">
@@ -208,12 +202,12 @@
                                         <br>
                                         <b>欄杆及護網等安全措施：</b>
                                         <br>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                         （
-                                        <input type="radio" id="com3" name="feature41" value="11" />良好
-                                        <input type="radio" id="com3" name="feature41" value="10" />待改善
+                                        <input type="radio" id="com3" disabled name="feature41" value="11" />良好
+                                        <input type="radio" id="com3" disabled name="feature41" value="10" />待改善
                                         ）
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         <br>
                                     </div>
@@ -234,36 +228,36 @@
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
                                         <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
                                         <br>紀錄：
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         項目
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
                                         <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
                                         <br>紀錄：
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         項目
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
                                         <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
                                         <br>紀錄：
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         項目
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
                                         <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
                                         <br>紀錄：
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         項目
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
                                         <input type="text" class=" vCheckMan" style="width: 30%" value="{{$info->vCheckMan or ''}}">處
                                         <br>紀錄：
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="0" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />無
                                         <br>
                                         <b>建議加設之觀測儀器：</b>
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
@@ -392,21 +386,21 @@
                                         </select>
                                         <br>
                                         <b>9.溢洪道底板：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                         （
-                                        <input type="radio" id="com3" name="feature4" value="1" />完整
-                                        <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待修補
                                         ）
                                         <br>
                                         <b>10.設計洪水量：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />重新檢討
-                                        <input type="radio" id="com3" name="feature4" value="0" />不需檢討
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />重新檢討
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />不需檢討
                                         <br>
                                         <b>11.排洪能力：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />足夠
-                                        <input type="radio" id="com3" name="feature4" value="0" />不足
-                                        <input type="radio" id="com3" name="feature4" value="0" />待檢討
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />足夠
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />不足
+                                        <input type="radio" id="com3" disabled name="feature4" value="0" />待檢討
                                         <br>
                                         <b>※重要事項記述：</b>
                                         <input type="text" class=" vCheckMan" style="width: 40%" value="{{$info->vCheckMan or ''}}">
@@ -418,14 +412,14 @@
                                     <div class="col-sm-9">
                                         <b>1.進水口結構：</b><br>
                                         <b>攔污柵：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />待增設
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待增設
                                         <br>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                         （
-                                        <input type="radio" id="com3" name="feature4" value="1" />完整
-                                        <input type="radio" id="com3" name="feature4" value="1" />待修補
-                                        <input type="radio" id="com3" name="feature4" value="1" />漂流物待清除
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待修補
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />漂流物待清除
                                         ）
                                         <br>
                                         <b>混凝土結構：</b>
@@ -453,11 +447,11 @@
                                         <br>
                                         <br>
                                         <b>2.緊急控制設施：</b><br>
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                         （
-                                        <input type="radio" id="com3" name="feature4" value="1" />完整
-                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />完整
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待改善
                                         ）
                                         <br>
                                         <b>3.出水管道：</b>
@@ -546,12 +540,12 @@
                                 <div class="col-sm-9">
                                     <b>1.進水口結構：</b><br>
                                     <b>攔污柵：</b>
-                                    <input type="radio" id="com3" name="feature4" value="1" />無
-                                    <input type="radio" id="com3" name="feature4" value="1" />待增設
-                                    <input type="radio" id="com3" name="feature4" value="1" />有
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />待增設
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                     （
-                                    <input type="radio" id="com3" name="feature4" value="1" />完整
-                                    <input type="radio" id="com3" name="feature4" value="1" />待修補
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />完整
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />待修補
                                     ）
                                     <br>
                                     <b>閘門設備：</b>
@@ -562,9 +556,9 @@
                                     </select>
                                     <br>
                                     <b>操作手冊：</b>
-                                    <input type="radio" id="com3" name="feature4" value="1" />無
-                                    <input type="radio" id="com3" name="feature4" value="1" />待增補
-                                    <input type="radio" id="com3" name="feature4" value="1" />有
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />待增補
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                     <br>
                                     <b>2.壓力綱管：</b><br>
                                     <select class=" iHead" id="com2" >
@@ -587,11 +581,11 @@
                                     </select>
                                     <br>
                                     <b>5.備用電力設備：</b><br>
-                                    <input type="radio" id="com3" name="feature4" value="1" />無
-                                    <input type="radio" id="com3" name="feature4" value="1" />有
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                     （
-                                    <input type="radio" id="com3" name="feature4" value="1" />良好
-                                    <input type="radio" id="com3" name="feature4" value="1" />待修
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />良好
+                                    <input type="radio" id="com3" disabled name="feature4" value="1" />待修
                                     ）
                                     <br>
                                     <br>
@@ -607,23 +601,23 @@
                                     <h6>（一）閘閥及機電設備</h6>
                                     <div class="col-sm-9">
                                         <b>1.檢查：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         <b>定期檢查：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         <b>檢查記錄：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br>
                                         <br>
                                         <b>2.動力來源：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />台電
-                                        <input type="radio" id="com3" name="feature4" value="1" />自備電源
-                                        <input type="radio" id="com3" name="feature4" value="1" />人力
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />台電
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />自備電源
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />人力
                                         <br>
                                         <br>
                                         <b>3.維護：</b><br>
@@ -634,59 +628,59 @@
                                         </select>
                                         <br>
                                         <b>記錄：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br><br>
                                         <b>4.暴雨前後之檢查：</b><br>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>，紀錄
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br><br>
                                         <b>5.地震前後之檢查：</b><br>
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
                                         <br>，紀錄
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br>
                                         <br><br>
                                         <b>6.啟用年份：</b>
                                         <input type="text" class=" vCheckMan" style="width: 20%" value="{{$info->vCheckMan or ''}}">年啟用
-                                        <input type="text" id="com3" name="feature4" value="1" />已逾齡
-                                        <input type="radio" id="com3" name="feature4" value="1" />未逾齡
+                                        <input type="text" id="com3" disabled name="feature4" value="1" />已逾齡
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />未逾齡
                                         <br>
                                         <b>7.河道放水口：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         <b>維護：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <option value="2" title="">待加強</option>
                                         <br>
                                         <b>記錄：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br>
 
                                         <b>8.定期操作試驗：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>，紀錄
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br>
                                         <br>
                                         <b>9.其它放水設施：</b>
-                                        <input type="radio" id="com3" name="feature4" value="有" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="有" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         名稱：<input type="text" class=" vCheckMan" style="width: 20%" value="{{$info->vCheckMan or ''}}">
                                         <br>
@@ -698,34 +692,34 @@
                                         </select>
                                         <br>
                                         紀錄
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
-                                        <input type="radio" id="com3" name="feature4" value="1" />不全
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />不全
                                         <br>
                                         <b>10.閘閥之水密性：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />良好
-                                        <input type="radio" id="com3" name="feature4" value="1" />漏水待改善
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />漏水待改善
                                         <br>
                                         <b>11.閘閥開度指示器：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />位置正確
-                                        <input type="radio" id="com3" name="feature4" value="1" />偏差待訂正
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />位置正確
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />偏差待訂正
                                         <br>
                                         <b>12.閘閥插板及吊放設備：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         <b>維護：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />良好
-                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待改善
                                         <br>
                                         <br>
                                         <b>13.欄污柵：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />無
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />無
                                         <br>
                                         <b>維護：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />良好
-                                        <input type="radio" id="com3" name="feature4" value="1" />待改善
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />良好
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待改善
                                         <br>
                                         <br>
                                         <b>※重要事項記述：</b>
@@ -738,18 +732,18 @@
                                     <h6>（二）閘閥操作</h6>
                                     <div class="col-sm-9">
                                         <b>1.設置地點與外界隔絕：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />是
-                                        <input type="radio" id="com3" name="feature4" value="1" />外人可靠近
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />是
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />外人可靠近
                                         <br>
                                         <b>2.操作規則：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />有
-                                        <input type="radio" id="com3" name="feature4" value="1" />待訂
-                                        <input type="radio" id="com3" name="feature4" value="1" />待修正
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />有
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待訂
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待修正
                                         <br>
                                         <b>3.水門啟閉之標準：</b>
-                                        <input type="radio" id="com3" name="feature4" value="1" />己辦
-                                        <input type="radio" id="com3" name="feature4" value="1" />辦理中
-                                        <input type="radio" id="com3" name="feature4" value="1" />待辦
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />己辦
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />辦理中
+                                        <input type="radio" id="com3" disabled name="feature4" value="1" />待辦
                                         <br>
                                         <br>
                                         <br>
@@ -763,12 +757,15 @@
                                 </div>
                             </div>
                             <hr>
+                            <?php */?>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    @if( isset($info) && $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>19 && session('member.iAcType')<80)
-                                        <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
-                                            Check & Send
-                                        </button>
+                                    @if(isset($info->iCheck_message))
+                                        @if( $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<80)
+                                            <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iId or ''}}">
+                                                Check & Send
+                                            </button>
+                                        @endif
                                     @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-back">Back</button>
                                 </div>
@@ -829,9 +826,16 @@
                     }
                 })
             });
-            for(var key in dd){
-                $("[name='"+key+"']").val(dd[key]);
-            }
+
+            /************************************************
+            *  JQuery serializeArray decode :
+             */
+                dd = {!! $info->vDetail !!};
+                $.each(dd, function(i, field){
+                    $("[name='"+field.name+"']").val(field.value);
+                });
+            /*
+             ***********************************************/
         });
     </script>
 @endsection

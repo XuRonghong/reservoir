@@ -7,6 +7,7 @@ use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
 use App\ModMessage;
 use App\ModTraceCheck;
+use App\ModReservoir;
 
 
 class TraceController extends _WebController
@@ -201,7 +202,36 @@ class TraceController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', '追蹤查核簽核' );
-        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 1/2' );
+
+        $map['bDel'] = 0;
+        $Dao = ModReservoir::query()->where($map)->get();
+        $this->view->with( 'reservoir', $Dao );
+
+        return $this->view;
+    }
+
+    /*
+     * on
+     */
+    public function add2 (Request $request)
+    {
+        $id = $request->get('reservoir') ? $request->get('reservoir') : 0;
+
+        $this->module = [ 'record' , 'trace' ];
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add2' );
+        $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
+            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
+            implode( '.', $this->module ) . '.add2' => url( 'web/' . implode( '/', $this->module ) . "/add2" )
+        ];
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
+        $this->view->with( 'module', $this->module );
+        $this->view->with( 'vTitle', '追蹤查核簽核' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 2/2' );
+
+        $Dao = ModReservoir::query()->find($id);
+        $this->view->with( 'reservoir_name', $Dao? $Dao->vName : '' );
 
         return $this->view;
     }
@@ -231,7 +261,7 @@ class TraceController extends _WebController
             $Dao->vNumber = rand(1000000001, 1099999999);
 //            $Dao->iStartTime = ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
 //            $Dao->iEndTime = ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
-//        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
+            $Dao->iCheck = 10;
             $Dao->iCreateTime = $Dao->iUpdateTime = time();
             $Dao->iStatus = ($request->input('iStatus')) ? $request->input('iStatus') : 1;
             $Dao->bDel = 0;
@@ -307,7 +337,14 @@ class TraceController extends _WebController
 
 
             //
-            $Dao->iCheck_message = ModMessage::query()->find($Dao->iSource) ->iCheck;
+            $Dao->iCheck_message = 10; //預設值: 只有第一線(權限:10)確認過訊息
+            $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來
+            if($Dao->message) {
+                $Dao->message->iCreateTime = date('Y/m/d H:i:s', $Dao->message->iCreateTime);
+                $Dao->message->iUpdateTime = date('Y/m/d H:i:s', $Dao->message->iUpdateTime);
+                //
+                $Dao->iCheck_message = $Dao->message->iCheck;
+            }
         }
         //
         $this->view->with( 'info', $Dao );
@@ -483,12 +520,12 @@ class TraceController extends _WebController
         if ($Dao){
             // json to html ...
 
-            $Dao->vDetail = json_decode($Dao->vDetail, true);
+//            $Dao->vDetail = json_decode($Dao->vDetail, false);
 
 
             //
             $Dao->iCheck_message = 10; //預設值: 只有第一線(權限:10)確認過訊息
-            $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來          
+            $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來
             if($Dao->message) {
                 $Dao->message->iCreateTime = date('Y/m/d H:i:s', $Dao->message->iCreateTime);
                 $Dao->message->iUpdateTime = date('Y/m/d H:i:s', $Dao->message->iUpdateTime);
