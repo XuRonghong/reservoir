@@ -3,8 +3,8 @@
     <ul id="sidebarnav">
         <!-- User Profile-->
         <li class="nav-small-cap">
-            <i class="mdi mdi-dots-horizontal"></i>
-            <span class="hide-menu">Table</span>
+            {{--<i class="mdi mdi-dots-horizontal"></i>--}}
+            {{--<span class="hide-menu">Table</span>--}}
         </li>
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
@@ -48,6 +48,17 @@
                         {{--<li class="sidebar-item"><a href="{{url('web/import_excel')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 匯入</span></a></li>--}}
                     </ul>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="mdi mdi-border-left"></i>
+                        <span class="hide-menu">歷史資料</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item"><a href="{{url('web/history/silt')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫淤積濬渫執行成果</span></a></li>
+                        <li class="sidebar-item"><a href="{{url('web/history/safe')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫歷屆定期安全評估報告</span></a></li>
+                        <li class="sidebar-item"><a href="{{url('web/history/other')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">水庫其他重要文件</span></a></li>
+                    </ul>
+                </li>
             {{-- End Nast --}}
             </ul>
         </li>
@@ -87,17 +98,6 @@
             <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item"><a href="{{url('web/instructions')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
                 <li class="sidebar-item"><a href="{{url('web/instructions/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
-            </ul>
-        </li>
-        <li class="sidebar-item">
-            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-all"></i>
-                <span class="hide-menu">歷史資料</span>
-            </a>
-            <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item"><a href="{{url('web/history/silt')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫淤積濬渫執行成果</span></a></li>
-                <li class="sidebar-item"><a href="{{url('web/history/safe')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 水庫歷屆定期安全評估報告</span></a></li>
-                <li class="sidebar-item"><a href="{{url('web/history/other')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu">水庫其他重要文件</span></a></li>
             </ul>
         </li>
         @if(session('member.iAcType')<10)

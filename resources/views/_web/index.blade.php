@@ -3,6 +3,22 @@
 <!-- ================== page-css ================== -->
 @section('page-css')
     <!--  -->
+    <style>
+        .table1 {
+            width: 100%;
+        }
+        .table1 th {
+            text-align: center;
+        }
+        .table1 td {
+            text-align: center;
+        }
+        .table1 .img1 {
+            margin: 10px;
+            width: 160px;
+            height: 160px;
+        }
+    </style>
 @endsection
 <!-- ================== /page-css ================== -->
 
@@ -23,6 +39,29 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+
+            <table border="1" class="table1" >
+                <tr>
+                    <th>水庫名稱</th>
+                    <th>上視圖</th>
+                    <th>3D圖</th>
+                    <th>剖面圖</th>
+                </tr>
+                @foreach($aaData as $key => $value)
+                <tr>
+                    <td width="150px"></td>
+                    <td>
+                        <img class="img1" src="{{$value['img1'] or ''}}" />
+                    </td>
+                    <td>
+                        <img class="img1" src="{{$value['img2'] or ''}}" />
+                    </td>
+                    <td>
+                        <img class="img1" src="{{$value['img3'] or ''}}" />
+                    </td>
+                </tr>
+                @endforeach
+            </table>
 
         </div>
         <!-- ============================================================== -->

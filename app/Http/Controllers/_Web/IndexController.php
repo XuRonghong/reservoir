@@ -41,12 +41,42 @@ class IndexController extends _WebController
 
 
         // 上方列的內容
-        $DaoMessage = $this->getDaoMessage();
-        if ($DaoMessage){
-            $this->view->with( 'message', $DaoMessage );
-            $this->view->with( 'message_total', $this->message_total );
-            $this->view->with( 'comment_total', $this->comment_total );
-        }
+//        $DaoMessage = $this->getDaoMessage();
+//        if ($DaoMessage){
+//            $this->view->with( 'message', $DaoMessage );
+//            $this->view->with( 'message_total', $this->message_total );
+//            $this->view->with( 'comment_total', $this->comment_total );
+//        }
+
+
+        $aaData = array();
+        $aaData = [
+            [
+            'vName'=> '',
+            'img1' => asset('images/empty.jpg'),
+            'img2' => asset('images/empty.jpg'),
+            'img3' => asset('images/empty.jpg'),
+            ],
+            [
+                'vName'=> '',
+                'img1' => asset('images/empty.jpg'),
+                'img2' => asset('images/empty.jpg'),
+                'img3' => asset('images/empty.jpg'),
+            ],
+            [
+                'vName'=> '',
+                'img1' => asset('images/empty.jpg'),
+                'img2' => asset('images/empty.jpg'),
+                'img3' => asset('images/empty.jpg'),
+            ],
+            [
+                'vName'=> '',
+                'img1' => asset('images/empty.jpg'),
+                'img2' => asset('images/empty.jpg'),
+                'img3' => asset('images/empty.jpg'),
+            ],
+        ];
+        $this->view->with( 'aaData', $aaData );
 
         return $this->view;
     }
