@@ -86,9 +86,36 @@
                             <div class="card-body">
                                 <h4 class="card-title">Info</h4>
                                 <div class="form-group row">
-                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">安全值</label>
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">安全等級</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control iSafeValue" id="com1" placeholder="安全值" value="{{$info->iSafeValue or ''}}">
+                                        <input type="number" class="form-control iSafeValue" id="com1" placeholder="安全等級" value="{{$info->iSafeValue or ''}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">聯絡資訊1</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact1" placeholder="聯絡人" value="{{$info->contact1 or ''}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact_tel1" placeholder="聯絡電話" value="{{$info->contact_tel1 or ''}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">聯絡資訊2</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact2" placeholder="聯絡人" value="{{$info->contact2 or ''}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact_tel2" placeholder="聯絡電話" value="{{$info->contact_tel2 or ''}}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="com1" class="col-sm-3 text-right control-label col-form-label">聯絡資訊3</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact3" placeholder="聯絡人" value="{{$info->contact3 or ''}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" data-name="contact_tel3" placeholder="聯絡電話" value="{{$info->contact_tel3 or ''}}">
                                     </div>
                                 </div>
                                 {{--<div class="form-group row">--}}
@@ -193,6 +220,9 @@
                 data.vLocation = current_modal.find(".vLocation").val();
                 data.vCounty = current_modal.find(".vCounty").val();
                 data.iSafeValue = current_modal.find(".iSafeValue").val();
+                $("[data-name]").each(function(){
+                    data[$(this).attr("data-name")]=$(this).val();
+                });
                 data.vImages = "";
                 $(".cropper_image").find('img').each(function () {
                     if ($(this).attr('id') != "Image") {
@@ -229,6 +259,9 @@
                 data.vLocation = current_modal.find(".vLocation").val();
                 data.vCounty = current_modal.find(".vCounty").val();
                 data.iSafeValue = current_modal.find(".iSafeValue").val();
+                $("[data-name]").each(function(){
+                    data[$(this).attr("data-name")]=$(this).val();
+                });
                 data.vImages = "";
                 $(".cropper_image").find('img').each(function () {
                     if ($(this).attr('id') != "Image") {
@@ -237,6 +270,7 @@
                     }
                 });
                 //
+                console.log(data);
                 $.ajax({
                     url: url_dosave,
                     type: "POST",

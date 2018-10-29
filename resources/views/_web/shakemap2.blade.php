@@ -36,10 +36,6 @@
                     <a href="{{url('web/reservoir')}}" class="nav-link">水庫資料庫</a>
                     <div class="indicator"></div>
                 </li>
-                <li class="nav-item">
-                    <a href="{{url('web/member')}}" class="nav-link">權限管理</a>
-                    <div class="indicator"></div>
-                </li>
                 {{--<li class="login">--}}
                     {{--<a href="#" class="btn btn-login">登入</a>--}}
                 {{--</li>--}}
@@ -814,7 +810,7 @@
 
                             //
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info0']").each(function(){
-                                $(this).text($(this).attr("data-title")+"ID:"+src.data[i].id);
+                                $(this).text($(this).attr("data-title"));
                             });
                             // $("[data-id='"+src.data[i].id+"']").find("[data-name='info1']").each(function(){
                             //     $(this).text($(this).attr("data-title")+"PGA:"+src.data[i].PGA);
@@ -887,7 +883,7 @@
 
                             //
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info0']").each(function(){
-                                $(this).text($(this).attr("data-title")+"ID:"+src.data[i].id);
+                                $(this).text($(this).attr("data-title"));
                             });
                             $("[data-id='"+src.data[i].id+"']").find("[data-name='info1']").each(function(){
                                 $(this).text($(this).attr("data-title")+"scale:"+src.data[i].scale);

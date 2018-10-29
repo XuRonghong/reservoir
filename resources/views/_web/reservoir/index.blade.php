@@ -96,22 +96,23 @@
                 "scrollY": '65vh',
                 // 'sServerMethod': 'GET',
                 "aoColumns": [
-                    {
-                        "sTitle": "ID",
-                        "mData": "iId",
-                        "width": "80px",
-                        "sName": "iId",
-                        "bSearchable": false,
-                        "mRender": function (data, type, row) {
-                            return data;
-                        }
-                    },
+                    // {
+                    //     "sTitle": "ID",
+                    //     "mData": "iId",
+                    //     "width": "80px",
+                    //     "sName": "iId",
+                    //     // "visible":false,
+                    //     "bSearchable": false,
+                    //     "mRender": function (data, type, row) {
+                    //         return data;
+                    //     }
+                    // },
                     {"sTitle": "地區別", "mData": "vRegion", "width": "100px", "sName": "vRegion"},
                     {"sTitle": "名稱", "mData": "vName", "width": "100px", "sName": "vName"},
                     {"sTitle": "詳細地址", "mData": "vLocation", "width": "100%", "sName": "vLocation"},
                     {"sTitle": "壩堰位置", "mData": "vCounty", "width": "200px", "sName": "vCounty"},
                     // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "安全值", "mData": "iSafeValue", "width": "100px", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
+                    {"sTitle": "安全等級", "mData": "iSafeValue", "width": "100px", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
                     // {"sTitle": "Sum", "mData": "iSum", "width": "8%", "sName": "iSum"},
                     {
                         "sTitle": "圖片",
@@ -125,6 +126,27 @@
                             for (var key in data) {
                                 html_str += "<img width='75px' src=" + data[key] + " style='margin:5px;'>";
                             }
+                            return html_str;
+                        }
+                    },
+                    {
+                        "sTitle": "聯絡資訊",
+                        "mData": "contact",
+                        "sName": "contact",
+                        "width": "100px",
+                        "bSortable": false,
+                        "bSearchable": false,
+                        "mRender": function (data, type, row) {
+                            var html_str = "";
+                            html_str+=row["contact1"];
+                            if(row["contact_tel1"]!="")
+                                html_str+="("+row["contact_tel1"]+")<br>";
+                            html_str+=row["contact2"];
+                            if(row["contact_tel2"]!="")
+                                html_str+="("+row["contact_tel2"]+")<br>";
+                            html_str+=row["contact3"];
+                            if(row["contact_tel3"]!="")
+                                html_str+="("+row["contact_tel3"]+")<br>";
                             return html_str;
                         }
                     },
@@ -150,7 +172,7 @@
                             $('.waitme').waitMe('hide');
                             return btn;
                         }
-                    },
+                    }
                 ],
                 "sAjaxSource": ajax_source,
                 "ajax": ajax_Table,

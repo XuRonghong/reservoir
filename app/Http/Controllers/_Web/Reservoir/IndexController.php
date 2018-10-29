@@ -86,7 +86,7 @@ class IndexController extends _WebController
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
-            ->orderBy( $sort_name, $sort_dir )
+            // ->orderBy( trim($sort_name), $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
             ->get();
@@ -185,6 +185,12 @@ class IndexController extends _WebController
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
         $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
+        $Dao->contact1=$request->input("contact1","");
+        $Dao->contact_tel1=$request->input("contact_tel1","");
+        $Dao->contact2=$request->input("contact2","");
+        $Dao->contact_tel2=$request->input("contact_tel2","");
+        $Dao->contact3=$request->input("contact3","");
+        $Dao->contact_tel3=$request->input("contact_tel3","");
         if ($Dao->save()) {
             //Logs
             $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
@@ -201,6 +207,7 @@ class IndexController extends _WebController
             $DaoInfo->iCreateTime = $DaoInfo->iUpdateTime = time();
             $DaoInfo->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
             $DaoInfo->bDel = 0;
+
             if ($DaoInfo->save()) {
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans('_web_message.add_success');
@@ -244,7 +251,9 @@ class IndexController extends _WebController
             ->leftJoin('mod_reservoir_info', function ($join) {
                 $join->on('mod_reservoir.iId', '=', 'mod_reservoir_info.iReservoirId');
             })
-            ->select('mod_reservoir.vCode',
+            ->select(
+                'mod_reservoir.iId',
+                'mod_reservoir.vCode',
                 'mod_reservoir.vRegion',
                 'mod_reservoir.vName',
                 'mod_reservoir.vLocation',
@@ -254,6 +263,12 @@ class IndexController extends _WebController
                 'mod_reservoir.iSum',
                 'mod_reservoir.iStatus',
                 'mod_reservoir.bDel',
+                'mod_reservoir.contact1',
+                'mod_reservoir.contact_tel1',
+                'mod_reservoir.contact2',
+                'mod_reservoir.contact_tel2',
+                'mod_reservoir.contact3',
+                'mod_reservoir.contact_tel3',
                 'mod_reservoir_info.vImages',
                 'mod_reservoir_info.vSafe',
                 'mod_reservoir_info.iSafeValue')
@@ -339,6 +354,13 @@ class IndexController extends _WebController
         if ($request->input( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
+        $Dao->contact1=$request->input("contact1","");
+        $Dao->contact_tel1=$request->input("contact_tel1","");
+        $Dao->contact2=$request->input("contact2","");
+        $Dao->contact_tel2=$request->input("contact_tel2","");
+        $Dao->contact3=$request->input("contact3","");
+        $Dao->contact_tel3=$request->input("contact_tel3","");
+
         $Dao->iUpdateTime = time();
 
         if ($Dao->save()) {

@@ -44,12 +44,12 @@
                 <tr>
                     <th>水庫名稱</th>
                     <th>上視圖</th>
-                    <th>3D圖</th>
                     <th>剖面圖</th>
+                    <th>3D圖</th>
                 </tr>
                 @foreach($aaData as $key => $value)
                 <tr>
-                    <td width="150px"></td>
+                    <td width="150px">{{$value['vName'] or ''}}</td>
                     <td>
                         <img class="img1" src="{{$value['img1'] or ''}}" />
                     </td>

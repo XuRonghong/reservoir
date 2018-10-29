@@ -52,29 +52,29 @@ class IndexController extends _WebController
         $aaData = array();
         $aaData = [
             [
-            'vName'=> '',
-            'img1' => asset('images/empty.jpg'),
-            'img2' => asset('images/empty.jpg'),
-            'img3' => asset('images/empty.jpg'),
+                'vName'=> '鯉魚潭水庫',
+                'img1' => asset('images/index/1.png'),
+                'img2' => asset('images/index/2.png'),
+                'img3' => asset('images/index/3.png'),
             ],
-            [
-                'vName'=> '',
-                'img1' => asset('images/empty.jpg'),
-                'img2' => asset('images/empty.jpg'),
-                'img3' => asset('images/empty.jpg'),
-            ],
-            [
-                'vName'=> '',
-                'img1' => asset('images/empty.jpg'),
-                'img2' => asset('images/empty.jpg'),
-                'img3' => asset('images/empty.jpg'),
-            ],
-            [
-                'vName'=> '',
-                'img1' => asset('images/empty.jpg'),
-                'img2' => asset('images/empty.jpg'),
-                'img3' => asset('images/empty.jpg'),
-            ],
+            // [
+            //     'vName'=> '',
+            //     'img1' => asset('images/empty.jpg'),
+            //     'img2' => asset('images/empty.jpg'),
+            //     'img3' => asset('images/empty.jpg'),
+            // ],
+            // [
+            //     'vName'=> '',
+            //     'img1' => asset('images/empty.jpg'),
+            //     'img2' => asset('images/empty.jpg'),
+            //     'img3' => asset('images/empty.jpg'),
+            // ],
+            // [
+            //     'vName'=> '',
+            //     'img1' => asset('images/empty.jpg'),
+            //     'img2' => asset('images/empty.jpg'),
+            //     'img3' => asset('images/empty.jpg'),
+            // ],
         ];
         $this->view->with( 'aaData', $aaData );
 

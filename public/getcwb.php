@@ -37,7 +37,7 @@
 <?php
 	$dd=file_get_contents("https://www.cwb.gov.tw/V7/modules/MOD_EC_Home.htm?_=".time());
 	$nn=preg_match_all('/<td nowrap="nowrap">[0-9]+?<\/td>.+?<td style="display:none">([A-Z0-9]+?).htm<\/td>/si', $dd, $cc);
-	echo "Count:".$nn;
+	// echo "Count:".$nn;
 //	for($i=0;$i<$nn;$i++){
 //		echo "<img src='https://www.cwb.gov.tw/V7/earthquake/Data/quake/".$cc[1][$i]."_H.png'><br>";
 		//如果只要抓最新的就把變數帶$cc[1][0]就好
