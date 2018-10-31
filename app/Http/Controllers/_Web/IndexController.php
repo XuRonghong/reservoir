@@ -23,7 +23,7 @@ class IndexController extends _WebController
 
 
     /*
-     * 屬於index的畫面  顯示Event資料
+     * index page
      */
     public function index ()
     {
@@ -34,10 +34,10 @@ class IndexController extends _WebController
             $this->vTitle => url( 'web' ),
 //            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
-        $this->view->with( 'breadcrumb', $this->breadcrumb );
-        $this->view->with( 'module', $this->module );
-        $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '地震Event' );
+//        $this->view->with( 'breadcrumb', $this->breadcrumb );
+//        $this->view->with( 'module', $this->module );
+//        $this->view->with( 'vTitle', $this->vTitle );
+//        $this->view->with( 'vSummary', '地震Event' );
 
 
         // 上方列的內容
@@ -81,6 +81,41 @@ class IndexController extends _WebController
         return $this->view;
     }
 
+    public function getList ( Request $request ){
+
+    }
+
+    public function add ( Request $request ){
+
+    }
+
+    public function doAdd ( Request $request ){
+
+    }
+
+    public function edit ( Request $request ){
+
+    }
+
+    public function doSave ( Request $request ){
+
+    }
+
+    public function doDel ( Request $request ){
+
+    }
+
+    public function attributes ( Request $request ){
+
+    }
+
+
+
+    /*****************************************************************************
+     * @
+     * @ Event table 相關
+     * @
+     *****************************************************************************/
     /*
      * 所有Event ajax
      */
@@ -190,7 +225,6 @@ class IndexController extends _WebController
 
     }
 
-
     /*
      * Event 詳細情形
      */
@@ -251,11 +285,10 @@ class IndexController extends _WebController
 
 
     /***********************************************************
-     * @return \Illuminate\Contracts\View\View
-     *  系統的相關功能代碼
-     *
+     * @
+     * @ 系統的相關功能代碼
+     * @
      ************************************************************/
-
     /*
      * ajax to upbar comment add
      * 有新的地震資訊，加入訊息通知

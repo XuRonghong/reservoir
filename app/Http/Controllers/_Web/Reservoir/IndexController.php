@@ -132,6 +132,9 @@ class IndexController extends _WebController
                 case 4:
                     $var->iType = $this->ReservoirType[4];
                     break;
+                default:
+                    $var->iType = '0';
+                    break;
             }
         }
 
