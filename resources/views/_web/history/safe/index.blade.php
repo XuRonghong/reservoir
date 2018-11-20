@@ -21,8 +21,8 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
-    @include('_web._layouts.breadcrumb')
-    <!-- ============================================================== -->
+        @include('_web._layouts.breadcrumb')
+        <!-- ============================================================== -->
         <!-- End Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
@@ -98,70 +98,49 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                "scrollY": '55vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
-                    // {
-                    //     "sTitle": "ID",
-                    //     "mData": "iId",
-                    //     "width": "40px",
-                    //     "sName": "iId",
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return data;
-                    //     }
-                    // },
                     {
                         "sTitle": "發送者",
                         "mData": "iMemberId",
-                        "width": "70px",
+                        "width": "80px",
                         "sName": "iMemberId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "Rank",
-                    //     "mData": "iRank",
-                    //     "sName": "iRank",
-                    //     "bSearchable": false,
-                    //     "width": "40px",
-                    //     "mRender": function (data, type, row) {
-                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                    //     }
-                    // },
                     {
                         "sTitle": "Title (點擊即可修改)",
                         "mData": "vTitle",
                         "sName": "vTitle",
                         "bSearchable": true,
-                        "width": "280px",
+                        "width": "330px",
                         "mRender": function (data, type, row) {
                             return '<input class="vTitle" size="10" style="width: 100%; display: none;" type="text" value="' + data + '"></input>'+'<div class="aaa">'+data+'</div>';
                         }
                     },
-                    // {"sTitle": "Code", "mData": "vCode", "width": "50px", "sName": "vCode"},
                     {
                         "sTitle": "File",
                         "mData": "vFile",
                         "sName": "vFile",
                         "bSearchable": false,
-                        "width": "80px",
+                        "width": "60px",
                         "mRender": function (data, type, row) {
-                            return '<a class="btn btn-xs btn-danger" href="'+data+'"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>';
+                            return '<a class="btn btn-xs btn-danger" href="'+data+'"><h6><i class="fa fa-file-pdf" aria-hidden="true"></i></h6></a>';
                         }
                     },
-                    // {"sTitle": "vNum", "mData": "vNum", "width": "50px", "sName": "vNum"},
                     {
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
-                        'width': '180px',
+                        'width': '120px',
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
+                            btn = "<div style='text-align: right;'>";
                             // switch (row.iStatus) {
                             //     case 1:
                             //         btn = '<button class="btn btn-xs btn-success btn-status">已開啟</button>';
@@ -170,8 +149,9 @@
                             //         btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
                             //         break;
                             // }
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            btn += '</div>';
                             $('.waitme').waitMe('hide');
                             return btn;
                         }

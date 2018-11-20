@@ -93,27 +93,15 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                // 'sServerMethod': 'GET',
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
-                    // {
-                    //     "sTitle": "ID",
-                    //     "mData": "iId",
-                    //     "width": "80px",
-                    //     "sName": "iId",
-                    //     // "visible":false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return data;
-                    //     }
-                    // },
-                    {"sTitle": "地區別", "mData": "vRegion", "width": "100px", "sName": "vRegion"},
-                    {"sTitle": "名稱", "mData": "vName", "width": "100px", "sName": "vName"},
-                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "100%", "sName": "vLocation"},
-                    {"sTitle": "壩堰位置", "mData": "vCounty", "width": "200px", "sName": "vCounty"},
-                    // {"sTitle": "Type", "mData": "iType", "width": "5%", "sName": "iType"},
-                    {"sTitle": "安全等級", "mData": "iSafeValue", "width": "100px", "sName": "iSafeValue","bSortable": false,"bSearchable": false},
-                    // {"sTitle": "Sum", "mData": "iSum", "width": "8%", "sName": "iSum"},
+                    {"sTitle": "地區別",   "mData": "vRegion",   "width": "60px", "sName": "vRegion", "bSortable": false, "bSearchable": true},
+                    {"sTitle": "名稱",     "mData": "vName",     "width": "150px", "sName": "vName", "bSortable": true, "bSearchable": true},
+                    {"sTitle": "詳細地址", "mData": "vLocation", "width": "300px", "sName": "vLocation", "bSortable": false, "bSearchable": true},
+                    {"sTitle": "壩堰位置", "mData": "vCounty",   "width": "130px", "sName": "vCounty", "bSortable": false, "bSearchable": true},
+                    {"sTitle": "安全等級", "mData": "iSafeValue","width": "75px", "sName": "iSafeValue", "bSortable": false, "bSearchable": false},
                     {
                         "sTitle": "圖片",
                         "mData": "vImages",
@@ -133,9 +121,9 @@
                         "sTitle": "聯絡資訊",
                         "mData": "contact",
                         "sName": "contact",
-                        "width": "100px",
+                        "width": "180px",
                         "bSortable": false,
-                        "bSearchable": false,
+                        "bSearchable": true,
                         "mRender": function (data, type, row) {
                             var html_str = "";
                             html_str+=row["contact1"];
@@ -154,7 +142,7 @@
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
-                        "width": "200px",
+                        "width": "170px",
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
@@ -192,6 +180,8 @@
             });
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('change', '.irank', function () {
                 var id = $(this).closest('tr').attr('id');

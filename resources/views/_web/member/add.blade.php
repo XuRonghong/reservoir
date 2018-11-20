@@ -39,10 +39,10 @@
                 <div class="col-12">
                     <div class="card" id="manage-modal">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
+                            <hr>
                         </div>
-                        <hr>
                         <form class="form-horizontal">
                             <div class="card-body member-modal">
                                 @if(isset($info))

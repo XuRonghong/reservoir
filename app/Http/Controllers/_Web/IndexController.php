@@ -34,9 +34,9 @@ class IndexController extends _WebController
             $this->vTitle => url( 'web' ),
 //            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) )
         ];
-//        $this->view->with( 'breadcrumb', $this->breadcrumb );
-//        $this->view->with( 'module', $this->module );
-//        $this->view->with( 'vTitle', $this->vTitle );
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
+        $this->view->with( 'module', $this->module );
+        $this->view->with( 'vTitle', $this->vTitle );
 //        $this->view->with( 'vSummary', '地震Event' );
 
 
@@ -436,7 +436,16 @@ class IndexController extends _WebController
      */
     public function getMessageList ()
     {
-        $DaoMessage = $this->getDaoMessage(false);
+//        $DaoMessage = $this->getDaoMessage(false);
+        //撈取資訊資料表
+        if (session('member.iAcType')<10){
+            $DaoMessage = $this->getDaoMessage( false , false);     //網站管理員不用階級check
+        } else {
+
+            $DaoMessage = $this->getDaoMessage( false , true);
+        }
+
+
         if ($DaoMessage){
             //
             $Dao = [];

@@ -8,7 +8,7 @@
         </li>
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-left"></i>
+                <i class="mdi mdi-content-paste"></i>
                 <span class="hide-menu">管理查詢系統</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level margin-left-10">
@@ -69,7 +69,7 @@
         @if(session('member.iAcType')<19)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-left"></i>
+                <i class="mdi mdi-content-copy"></i>
                 <span class="hide-menu">安全管考系統</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
@@ -82,11 +82,11 @@
         @endif
         <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/shakemap2')}}" aria-expanded="false">
-                <i class="mdi mdi-content-paste"></i>
+                <i class="mdi mdi-border-left"></i>
                 <span class="hide-menu">地震豪雨通報系統</span>
             </a>
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/index')}}" aria-expanded="false">
-                <i class="mdi mdi-content-paste"></i>
+                <i class="mdi mdi-content-duplicate"></i>
                 <span class="hide-menu">重要監測運整</span>
             </a>
         </li>
@@ -105,7 +105,7 @@
         @if(session('member.iAcType')<10)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-all"></i>
+                <i class="mdi mdi-content-save-settings"></i>
                 <span class="hide-menu">系統管理員</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
@@ -119,7 +119,7 @@
         @if(session('member.iAcType')==1)
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-all"></i>
+                <i class="mdi mdi-content-save"></i>
                 <span class="hide-menu">LOG</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
@@ -130,7 +130,7 @@
         @endif
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="mdi mdi-border-all"></i>
+                <i class="mdi mdi-content-save-all"></i>
                 <span class="hide-menu">系統操作說明</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">

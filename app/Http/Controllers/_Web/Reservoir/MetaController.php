@@ -47,6 +47,8 @@ class MetaController extends _WebController
      */
     public function getList ( Request $request )
     {
+        $this->_init();
+
         $sort_arr = [];
         $search_arr = [];
         $search_word = $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -73,23 +75,24 @@ class MetaController extends _WebController
 
         $mapReservoirMeta['bDel'] = 0;
         $total_count = ModReservoirMeta::query()->where( $mapReservoirMeta )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
+            ->where(function( $query ) use ( $search_arr, $search_word ) {
+                foreach ($search_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
             ->count();
 
         $data_arr = ModReservoirMeta::query()->where( $mapReservoirMeta )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
+            ->where(function( $query ) use ( $search_arr, $search_word ) {
+                foreach ($search_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
-            ->orderBy( $sort_name, $sort_dir )
+            ->orderBy( trim($sort_name), $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
             ->get();
+
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
             $this->rtndata['message'] = ['Oops! 沒有資訊!'];

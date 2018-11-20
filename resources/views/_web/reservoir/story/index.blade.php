@@ -94,41 +94,30 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
                         "mData": "iId",
-                        "width": "40px",
+                        "width": "50px",
                         "sName": "iId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "Rank",
-                    //     "mData": "iRank",
-                    //     "sName": "iRank",
-                    //     "bSearchable": false,
-                    //     "width": "40px",
-                    //     "mRender": function (data, type, row) {
-                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                    //     }
-                    // },
                     {
                         "sTitle": "名稱 (點擊即可修改名稱)",
                         "mData": "vName",
                         "sName": "vName",
                         "bSearchable": true,
-                        "width": "270px",
+                        "width": "300px",
                         "mRender": function (data, type, row) {
                             return '<input class="vName" size="10" style="width: 100%; display: none;" type="text" value="' + data + '"></input>'+'<div class="aaa">'+data+'</div>';
                         }
                     },
-                    // {"sTitle": "Code", "mData": "vCode", "width": "50px", "sName": "vCode"},
                     {
                         "sTitle": "File",
                         "mData": "vFile",
@@ -139,7 +128,6 @@
                             return '<a class="btn btn-xs btn-danger" href="'+data+'"><i class="fa fa-file-pdf" aria-hidden="true"></i></a>';
                         }
                     },
-                    // {"sTitle": "vNum", "mData": "vNum", "width": "50px", "sName": "vNum"},
                     {
                         "sTitle": "",
                         "bSortable": false,
@@ -148,6 +136,7 @@
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
+                            btn = "<div style='text-align: right;'>";
                             // switch (row.iStatus) {
                             //     case 1:
                             //         btn = '<button class="btn btn-xs btn-success btn-status">已開啟</button>';
@@ -156,8 +145,9 @@
                             //         btn = '<button class="btn btn-xs btn-primary btn-status">未開啟</button>';
                             //         break;
                             // }
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            btn += '</div>';
                             $('.waitme').waitMe('hide');
                             return btn;
                         }
@@ -181,6 +171,8 @@
             });
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('change', '.irank', function () {
                 var id = $(this).closest('tr').attr('id');
@@ -216,6 +208,9 @@
             });
             // 編輯完成退回瀏覽模式
             $("#dt_basic").on('change', '.vName', function () {
+                //
+                toastr.info('等我一下...', "{{trans('_web_alert.notice')}}");
+                //
                 $(this).hide();
                 $(this).parent().find('.aaa').show();
                 //
@@ -310,7 +305,7 @@
                     });
                 });
             });
-            $('iRank').click();
+            // $('iRank').click();
         });
     </script>
 @endsection

@@ -46,6 +46,8 @@ class IndexController extends _WebController
      */
     public function getList ( Request $request )
     {
+        $this->_init();
+
         $sort_arr = [];
         $search_arr = [];
         $search_word =    $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -70,26 +72,52 @@ class IndexController extends _WebController
         $sort_name = $sort_arr[ $request->input( 'iSortCol_0' ) ];
         $sort_dir = $request->input( 'sSortDir_0' );
 
+        $orderStartDate = $request->input( 'orderStartDate' ) ? strtotime( $request->input( 'orderStartDate' ) ) : 0;
+        $orderEndDate = $request->input( 'orderEndDate' ) ? strtotime( $request->input( 'orderEndDate' ) ) : 0;
+        $orderPayStatus = $request->input( 'orderPayStatus' ) ? $request->input( 'orderPayStatus' ) : "";
+        $orderStatus = $request->input( 'orderStatus' ) ? $request->input( 'orderStatus' ) : "";
+
 
         $mapReservoir['mod_reservoir.bDel'] = 0;
         $total_count = ModReservoir::query()->where( $mapReservoir )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
-                    $query->orWhere( $item, 'like', '%' . $search_word . '%' );
+            ->where(function ($query) use ($search_arr, $search_word) {
+                foreach ($search_arr as $item) {
+                    //伯源增加的連絡資訊，搜尋要另外判斷
+                    if ($item=="contact"){
+                        $query->orWhere('contact1', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact2', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact3', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel1', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel2', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel3', 'like', '%' . $search_word . '%');
+                    }else {
+                        $query->orWhere($item, 'like', '%' . $search_word . '%');
+                    }
                 }
             })
             ->count();
 
         $data_arr = ModReservoir::query()->where( $mapReservoir )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
-                    $query->orWhere( $item, 'like', '%' . $search_word . '%' );
+            ->where(function ($query) use ($search_arr, $search_word) {
+                foreach ($search_arr as $item) {
+                    //伯源增加的連絡資訊，搜尋要另外判斷
+                    if ($item=="contact"){
+                        $query->orWhere('contact1', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact2', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact3', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel1', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel2', 'like', '%' . $search_word . '%');
+                        $query->orWhere('contact_tel3', 'like', '%' . $search_word . '%');
+                    }else {
+                        $query->orWhere($item, 'like', '%' . $search_word . '%');
+                    }
                 }
             })
-            // ->orderBy( trim($sort_name), $sort_dir )
+            ->orderBy( trim($sort_name), $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
             ->get();
+
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
             $this->rtndata['message'] = ['Oops! 沒有水庫資訊!'];
@@ -97,13 +125,15 @@ class IndexController extends _WebController
         }
         foreach ($data_arr as $key => $var)
         {
+            $var->iSafeValue = 0;
+            $DaoInfo = ModReservoirInfo::query()->where('iReservoirId','=',$var->iId)->first();
+            if ( !$DaoInfo)continue;
+
+
             $var->DT_RowId = $var->iId;
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
             $var->vImages = [];//url('images/empty.jpg');
-            $var->iSafeValue = 0;
 
-            $DaoInfo = ModReservoirInfo::query()->where('iReservoirId','=',$var->iId)->first();
-            if ( !$DaoInfo)continue;
             //安全值
             $var->iSafeValue = $DaoInfo->iSafeValue ? $DaoInfo->iSafeValue : 0;
             //圖片

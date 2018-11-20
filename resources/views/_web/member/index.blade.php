@@ -39,7 +39,7 @@
                         <div class="card-body">
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
-                            <div class="table-responsive">
+                            <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
                             </div>
@@ -89,13 +89,16 @@
 
         $(document).ready(function () {
             /* BASIC ;*/
+            // loading .....
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
@@ -149,10 +152,13 @@
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
-                            var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            // var btn = "無功能";
+                            var btn = '<div style="text-align: right;">';
+                            btn += '<button class="btn btn-xs btn-default btn-attributes" title="全部資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             btn += '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
-                            btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            btn += '<button class="btn btn-xs btn-danger pull-right btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+                            btn += '</div>';
+                            $('.waitme').waitMe('hide');
                             return btn;
                         }
                     },
@@ -167,7 +173,16 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 }
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('change', '.irank', function () {
                 //var id = $(this).closest('tr').attr('id');

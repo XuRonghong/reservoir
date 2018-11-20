@@ -37,10 +37,9 @@
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
-                        <hr>
                         <form class="form-horizontal">
                             <div class="card-body">
-                                <h4 class="card-title"></h4>
+                                {{--<h4 class="card-title"></h4>--}}
                                 <div class="form-group row">
                                     <label class="col-sm-3 text-right control-label col-form-label">Category</label>
                                     <div class="col-sm-9">

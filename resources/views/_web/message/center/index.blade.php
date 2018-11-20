@@ -39,8 +39,9 @@
                         <div class="card-body">
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
-                            <div class="table-responsive">
-                                <table id="dt_basic" class="table table-striped table-bordered">
+                            <div class="table-responsive waitme">
+                                <table id="dt_basic" class="table table-striped table-bordered ">
+
                                 </table>
                             </div>
                         </div>
@@ -89,14 +90,16 @@
 
         $(document).ready(function () {
             /* BASIC ;*/
+            // loading .....
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
@@ -108,19 +111,8 @@
                             return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "圖片",
-                    //     "mData": "vImages",
-                    //     "width": "10%",
-                    //     "bSortable": false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return "<img width='100%' src=" + data + ">";
-                    //     }
-                    // },
-                    {"sTitle": "標頭", "mData": "vTitle", "width": "270px", "sName": "vTitle"},
+                    {"sTitle": "標頭", "mData": "vTitle", "width": "300px", "sName": "vTitle"},
                     {"sTitle": "發送者", "mData": "iSource", "width": "80px", "sName": "iSource"},
-                    // {"sTitle": "分類", "mData": "iType", "width": "40px", "sName": "iType"},
                     {"sTitle": "時間", "mData": "iCreateTime", "width": "", "sName": "iCreateTime"},
                     {
                         "sTitle": "",
@@ -143,6 +135,7 @@
                                 btn += '<button class="pull-right btn btn-xs btn-danger btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                                 <?php } ?>
                             }
+                            $('.waitme').waitMe('hide');
                             return btn;
                         }
                     },
@@ -157,7 +150,16 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 },
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
                 //var id = $(this).closest('tr').attr('id');

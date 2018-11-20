@@ -158,6 +158,8 @@
             })
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取( $('.waitme').waitMe('hide') , 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('change', '.irank', function () {
                 //var id = $(this).closest('tr').attr('id');

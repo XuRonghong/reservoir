@@ -37,9 +37,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{session()->get( 'SEO.vTitle')}}</h4>
-                            <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
-                            <div class="table-responsive">
+                            {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
+                            {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
+                            <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
 
                                 </table>
@@ -90,18 +90,21 @@
 
         $(document).ready(function () {
             /* BASIC ;*/
+            //
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
                         "mData": "iMemberId",
-                        "width": "7%",
+                        // "width": "30px",
                         "sName": "iMemberId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -111,19 +114,20 @@
                     {
                         "sTitle": "圖片",
                         "mData": "vUserImage",
-                        "width": "10%",
+                        "width": "50px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             return "<img width='100%' src=" + data + ">";
                         }
                     },
-                    {"sTitle": "使用者名稱", "mData": "vUserName", "width": "15%", "sName": "vUserName"},
-                    {"sTitle": "使用者信箱", "mData": "vUserEmail", "width": "20%", "sName": "vUserEmail"},
-                    {"sTitle": "連絡電話", "mData": "vUserContact", "width": "15%", "sName": "vUserContact"},
-                    {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "25%", "sName": "vUserAddress"},
+                    {"sTitle": "使用者名稱", "mData": "vUserName", "width": "100px", "sName": "vUserName"},
+                    {"sTitle": "使用者信箱", "mData": "vUserEmail", "width": "160px", "sName": "vUserEmail"},
+                    {"sTitle": "連絡電話", "mData": "vUserContact", "width": "120px", "sName": "vUserContact"},
+                    {"sTitle": "聯絡地址", "mData": "vUserAddress", "width": "250px", "sName": "vUserAddress"},
                     {
                         "sTitle": "",
+                        "width": "40px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -132,6 +136,7 @@
                             btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             // btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
+                            $('.waitme').waitMe('hide');
                             return btn;
                         }
                     },
@@ -146,7 +151,16 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 },
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
                 //var id = $(this).closest('tr').attr('id');

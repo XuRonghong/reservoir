@@ -94,9 +94,9 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
+                "scrollY": '60vh',
                 // 'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "ID",
@@ -108,16 +108,6 @@
                             return data;
                         }
                     },
-                    // {
-                    //     "sTitle": "Rank",
-                    //     "mData": "iRank",
-                    //     "sName": "iRank",
-                    //     "bSearchable": false,
-                    //     "width": "30px",
-                    //     "mRender": function (data, type, row) {
-                    //         return '<input class="irank" size="1" type="text" value="' + data + '"></input>';
-                    //     }
-                    // },
                     {"sTitle": "蓄水建造物", "mData": "vStructure", "width": "120px", "sName": "vStructure"},
                     {"sTitle": "災害潛勢", "mData": "vLevel", "width": "80px", "sName": "vLevel"},
                     {"sTitle": "壩高(m)", "mData": "iHeight", "width": "80px", "sName": "iHeight"},
@@ -168,6 +158,8 @@
             });
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('change', '.irank', function () {
                 var id = $(this).closest('tr').attr('id');

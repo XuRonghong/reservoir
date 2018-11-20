@@ -39,7 +39,7 @@
                         <div class="card-body">
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
-                            <div class="table-responsive ">
+                            <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
                                 </table>
                             </div>
@@ -88,35 +88,17 @@
 
         $(document).ready(function () {
             /* BASIC ;*/
+            // loading .....
+            run_waitMe($('.waitme'));
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '65vh',
-                'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                "scrollY": '60vh',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
-                    // {
-                    //     "sTitle": "ID",
-                    //     "mData": "iId",
-                    //     "width": "5%",
-                    //     "sName": "iId",
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return data;
-                    //     }
-                    // },
-                    // {
-                    //     "sTitle": "圖片",
-                    //     "mData": "vImages",
-                    //     "width": "10%",
-                    //     "bSortable": false,
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         return "<img width='100%' src=" + data + ">";
-                    //     }
-                    // },
                     {
                         "sTitle": "標頭",
                         "mData": "message",
@@ -131,20 +113,6 @@
                             }
                         }
                     },
-                    // {
-                    //     "sTitle": "發送者",
-                    //     "mData": "message",
-                    //     "width": "140px",
-                    //     "sName": "iSource",
-                    //     "bSearchable": false,
-                    //     "mRender": function (data, type, row) {
-                    //         if (row.message) {
-                    //             return row.message.iSource;
-                    //         } else {
-                    //             return '';
-                    //         }
-                    //     }
-                    // },
                     {
                         "sTitle": "狀態",
                         "mData": "message",
@@ -184,6 +152,7 @@
                         "sName": "iCreateTime",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
+                            $('.waitme').waitMe('hide');
                             if (row.message) {
                                 return row.message.iCreateTime;
                             } else {
@@ -202,7 +171,16 @@
                     "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 },
             });
+            $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
+                run_waitMe($('.waitme'));
+            });
+            $('#dt_basic_length select').change(function () {
+                run_waitMe($('.waitme'));
+            });
+            setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
+
+
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
                 var id = $(this).closest('tr').attr('id');
