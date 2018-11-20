@@ -85,7 +85,7 @@
                 <i class="mdi mdi-border-left"></i>
                 <span class="hide-menu">地震豪雨通報系統</span>
             </a>
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/index')}}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('web/instructions/monitor')}}" aria-expanded="false">
                 <i class="mdi mdi-content-duplicate"></i>
                 <span class="hide-menu">重要監測運整</span>
             </a>

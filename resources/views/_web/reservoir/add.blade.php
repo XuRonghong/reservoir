@@ -44,7 +44,7 @@
                                     <label class="col-sm-3 text-right control-label col-form-label">Category</label>
                                     <div class="col-sm-9">
                                         <select class="form-control iType">
-                                            @foreach($reservori_category as $key => $var)
+                                            @foreach($reservoir_category as $key => $var)
                                                 <option value="{{$key or 0}}" @if(isset($info) && $info->iType==$key) selected @endif >
                                                     {{$var or ''}}
                                                 </option>
@@ -219,6 +219,7 @@
                 data.vLocation = current_modal.find(".vLocation").val();
                 data.vCounty = current_modal.find(".vCounty").val();
                 data.iSafeValue = current_modal.find(".iSafeValue").val();
+                //
                 $("[data-name]").each(function(){
                     data[$(this).attr("data-name")]=$(this).val();
                 });

@@ -196,7 +196,7 @@ class IndexController extends _WebController
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '新增水庫資料' );
 
-        $this->view->with( 'reservori_category', $this->ReservoirType );
+        $this->view->with( 'reservoir_category', $this->ReservoirType );
         return $this->view;
     }
 
@@ -337,7 +337,7 @@ class IndexController extends _WebController
         }
         //
         $this->view->with( 'info', $DaoReservoir );
-        $this->view->with( 'reservori_category', $this->ReservoirType );
+        $this->view->with( 'reservoir_category', $this->ReservoirType );
 
         return $this->view;
     }

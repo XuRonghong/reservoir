@@ -9,7 +9,7 @@ use App\Http\Controllers\FuncController;
 use App\ModInstructions;
 
 
-class InstructionsController extends _WebController
+class MonitorController extends _WebController
 {
 
     /*
@@ -17,7 +17,7 @@ class InstructionsController extends _WebController
      */
     function __construct ()
     {
-        $this->module = [ 'instructions' ];
+        $this->module = [ 'instructions', 'monitor' ];
         $this->vTitle = 'Index';
     }
 
@@ -35,7 +35,9 @@ class InstructionsController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '系統操作說明' );
+        $this->view->with( 'vSummary', '重要監測運整' );
+
+        $this->view->with( 'add_url', url('web/' . implode( '/' , $this->module ) . '/add') );
 
         return $this->view;
     }
@@ -46,6 +48,8 @@ class InstructionsController extends _WebController
      */
     public function getList ( Request $request )
     {
+        $this->_init();
+
         $sort_arr = [];
         $search_arr = [];
         $search_word = $request->input('sSearch') ? $request->input('sSearch') : '' ;
@@ -66,13 +70,16 @@ class InstructionsController extends _WebController
                 $sort_arr[$key] = $item;
             }
         }
-        $sort_name = $sort_arr[ $request->input( 'iSortCol_0' ) ];
-        $sort_dir = $request->input( 'sSortDir_0' );
+        $sort_name = $request->input( 'iSortCol_0' )? $sort_arr[ $request->input( 'iSortCol_0' ) ] : 'mod_instructions.iId';
+        $sort_dir = $request->input( 'sSortDir_0' )? $request->input( 'sSortDir_0' ) : 'desc';
 
 
-        $map['bDel'] = 0;
-        $map['iType'] = 11;     // 11.系統操作說明  21.重要監測運整
+        $map['mod_instructions.bDel'] = 0;
+        $map['mod_instructions.iType'] = 21;     // 11.系統操作說明  21.重要監測運整
         $total_count = ModInstructions::query()->where( $map )
+            ->join( 'mod_reservoir', function( $join ) {
+                $join->on( 'mod_reservoir.iId', '=', 'mod_instructions.iReservoir' );
+            })
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -81,6 +88,9 @@ class InstructionsController extends _WebController
             ->count();
 
         $data_arr = ModInstructions::query()->where( $map )
+            ->join( 'mod_reservoir', function( $join ) {
+                $join->on( 'mod_reservoir.iId', '=', 'mod_instructions.iReservoir' );
+            })
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
                 foreach ($sort_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
@@ -89,6 +99,9 @@ class InstructionsController extends _WebController
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
+            ->select('mod_instructions.*' ,
+                'mod_reservoir.iId' ,
+                'mod_reservoir.vName' )
             ->get();
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
@@ -102,7 +115,7 @@ class InstructionsController extends _WebController
             $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
             //
             $var->iMemberId = SysMember::query()->where('iId', '=', $var->iMemberId)->first() ->vAccount;
-            //檔案路徑
+            //圖片檔案路徑
             $image_arr = [];
             $tmp_arr = explode( ';', $var->vFile );
             $tmp_arr = array_filter( $tmp_arr );
@@ -131,6 +144,7 @@ class InstructionsController extends _WebController
      */
     public function add ()
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -140,7 +154,9 @@ class InstructionsController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '新增操作說明' );
+        $this->view->with( 'vSummary', '重要監測運整-新增' );
+
+        $this->view->with( 'reservoir', $this->Reservoir );
 
         return $this->view;
     }
@@ -153,14 +169,16 @@ class InstructionsController extends _WebController
     {
         $Dao = new ModInstructions();
         $Dao->iRank = 0;         //順序 越大越後面
-        $Dao->iType = 11;       //11.系統操作說明
+        $Dao->iType = 21;       //11.系統操作說明     21.重要監測運整
         $Dao->iMemberId = session('member.iId');
-        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
-        $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-        $Dao->vFile = ( $request->input( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
-        $Dao->vNum = ( $request->input( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
+        $Dao->iReservoir = ( $request->exists( 'iReservoir' ) ) ? $request->input( 'iReservoir' ) : "";
+//        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
+        $Dao->vFile = ( $request->exists( 'vImages1' ) ) ? $request->input( 'vImages1' ).';' : '';
+        $Dao->vFile .= ( $request->exists( 'vImages2' ) ) ? $request->input( 'vImages2' ).';' : '';
+        $Dao->vFile .= ( $request->exists( 'vImages3' ) ) ? $request->input( 'vImages3' ).';' : '';
+//        $Dao->vNum = ( $request->exists( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+        $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
         if ($Dao->save()) {
             //Logs
@@ -183,6 +201,7 @@ class InstructionsController extends _WebController
      */
     public function edit ( $id )
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -192,7 +211,7 @@ class InstructionsController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '編輯水庫故事' );
+        $this->view->with( 'vSummary', '重要監測運整-編輯' );
 
 
         $map['bDel'] = 0;
@@ -220,6 +239,7 @@ class InstructionsController extends _WebController
 
         //
         $this->view->with( 'info', $Dao );
+        $this->view->with( 'reservoir', $this->Reservoir );
 
         return $this->view;
     }
@@ -244,19 +264,25 @@ class InstructionsController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'vTitle' )) {
-            $Dao->vTitle = $request->input( 'vTitle' );
+        if ($request->exists( 'iReservoir' )) {
+            $Dao->iReservoir = $request->input( 'iReservoir' );
         }
-        if ($request->input( 'vCode' )) {
-            $Dao->vCode = $request->input( 'vCode' );
+//        if ($request->exists( 'vCode' )) {
+//            $Dao->vCode = $request->input( 'vCode' );
+//        }
+        if ($request->exists( 'vImages1' )) {
+            $Dao->vFile = $request->input( 'vImages1' ) .';' ;
         }
-        if ($request->input( 'vFile' )) {
-            $Dao->vFile = $request->input( 'vFile' );
+        if ($request->exists( 'vImages2' )) {
+            $Dao->vFile .= $request->input( 'vImages2' ) .';' ;
         }
-        if ($request->input( 'vNum' )) {
-            $Dao->vNum = $request->input( 'vNum' );
+        if ($request->exists( 'vImages3' )) {
+            $Dao->vFile .= $request->input( 'vImages3' ) .';' ;
         }
-        if ($request->input( 'iStatus' )) {
+//        if ($request->exists( 'vNum' )) {
+//            $Dao->vNum = $request->input( 'vNum' );
+//        }
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();

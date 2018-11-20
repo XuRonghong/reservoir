@@ -41,6 +41,7 @@ class _WebController extends Controller
     protected $comment_total = 0;
     protected $Permission = [];
     protected $ReservoirType = [];
+    protected $Reservoir = [];
 
 
     /*
@@ -75,6 +76,16 @@ class _WebController extends Controller
             4    =>  'type 4',
             5    =>  'type 5',
         ];
+        $map['bDel']=0;
+        $map['iStatus']=1;
+        $this->Reservoir = ModReservoir::query()->where($map)->get();
+        if ($this->Reservoir){
+            foreach ($this->Reservoir as $key => $value){
+                if (trim($value->vName)==''){
+                    unset($this->Reservoir[$key]);
+                }
+            }
+        }
     }
 
     /*

@@ -41,6 +41,7 @@
                             {{--<h6 class="card-subtitle">{{$vSummary or ''}}</h6>--}}
                             <div class="table-responsive waitme">
                                 <table id="dt_basic" class="table table-striped table-bordered">
+
                                 </table>
                             </div>
                         </div>

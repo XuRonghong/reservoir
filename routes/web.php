@@ -169,25 +169,6 @@ Route::group(
 
 
 
-            /*************************************
-             * 重要監測運整
-             *************************************/
-            Route::group(
-                [
-                    'prefix' => '',
-//                    'namespace' => '',
-                ], function() {
-
-                Route::get( '', 'IndexController@index' );
-                Route::get( 'getlist', 'IndexController@getList' );
-                Route::get( 'add', 'IndexController@add' );
-                Route::post('doadd', 'IndexController@doAdd' );
-                Route::get( 'edit/{id}', 'IndexController@edit' );
-                Route::post('dosave', 'IndexController@doSave' );
-                Route::post('dodel', 'IndexController@doDel' );
-                Route::get( 'attributes/{id}', 'IndexController@attributes' );
-            } );
-
 
             /*************************************
              * 地震event資訊 (已關閉)
@@ -256,6 +237,30 @@ Route::group(
                 Route::post( 'dosave', 'InstructionsController@doSave' );
                 Route::post( 'dosaveshow', 'InstructionsController@doSaveShow' );
                 Route::post( 'dodel', 'InstructionsController@doDel' );
+
+
+                /*************************************
+                 * 重要監測運整
+                 *************************************/
+                Route::group(
+                    [
+                        'prefix' => 'monitor',
+//                    'namespace' => '',
+                    ], function() {
+
+                    //
+                    Route::get( '', 'MonitorController@index' );
+                    Route::any( 'getlist', 'MonitorController@getList' );
+                    Route::get( 'add', 'MonitorController@add' );
+                    Route::post( 'doadd', 'MonitorController@doAdd' );
+                    Route::get( 'edit/{id}', 'MonitorController@edit' );
+                    Route::post( 'dosave', 'MonitorController@doSave' );
+                    Route::post( 'dosaveshow', 'MonitorController@doSaveShow' );
+                    Route::post( 'dosavepassword', 'MonitorController@doSavePassword' );
+                    Route::get( 'attr/{id}', 'MonitorController@attr' );
+
+                } );
+
             } );
 
 
