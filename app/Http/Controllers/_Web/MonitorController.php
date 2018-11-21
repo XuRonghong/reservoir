@@ -77,7 +77,7 @@ class MonitorController extends _WebController
         $map['mod_instructions.bDel'] = 0;
         $map['mod_instructions.iType'] = 21;     // 11.系統操作說明  21.重要監測運整
         $total_count = ModInstructions::query()->where( $map )
-            ->join( 'mod_reservoir', function( $join ) {
+            ->leftJoin( 'mod_reservoir', function( $join ) {
                 $join->on( 'mod_reservoir.iId', '=', 'mod_instructions.iReservoir' );
             })
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
@@ -88,7 +88,7 @@ class MonitorController extends _WebController
             ->count();
 
         $data_arr = ModInstructions::query()->where( $map )
-            ->join( 'mod_reservoir', function( $join ) {
+            ->leftJoin( 'mod_reservoir', function( $join ) {
                 $join->on( 'mod_reservoir.iId', '=', 'mod_instructions.iReservoir' );
             })
             ->where(function( $query ) use ( $sort_arr, $search_word ) {
@@ -99,9 +99,12 @@ class MonitorController extends _WebController
             ->orderBy( $sort_name, $sort_dir )
             ->skip( $iDisplayStart )
             ->take( $iDisplayLength )
-            ->select('mod_instructions.*' ,
-                'mod_reservoir.iId' ,
-                'mod_reservoir.vName' )
+            ->select([
+                'mod_instructions.iId' ,
+                'mod_instructions.vFile' ,
+                'mod_instructions.iReservoir' ,
+                'mod_reservoir.vName'
+            ])
             ->get();
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
@@ -114,8 +117,9 @@ class MonitorController extends _WebController
             $var->iCreateTime = date( 'Y/m/d H:i:s', $var->iCreateTime );
             $var->iUpdateTime = date( 'Y/m/d H:i:s', $var->iUpdateTime );
             //
-            $var->iMemberId = SysMember::query()->where('iId', '=', $var->iMemberId)->first() ->vAccount;
+//            $var->iMemberId = SysMember::query()->where('iId', '=', $var->iMemberId)->first() ->vAccount;
             //圖片檔案路徑
+
             $image_arr = [];
             $tmp_arr = explode( ';', $var->vFile );
             $tmp_arr = array_filter( $tmp_arr );
@@ -173,9 +177,9 @@ class MonitorController extends _WebController
         $Dao->iMemberId = session('member.iId');
         $Dao->iReservoir = ( $request->exists( 'iReservoir' ) ) ? $request->input( 'iReservoir' ) : "";
 //        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-        $Dao->vFile = ( $request->exists( 'vImages1' ) ) ? $request->input( 'vImages1' ).';' : '';
-        $Dao->vFile .= ( $request->exists( 'vImages2' ) ) ? $request->input( 'vImages2' ).';' : '';
-        $Dao->vFile .= ( $request->exists( 'vImages3' ) ) ? $request->input( 'vImages3' ).';' : '';
+        $Dao->vFile = ( $request->exists( 'vImage1' ) ) ? $request->input( 'vImage1' ).';' : '';
+        $Dao->vFile .= ( $request->exists( 'vImage2' ) ) ? $request->input( 'vImage2' ).';' : '';
+        $Dao->vFile .= ( $request->exists( 'vImage3' ) ) ? $request->input( 'vImage3' ).';' : '';
 //        $Dao->vNum = ( $request->exists( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
         $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
@@ -217,7 +221,7 @@ class MonitorController extends _WebController
         $map['bDel'] = 0;
         $Dao = ModInstructions::query()->where($map)
             ->where( 'iId', '=', $id )
-            ->orWhere('vNum', '=', $id)
+//            ->orWhere('vNum', '=', $id)
             ->first();
         if ( !$Dao) {
 //            session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
@@ -228,6 +232,7 @@ class MonitorController extends _WebController
         $image_arr = [];
         $tmp_arr = explode( ';', $Dao->vFile );
         $tmp_arr = array_filter( $tmp_arr );
+        $Dao->vFileId = $tmp_arr;
         foreach ($tmp_arr as $item) {
             $image_arr[] = FuncController::_getFilePathById( $item );
         }
@@ -270,14 +275,14 @@ class MonitorController extends _WebController
 //        if ($request->exists( 'vCode' )) {
 //            $Dao->vCode = $request->input( 'vCode' );
 //        }
-        if ($request->exists( 'vImages1' )) {
-            $Dao->vFile = $request->input( 'vImages1' ) .';' ;
+        if ($request->exists( 'vImage1' )) {
+            $Dao->vFile = $request->input( 'vImage1' ) .';' ;
         }
-        if ($request->exists( 'vImages2' )) {
-            $Dao->vFile .= $request->input( 'vImages2' ) .';' ;
+        if ($request->exists( 'vImage2' )) {
+            $Dao->vFile .= $request->input( 'vImage2' ) .';' ;
         }
-        if ($request->exists( 'vImages3' )) {
-            $Dao->vFile .= $request->input( 'vImages3' ) .';' ;
+        if ($request->exists( 'vImage3' )) {
+            $Dao->vFile .= $request->input( 'vImage3' ) .';' ;
         }
 //        if ($request->exists( 'vNum' )) {
 //            $Dao->vNum = $request->input( 'vNum' );

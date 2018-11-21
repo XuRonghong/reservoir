@@ -56,24 +56,24 @@
                                 <div class="form-group row">
                                     <label for="img1" class="col-sm-3 text-right control-label col-form-label">Picture 1</label>
                                     <div class="col-sm-9">
-                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img id="img1" src="{{$info->vFile[0] or url('images/empty.jpg')}}" style="height:140px">
+                                        <a class="btn-image-modal1" data-modal="image-form" data-id="1">
+                                            <img id="{{$info->vFileId[0] or 'img1'}}" class="img1" src="{{$info->vFile[0] or url('images/empty.jpg')}}" style="height:140px">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="img2" class="col-sm-3 text-right control-label col-form-label">Picture 2</label>
                                     <div class="col-sm-9">
-                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img id="img2" src="{{$info->vFile[1] or url('images/empty.jpg')}}" style="height:140px">
+                                        <a class="btn-image-modal2" data-modal="image-form" data-id="2">
+                                            <img id="{{$info->vFileId[1] or 'img2'}}" class="img2" src="{{$info->vFile[1] or url('images/empty.jpg')}}" style="height:140px">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="img3" class="col-sm-3 text-right control-label col-form-label">Picture 3</label>
                                     <div class="col-sm-9">
-                                        <a class="btn-image-modal" data-modal="image-form" data-id="">
-                                            <img id="img3" src="{{$info->vFile[2] or url('images/empty.jpg')}}" style="height:140px">
+                                        <a class="btn-image-modal3" data-modal="image-form" data-id="3">
+                                            <img id="{{$info->vFileId[2] or 'img3'}}" class="img3" src="{{$info->vFile[2] or url('images/empty.jpg')}}" style="height:140px">
                                         </a>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
                                     @if(isset($info))
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iMemberId or ''}}">Save</button>
+                                        <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">Save</button>
                                     @else
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">Add</button>
                                     @endif
@@ -122,7 +122,7 @@
 @section('inline-js')
     <!--  -->
     <!-- Public Crop_Image -->
-    @include('_web._js.crop_image')
+    @include('_web._js.crop_image_noAspectRatio')
     <!-- end -->
     <!-- Public SummerNote -->
     @include('_web._js.summernote')
@@ -144,9 +144,9 @@
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iReservoir = current_modal.find(".iReservoir").val();
-                data.vImage1 = current_modal.find("#img1").attr('src');
-                data.vImage2 = current_modal.find("#img2").attr('src');
-                data.vImage3 = current_modal.find("#img3").attr('src');
+                data.vImage1 = current_modal.find(".img1").attr('id');
+                data.vImage2 = current_modal.find(".img2").attr('id');
+                data.vImage3 = current_modal.find(".img3").attr('id');
                 //
                 $(".cropper_image").find('img').each(function () {
                     if ($(this).attr('id') != "Image") {
@@ -178,9 +178,9 @@
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
                 data.iReservoir = current_modal.find(".iReservoir").val();
-                data.vImage1 = current_modal.find("#img1").attr('src');
-                data.vImage2 = current_modal.find("#img2").attr('src');
-                data.vImage3 = current_modal.find("#img3").attr('src');
+                data.vImage1 = current_modal.find(".img1").attr('id');
+                data.vImage2 = current_modal.find(".img2").attr('id');
+                data.vImage3 = current_modal.find(".img3").attr('id');
                 //
                 $.ajax({
                     url: url_dosave,

@@ -108,7 +108,7 @@
                     {
                         "sTitle": "水庫名稱",
                         "mData": "vName",
-                        "width": "50px",
+                        "width": "150px",
                         "bSortable": true,
                         "bSearchable": true,
                         "mRender": function (data, type, row) {
@@ -116,9 +116,9 @@
                         }
                     },
                     {
-                        "sTitle": "圖片1",
+                        "sTitle": "上視圖",
                         "mData": "vImage1",
-                        "width": "50px",
+                        "width": "150px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -126,9 +126,9 @@
                         }
                     },
                     {
-                        "sTitle": "圖片2",
+                        "sTitle": "剖面圖",
                         "mData": "vImage2",
-                        "width": "50px",
+                        "width": "150px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -136,9 +136,9 @@
                         }
                     },
                     {
-                        "sTitle": "圖片3",
+                        "sTitle": "3D圖",
                         "mData": "vImage3",
-                        "width": "50px",
+                        "width": "150px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -147,7 +147,7 @@
                     },
                     {
                         "sTitle": "",
-                        "width": "40px",
+                        "width": "60px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -173,18 +173,20 @@
             });
             $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
                 run_waitMe($('.waitme'));
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 3000);   //逾時10秒關閉讀取
             });
             $('#dt_basic_length select').change(function () {
                 run_waitMe($('.waitme'));
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 3000);   //逾時10秒關閉讀取
             });
-            setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
+            setTimeout(function(){ $('.waitme').waitMe('hide') }, 6000);   //逾時10秒關閉讀取
             /* END BASIC */
+
 
 
             //
             $("#dt_basic").on('click', '.btn-edit', function () {
-                //var id = $(this).closest('tr').attr('id');
-                var id = $(this).closest('tr').find('td').first().text();
+                var id = $(this).closest('tr').attr('id');
                 location.href = url_edit + '/' + id;
             });
         });
