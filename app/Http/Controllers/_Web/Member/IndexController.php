@@ -285,7 +285,8 @@ class IndexController extends _WebController
         $this->view->with( 'permission', $this->Permission );
 
 
-        $DaoMember = SysMember::query()->find($id);//->where('iUserId','=',$id)->first();
+        $map['iStatus'] = 1;
+        $DaoMember = SysMember::query()->where($map)->find($id);//->where('iUserId','=',$id)->first();
         if (!$DaoMember) {
 //            session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
@@ -438,6 +439,13 @@ class IndexController extends _WebController
      */
     public function attr (Request $request , $id)
     {
+        if (session('member.iAcType') > 9 && session('member.iId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+        if ($id == 1 && session('member.iId') != $id){
+            return redirect ()->guest ( 'web/login' );
+        };
+
         $this->_init();
         $this->view = View()->make('_web.' . implode('.', $this->module) . '.attr');
         $this->breadcrumb = [
@@ -451,8 +459,8 @@ class IndexController extends _WebController
         $this->view->with( 'vSummary', '更多資訊' );
         $this->view->with( 'permission', $this->Permission );
 
-
-        $DaoMember = SysMember::query()->find($id);
+        $map['iStatus']=1;
+        $DaoMember = SysMember::query()->where($map)->find($id);
         if (!$DaoMember) {
             session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));

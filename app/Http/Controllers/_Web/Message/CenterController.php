@@ -250,20 +250,20 @@ class CenterController extends _WebController
     {
         try {
             $Dao = new ModMessage();
-            $Dao->iType =   ($request->input('iType')) ? $request->input('iType') : 99;     // type:99 預設message訊息
-            $Dao->iSource = ($request->input('iSource')) ? $request->input('iSource') : 2;
-            $Dao->iHead =   ($request->input('iHead')) ? $request->input('iHead') : 0;
-            $Dao->vTitle =  ($request->input('vTitle')) ? $request->input('vTitle') : "";
-            $Dao->vSummary =($request->input('vSummary')) ? $request->input('vSummary') : "";
-            $Dao->vDetail = ($request->input('vDetail')) ? $request->input('vDetail') : '';
-            $Dao->vImages = ($request->input('vImages')) ? $request->input('vImages') : "";
+            $Dao->iType =   ($request->exists('iType')) ? $request->input('iType') : 99;     // type:99 預設message訊息
+            $Dao->iSource = ($request->exists('iSource')) ? $request->input('iSource') : 2;
+            $Dao->iHead =   ($request->exists('iHead')) ? $request->input('iHead') : 0;
+            $Dao->vTitle =  ($request->exists('vTitle')) ? $request->input('vTitle') : "";
+            $Dao->vSummary =($request->exists('vSummary')) ? $request->input('vSummary') : "";
+            $Dao->vDetail = ($request->exists('vDetail')) ? $request->input('vDetail') : '';
+            $Dao->vImages = ($request->exists('vImages')) ? $request->input('vImages') : "";
             $Dao->vNumber = 'MESS'.date('ymd',time()).rand(000, 999);
             $Dao->vReadman = session('member.iId') . ';';     //紀錄哪些使用者讀過
-            $Dao->iStartTime =  ($request->input('iStartTime')) ? $request->input('iStartTime') : time();
-            $Dao->iEndTime =    ($request->input('iEndTime')) ? $request->input('iEndTime') : 0;
+            $Dao->iStartTime =  ($request->exists('iStartTime')) ? $request->input('iStartTime') : time();
+            $Dao->iEndTime =    ($request->exists('iEndTime')) ? $request->input('iEndTime') : 0;
             $Dao->iCheck = 0;
             $Dao->iCreateTime = $Dao->iUpdateTime = time();
-            $Dao->iStatus = ($request->input('iStatus')) ? $request->input('iStatus') : 1;
+            $Dao->iStatus = ($request->exists('iStatus')) ? $request->input('iStatus') : 1;
             $Dao->bDel = 0;
 
             if ($Dao->save()) {
@@ -391,17 +391,17 @@ class CenterController extends _WebController
 
 //        $Dao->iRank = null; //$maxRank + 1;
 //        $Dao->iCategoryType = 0; //( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : $Dao->iType;
-        $Dao->iSource = ( $request->input( 'iSource' ) ) ? $request->input( 'iSource' ) : $Dao->iSource;
-        $Dao->iHead = ( $request->input( 'iHead' ) ) ? $request->input( 'iHead' ) : $Dao->iHead;
-        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : $Dao->vTitle;
-        $Dao->vSummary = ( $request->input( 'vSummary' ) ) ? $request->input( 'vSummary' ) : $Dao->vSummary;
-        $Dao->vDetail = ( $request->input( 'vDetail' ) ) ? $request->input( 'vDetail' ) : $Dao->vDetail;
+        $Dao->iType = ( $request->exists( 'iType' ) ) ? $request->input( 'iType' ) : $Dao->iType;
+        $Dao->iSource = ( $request->exists( 'iSource' ) ) ? $request->input( 'iSource' ) : $Dao->iSource;
+        $Dao->iHead = ( $request->exists( 'iHead' ) ) ? $request->input( 'iHead' ) : $Dao->iHead;
+        $Dao->vTitle = ( $request->exists( 'vTitle' ) ) ? $request->input( 'vTitle' ) : $Dao->vTitle;
+        $Dao->vSummary = ( $request->exists( 'vSummary' ) ) ? $request->input( 'vSummary' ) : $Dao->vSummary;
+        $Dao->vDetail = ( $request->exists( 'vDetail' ) ) ? $request->input( 'vDetail' ) : $Dao->vDetail;
         $Dao->vReadman = session('member.iAcType').";";
-        $Dao->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : $Dao->vImages;
+        $Dao->vImages = ( $request->exists( 'vImages' ) ) ? $request->input( 'vImages' ) : $Dao->vImages;
 //        $Dao->vNumber = rand( 1000000001, 1099999999 );
-        $Dao->iStartTime = ( $request->input( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : $Dao->iStartTime;
-        $Dao->iEndTime = ( $request->input( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : $Dao->iEndTime;
+        $Dao->iStartTime = ( $request->exists( 'iStartTime' ) ) ? $request->input( 'iStartTime' ) : $Dao->iStartTime;
+        $Dao->iEndTime = ( $request->exists( 'iEndTime' ) ) ? $request->input( 'iEndTime' ) : $Dao->iEndTime;
 //        $Dao->iCheck = ( $request->input( 'iCheck' ) ) ? $request->input( 'iCheck' ) : 0;
         $Dao->iUpdateTime = time();
 
@@ -440,17 +440,17 @@ class CenterController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'bActive' )) {
+        if ($request->exists( 'bActive' )) {
             $Dao->bActive = ( $request->input( 'bActive' ) == "change" ) ? !$Dao->bActive : $request->input( 'bActive' );
         }
-        if ($request->input( 'iStatus' )) {
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iRank = $request->input( 'iRank' ) ? $request->input( 'iRank' ) : $Dao->iRank ;
         $Dao->iUpdateTime = time();
 
         if ($Dao->save()) {
-            if ($request->input( 'iStatus' )) {
+            if ($request->exists( 'iStatus' )) {
                 $DaoInfo = SysMemberInfo::query()->where('iMemberId' , '=', $Dao->iId)->first();
                 $DaoInfo->iMemberId = 0;
                 $DaoInfo->save();

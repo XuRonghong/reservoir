@@ -69,8 +69,8 @@ class IndexController extends _WebController
                 $sort_arr[$key] = $item;
             }
         }
-        $sort_name = $sort_arr[ $request->input( 'iSortCol_0' ) ];
-        $sort_dir = $request->input( 'sSortDir_0' );
+        $sort_name = $request->input( 'iSortCol_0' )? $sort_arr[ $request->input( 'iSortCol_0' ) ] : 'iId';
+        $sort_dir = $request->input( 'sSortDir_0' )? $request->input( 'sSortDir_0' ) : 'desc';
 
         $orderStartDate = $request->input( 'orderStartDate' ) ? strtotime( $request->input( 'orderStartDate' ) ) : 0;
         $orderEndDate = $request->input( 'orderEndDate' ) ? strtotime( $request->input( 'orderEndDate' ) ) : 0;
@@ -208,15 +208,15 @@ class IndexController extends _WebController
     {
         $Dao = new ModReservoir();
         $Dao->iRank = 0;
-//        $Dao->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
-        $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-        $Dao->vRegion = ( $request->input( 'vRegion' ) ) ? $request->input( 'vRegion' ) : "";
-        $Dao->vName = ( $request->input( 'vName' ) ) ? $request->input( 'vName' ) : '';
-        $Dao->vLocation = ( $request->input( 'vLocation' ) ) ? $request->input( 'vLocation' ) : "#";
-        $Dao->vCounty = ( $request->input( 'vCounty' ) ) ? $request->input( 'vCounty' ) : "";
-        $Dao->iSum = ( $request->input( 'iSum' ) ) ? $request->input( 'iSum' ) : 0;
+//        $Dao->iType = ( $request->exists( 'iType' ) ) ? $request->input( 'iType' ) : 0;
+        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
+        $Dao->vRegion = ( $request->exists( 'vRegion' ) ) ? $request->input( 'vRegion' ) : "";
+        $Dao->vName = ( $request->exists( 'vName' ) ) ? $request->input( 'vName' ) : '';
+        $Dao->vLocation = ( $request->exists( 'vLocation' ) ) ? $request->input( 'vLocation' ) : "#";
+        $Dao->vCounty = ( $request->exists( 'vCounty' ) ) ? $request->input( 'vCounty' ) : "";
+        $Dao->iSum = ( $request->exists( 'iSum' ) ) ? $request->input( 'iSum' ) : 0;
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+        $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
         $Dao->contact1=$request->input("contact1","");
         $Dao->contact_tel1=$request->input("contact_tel1","");
@@ -231,14 +231,14 @@ class IndexController extends _WebController
             $DaoInfo = new ModReservoirInfo();
             $DaoInfo->iReservoirId = $Dao->iId;
             $DaoInfo->iRank = 0;
-            $DaoInfo->iType = ( $request->input( 'iType' ) ) ? $request->input( 'iType' ) : 0;
+            $DaoInfo->iType = ( $request->exists( 'iType' ) ) ? $request->input( 'iType' ) : 0;
             $DaoInfo->vCode = 0; //( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-            $DaoInfo->vImages = ( $request->input( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
-            $DaoInfo->vSafe = ( $request->input( 'vSafe' ) ) ? $request->input( 'vSafe' ) : '';
-            $DaoInfo->iSafeValue = ( $request->input( 'iSafeValue' ) ) ? $request->input( 'iSafeValue' ) : 0;
+            $DaoInfo->vImages = ( $request->exists( 'vImages' ) ) ? $request->input( 'vImages' ) : "";
+            $DaoInfo->vSafe = ( $request->exists( 'vSafe' ) ) ? $request->input( 'vSafe' ) : '';
+            $DaoInfo->iSafeValue = ( $request->exists( 'iSafeValue' ) ) ? $request->input( 'iSafeValue' ) : 0;
             $DaoInfo->iSum = 0; //( $request->input( 'iSum' ) ) ? $request->input( 'iSum' ) : 0;
             $DaoInfo->iCreateTime = $DaoInfo->iUpdateTime = time();
-            $DaoInfo->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+            $DaoInfo->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
             $DaoInfo->bDel = 0;
 
             if ($DaoInfo->save()) {
@@ -363,28 +363,28 @@ class IndexController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'iRank' )) {
+        if ($request->exists( 'iRank' )) {
             $Dao->iRank = $request->input( 'iRank' );
         }
-        if ($request->input( 'vCode' )) {
+        if ($request->exists( 'vCode' )) {
             $Dao->vCode = $request->input( 'vCode' );
         }
-        if ($request->input( 'vRegion' )) {
+        if ($request->exists( 'vRegion' )) {
             $Dao->vRegion = $request->input( 'vRegion' );
         }
-        if ($request->input( 'vName' )) {
+        if ($request->exists( 'vName' )) {
             $Dao->vName = $request->input( 'vName' );
         }
-        if ($request->input( 'vLocation' )) {
+        if ($request->exists( 'vLocation' )) {
             $Dao->vLocation = $request->input( 'vLocation' );
         }
-        if ($request->input( 'vCounty' )) {
+        if ($request->exists( 'vCounty' )) {
             $Dao->vCounty = $request->input( 'vCounty' );
         }
-        if ($request->input( 'iSum' )) {
+        if ($request->exists( 'iSum' )) {
             $Dao->iSum = $request->input( 'iSum' );
         }
-        if ($request->input( 'iStatus' )) {
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->contact1=$request->input("contact1","");
@@ -407,13 +407,13 @@ class IndexController extends _WebController
                 return response()->json( $this->rtndata );
             }
 
-            if ($request->input( 'iType' )) {
+            if ($request->exists( 'iType' )) {
                 $DaoInfo->iType = $request->input( 'iType' );
             }
-            if ($request->input( 'vImages' )) {
+            if ($request->exists( 'vImages' )) {
                 $DaoInfo->vImages = $request->input( 'vImages' );
             }
-            if ($request->input( 'iSafeValue' )) {
+            if ($request->exists( 'iSafeValue' )) {
                 $DaoInfo->iSafeValue = $request->input( 'iSafeValue' );
             }
             $DaoInfo->iUpdateTime = time();

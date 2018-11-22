@@ -101,14 +101,14 @@
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
-                "scrollY": '60vh',
+                "scrollY": '55vh',
                 // 'bProcessing': true,
                 'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "水庫名稱",
                         "mData": "vName",
-                        "width": "150px",
+                        "width": "120px",
                         "bSortable": true,
                         "bSearchable": true,
                         "mRender": function (data, type, row) {
@@ -147,13 +147,13 @@
                     },
                     {
                         "sTitle": "",
-                        "width": "60px",
+                        "width": "30px",
                         "bSortable": false,
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
-                            btn = '<button class="btn btn-xs btn-default btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
+                            btn = '<button class="btn btn-xs btn-skype btn-edit" title="修改"><i class="fa fa-pencil" aria-hidden="true">修改</i></button>';
                             // btn += '<button class="pull-right btn btn-xs btn-default btn-del" title="刪除"><i class="fa fa-trash" aria-hidden="true"></i></button>';
                             // btn += '<button class="btn btn-xs btn-default btn-attributes" title="相關資訊"><i class="fa fa-book" aria-hidden="true"></i></button>';
                             $('.waitme').waitMe('hide');
@@ -173,11 +173,11 @@
             });
             $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
                 run_waitMe($('.waitme'));
-                setTimeout(function(){ $('.waitme').waitMe('hide') }, 3000);   //逾時10秒關閉讀取
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 1000);   //逾時1秒關閉讀取
             });
             $('#dt_basic_length select').change(function () {
                 run_waitMe($('.waitme'));
-                setTimeout(function(){ $('.waitme').waitMe('hide') }, 3000);   //逾時10秒關閉讀取
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 1000);   //逾時1秒關閉讀取
             });
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 6000);   //逾時10秒關閉讀取
             /* END BASIC */

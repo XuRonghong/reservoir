@@ -7,15 +7,15 @@
 }
 
 .img-preview-sm {
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 }
 </style>
 <!-- Image cropper -->
 <link href="{{url('css/cropper.min.css')}}" rel="stylesheet">
 <div id="image-form" class="modal fade" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content" style="width: 680px;">
+		<div class="modal-content" style="width: 960px; height: 480px; margin-left: -240px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				{{--<h4 class="modal-title">{{trans('_web_alert.cropper_image')}}</h4>--}}
@@ -141,6 +141,7 @@ $(document).ready(function() {
         $('#div_'+imagedata.fileid).append(cropImage);
         $('#div_'+imagedata.fileid).append("<a class=\"image-del\">X</a>");
         $('#image-form').hide();
+        //上傳大於五張
     	// if($('.cropper_image').find('#img'+img).length > 5){
     		// $('.cropper_image').find('#Image').remove();
     	// }

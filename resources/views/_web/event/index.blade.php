@@ -96,8 +96,8 @@
                 "stateSave": true,
                 "scrollX": true,
                 "scrollY": '65vh',
-                'bProcessing': true,
-                // 'sServerMethod': 'GET',
+                // 'bProcessing': true,
+                'sServerMethod': 'GET',
                 "aoColumns": [
                     {
                         "sTitle": "keyValue",
@@ -152,9 +152,11 @@
             });
             $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
                 run_waitMe($('.waitme'));
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 1000);   //逾時1秒關閉讀取
             });
             $('#dt_basic_length select').change(function () {
                 run_waitMe($('.waitme'));
+                setTimeout(function(){ $('.waitme').waitMe('hide') }, 1000);   //逾時1秒關閉讀取
             })
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取( $('.waitme').waitMe('hide') , 10000);   //逾時10秒關閉讀取
             /* END BASIC */

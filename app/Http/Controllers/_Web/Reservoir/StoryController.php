@@ -154,12 +154,12 @@ class StoryController extends _WebController
         $Dao = new ModReservoirStory();
         $Dao->iRank = 0;         //順序 越大越後面
         $Dao->iMemberId = session('member.iId');
-        $Dao->vName = ( $request->input( 'vName' ) ) ? $request->input( 'vName' ) : "";
-        $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-        $Dao->vFile = ( $request->input( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
-        $Dao->vNum = ( $request->input( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
+        $Dao->vName = ( $request->exists( 'vName' ) ) ? $request->input( 'vName' ) : "";
+        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
+        $Dao->vFile = ( $request->exists( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
+        $Dao->vNum = ( $request->exists( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+        $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
         if ($Dao->save()) {
             //Logs
@@ -243,19 +243,19 @@ class StoryController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'vName' )) {
+        if ($request->exists( 'vName' )) {
             $Dao->vName = $request->input( 'vName' );
         }
-        if ($request->input( 'vCode' )) {
+        if ($request->exists( 'vCode' )) {
             $Dao->vCode = $request->input( 'vCode' );
         }
-        if ($request->input( 'vFile' )) {
+        if ($request->exists( 'vFile' )) {
             $Dao->vFile = $request->input( 'vFile' );
         }
-        if ($request->input( 'vNum' )) {
+        if ($request->exists( 'vNum' )) {
             $Dao->vNum = $request->input( 'vNum' );
         }
-        if ($request->input( 'iStatus' )) {
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();

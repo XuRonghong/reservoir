@@ -142,17 +142,17 @@ class MetaController extends _WebController
         $maxRank = ModReservoirMeta::query()->max( 'iRank' );
         $Dao = new ModReservoirMeta();
         $Dao->iRank = $maxRank + 1;         //順序 越大越後面
-        $Dao->vStructure = ( $request->input( 'vStructure' ) ) ? $request->input( 'vStructure' ) : "";
-        $Dao->vLevel = ( $request->input( 'vLevel' ) ) ? $request->input( 'vLevel' ) : "";
-        $Dao->iHeight = ( $request->input( 'iHeight' ) ) ? $request->input( 'iHeight' ) : 0;
-        $Dao->iStoreTotal = ( $request->input( 'iStoreTotal' ) ) ? $request->input( 'iStoreTotal' ) : 0;
-        $Dao->vGrade = ( $request->input( 'vGrade' ) ) ? $request->input( 'vGrade' ) : "";
-        $Dao->vTrustRegion = ( $request->input( 'vTrustRegion' ) ) ? $request->input( 'vTrustRegion' ) : '';
-        $Dao->vNumber = ( $request->input( 'vNumber' ) ) ? $request->input( 'vNumber' ) : "";
-        $Dao->vNet = ( $request->input( 'vNet' ) ) ? $request->input( 'vNet' ) : '';
-        $Dao->vAreaCode = ( $request->input( 'vAreaCode' ) ) ? $request->input( 'vAreaCode' ) : '';
+        $Dao->vStructure = ( $request->exists( 'vStructure' ) ) ? $request->input( 'vStructure' ) : "";
+        $Dao->vLevel = ( $request->exists( 'vLevel' ) ) ? $request->input( 'vLevel' ) : "";
+        $Dao->iHeight = ( $request->exists( 'iHeight' ) ) ? $request->input( 'iHeight' ) : 0;
+        $Dao->iStoreTotal = ( $request->exists( 'iStoreTotal' ) ) ? $request->input( 'iStoreTotal' ) : 0;
+        $Dao->vGrade = ( $request->exists( 'vGrade' ) ) ? $request->input( 'vGrade' ) : "";
+        $Dao->vTrustRegion = ( $request->exists( 'vTrustRegion' ) ) ? $request->input( 'vTrustRegion' ) : '';
+        $Dao->vNumber = ( $request->exists( 'vNumber' ) ) ? $request->input( 'vNumber' ) : "";
+        $Dao->vNet = ( $request->exists( 'vNet' ) ) ? $request->input( 'vNet' ) : '';
+        $Dao->vAreaCode = ( $request->exists( 'vAreaCode' ) ) ? $request->input( 'vAreaCode' ) : '';
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+        $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
         if ($Dao->save()) {
             //Logs
@@ -223,37 +223,37 @@ class MetaController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'iRank' )) {
+        if ($request->exists( 'iRank' )) {
             $Dao->iRank = $request->input( 'iRank' );
         }
-        if ($request->input( 'vStructure' )) {
+        if ($request->exists( 'vStructure' )) {
             $Dao->vStructure = $request->input( 'vStructure' );
         }
-        if ($request->input( 'vLevel' )) {
+        if ($request->exists( 'vLevel' )) {
             $Dao->vLevel = $request->input( 'vLevel' );
         }
-        if ($request->input( 'iHeight' )) {
+        if ($request->exists( 'iHeight' )) {
             $Dao->iHeight = $request->input( 'iHeight' );
         }
-        if ($request->input( 'iStoreTotal' )) {
+        if ($request->exists( 'iStoreTotal' )) {
             $Dao->iStoreTotal = $request->input( 'iStoreTotal' );
         }
-        if ($request->input( 'vGrade' )) {
+        if ($request->exists( 'vGrade' )) {
             $Dao->vGrade = $request->input( 'vGrade' );
         }
-        if ($request->input( 'vTrustRegion' )) {
+        if ($request->exists( 'vTrustRegion' )) {
             $Dao->vTrustRegion = $request->input( 'vTrustRegion' );
         }
-        if ($request->input( 'vNumber' )) {
+        if ($request->exists( 'vNumber' )) {
             $Dao->vNumber = $request->input( 'vNumber' );
         }
-        if ($request->input( 'vNet' )) {
+        if ($request->exists( 'vNet' )) {
             $Dao->vNet = $request->input( 'vNet' );
         }
-        if ($request->input( 'vAreaCode' )) {
+        if ($request->exists( 'vAreaCode' )) {
             $Dao->vAreaCode = $request->input( 'vAreaCode' );
         }
-        if ($request->input( 'iStatus' )) {
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();

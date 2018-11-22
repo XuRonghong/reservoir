@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\_Web;
 
-use App\SysMember;
 use Illuminate\Http\Request;
 use App\Http\Controllers\_Web\_WebController;
 use App\Http\Controllers\FuncController;
 use App\ModInstructions;
+use App\SysMember;
 
 
 class MonitorController extends _WebController
@@ -36,7 +36,6 @@ class MonitorController extends _WebController
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '重要監測運整' );
-
         $this->view->with( 'add_url', url('web/' . implode( '/' , $this->module ) . '/add') );
 
         return $this->view;
@@ -106,6 +105,7 @@ class MonitorController extends _WebController
                 'mod_reservoir.vName'
             ])
             ->get();
+
         if ( !$data_arr){
             $this->rtndata['status'] = 0;
             $this->rtndata['message'] = ['Oops! 沒有資訊!'];
@@ -159,8 +159,7 @@ class MonitorController extends _WebController
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '重要監測運整-新增' );
-
-        $this->view->with( 'reservoir', $this->Reservoir );
+        $this->view->with( 'reservoir', $this->Reservoir );     //水庫列表
 
         return $this->view;
     }
@@ -175,22 +174,22 @@ class MonitorController extends _WebController
         $Dao->iRank = 0;         //順序 越大越後面
         $Dao->iType = 21;       //11.系統操作說明     21.重要監測運整
         $Dao->iMemberId = session('member.iId');
+
         $Dao->iReservoir = ( $request->exists( 'iReservoir' ) ) ? $request->input( 'iReservoir' ) : "";
-//        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
         $Dao->vFile = ( $request->exists( 'vImage1' ) ) ? $request->input( 'vImage1' ).';' : '';
         $Dao->vFile .= ( $request->exists( 'vImage2' ) ) ? $request->input( 'vImage2' ).';' : '';
         $Dao->vFile .= ( $request->exists( 'vImage3' ) ) ? $request->input( 'vImage3' ).';' : '';
-//        $Dao->vNum = ( $request->exists( 'vNum' ) ) ? $request->input( 'vNum' ) : "";
+
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
         $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
-        if ($Dao->save()) {
-            //Logs
-            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
 
+        if ($Dao->save()) {
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans('_web_message.add_success');
             $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
+            //Logs
+            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.add_fail' );
@@ -217,14 +216,10 @@ class MonitorController extends _WebController
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '重要監測運整-編輯' );
 
-
         $map['bDel'] = 0;
-        $Dao = ModInstructions::query()->where($map)
-            ->where( 'iId', '=', $id )
-//            ->orWhere('vNum', '=', $id)
-            ->first();
+        $map['iId'] = $id;
+        $Dao = ModInstructions::query()->where($map)->first();
         if ( !$Dao) {
-//            session()->put( 'check_empty.message', trans( '_web_message.empty_id' ) );
             return redirect( 'web/' . implode( '/', $this->module ) );
         }
 
@@ -272,9 +267,7 @@ class MonitorController extends _WebController
         if ($request->exists( 'iReservoir' )) {
             $Dao->iReservoir = $request->input( 'iReservoir' );
         }
-//        if ($request->exists( 'vCode' )) {
-//            $Dao->vCode = $request->input( 'vCode' );
-//        }
+        //
         if ($request->exists( 'vImage1' )) {
             $Dao->vFile = $request->input( 'vImage1' ) .';' ;
         }
@@ -284,21 +277,18 @@ class MonitorController extends _WebController
         if ($request->exists( 'vImage3' )) {
             $Dao->vFile .= $request->input( 'vImage3' ) .';' ;
         }
-//        if ($request->exists( 'vNum' )) {
-//            $Dao->vNum = $request->input( 'vNum' );
-//        }
+        //
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();
 
         if ($Dao->save()) {
-            //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
-//
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
+            //Logs
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
@@ -319,14 +309,16 @@ class MonitorController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $map['bDel'] = 0;
-        $Dao = ModInstructions::query()->find( $id );
+        $Dao = ModInstructions::query()->where($map)->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
 
+        //隨點隨改
         if ($request->exists( 'vTitle' )) {
             $Dao->vTitle = $request->input( 'vTitle' );
         }
@@ -362,6 +354,7 @@ class MonitorController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.empty_id' );
             return response()->json( $this->rtndata );
         }
+
         $Dao = ModInstructions::query()->find( $id );
         if ( !$Dao) {
             $this->rtndata ['status'] = 0;

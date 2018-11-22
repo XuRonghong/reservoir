@@ -37,12 +37,11 @@
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-subtitle">{{$vSummary or ''}}</h6>
                         </div>
-                        <hr>
                         <form class="form-horizontal">
                             <div class="card-body memberInfo-modal">
                                 {{--<h4 class="card-title">Personal Info</h4>--}}
                                 <div class="form-group row">
-                                    <label class="col-sm-3 text-right control-label col-form-label">Reservoir</label>
+                                    <label class="col-sm-3 text-right control-label col-form-label">水庫</label>
                                     <div class="col-sm-9">
                                         <select class="form-control iReservoir">
                                             @foreach($reservoir as $key => $var)
@@ -54,26 +53,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">Picture 1</label>
+                                    <label for="img1" class="col-sm-3 text-right control-label col-form-label">上視圖</label>
                                     <div class="col-sm-9">
                                         <a class="btn-image-modal1" data-modal="image-form" data-id="1">
-                                            <img id="{{$info->vFileId[0] or 'img1'}}" class="img1" src="{{$info->vFile[0] or url('images/empty.jpg')}}" style="height:140px">
+                                            <img id="{{$info->vFileId[0] or 'img1'}}" class="img1" src="{{$info->vFile[0] or url('images/empty.jpg')}}" style="height:220px">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="img2" class="col-sm-3 text-right control-label col-form-label">Picture 2</label>
+                                    <label for="img2" class="col-sm-3 text-right control-label col-form-label">剖面圖</label>
                                     <div class="col-sm-9">
                                         <a class="btn-image-modal2" data-modal="image-form" data-id="2">
-                                            <img id="{{$info->vFileId[1] or 'img2'}}" class="img2" src="{{$info->vFile[1] or url('images/empty.jpg')}}" style="height:140px">
+                                            <img id="{{$info->vFileId[1] or 'img2'}}" class="img2" src="{{$info->vFile[1] or url('images/empty.jpg')}}" style="height:220px">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="img3" class="col-sm-3 text-right control-label col-form-label">Picture 3</label>
+                                    <label for="img3" class="col-sm-3 text-right control-label col-form-label">3D圖</label>
                                     <div class="col-sm-9">
                                         <a class="btn-image-modal3" data-modal="image-form" data-id="3">
-                                            <img id="{{$info->vFileId[2] or 'img3'}}" class="img3" src="{{$info->vFile[2] or url('images/empty.jpg')}}" style="height:140px">
+                                            <img id="{{$info->vFileId[2] or 'img3'}}" class="img3" src="{{$info->vFile[2] or url('images/empty.jpg')}}" style="height:220px">
                                         </a>
                                     </div>
                                 </div>
@@ -132,7 +131,7 @@
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
         $(document).ready(function () {
-            //
+            //圖片上傳需要的元素
             var modal = $("#manage-modal");
             current_modal = modal.find('.memberInfo-modal');
             //

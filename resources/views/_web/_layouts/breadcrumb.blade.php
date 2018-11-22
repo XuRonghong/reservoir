@@ -2,7 +2,7 @@
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-7 align-self-center">
-            <h4 class="page-title">{{session('SEO.vTitle')}}</h4>
+            {{--<h4 class="page-title">{{session('SEO.vTitle')}}</h4>--}}
             <div class="d-flex align-items-center">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

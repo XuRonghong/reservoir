@@ -158,13 +158,13 @@ class SafeController extends _WebController
         $Dao->iRank = $maxRank + 1;         //順序 越大越後面
         $Dao->iType = 2;    //1.水庫淤積濬渫執行成果  2. 水庫歷屆定期安全評估報告  3.水庫其他重要文件
         $Dao->iMemberId = session('member.iId');
-        $Dao->vTitle = ( $request->input( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
-        $Dao->vCode = ( $request->input( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
-        $Dao->vFile = ( $request->input( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
-        $Dao->vData = ( $request->input( 'vData' ) ) ? $request->input( 'vData' ) : '';
-        $Dao->iNum = ( $request->input( 'iNum' ) ) ? $request->input( 'iNum' ) : "";
+        $Dao->vTitle = ( $request->exists( 'vTitle' ) ) ? $request->input( 'vTitle' ) : "";
+        $Dao->vCode = ( $request->exists( 'vCode' ) ) ? $request->input( 'vCode' ) : "";
+        $Dao->vFile = ( $request->exists( 'vFile' ) ) ? $request->input( 'vFile' ) : '';
+        $Dao->vData = ( $request->exists( 'vData' ) ) ? $request->input( 'vData' ) : '';
+        $Dao->iNum = ( $request->exists( 'iNum' ) ) ? $request->input( 'iNum' ) : "";
         $Dao->iCreateTime = $Dao->iUpdateTime = time();
-        $Dao->iStatus = ( $request->input( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
+        $Dao->iStatus = ( $request->exists( 'iStatus' ) ) ? $request->input( 'iStatus' ) : 1;
         $Dao->bDel = 0;
         if ($Dao->save()) {
             //Logs
@@ -247,22 +247,22 @@ class SafeController extends _WebController
             return response()->json( $this->rtndata );
         }
 
-        if ($request->input( 'vTitle' )) {
+        if ($request->exists( 'vTitle' )) {
             $Dao->vTitle = $request->input( 'vTitle' );
         }
-        if ($request->input( 'vCode' )) {
+        if ($request->exists( 'vCode' )) {
             $Dao->vCode = $request->input( 'vCode' );
         }
-        if ($request->input( 'vFile' )) {
+        if ($request->exists( 'vFile' )) {
             $Dao->vFile = $request->input( 'vFile' );
         }
-        if ($request->input( 'vData' )) {
+        if ($request->exists( 'vData' )) {
             $Dao->vData = $request->input( 'vData' );
         }
-        if ($request->input( 'iNum' )) {
+        if ($request->exists( 'iNum' )) {
             $Dao->iNum = $request->input( 'iNum' );
         }
-        if ($request->input( 'iStatus' )) {
+        if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );
         }
         $Dao->iUpdateTime = time();
