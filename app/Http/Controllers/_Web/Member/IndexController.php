@@ -288,7 +288,7 @@ class IndexController extends _WebController
         $map['iStatus'] = 1;
         $DaoMember = SysMember::query()->where($map)->find($id);//->where('iUserId','=',$id)->first();
         if (!$DaoMember) {
-//            session()->put('check_empty.message', trans('_web_message.empty_id'));
+            session()->put('check_empty.message', trans('_web_message.empty_id'));
             return redirect('web/' . implode('/', $this->module));
         }
         $this->view->with( 'info', $DaoMember );

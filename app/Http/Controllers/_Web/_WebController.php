@@ -285,7 +285,11 @@ class _WebController extends Controller
                 if ($var->iType > 50){
                     $this->message_total ++ ;
                 } else {
-                    $this->comment_total ++ ;
+
+                    //地震儀事件event資料表 取得特定時間以內
+                    if ($var->iCreateTime > date( 'Y/m/d H:i:s', time()-86400*30 ) )
+                        $this->comment_total ++ ;
+
                 }
             }
         }

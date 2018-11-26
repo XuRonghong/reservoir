@@ -410,7 +410,11 @@ class IndexController extends _WebController
                 $var->url = url('web/message/attr') . '/' . $var->iId;
                 //主要分 系統訊息 與 地震通知 種類
                 if ($var->iType < 50){
-                    $Dao[] = $var;      //物件的重新組合
+
+                    //地震儀事件event資料表 取得特定時間以內
+                    if ($var->iCreateTime > date( 'Y/m/d H:i:s', time()-86400*30 ) )
+                        $Dao[] = $var;      //物件的重新組合
+
                 }
                 //圖片處理,假如NULL給他個預設值
                 if ( !$var->vImages){
