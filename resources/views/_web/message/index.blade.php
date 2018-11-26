@@ -132,7 +132,7 @@
             init.click();
             init.click();
 
-            var table = $('#zero_config');
+            var table = $('#zero_config').dataTable();
             table.api().bProcessing = true;
 
             //

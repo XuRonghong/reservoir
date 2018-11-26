@@ -8,6 +8,7 @@ use App\Http\Controllers\FuncController;
 use App\ModMessage;
 use App\ModTraceCheck;
 use App\ModReservoir;
+use App\SysMemberAccess;
 
 
 class TraceController extends _WebController
@@ -209,7 +210,7 @@ class TraceController extends _WebController
 
 
     /*
-     * on
+     * on 選擇哪個水庫
      */
     public function add (Request $request)
     {
@@ -217,6 +218,7 @@ class TraceController extends _WebController
             return redirect()->back();
         }
 
+        $this->_init();
 
 
         $this->module = [ 'record' , 'trace' ];
@@ -229,7 +231,7 @@ class TraceController extends _WebController
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', '追蹤查核簽核' );
-        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 1/2' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 1/3' );
 
         $map['bDel'] = 0;
         $Dao = ModReservoir::query()->where($map)->get();
@@ -239,7 +241,7 @@ class TraceController extends _WebController
     }
 
     /*
-     * on
+     * on 選擇填寫水庫的子項目並記錄喜好
      */
     public function add2 (Request $request)
     {
@@ -247,20 +249,104 @@ class TraceController extends _WebController
             return redirect()->back();
         }
 
+        $this->_init();
 
         $id = $request->get('reservoir') ? $request->get('reservoir') : 0;
 
+
+        //使用者對水庫的喜好設定
+        $map['bOpen'] = 1;
+        $map['iMemberId'] = session('member.iId');
+        $map['iTargetKey'] = $id;       //水庫id
+        $DaoSysMemAccess = SysMemberAccess::query()->where($map)->first();
+
+        if ($DaoSysMemAccess){
+
+            $url = url('web/record/trace/add3') . '?reservoir=' . $id;
+            return redirect($url);
+
+        } else {
+
+
+            $this->module = [ 'record' , 'trace' ];
+            $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add2' );
+            $this->breadcrumb = [
+                $this->vTitle => url( 'web' ),
+                implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
+                implode( '.', $this->module ) . '.add2' => url( 'web/' . implode( '/', $this->module ) . "/add2" )
+            ];
+            $this->view->with( 'breadcrumb', $this->breadcrumb );
+            $this->view->with( 'module', $this->module );
+            $this->view->with( 'vTitle', '追蹤查核簽核' );
+            $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 2/3' );
+            $this->view->with( 'reservoirId', $id );
+            $this->view->with( 'TraceTable', $this->TraceTable );
+        }
+
+        return $this->view;
+    }
+
+    /*
+       * on
+       */
+    public function doAdd2 ( Request $request )
+    {
+        $this->_init();
+
+        try {
+            $Dao = new SysMemberAccess();
+            $Dao->iMemberId = session('member.iId');
+            $Dao->iMenuId = ($request->exists('iMenuId')) ? $request->input('iMenuId') : 0;
+            $Dao->bOpen = ($request->exists('bOpen')) ? $request->input('bOpen') : 1;
+            $Dao->bSet = ($request->exists('bSet')) ? $request->input('bSet') : 1;
+            $Dao->iTargetKey = ($request->exists('iTargetKey')) ? $request->input('iTargetKey') : 0;
+            $Dao->vDetail = ($request->exists('vDetail')) ? $request->input('vDetail') : '';
+            $Dao->iNumber = ($request->exists('iNumber')) ? $request->input('iNumber') : 0;
+
+            if ($Dao->save()) {
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+
+                $this->rtndata ['status'] = 1;
+                $this->rtndata ['message'] = trans('_web_message.add_success');
+                $this->rtndata ['rtnurl'] = url('web/record/trace/add3') . '?reservoir=' . $Dao->iTargetKey;
+            } else {
+                $this->rtndata ['status'] = 0;
+                $this->rtndata ['message'] = trans('_web_message.add_fail');
+            }
+        } catch (\Exception $e){
+            $this->rtndata ['status'] = 0;
+            $this->rtndata ['message'] = $e->getMessage();
+        }
+
+        return response()->json( $this->rtndata );
+    }
+
+    /*
+     * on 正式填表
+     */
+    public function add3 (Request $request)
+    {
+        if (session('member.iAcType')<10 || session('member.iAcType')>19){
+            return redirect()->back();
+        }
+
+        $this->_init();
+
+        $id = $request->get('reservoir') ? $request->get('reservoir') : 0;
+
+
+
         $this->module = [ 'record' , 'trace' ];
-        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add2' );
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add3' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
             implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
-            implode( '.', $this->module ) . '.add2' => url( 'web/' . implode( '/', $this->module ) . "/add2" )
+            implode( '.', $this->module ) . '.add3' => url( 'web/' . implode( '/', $this->module ) . "/add3" )
         ];
         $this->view->with( 'breadcrumb', $this->breadcrumb );
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', '追蹤查核簽核' );
-        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 2/2' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 3/3' );
 
 
         ///
@@ -282,14 +368,23 @@ class TraceController extends _WebController
         $Dao = ModReservoir::query()->find($id);
         $this->view->with( 'reservoir_name', $Dao? $Dao->vName : '' );
 
+
+        $this->view->with( 'TraceTable', $this->TraceTable );
+        //使用者對水庫的喜好設定
+        $map['bOpen'] = 1;
+        $map['iMemberId'] = session('member.iId');
+        $map['iTargetKey'] = $id;       //水庫id
+        $DaoSysMemAccess = SysMemberAccess::query()->where($map)->first();
+        if ($DaoSysMemAccess)
+            $this->view->with( 'memberAccess', $DaoSysMemAccess );
+
         return $this->view;
     }
-
 
     /*
     * on
     */
-    public function doAdd ( Request $request )
+    public function doAdd3 ( Request $request )
     {
         $this->_init();
 
@@ -375,53 +470,85 @@ class TraceController extends _WebController
             return redirect()->back();
         }
 
-        $this->view = View()->make('_web.' . implode('.', $this->module) . '.add2');
-        $this->breadcrumb = [
-            $this->vTitle => url( 'web' ),
-            implode('.', $this->module) => url('web/' . implode('/', $this->module)),
-            implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit" . $id )
-        ];
-        $this->view->with( 'breadcrumb', $this->breadcrumb );
-        $this->view->with( 'module', $this->module );
-        $this->view->with( 'vTitle', $this->vTitle );
-        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表' );
+
+        $this->_init();
 
 
-        //////
-        //SERVER密鑰  存資料庫
-        //送出推播、掛在WEB通知 (Android)
-        ///////
-        $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
-        $sendNotifyMessageHeaders = '
+        //使用者對水庫的喜好設定
+        $map['bOpen'] = 1;
+        $map['iMemberId'] = session('member.iId');
+        $map['iTargetKey'] = $id;       //水庫id
+        $DaoSysMemAccess = SysMemberAccess::query()->where($map)->first();
+        if ($DaoSysMemAccess)
         {
-            "Content-Type":"application/json",
-            "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
-        }';
-        $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
-        //////
+
+                $this->view = View()->make('_web.' . implode('.', $this->module) . '.add3');
+                $this->breadcrumb = [
+                    $this->vTitle => url( 'web' ),
+                    implode('.', $this->module) => url('web/' . implode('/', $this->module)),
+                    implode('.', $this->module) . '.edit' => url('web/' . implode('/', $this->module) . "/edit" . $id )
+                ];
+                $this->view->with( 'breadcrumb', $this->breadcrumb );
+                $this->view->with( 'module', $this->module );
+                $this->view->with( 'vTitle', $this->vTitle );
+                $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表' );
+                $this->view->with( 'TraceTable', $this->TraceTable );
+                $this->view->with( 'memberAccess', $DaoSysMemAccess );
+
+
+                //////
+                //SERVER密鑰  存資料庫
+                //送出推播、掛在WEB通知 (Android)
+                ///////
+                $API_SERVER_ACCESS_KEY = "AAAAMUWvMtg:APA91bEnWZfQmcGGl4aFsHscJqTGVWLgIGDTnDNAzuqyt1vYy_uKgsQjlBSvfm3eAAGI7jGZ1P0GgE8QHdmb-H0imVjwiYGFScen_W9hQqTcbBs5p0OjychEovihcrSxydIkjqdZWlpS";
+                $sendNotifyMessageHeaders = '
+            {
+                "Content-Type":"application/json",
+                "Authorization":"key="+"'.$API_SERVER_ACCESS_KEY.'"
+            }';
+                $this->view->with( 'sendNotifyMessageHeaders', urlencode($sendNotifyMessageHeaders) );
+                //////
 
 
 
-//        $map['iStatus'] = 1;
-        $map['bDel'] = 0;
-        $Dao = ModTraceCheck::query()->where($map)->find($id);
-        if ($Dao) {
-            // json to html ...
-
-
-
-            //
-            $Dao->iCheck_message = 10; //預設值: 只有第一線(權限:10)確認過訊息
-            $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來
-            if($Dao->message) {
-                $Dao->message->iCreateTime = date('Y/m/d H:i:s', $Dao->message->iCreateTime);
-                $Dao->message->iUpdateTime = date('Y/m/d H:i:s', $Dao->message->iUpdateTime);
+    //        $map['iStatus'] = 1;
+                $map['bDel'] = 0;
+                $Dao = ModTraceCheck::query()->where($map)->find($id);
+                if ($Dao) {
+                    //
+                    $Dao->iCheck_message = 10; //預設值: 只有第一線(權限:10)確認過訊息
+                    $Dao->message = ModMessage::query()->find($Dao->iSource);       //用來源去找是哪個訊息存進來
+                    if($Dao->message) {
+                        $Dao->message->iCreateTime = date('Y/m/d H:i:s', $Dao->message->iCreateTime);
+                        $Dao->message->iUpdateTime = date('Y/m/d H:i:s', $Dao->message->iUpdateTime);
+                        //
+                        $Dao->iCheck_message = $Dao->message->iCheck;
+                    }
+                }
                 //
-                $Dao->iCheck_message = $Dao->message->iCheck;
-            }
+                $this->view->with( 'info', $Dao );
+
+
         }
-        //
-        $this->view->with( 'info', $Dao );
+        else
+        {
+
+
+                $this->module = [ 'record' , 'trace' ];
+                $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add2' );
+                $this->breadcrumb = [
+                    $this->vTitle => url( 'web' ),
+                    implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
+                    implode( '.', $this->module ) . '.add2' => url( 'web/' . implode( '/', $this->module ) . "/add2" )
+                ];
+                $this->view->with( 'breadcrumb', $this->breadcrumb );
+                $this->view->with( 'module', $this->module );
+                $this->view->with( 'vTitle', '追蹤查核簽核' );
+                $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 2/3' );
+                $this->view->with( 'reservoirId', $id );
+                $this->view->with( 'TraceTable', $this->TraceTable );
+
+        }
 
         return $this->view;
     }

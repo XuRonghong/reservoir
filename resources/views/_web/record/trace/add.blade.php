@@ -94,18 +94,7 @@
 
 <!-- ================== inline-js ================== -->
 @section('inline-js')
-    <!--  -->
-    <!-- Public Crop_Image -->
-    @include('_web._js.crop_image')
-    <!-- end -->
-    <!-- Public SummerNote -->
-    @include('_web._js.summernote')
-    <!-- end -->
     <script type="text/javascript">
-        var current_data = [];
-        var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
-        var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
-        var url_dosave2 = "{{ url('web/'.implode( '/', $module ).'/dosave2')}}";
         $(document).ready(function () {
             //
             $(".btn-cancel").click(function () {
@@ -113,7 +102,6 @@
             });
             //
             $(".btn-next").click(function () {
-                //
                 var url = $(this).data('url');
                 var id = $('.reservoir').val();
                 location.href = url + '?reservoir=' + id;

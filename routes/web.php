@@ -206,12 +206,19 @@ Route::group(
 
                     Route::get( '', 'TraceController@index' );
                     Route::get( 'getlist', 'TraceController@getList' );
+
                     Route::get( 'add', 'TraceController@add' );
                     Route::get( 'add2', 'TraceController@add2' );
-                    Route::post( 'doadd', 'TraceController@doAdd' );
+                    Route::post( 'doadd2', 'TraceController@doAdd2' );
+                    Route::post( 'dosave_add2', 'TraceController@doSave2' );
+
+                    Route::get( 'add3', 'TraceController@add3' );
+                    Route::post( 'doadd3', 'TraceController@doAdd3' );
+
                     Route::get( 'edit/{id}', 'TraceController@edit' );
                     Route::post( 'dosave', 'TraceController@doSave' );
                     Route::post( 'dosave2', 'TraceController@doSave2' );
+
                     Route::post( 'dodel', 'TraceController@doDel' );
                     Route::get( 'attributes/{id}', 'TraceController@attributes' );
                     Route::post( 'dosaveattr', 'TraceController@doSaveAttributes' );

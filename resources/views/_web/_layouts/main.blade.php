@@ -260,14 +260,14 @@
                         html_str += '<li>';
                         html_str +=     '<div class="drop-title text-white bg-danger">';
                         html_str +=         '<h4 class="m-b-0 m-t-5">' + rtndata.total + ' New</h4>';
-                        html_str +=         '<span class="font-light">Messages</span>';
+                        // html_str +=         '<span class="font-light">Messages</span>';
                         html_str +=     '</div>';
                         html_str += '</li>';
                         html_str += '<li>';
-                        html_str +=     '<div class="message-center message-body">';
+                        html_str +=     '<div class="message-center message-body" style="width: 440px; height: auto">';
                         //
                         for (var key in rtndata.aaData) {
-                            if (key > 4) break;  //顯示5筆資料
+                            if (key > 3) break;  //顯示4筆資料
                             var obj = rtndata.aaData[key];
                             html_str += '<a href="' + obj.url + '" class="message-item">';
                             html_str +=     '<span class="user-img">';
@@ -323,10 +323,10 @@
                         html_str +=     '</div>';
                         html_str += '</li>';
                         html_str += '<li>';
-                        html_str +=     '<div class="message-center message-body">';
+                        html_str +=     '<div class="message-center message-body" style="width: 440px; height: auto">';
                         //
                         for (var key in rtndata.aaData) {
-                            if (key > 4) break;  //顯示5筆資料
+                            if (key > 3) break;  //顯示4筆資料
                             var obj = rtndata.aaData[key];
                             html_str += '<a href="' + obj.url + '" class="message-item">';
                             html_str +=     '<span class="user-img">';
