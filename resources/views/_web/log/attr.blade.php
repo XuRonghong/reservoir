@@ -51,6 +51,7 @@
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label"></label>
                                         <div class="col-sm-9">
                                             {{$info->vValue or ''}}
+                                            {{--{!! $info->vValue !!}--}}
                                         </div>
                                     </div>
                                 {{--@else--}}

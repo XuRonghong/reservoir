@@ -112,6 +112,9 @@ class LogController extends _WebController
             return redirect('web/' . implode('/', $this->module));
         }
 
+//        $DaoLog->vValue = json_decode( $DaoLog->vValue, false );
+//        $DaoLog->vValue = urldecode( $DaoLog->vValue ) ;
+
         $this->view->with( 'info', $DaoLog );
 
         return $this->view;

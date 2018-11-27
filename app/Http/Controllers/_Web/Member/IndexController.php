@@ -219,6 +219,9 @@ class IndexController extends _WebController
         $DaoMember->bActive = 1;
         $DaoMember->iStatus = 1;
         if ($DaoMember->save()) {
+            //
+            $this->_saveLogAction($DaoMember->getTable(), $DaoMember->iId, 'add', json_encode($DaoMember , JSON_UNESCAPED_UNICODE) );
+            
             //註冊會員的詳情資料
             $DaoMemberInfo = new SysMemberInfo();
             $DaoMemberInfo->iMemberId = $DaoMember->iId;
@@ -250,6 +253,8 @@ class IndexController extends _WebController
 
             //
             //CoinController::_CheckActivityRegister( $DaoMember->iId );
+            //
+            $this->_saveLogAction($DaoMemberInfo->getTable(), $DaoMember->iId, 'add', json_encode($DaoMemberInfo , JSON_UNESCAPED_UNICODE) );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.register.fail' );
@@ -320,12 +325,12 @@ class IndexController extends _WebController
         $Dao->iUpdateTime = time();
         if ($Dao->save()) {
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
 
             // session
             $DaoMemberInfo = SysMemberInfo::query()->find( session()->get('member.iId') );
             // Member
-//                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
+//                session()->put( 'member', json_decode( json_encode($DaoMember , JSON_UNESCAPED_UNICODE) , true ) );
             // MemberInfo
             session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
 
@@ -381,7 +386,7 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
@@ -423,7 +428,7 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/login' );
             //Logs
-            $this->_saveLogAction( $DaoMember->getTable(), $DaoMember->iId, 'edit', json_encode( $DaoMember ) );
+            $this->_saveLogAction( $DaoMember->getTable(), $DaoMember->iId, 'edit', json_encode($DaoMember , JSON_UNESCAPED_UNICODE)  );
             session()->forget( 'member' );
         } else {
             $this->rtndata ['status'] = 0;

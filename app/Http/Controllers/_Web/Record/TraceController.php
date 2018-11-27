@@ -321,7 +321,7 @@ class TraceController extends _WebController
             $Dao->bSet = ($request->exists('bSet')) ? $request->input('bSet') : 1;
 
             if ($Dao->save()) {
-                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans('_web_message.add_success');
@@ -450,7 +450,7 @@ class TraceController extends _WebController
             }
 
             if ($Dao->save()) {
-                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao , JSON_UNESCAPED_UNICODE));
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = trans( '_web_message.save_success' );
@@ -558,7 +558,7 @@ class TraceController extends _WebController
             $Dao->bDel = 0;
 
             if ($Dao->save()) {
-                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
                 //************************************************************************
                     $message = '發送給 ' . $this->Permission['20'];
@@ -799,7 +799,7 @@ class TraceController extends _WebController
             $Dao->iStartTime = time();
             if ($Dao->save()) {
                 //Logs
-                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao));
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
                 $this->rtndata ['status'] = 1;
                 $this->rtndata ['message'] = $message;
@@ -820,7 +820,7 @@ class TraceController extends _WebController
             $Dao->iStartTime = time();
             if ($Dao->save()) {
                 //Logs
-                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao));
+                $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
                 $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = $message;

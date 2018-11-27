@@ -222,14 +222,14 @@ class InfoController extends _WebController
 
             if ($DaoMemberInfo->save()){
                 //Logs
-                $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode( $DaoMemberInfo ) );
+                $this->_saveLogAction( $DaoMemberInfo->getTable(), $DaoMemberInfo->iMemberId, 'edit', json_encode($DaoMemberInfo , JSON_UNESCAPED_UNICODE)  );
 
                 // session
                 $DaoMemberInfo = SysMemberInfo::query()->find( session()->get('member.iId') );
                 // Member
 //                session()->put( 'member', json_decode( json_encode( $DaoMember ), true ) );
                 // MemberInfo
-                session()->put( 'member.meta', json_decode( json_encode( $DaoMemberInfo ), true ) );
+                session()->put( 'member.meta', json_decode( json_encode($DaoMemberInfo , JSON_UNESCAPED_UNICODE) , true ) );
 
 
                 $this->rtndata ['status'] = 1;

@@ -236,7 +236,7 @@ class LoginController extends _WebController
 
 
         //
-        FuncController::_addLog( 'login' );
+        FuncController::_addLog( 'loginMobile' );
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans( '_web_message.login.success' );

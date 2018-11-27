@@ -118,7 +118,7 @@ class IndexController extends _WebController
         $Dao->iStartTime = time();
         if ($Dao->save()) {
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
 
             //所有的水庫審查員
 //            $DaoMember = SysMember::query()->where('iAcType','=','20')->get();
@@ -217,7 +217,7 @@ class IndexController extends _WebController
             ->where('iType', '<', 50)
             ->update( array('bDel'=>1, 'iUpdateTime'=>time()) );
         //Logs
-        $this->_saveLogAction('mod_message', 9999999999, 'delete', json_encode($Dao));
+        $this->_saveLogAction('mod_message', 9999999999, 'delete', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
         $this->rtndata ['status'] = 1;
         $this->rtndata ['message'] = trans('_web_message.delete_success');

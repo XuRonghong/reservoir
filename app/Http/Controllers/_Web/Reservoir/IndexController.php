@@ -226,7 +226,7 @@ class IndexController extends _WebController
         $Dao->contact_tel3=$request->input("contact_tel3","");
         if ($Dao->save()) {
             //Logs
-            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
 
             $DaoInfo = new ModReservoirInfo();
             $DaoInfo->iReservoirId = $Dao->iId;
@@ -246,7 +246,7 @@ class IndexController extends _WebController
                 $this->rtndata ['message'] = trans('_web_message.add_success');
                 $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
                 //Logs
-                $this->_saveLogAction($DaoInfo->getTable(), $DaoInfo->iId, 'add', json_encode($DaoInfo));
+                $this->_saveLogAction($DaoInfo->getTable(), $DaoInfo->iId, 'add', json_encode($DaoInfo , JSON_UNESCAPED_UNICODE) );
             } else {
                 $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = trans( '_web_message.add_fail' ) . 'info';
@@ -398,7 +398,7 @@ class IndexController extends _WebController
 
         if ($Dao->save()) {
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
 
             $DaoInfo = ModReservoirInfo::query()->where( 'iReservoirId', '=',  $id )->first();
             if ( !$DaoInfo) {
@@ -423,7 +423,7 @@ class IndexController extends _WebController
                 $this->rtndata ['message'] = trans( '_web_message.save_success' );
                 $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
                 //Logs
-                $this->_saveLogAction( $DaoInfo->getTable(), $DaoInfo->iId, 'edit', json_encode( $DaoInfo ) );
+                $this->_saveLogAction( $DaoInfo->getTable(), $DaoInfo->iId, 'edit', json_encode($DaoInfo , JSON_UNESCAPED_UNICODE)  );
             } else {
                 $this->rtndata ['status'] = 0;
                 $this->rtndata ['message'] = trans( '_web_message.save_fail' ) . 'info';
@@ -468,7 +468,7 @@ class IndexController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
@@ -503,7 +503,7 @@ class IndexController extends _WebController
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.delete_fail' );

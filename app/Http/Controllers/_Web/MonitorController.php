@@ -189,7 +189,7 @@ class MonitorController extends _WebController
             $this->rtndata ['message'] = trans('_web_message.add_success');
             $this->rtndata ['rtnurl'] = url('web/' . implode('/', $this->module));
             //Logs
-            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao));
+            $this->_saveLogAction($Dao->getTable(), $Dao->iId, 'add', json_encode($Dao , JSON_UNESCAPED_UNICODE) );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.add_fail' );
@@ -288,7 +288,7 @@ class MonitorController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
@@ -333,7 +333,7 @@ class MonitorController extends _WebController
             $this->rtndata ['message'] = trans( '_web_message.save_success' );
             $this->rtndata ['rtnurl'] = url( 'web/' . implode( '/', $this->module ) );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'edit', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.save_fail' );
@@ -369,7 +369,7 @@ class MonitorController extends _WebController
             $this->rtndata ['status'] = 1;
             $this->rtndata ['message'] = trans( '_web_message.delete_success' );
             //Logs
-            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode( $Dao ) );
+            $this->_saveLogAction( $Dao->getTable(), $Dao->iId, 'delete', json_encode($Dao , JSON_UNESCAPED_UNICODE)  );
         } else {
             $this->rtndata ['status'] = 0;
             $this->rtndata ['message'] = trans( '_web_message.delete_fail' );
