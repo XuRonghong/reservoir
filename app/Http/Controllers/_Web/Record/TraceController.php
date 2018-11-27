@@ -339,13 +339,46 @@ class TraceController extends _WebController
         return response()->json( $this->rtndata );
     }
 
+
+    /*
+     * on 選擇哪個水庫
+     */
+    public function edit_Add (Request $request)
+    {
+        //非該權限者，退回
+        if (/*session('member.iAcType')<10 ||*/ session('member.iAcType')>10){
+            return redirect()->back();
+        }
+
+        $this->_init();
+
+        $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
+        $this->breadcrumb = [
+            $this->vTitle => url( 'web' ),
+            implode( '.', $this->module ) => url( 'web/' . implode( '/', $this->module ) ),
+            implode( '.', $this->module ) . '.add' => url( 'web/' . implode( '/', $this->module ) . "/add" )
+        ];
+        $this->view->with( 'breadcrumb', $this->breadcrumb );
+        $this->view->with( 'module', $this->module );
+        $this->view->with( 'vTitle', '編輯 追蹤查核簽核' );
+        $this->view->with( 'vSummary', '蓄水庫與引水建造物安全檢查彙整表 1/3' );
+
+        $map['bDel'] = 0;
+        $select = ['iId', 'vName'];
+        $Dao = ModReservoir::query()->where($map)->select($select)->get();
+        $this->view->with( 'reservoir', $Dao );
+        $this->view->with( 'isEdit', 1 );
+
+        return $this->view;
+    }
+
     /*
      * on 修改檢查表的個別水庫偏好設定 (sys_member_access)
      */
     public function edit_Add2 ( Request $request )
     {
             //非該權限者，退回
-            if (session('member.iAcType')<0 || session('member.iAcType')>9){
+            if (/*session('member.iAcType')<10 ||*/ session('member.iAcType')>10){
                 return redirect()->back();
             }
 
@@ -355,7 +388,7 @@ class TraceController extends _WebController
 
             //編輯使用者對水庫的喜好設定
             $map['bOpen'] = 1;
-            $map['iMemberId'] = session('member.iId');
+//            $map['iMemberId'] = session('member.iId');
             $map['iTargetKey'] = $reservoir_id;       //水庫id
             $DaoSysMemAccess = SysMemberAccess::query()->where($map)->first();
             if ($DaoSysMemAccess)
@@ -399,7 +432,7 @@ class TraceController extends _WebController
             $map['iTargetKey'] = $iTargetKey;
             $Dao = SysMemberAccess::query()->where($map)->first();
 
-            $Dao->iMemberId = session('member.iId');
+//            $Dao->iMemberId = session('member.iId');
             if ($request->exists('iMenuId')){
                 $Dao->iMenuId = $request->input('iMenuId') ;
             }

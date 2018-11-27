@@ -59,7 +59,11 @@
                             <hr>
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
-                                    <button type="button" data-url="{{url('web/record/trace/add2')}}" class="btn btn-info waves-effect waves-light btn-next">NEXT</button>
+                                    @if(isset($isEdit))
+                                        <button type="button" data-url="{{url('web/record/trace/edit_add2')}}" class="btn btn-skype waves-effect waves-light btn-next_isEdit">NEXT</button>
+                                    @else
+                                        <button type="button" data-url="{{url('web/record/trace/add2')}}" class="btn btn-info waves-effect waves-light btn-next">NEXT</button>
+                                    @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
                             </div>
@@ -102,6 +106,12 @@
             });
             //
             $(".btn-next").click(function () {
+                var url = $(this).data('url');
+                var id = $('.reservoir').val();
+                location.href = url + '?reservoir=' + id;
+            });
+            // edit
+            $(".btn-next_isEdit").click(function () {
                 var url = $(this).data('url');
                 var id = $('.reservoir').val();
                 location.href = url + '?reservoir=' + id;

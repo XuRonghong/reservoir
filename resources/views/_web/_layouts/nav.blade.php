@@ -75,7 +75,9 @@
             <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item"><a href="{{url('web/record/trace')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 總表</span></a></li>
                 @if(session('member.iAcType')>9)
-                <li class="sidebar-item"><a href="{{url('web/record/trace/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+                    <li class="sidebar-item"><a href="{{url('web/record/trace/add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 新增</span></a></li>
+                @elseif(session('member.iAcType')<10)
+                    <li class="sidebar-item"><a href="{{url('web/record/trace/edit_add')}}" class="sidebar-link"><i class="mdi mdi-border-nono"></i><span class="hide-menu"> 修改項目</span></a></li>
                 @endif
             </ul>
         </li>

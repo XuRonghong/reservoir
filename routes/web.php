@@ -210,6 +210,7 @@ Route::group(
                     Route::get( 'add', 'TraceController@add' );
                     Route::get( 'add2', 'TraceController@add2' );
                     Route::post( 'doadd2', 'TraceController@doAdd2' );
+                    Route::get( 'edit_add', 'TraceController@edit_Add' );
                     Route::get( 'edit_add2', 'TraceController@edit_Add2' );
                     Route::post( 'dosave_add2', 'TraceController@doSave_Add2' );
 
