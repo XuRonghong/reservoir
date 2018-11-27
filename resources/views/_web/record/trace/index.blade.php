@@ -78,11 +78,11 @@
         var current_data = [];
         var ajax_source = "{{ url('web/'.implode( '/', $module ).'/getlist')}}";
         var ajax_Table = "{{ url('web/'.implode( '/', $module ).'/getlist')}}";
-        var url_dosave_show = "{{ url('web/'.implode( '/', $module ).'/dosaveshow')}}";
         var url_add = "{{ url('web/'.implode( '/', $module ).'/add')}}";
         var url_doadd = "{{ url('web/'.implode( '/', $module ).'/doadd')}}";
         var url_edit = "{{ url('web/'.implode( '/', $module ).'/edit')}}";
         var url_dosave = "{{ url('web/'.implode( '/', $module ).'/dosave')}}";
+        var url_dosave_show = "{{ url('web/'.implode( '/', $module ).'/dosaveshow')}}";
         var url_dodel = "{{ url('web/'.implode( '/', $module ).'/dodel')}}";
         var url_attr = "{{ url('web/'.implode( '/', $module ).'/attributes')}}";
 
@@ -131,7 +131,7 @@
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
-                        "width": "40px",
+                        "width": "35px",
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
@@ -148,15 +148,15 @@
                     {
                         "sTitle": "時間",
                         "mData": "message",
-                        "width": "200px",
-                        "sName": "iCreateTime",
+                        "width": "170px",
+                        "sName": "iUpdateTime",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
                             $('.waitme').waitMe('hide');
                             if (row.message) {
                                 return row.message.iCreateTime;
                             } else {
-                                return '';
+                                return row.iUpdateTime;
                             }
                         }
                     },

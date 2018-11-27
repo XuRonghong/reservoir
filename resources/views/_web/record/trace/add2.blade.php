@@ -34,12 +34,13 @@
             <!-- Row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card" id="manage-modal">
+                    <div class="card waitme" id="manage-modal">
                         <div class="card-body">
                             <h4 class="card-title vSummary">{{$vSummary or ''}}</h4>
                             <hr>
                         </div>
                         <form class="form-horizontal  trace_table">
+                            <h3 class="card-title text-center ">{{$reservoir_name or ''}}</h3>
 
                             <div class="card-body messageInfo-modal2  b">
                                 <h4 class="card-title Title2">貳、檢查內容</h4>
@@ -75,11 +76,16 @@
                                     @if(isset($info))
                                         <button type="button" class="btn btn-info waves-effect waves-light btn-dosave" data-id="{{$reservoirId or 0}}">SAVE</button>
                                     @else
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd" data-id="{{$reservoirId or 0}}">NEXT</button>
+                                        @if(isset($fromUrl))
+                                            <button type="button" class="btn btn-skype waves-effect waves-light btn-doadd_and_back" data-id="{{$reservoirId or 0}}" data-url="{{$fromUrl or ''}}">NEXT</button>
+                                        @else
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-doadd" data-id="{{$reservoirId or 0}}">NEXT</button>
+                                        @endif
                                     @endif
                                     <button type="button" class="btn btn-dark waves-effect waves-light btn-cancel">Cancel</button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -139,6 +145,7 @@
             });
             //
             $(".btn-doadd").click(function () {
+                run_waitMe($('.waitme'));
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iTargetKey = $(this).data('id');
@@ -155,12 +162,46 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             //
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
                                 location.href = rtndata.rtnurl;
-                            }, 1000)
+                            }, 500)
+                        } else {
+                            toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
+                        }
+                    }
+                });
+            });
+            //
+            $(".btn-doadd_and_back").click(function () {
+                run_waitMe($('.waitme'));
+                var fromUrl = $(this).data('url');
+                //
+                var data = {"_token": "{{ csrf_token() }}"};
+                data.iTargetKey = $(this).data('id');
+                /************************************************
+                 *  JQuery serializeArray encode :
+                 */
+                data.vDetail = JSON.stringify( $('form.trace_table').serializeArray() );
+                /*
+                 ***********************************************/
+                //
+                $.ajax({
+                    url: url_doadd2,
+                    type: "POST",
+                    data: data,
+                    resetForm: true,
+                    success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
+                        if (rtndata.status) {
+                            //
+                            toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
+                            setTimeout(function () {
+                                location.href = fromUrl;
+                            }, 500)
                         } else {
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
@@ -169,6 +210,7 @@
             });
             //
             $(".btn-dosave").click(function () {
+                run_waitMe($('.waitme'));
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iTargetKey = $(this).data('id');
@@ -185,6 +227,7 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {

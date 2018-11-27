@@ -27,7 +27,7 @@
                     <div class="dark-logo" style="color: white; font-family: '微軟正黑體', font-size: 18px;">水庫安全管理系統</div>
                     <!-- Light Logo text -->
                     {{--<img src="{{url('xtreme-admin/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />--}}
-                    <div class="light-logo" style="color: white; font-family: '微軟正黑體'; font-size: 18px;">水庫安全管理系統</div>
+                    <div class="light-logo" style="color: white; font-family: '微軟正黑體'; font-size: 18px;">&nbsp;&nbsp;水庫安全管理系統</div>
                 </span>
             </a>
             <!-- ============================================================== -->

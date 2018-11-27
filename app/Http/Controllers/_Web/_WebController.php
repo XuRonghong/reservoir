@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FuncController;
 use App\LogAction;
-use App\LogOrder;
-use App\SysMenu;
 use App\SysMember;
 use App\SysMemberInfo;
 use App\SysGroupMember;
@@ -29,7 +27,8 @@ use App\ModReservoirInfo;
 
 class _WebController extends Controller
 {
-    protected $vTitle = '水庫管理系統';
+
+    protected $vTitle = '水庫安全管理系統';
     protected $func;
     protected $view;
     protected $sys_menu;
@@ -39,28 +38,27 @@ class _WebController extends Controller
     /* message category */
     protected $message_total = 0;
     protected $comment_total = 0;
+    /**/
     protected $Permission = [];
     protected $ReservoirType = [];
     protected $Reservoir = [];
-    protected $TraceTable = [];     //水庫安全檢查表之填寫項目
-    protected $TraceTable2 = [];     //水庫安全檢查表之填寫項目
+    protected $TraceTable = [];     //水庫安全檢查表之填寫項目大項
+    protected $TraceTable2 = [];     //水庫安全檢查表之填寫項目小項
 
 
-    /*
-     *
-     */
+    //
     function __construct ()
     {
-        $this->vTitle = '水庫安全管理系統';
         session()->put( 'SEO.vTitle' , $this->vTitle );
     }
 
 
     /*
-     *
+     * 架構參數
      */
     public function _init ()
     {
+        //權限階級
         $this->Permission = [
             '2'     =>  '網站系統管理員',
             '10'    =>  '管理局-承辦人員',
@@ -70,6 +68,7 @@ class _WebController extends Controller
             '50'    =>  '水利署-中階主管',
             '60'    =>  '水利署-高階主管',
         ];
+        //水庫種類(還未定義)
         $this->ReservoirType = [
 //            0    =>  'type 0',
             1    =>  'type 1',
@@ -78,8 +77,9 @@ class _WebController extends Controller
             4    =>  'type 4',
             5    =>  'type 5',
         ];
-        $map['bDel']=0;
-        $map['iStatus']=1;
+        //資料庫的所有水庫
+        $map['bDel'] = 0 ;
+        $map['iStatus'] = 1 ;
         $this->Reservoir = ModReservoir::query()->where($map)->get();
         if ($this->Reservoir){
             foreach ($this->Reservoir as $key => $value){
@@ -90,27 +90,29 @@ class _WebController extends Controller
         }
 
 
-        /*
+        /* 水庫安全檢查表之填寫項目大項
          *   貳、檢查內容
          */
         $this->TraceTable = [
             // 一、結構物安全檢查
-            'TraceRow1' => [
+            'TraceRow1' =>
+            [
                 'b1111'    =>  '壩體',
                 'b1121'    =>  '溢洪道',
                 'b1131'    =>  '取水工及出水工',
                 'b1141'    =>  '發電設備',
             ],
             // 二、放水設施安全檢查
-            'TraceRow2' => [
-                'b21111'    =>  '壩體',
+            'TraceRow2' =>
+            [
+                'b21111'   =>  '壩體',
                 'b2121'    =>  '閘閥及機電設備',
                 'b2131'    =>  '閘閥操作',
             ],
         ];
 
         /*
-        * 水庫安全檢查表之填寫項目2
+        * 水庫安全檢查表之填寫項目小項
         */
         /*$this->TraceTable2 = [
             't1001'    =>  '上游坡面',
@@ -145,8 +147,9 @@ class _WebController extends Controller
         ];*/
     }
 
+
     /*
-     *
+     * 目前無入用
      */
     public function __initial ()
     {
@@ -205,6 +208,7 @@ class _WebController extends Controller
     }
 
 
+
     /*
      * 丟檔案id取得圖片檔路徑 get()
      */
@@ -245,6 +249,7 @@ class _WebController extends Controller
 
         return null;
     }
+
 
     /*
      * 丟檔案id取得圖片檔路徑 first()
@@ -287,7 +292,7 @@ class _WebController extends Controller
 
 
     /*
-     *
+     * Super Do
      */
     protected function gotosuperdo ($DaoMember)
     {

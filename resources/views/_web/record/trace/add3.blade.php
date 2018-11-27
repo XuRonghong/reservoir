@@ -35,9 +35,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card" id="manage-modal">
-                        <div class="card-body">
-                            <h4 class="card-title vSummary">{{$vSummary or ''}}</h4>
-                            <hr>
+                        <div class="card-body waitme">
+                            <h3 class="card-title text-center">{{$vSummary or ''}}</h3>
                         </div>
                         <form class="form-horizontal  trace_table">
                             <div class="card-body messageInfo-modal1  a">
@@ -47,7 +46,7 @@
                                     <div class="col-sm-9  a11">
                                         <br>
                                         <div class="t1">水庫名稱：</div>
-                                        <input type="text" name="a111" class="form-control a111 reservoir_name" id="com1" value="{{$reservoir_name or ''}}">
+                                        <input type="text" name="a111" class="form-control a111 reservoir_name" id="com1" value="{{$reservoir_name or ''}}" data-id="{{$reservoir_id or ''}}">
                                         <div class="t2">檢查日期：</div>
                                         <input type="date" name="a112" class="form-control a112" >
                                         <div class="t3">管理機關：</div>
@@ -67,7 +66,7 @@
                                         水庫水位：
                                         <input type="text" name="a121" class="form-control a121" id="com2" >
                                         水庫蓄水量：
-                                        <input type="date" name="a122" class="form-control a122" >
+                                        <input type="text" name="a122" class="form-control a122" >
                                         最高記錄水位：
                                         <input type="text" name="a123" class="form-control a123" >
                                         <br>
@@ -134,8 +133,8 @@
                                 <h4 class="card-title  b1_title">貳、檢查內容</h4>
                                 <div class="form-group row  b1">
                                     <label for="com4" class="col-sm-3 text-left control-label col-form-label  b11_title">一、結構物安全檢查</label>
-                                    <div class="form-group row  b11" id="com4">
-                                        <label for="com41" class="col-sm-3 text-left control-label col-form-label  b111_title">（一）壩體</label>
+                                    <div class="form-group row AAA b11" id="com4">
+                                        <label for="com41" class="col-sm-3 text-left control-label col-form-label  b111_title">（一）壩</label>
                                         <div id="com41" class="form-group row b111 BBB">
                                             <br>
                                             <div class="col-sm-9  b1111">
@@ -151,7 +150,7 @@
                                                 </select>
                                                 <br>
                                                 <b>坡面拋石保護或植物生長：</b>
-                                                <select id="com41" class=" iHead" name="b1121">
+                                                <select id="com41" class="form-sel iHead" name="b1112">
                                                     <option value="11" title="">良好</option>
                                                     <option value="12" title="">待改善</option>
                                                 </select>
@@ -660,7 +659,7 @@
 
                                 <div class="form-group row  b2">
                                     <label for="com5" class="col-sm-3 text-left control-label col-form-label b21_title">二、放水設施安全檢查</label>
-                                    <div class="form-group row  b21" id="com5">
+                                    <div class="form-group row AAA b21" id="com5">
                                         <label for="com51" class="col-sm-3 text-left control-label col-form-label b211_title">（一）壩體</label>
                                         <div class="form-group row bbb BBB  b211" id="com51">
                                             <div class="col-sm-9 b2111">
@@ -676,7 +675,7 @@
                                                 </select>
                                                 <br>
                                                 坡面拋石保護或植物生長：
-                                                <select id="com51" class=" iHead" name="b21112">
+                                                <select id="com51" class="form-sel iHead" name="b21112">
                                                     <option value="11" title="">良好</option>
                                                     <option value="12" title="">待改善</option>
                                                 </select>
@@ -1019,9 +1018,15 @@
                             <div class="card-body">
                                 <div class="form-group m-b-0 text-right">
                                     @if( session('member.iAcType') && session('member.iAcType')>9 && session('member.iAcType')<20)
-                                        <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
-                                            Add & Send
-                                        </button>
+                                        @if(isset($info))
+                                            <button type="button" class="btn btn-skype waves-effect waves-light btn-dosave" data-id="{{$info->iId or ''}}">
+                                                Add & Send
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-info waves-effect waves-light btn-doadd">
+                                                Add & Send
+                                            </button>
+                                        @endif
                                     @elseif( isset($info) && $info->iCheck_message < session('member.iAcType') && session('member.iAcType')>19 && session('member.iAcType')<80)
                                         <button type="button" class="btn btn-success waves-effect waves-light btn-check" data-id="{{$info->iSource or ''}}">
                                             Check & Send
@@ -1070,10 +1075,10 @@
 @section('inline-js')
     <!--  -->
     <!-- Public Crop_Image -->
-    @include('_web._js.crop_image')
+    {{--@include('_web._js.crop_image')--}}
     <!-- end -->
     <!-- Public SummerNote -->
-    @include('_web._js.summernote')
+    {{--@include('_web._js.summernote')--}}
     <!-- end -->
     <script type="text/javascript">
         var current_data = [];
@@ -1087,28 +1092,49 @@
              *  JQuery serializeArray decode :
              */
 
-
-                <?php if (isset($memberAccess)){ ?>
-
-                    $('.BBB').hide();
-                    $('.BBB').prev('label').hide();
-
-                    dd = {!! $memberAccess->vDetail !!};
-                    $.each(dd, function(i, field){
-                        $("[name='"+field.name+"']").parents('.BBB').show();
-                        $("[name='"+field.name+"']").parents('.BBB').prev('label').show();
+                //水庫安全檢查表之填寫項目大項標題
+                <?php if (isset($TraceTable)){ ?>
+                    dd = <?php echo $TraceTable ?>;
+                    $.each(dd['TraceRow1'], function(i, field){
+                        $("[name='"+i+"']").parents('.BBB').prev('label').text(field);
+                    });
+                    $.each(dd['TraceRow2'], function(i, field){
+                        $("[name='"+i+"']").parents('.BBB').prev('label').text(field);
                     });
                 <?php } ?>
 
+                    //每個水庫的喜好設定值
+                    <?php if (isset($memberAccess)){ ?>
+                        $('.AAA').hide();
+                        $('.AAA').prev('label').hide();
+                            $('.BBB').hide();
+                            $('.BBB').prev('label').hide();
 
+                        dd = <?php echo $memberAccess->vDetail ?>;
+                        $.each(dd, function(i, field){
+                            $("[name='"+field.name+"']").parents('.AAA').show();
+                            $("[name='"+field.name+"']").parents('.AAA').prev('label').show();
+                                $("[name='"+field.name+"']").parents('.BBB').show();
+                                $("[name='"+field.name+"']").parents('.BBB').prev('label').show();
+                        });
+                    <?php } ?>
+
+                //審查表編輯
                 <?php if (isset($info)){ ?>
-                    dd = {!! $info->vDetail !!};
+                    dd = <?php echo $info->vDetail ?>;
                     $.each(dd, function(i, field){
-                        $("[name='"+field.name+"']").val(field.value);
+                        var _input = $("[name='"+field.name+"']");
+                        //單選題特殊處理
+                        if( _input.attr('type') === 'radio'){
+                            _input.filter('[value='+field.value+']').prop('checked', true);
+                        } else {
+                            _input.val(field.value);
+                        }
                     });
                 <?php } ?>
             /*
              ***********************************************/
+
 
             //
             var modal = $("#manage-modal");
@@ -1119,9 +1145,10 @@
             });
             //
             $(".btn-doadd").click(function () {
+                run_waitMe($('.waitme'));
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-
+                data.reservoirId = $('.reservoir_name').data('id');
                 data.reservoir = $('.reservoir_name').val();
                 /************************************************
                  *  JQuery serializeArray encode :
@@ -1136,6 +1163,7 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             //
                             sendNotifyMessage(rtndata.newid , rtndata.heads_token , $('.reservoir_name').val() , $(".vSummary").val());
@@ -1152,6 +1180,7 @@
             });
             //
             $(".btn-check").click(function () {
+                run_waitMe($('.waitme'));
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = $(this).data('id');
                 $.ajax({
@@ -1159,6 +1188,7 @@
                     type: 'POST',
                     data: data,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             //button hide
@@ -1175,9 +1205,11 @@
             });
             //
             $(".btn-dosave").click(function () {
+                run_waitMe($('.waitme'));
                 //
                 var data = {"_token": "{{ csrf_token() }}"};
-
+                data.iId = $(this).data('id');
+                data.reservoirId = $('.reservoir_name').data('id');
                 data.reservoir = $('.reservoir_name').val();
                 /************************************************
                  *  JQuery serializeArray encode :
@@ -1192,6 +1224,7 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
