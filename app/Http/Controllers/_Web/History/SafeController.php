@@ -36,7 +36,6 @@ class SafeController extends _WebController
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '水庫歷屆定期安全評估報告' );
-
         $this->view->with( 'add_url', url('web/' . implode( '/' , $this->module ) . '/add') );
 
         return $this->view;
@@ -75,16 +74,16 @@ class SafeController extends _WebController
         $map['bDel'] = 0;
         $map['iType'] = 2;    //1.水庫淤積濬渫執行成果  2. 水庫歷屆定期安全評估報告  3.水庫其他重要文件
         $total_count = ModHistory::query()->where( $map )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
+            ->where(function( $query ) use ( $search_arr, $search_word ) {
+                foreach ($search_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
             ->count();
 
         $data_arr = ModHistory::query()->where( $map )
-            ->where(function( $query ) use ( $sort_arr, $search_word ) {
-                foreach ($sort_arr as $item) {
+            ->where(function( $query ) use ( $search_arr, $search_word ) {
+                foreach ($search_arr as $item) {
                     $query->orWhere( $item, 'like', '%' . $search_word . '%' );
                 }
             })
@@ -133,6 +132,7 @@ class SafeController extends _WebController
      */
     public function add ()
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -143,6 +143,8 @@ class SafeController extends _WebController
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '新增 水庫歷屆定期安全評估報告' );
+        $this->view->with( 'Reservoir', $this->Reservoir );
+        $this->view->with( 'Year', $this->Year );
 
         return $this->view;
     }
@@ -187,6 +189,7 @@ class SafeController extends _WebController
      */
     public function edit ( $id )
     {
+        $this->_init();
         $this->view = View()->make( '_web.' . implode( '.' , $this->module ) . '.add' );
         $this->breadcrumb = [
             $this->vTitle => url( 'web' ),
@@ -197,6 +200,8 @@ class SafeController extends _WebController
         $this->view->with( 'module', $this->module );
         $this->view->with( 'vTitle', $this->vTitle );
         $this->view->with( 'vSummary', '編輯 水庫歷屆定期安全評估報告' );
+        $this->view->with( 'Reservoir', $this->Reservoir );
+        $this->view->with( 'Year', $this->Year );
 
 
         $map['bDel'] = 0;
@@ -304,6 +309,12 @@ class SafeController extends _WebController
 
         if ($request->exists( 'vTitle' )) {
             $Dao->vTitle = $request->input( 'vTitle' );
+        }
+        if ($request->exists( 'vData' )) {
+            $Dao->vData = $request->input( 'vData' );
+        }
+        if ($request->exists( 'vCode' )) {
+            $Dao->vCode = $request->input( 'vCode' );
         }
         if ($request->exists( 'iStatus' )) {
             $Dao->iStatus = ( $request->input( 'iStatus' ) == "change" ) ? !$Dao->iStatus : $request->input( 'iStatus' );

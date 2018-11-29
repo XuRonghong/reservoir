@@ -188,6 +188,11 @@ class UploadController extends Controller
             //取得上傳檔案的 MIME 類型
             $mime = $request->file('file')->getMimeType();
 
+            if ($extension!='pdf' || $mime!='application/pdf'){
+                $this->rtndata ['status'] = 0;
+                $this->rtndata ['message'] = trans( '_web_message.upload.fail' ).' : not PDF !!';
+                return response()->json( $this->rtndata );
+            }
 //            $image = explode(',', $request->file('file'));
 //            $data = base64_decode($image [1]);
 
@@ -246,7 +251,7 @@ class UploadController extends Controller
         }
 
         $this->rtndata ['status'] = 1;
-        $this->rtndata ['message'] = trans( '_web_message.upload.success' );;
+        $this->rtndata ['message'] = trans( '_web_message.upload.success' );
         $this->rtndata ['fileid'] = $Dao->iId;
 
         return response()->json( $this->rtndata );

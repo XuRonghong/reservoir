@@ -54,6 +54,16 @@
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
+            <div class="select001" style="display: none;">
+                <select id="fname1" class="form-control vCode" style="float: left; margin-left: 240px; margin-top: -50px; width: 20%;height: 20px; position: fixed; z-index: 3">
+                    <option value=""></option>
+                    @foreach($Reservoir as $key => $value)
+                        <option value="{{$value['vName'] or ''}}" @if(isset($info) && $info->vCode==$value['vName']) selected @endif>
+                            {{$value['vName'] or ''}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <!-- ============================================================== -->
         <!-- End Container fluid  -->
@@ -93,6 +103,9 @@
             /* BASIC ;*/
             // loading .....
             run_waitMe($('.waitme'));
+
+            var select = $('.select001').html();
+
             var i = 0;
             var table = $('#dt_basic').dataTable({
                 "serverSide": true,
@@ -105,7 +118,7 @@
                     {
                         "sTitle": "發送者",
                         "mData": "iMemberId",
-                        "width": "80px",
+                        "width": "70px",
                         "sName": "iMemberId",
                         "bSearchable": false,
                         "mRender": function (data, type, row) {
@@ -113,13 +126,29 @@
                         }
                     },
                     {
+                        "sTitle": "年度*",
+                        "mData": "vData",
+                        "width": "60px",
+                        "sName": "vData",
+                        "bSortable": true,
+                        "bSearchable": true,
+                        "mRender": function (data, type, row) {
+                            // return data;
+                            data2=data;
+                            if (data=='')data='-';
+                            return '<input class="isEdit vData" data-id="vData" size="10" style="width: 100%; display: none;" type="text" value="' + data2 + '"></input>'+'<div class="aaa">'+data+'</div>';
+                        }
+                    },
+                    {
                         "sTitle": "Title (點擊即可修改)",
                         "mData": "vTitle",
                         "sName": "vTitle",
                         "bSearchable": true,
-                        "width": "320px",
+                        "width": "300px",
                         "mRender": function (data, type, row) {
-                            return '<input class="vTitle" size="10" style="width: 100%; display: none;" type="text" value="' + data + '"></input>'+'<div class="aaa">'+data+'</div>';
+                            data2=data;
+                            if (data=='')data='-';
+                            return '<input class="isEdit vTitle" data-id="vTitle" size="10" style="width: 100%; display: none;" type="text" value="' + data2 + '"></input>'+'<div class="aaa">'+data+'</div>';
                         }
                     },
                     {
@@ -127,16 +156,29 @@
                         "mData": "vFile",
                         "sName": "vFile",
                         "bSearchable": false,
-                        "width": "80px",
+                        "width": "40px",
                         "mRender": function (data, type, row) {
                             return '<a class="btn btn-xs btn-danger" href="'+data+'"><h6><i class="fa fa-file-pdf" aria-hidden="true"></i></h6></a>';
+                        }
+                    },
+                    {
+                        "sTitle": "水庫*",
+                        "mData": "vCode",
+                        "width": "120px",
+                        "sName": "vCode",
+                        "bSearchable": true,
+                        "mRender": function (data, type, row) {
+                            // return data;
+                            data2=data;
+                            if (data=='')data='-';
+                            return '<input class="isEdit vCode" data-id="vCode" size="10" style="width: 100%; display: none;" type="text" value="' + data2 + '"></input>'+'<div class="aaa">'+data+'</div>';
                         }
                     },
                     {
                         "sTitle": "",
                         "bSortable": false,
                         "bSearchable": false,
-                        'width': '150px',
+                        'width': '100px',
                         "mRender": function (data, type, row) {
                             current_data[row.iId] = row;
                             var btn = "無功能";
@@ -164,7 +206,7 @@
                 //     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
                 "autoWidth": true,
                 "oLanguage": {
-                    "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+                    "sSearch": select+'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
                 },
             });
             $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
@@ -181,6 +223,7 @@
 
             //
             $("#dt_basic").on('change', '.irank', function () {
+                run_waitMe($('.waitme'));
                 var id = $(this).closest('tr').attr('id');
                 var irank = $(this).val();
                 var data = {
@@ -194,6 +237,7 @@
                     type: "POST",
                     //async: false,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
@@ -207,32 +251,33 @@
             });
             // 按一下進入編輯模式
             $("#dt_basic").on('click', '.aaa', function () {
-                $('.aaa').show();
-                $('input.vTitle').hide();
-                $(this).parent().find('input.vTitle').show();
+                $('div.aaa').show();
+                $('input.isEdit').hide();
+                $(this).parent().find('input.isEdit').show();
                 $(this).hide();
             });
             // 編輯完成退回瀏覽模式
-            $("#dt_basic").on('change', '.vTitle', function () {
+            $("#dt_basic").on('change', '.isEdit', function () {
                 //
-                toastr.info('等我一下...', "{{trans('_web_alert.notice')}}");
+                toastr.info('', "等我一下...");
                 //
                 $(this).hide();
                 $(this).parent().find('.aaa').show();
                 //
                 var id = $(this).closest('tr').attr('id');
-                var vTitle = $(this).val();
                 var data = {
                     "_token": "{{ csrf_token() }}"
                 };
                 data.iId = id;
-                data.vTitle = vTitle;
+                data[$(this).data('id')] = $(this).val();
+                //
                 $.ajax({
                     url: url_dosave_show,
                     data: data,
                     type: "POST",
                     //async: false,
                     success: function (rtndata) {
+                        // $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {

@@ -7,9 +7,9 @@
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid-theme.min.css')}}" rel="stylesheet">
     <link href="{{url('xtreme-admin/assets/libs/jsgrid/dist/jsgrid.min.css')}}" rel="stylesheet">
     <style>
-        .btn {
-            margin-left: 20px;
-        }
+        .btn { margin-left: 20px; }
+        select, select option { font-size:18px; font-weight: bold;}
+        select, select optgroup { font-size:22px; font-weight: bold;}
     </style>
 @endsection
 <!-- ================== /page-css ================== -->
@@ -37,13 +37,47 @@
             <!-- Row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card"  id="edit-modal">
+                    <div class="card waitme"  id="edit-modal">
                         <div class="card-body">
                             {{--<h4 class="card-title">{{$vTitle or ''}}</h4>--}}
                             <h6 class="card-title">{{$vSummary or ''}}</h6>
                         </div>
                         <hr>
                         <form class="form-horizontal" enctype="multipart/form-data">
+                            <div class="card-body">
+                                {{--<h4 class="card-title"></h4>--}}
+                                <div class="form-group row">
+                                    <label for="fname1" class="col-sm-3 text-right control-label col-form-label">水庫</label>
+                                    <div class="col-sm-9">
+                                        <select id="fname1" class="form-control vCode">
+                                            <option value=""></option>
+                                            @foreach($Reservoir as $key => $value)
+                                                <option value="{{$value['vName'] or ''}}" @if(isset($info) && $info->vCode==$value['vName']) selected @endif>
+                                                    {{$value['vName'] or ''}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lname1" class="col-sm-3 text-right control-label col-form-label">年度</label>
+                                    <div class="col-sm-9">
+                                        <select id="lname1" class="form-control vData">
+                                            <optgroup label="{{substr($Year[0],0,2)}}">
+                                                @foreach($Year as $key => $value)
+                                                    <option value="{{$value or ''}}" @if(isset($info) && $info->vData==$value) selected @endif>
+                                                        {{substr($value,0,4)}}
+                                                    </option>
+                                                    @if( $key<count($Year)-1 && (intval(($value)/100)!=intval(($Year[$key+1])/100) ))
+                                            </optgroup>
+                                            <optgroup label="{{substr($value+1,0,2)}}">
+                                                @endif
+                                                @endforeach
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <h4 class="card-title"></h4>
                                 <div class="form-group row">
@@ -109,10 +143,10 @@
 @section('inline-js')
     <!--  -->
     <!-- Public Crop_Image -->
-    @include('_web._js.crop_image')
+    {{--@include('_web._js.crop_image')--}}
     <!-- end -->
     <!-- Public SummerNote -->
-    @include('_web._js.summernote')
+    {{--@include('_web._js.summernote')--}}
     <!-- end -->
     <script type="text/javascript">
         var url_index = "{{ url('web/'.implode( '/', $module ))}}";
@@ -129,6 +163,8 @@
             });
             //
             $(".btn-doadd").click(function () {
+                // loading .....
+                run_waitMe($('.waitme'));
                 //
                 var file_data = $('.uploadfile').prop('files')[0];
                 var data = new FormData();
@@ -147,6 +183,7 @@
                             var fileid = rtndata.fileid;
                             doAdd(fileid);
                         } else {
+                            $('.waitme').waitMe('hide');
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
                     }
@@ -156,6 +193,8 @@
             function doAdd(fileid) {
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.vTitle = $(".vTitle").val();
+                data.vCode = $(".vCode").val();
+                data.vData = $(".vData").val();
                 data.vFile = fileid;
                 $.ajax({
                     url: url_doadd,
@@ -163,6 +202,7 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {
@@ -176,6 +216,9 @@
             }
             //
             $(".btn-dosave").click(function () {
+                // loading .....
+                run_waitMe($('.waitme'));
+                //
                 id = $(this).data('id');
                 //
                 var file_data = $('.uploadfile').prop('files')[0];
@@ -195,6 +238,7 @@
                             var fileid = rtndata.fileid;
                             doSave(id,fileid);
                         } else {
+                            $('.waitme').waitMe('hide');
                             toastr.error(rtndata.message, "{{trans('_web_alert.notice')}}");
                         }
                     }
@@ -206,6 +250,8 @@
                 var data = {"_token": "{{ csrf_token() }}"};
                 data.iId = id;
                 data.vTitle = $(".vTitle").val();
+                data.vCode = $(".vCode").val();
+                data.vData = $(".vData").val();
                 data.vFile = fileid;
                 //
                 $.ajax({
@@ -214,6 +260,7 @@
                     data: data,
                     resetForm: true,
                     success: function (rtndata) {
+                        $('.waitme').waitMe('hide');
                         if (rtndata.status) {
                             toastr.success(rtndata.message, "{{trans('_web_alert.notice')}}");
                             setTimeout(function () {

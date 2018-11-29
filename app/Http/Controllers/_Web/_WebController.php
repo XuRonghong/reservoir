@@ -44,6 +44,7 @@ class _WebController extends Controller
     protected $Reservoir = [];
     protected $TraceTable = [];     //水庫安全檢查表之填寫項目大項
     protected $TraceTable2 = [];     //水庫安全檢查表之填寫項目小項
+    protected $Year = [];    //年度19XX~20XX
 
 
     //
@@ -145,6 +146,12 @@ class _WebController extends Controller
 
             't3001'    =>  '進水口結構',
         ];*/
+
+        //年度
+        $radius = 40;
+        for ($i = date('Y')-$radius; $i<date('Y')+$radius; $i++){
+            $this->Year[] = $i;
+        }
     }
 
 
