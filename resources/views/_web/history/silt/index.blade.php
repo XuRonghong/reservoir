@@ -55,14 +55,18 @@
             <!-- End PAge Content -->
             <!-- ============================================================== -->
             <div class="select001" style="display: none;">
-                <select id="fname1" class="form-control vCode" style="float: left; margin-left: 240px; margin-top: -50px; width: 20%;height: 20px; position: fixed; z-index: 3">
-                    <option value=""></option>
-                    @foreach($Reservoir as $key => $value)
-                        <option value="{{$value['vName'] or ''}}" @if(isset($info) && $info->vCode==$value['vName']) selected @endif>
-                            {{$value['vName'] or ''}}
-                        </option>
-                    @endforeach
-                </select>
+                {{--<div class="dataTables_length" id="dt_basic_reservoir">--}}
+                <label>水庫
+                    <select id="fname1" class="form-control form-control-sm vCode_select" style="width: 140px">
+                        <option value=""></option>
+                        @foreach($Reservoir as $key => $value)
+                            <option value="{{$value['vName'] or ''}}" @if(isset($info) && $info->vCode==$value['vName']) selected @endif>
+                                {{$value['vName'] or ''}}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+                {{--</div>--}}
             </div>
         </div>
         <!-- ============================================================== -->
@@ -108,6 +112,7 @@
 
             var i = 0;
             var table = $('#dt_basic').dataTable({
+                "iDisplayLength": 10,
                 "serverSide": true,
                 "stateSave": true,
                 "scrollX": true,
@@ -206,9 +211,20 @@
                 //     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
                 "autoWidth": true,
                 "oLanguage": {
-                    "sSearch": select+'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>'
+                    "sSearch": 'Search:<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>',
+                    // "sLengthMenu": 'Show<select>'+
+                    //     '<option value="5">5</option>'+
+                    //     '<option value="10">10</option>'+
+                    //     '<option value="30">30</option>'+
+                    //     '<option value="50">50</option>'+
+                    //     '<option value="100">100</option>'+
+                    //     '<option value="-1">All</option>'+
+                    //     '</select> entries'
                 },
             });
+            // 加入元件 **無入用，測試用**************
+            // $('#dt_basic_length').prepend(select);
+            // loading...
             $('div.dataTables_wrapper div.dataTables_paginate').click(function () {
                 run_waitMe($('.waitme'));
                 setTimeout(function(){ $('.waitme').waitMe('hide') }, 1000);   //逾時1秒關閉讀取
@@ -220,6 +236,25 @@
             setTimeout(function(){ $('.waitme').waitMe('hide') }, 10000);   //逾時10秒關閉讀取
             /* END BASIC */
 
+
+                //**無入用，測試用**************
+                $('#dt_basic_length .vCode_select').change(function () {
+                    var data = table.fnSettings().oInit;
+                    {{--data._token = "{{ csrf_token() }}";--}}
+                    data.vCode = $(this).val();
+                    // console.log( table.fnSettings() );
+                    // return;
+                    $.ajax({
+                        url: ajax_source,
+                        data: data,
+                        type: "GET",
+                        //async: false,
+                        success: function (rtndata) {
+                            table.fnServerData(rtndata);
+                            table.api().ajax.reload(null, false);
+                        }
+                    });
+                });
 
             //
             $("#dt_basic").on('change', '.irank', function () {

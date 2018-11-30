@@ -56,6 +56,7 @@ class SiltController extends _WebController
         $iDisplayLength = $request->input('iDisplayLength') ? $request->input('iDisplayLength') : 0 ;
         $iDisplayStart =  $request->input('iDisplayStart') ? $request->input('iDisplayStart') : 0 ;
         $sEcho =          $request->input('sEcho' ) ? $request->input('sEcho') : '' ;
+        $vCode =     $request->input('vCode' ) ? $request->input('vCode') : 0 ;
         $column_arr =     $request->input('sColumns' ) ? $request->input('sColumns') : '' ;
         $column_arr = explode( ',', $column_arr );
         foreach ($column_arr as $key => $item)
@@ -77,6 +78,7 @@ class SiltController extends _WebController
 
         $map['bDel'] = 0;
         $map['iType'] = 1;    //1.水庫淤積濬渫執行成果  2. 水庫歷屆定期安全評估報告  3.水庫其他重要文件
+        if ($vCode)$map['vCode'] = $vCode;
         $total_count = ModHistory::query()->where( $map )
             ->where(function( $query ) use ( $search_arr, $search_word ) {
                 foreach ($search_arr as $item) {
